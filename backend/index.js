@@ -19,7 +19,12 @@ app.listen(PORT, () => {
   };
   const query = 'SELECT "Make" from odbc."dcModels"';
   const client = new Client(config);
-  client.connect();
+  // client.connect();
+  // console log if connected
+  if (client.connect()) {
+    console.log("Connected to database");
+  }
+
   client.query(query, (err, result) => {
     if (err) {
       console.error("Error executing query:", err);
