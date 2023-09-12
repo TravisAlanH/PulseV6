@@ -14,7 +14,7 @@ app.listen(PORT, () => {
   let config = {
     method: "get",
     maxBodyLength: 10,
-    url: "http://10.34.3.86/api/v2/dcimoperations/search/makes/hp", // Use HTTPS
+    url: "https://10.34.3.86/api/v2/dcimoperations/search/makes/hp", // Use HTTPS
     headers: {
       Authorization: "Basic YWRtaW46c3VuYmlyZA==",
       "Content-Type": "application/json",
