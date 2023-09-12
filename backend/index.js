@@ -12,8 +12,7 @@ app.listen(PORT, () => {
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
   let config = {
-    host: "127.0.0.1",
-    port: "5500",
+    Proxy: "https://raleighvpn.sunbirddcim.com/app/ui/",
     method: "get",
     maxBodyLength: 10,
     url: "http://10.34.3.86/api/v2/dcimoperations/search/makes/hp", // Use HTTPS
