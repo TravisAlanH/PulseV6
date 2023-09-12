@@ -23,7 +23,7 @@ app.listen(PORT, () => {
     // Disable SSL certificate verification
     httpsAgent: new https.Agent({ rejectUnauthorized: false }),
   };
-
+  console.log("Test");
   axios
     .request(config)
     .then((response) => {
