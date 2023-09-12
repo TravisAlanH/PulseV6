@@ -12,6 +12,8 @@ app.listen(PORT, () => {
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
   let config = {
+    host: "127.0.0.1",
+    port: "5500",
     method: "get",
     maxBodyLength: 10,
     url: "https://10.34.3.86/api/v2/dcimoperations/search/makes/hp", // Use HTTPS
@@ -28,7 +30,7 @@ app.listen(PORT, () => {
     .request(config)
     .then((response) => {
       console.log(JSON.stringify(response.data));
-      res.end(JSON.stringify(response.data));
+      // res.end(JSON.stringify(response.data));
     })
     .catch((error) => {
       console.log(error.message);
