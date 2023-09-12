@@ -1,43 +1,88 @@
-const axios = require("axios");
-const express = require("express");
-const app = express();
-const https = require("https"); // Import the 'https' module
 const { Client } = require("pg");
 
-app.use(express.json());
+const config = {
+  user: "admin",
+  password: "WAT499er!",
+  host: "10.34.3.86",
+  database: "raritan",
+  port: 5432, // Replace with your PostgreSQL port if it's different
+};
 
-const PORT = process.env.PORT || 3100;
+const query = 'SELECT "Make" from odbc."dcModels"';
+const client = new Client(config);
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-  const config = {
-    user: "admin",
-    password: "WAT499er!",
-    host: "10.34.3.86",
-    database: "raritan",
-    port: 5432, // Replace with your PostgreSQL port if it's different
-  };
-  const query = 'SELECT "Make" from odbc."dcModels"';
-  const client = new Client(config);
-  // client.connect();
-  // console log if connected
-  if (client.connect()) {
+async function main() {
+  try {
+    await client.connect();
     console.log("Connected to database");
-  }
 
-  client.query(query, (err, result) => {
-    if (err) {
-      console.error("Error executing query:", err);
-      client.end();
-      return;
-    }
-    client.end();
+    const result = await client.query(query);
+    console.log("Querying database");
+
     let data = result.rows.splice(0, 1);
     const jsonResult = JSON.stringify(data);
     console.log(jsonResult);
-    // res.end(jsonResult);
-  });
+
+    client.end();
+  } catch (err) {
+    console.error("Error:", err);
+    client.end();
+  }
+}
+
+const PORT = process.env.PORT || 3100;
+const express = require("express");
+const app = express();
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+  main();
 });
+
+// const axios = require("axios");
+// const { log } = require("console");
+// const express = require("express");
+// const app = express();
+// const https = require("https"); // Import the 'https' module
+// const { Client } = require("pg");
+
+// app.use(express.json());
+
+// const PORT = process.env.PORT || 3100;
+
+// process.on("warning", (e) => console.warn(e.stack));
+
+// app.listen(PORT, () => {
+//   console.log(`Server running on port ${PORT}`);
+//   const config = {
+//     user: "admin",
+//     password: "WAT499er!",
+//     host: "10.34.3.86",
+//     database: "raritan",
+//     port: 5432, // Replace with your PostgreSQL port if it's different
+//   };
+//   const query = 'SELECT "Make" from odbc."dcModels"';
+//   const client = new Client(config);
+//   // client.connect();
+//   // console log if connected
+//   if (client.connect()) {
+//     console.log("Connected to database");
+//   }
+
+//   client.query(query, (err, result) => {
+//     console.log("Querying database");
+//     if (err) {
+//       console.error("Error executing query:", err);
+//       client.end();
+//       return;
+//     }
+//     client.end();
+//     let data = result.rows.splice(0, 1);
+//     const jsonResult = JSON.stringify(data);
+//     console.log(jsonResult);
+//     // res.end(jsonResult);
+//   });
+// });
 ////////////////////
 // Set NODE_TLS_REJECT_UNAUTHORIZED to 0 to disable SSL certificate verification
 // process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
