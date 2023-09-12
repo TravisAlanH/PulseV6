@@ -31,7 +31,7 @@ app.listen(PORT, () => {
       res.end(JSON.stringify(response.data));
     })
     .catch((error) => {
-      console.log(error);
+      console.log(error.message);
     });
   // process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
   // let config = {
