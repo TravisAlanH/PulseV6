@@ -9,10 +9,9 @@ const PORT = process.env.PORT || 3100;
 
 app.listen(PORT, () => {
   // Set NODE_TLS_REJECT_UNAUTHORIZED to 0 to disable SSL certificate verification
-  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+  // process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
   let config = {
-    Proxy: "https://raleighvpn.sunbirddcim.com/app/ui/",
     method: "get",
     maxBodyLength: 10,
     url: "http://10.34.3.86/api/v2/dcimoperations/search/makes/hp", // Use HTTPS
