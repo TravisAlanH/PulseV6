@@ -1,11 +1,9 @@
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 const express = require("express");
 const app = express();
-const fetch = require("node-fetch");
 
 app.listen(3000, () => {
-  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
-
-  var myHeaders = new fetch.Headers();
+  var myHeaders = new Headers();
   myHeaders.append("Authorization", "Basic YWRtaW46c3VuYmlyZA==");
 
   var requestOptions = {
