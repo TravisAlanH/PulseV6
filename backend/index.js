@@ -16,7 +16,7 @@ app.listen(PORT, () => {
     port: "5500",
     method: "get",
     maxBodyLength: 10,
-    url: "https://10.34.3.86/api/v2/dcimoperations/search/makes/hp", // Use HTTPS
+    url: "http://10.34.3.86/api/v2/dcimoperations/search/makes/hp", // Use HTTPS
     headers: {
       Authorization: "Basic YWRtaW46c3VuYmlyZA==",
       "Content-Type": "application/json",
