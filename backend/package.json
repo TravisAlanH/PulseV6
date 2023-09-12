@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "npm i",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "nodemon index.js",
-    "live": "node index.js"
+    "server": "nodemon index.js"
   },
   "keywords": [],
   "author": "",
