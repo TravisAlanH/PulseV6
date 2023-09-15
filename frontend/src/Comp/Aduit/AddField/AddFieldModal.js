@@ -1,0 +1,51 @@
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import * as actions from "../../../Store/Slices/Slice";
+import TempAssets from "./AddFieldTemplatesAssets";
+import TempLocation from "./AddFieldTemplatesLocation";
+
+export default function AddFieldModal({ Step }) {
+  const Template = {
+    Assets: TempAssets,
+    Location: TempLocation,
+  };
+
+  const dispatch = useDispatch();
+
+  //Set to 0 because all indexes are updated, adding fields is not specific to an index
+  const AssetsArray = useSelector((state) => state.data[Step][0]);
+
+  return (
+    <div className="z-40">
+      <form
+        className="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 gap-4"
+        onSubmit={(e) => {
+          e.preventDefault();
+
+          e.target.querySelectorAll('input[type="checkbox"]').forEach((element) => {
+            let payload = {
+              Step: Step,
+              checked: element.checked,
+              keyName: element.value,
+              keyValue: Template[Step][element.value],
+            };
+            dispatch(actions.addRemoveCustomFields(payload));
+          });
+        }}>
+        {Object.keys(Template[Step]).map((keyName, index) => (
+          <div key={index}>
+            <input
+              type="checkbox"
+              id={keyName}
+              name={keyName}
+              value={keyName}
+              defaultChecked={AssetsArray.hasOwnProperty(keyName)}
+            />
+            {keyName}
+          </div>
+        ))}
+        <input type="submit" value="Submit" />
+      </form>
+    </div>
+  );
+}

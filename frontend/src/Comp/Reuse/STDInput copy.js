@@ -53,8 +53,8 @@ export default function STDInput({ keyName, Step }) {
     default:
       STDInput = (
         <input
-          value={state[current][keyName].value}
           type={state[current][keyName].type}
+          defaultValue={state[current][keyName].value}
           placeholder={state[current][keyName].placeholder}
           required={state[current][keyName].required}
           onChange={(e) => {

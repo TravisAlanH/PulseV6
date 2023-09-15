@@ -1,18 +1,19 @@
 import React from "react";
-import STDInput from "../Reuse/STDInput";
 import { useSelector } from "react-redux";
+import LocationInputPage from "./LocationInputPage";
+import SetCurrentSelection from "../Reuse/SetCurrentSelection";
+import AddToStep from "../Reuse/AddToStep";
 
 export default function LocationLayout() {
-  const LocationCurrent = useSelector((state) => state.data.Current["Location"]);
-  const LocationState = useSelector((state) => state.data.Location[LocationCurrent]);
-  const LocationKeys = Object.keys(LocationState);
-  console.log(LocationKeys);
+  const LocationData = useSelector((state) => state.data.Location);
 
   return (
     <div className="flex flex-col">
-      {LocationKeys.map((key, index) => (
-        <STDInput key={index} keyName={key} Step="Location" />
-      ))}
+      <div className="flex flex-row gap-3">
+        <SetCurrentSelection Step="Location" />
+        <AddToStep Step={"Location"} />
+      </div>
+      {LocationData.length > 0 ? <LocationInputPage /> : null}
     </div>
   );
 }

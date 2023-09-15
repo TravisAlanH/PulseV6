@@ -1,4 +1,5 @@
 const countries = [
+  "Select a Country",
   "United States",
   "Afghanistan",
   "Albania",

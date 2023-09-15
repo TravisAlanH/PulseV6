@@ -1,13 +1,17 @@
 import countries from "./TemplateHelpers/Counties";
 
+//* ADD OR REMOVE OPTIONS FROM THE DROP DOWNS WHEN ADDING DATA
+//* ie: ADD ROW => ADD TO OPTION IN THE CABINET DROP DOWN
+
 let Template = {
   Location: {
+    ///////////////
     "# Operation*": "ADD",
-    "*Object*": "LOCATION",
+    "Object*": "LOCATION",
     "dcTrack Location Code*": {
       type: "text",
       value: "",
-      defaultValue: () => this.value,
+
       placeholder: "Input Here",
       options: [],
       required: false,
@@ -17,7 +21,7 @@ let Template = {
     "dcTrack Location Name*": {
       type: "text",
       value: "",
-      defaultValue: () => this.value,
+
       placeholder: "Input Here",
       options: [],
       required: false,
@@ -27,7 +31,7 @@ let Template = {
     "dcTrack Location Hierarchy*": {
       type: "text",
       value: "",
-      defaultValue: () => this.value,
+
       placeholder: "Input Here",
       options: [],
       required: false,
@@ -37,7 +41,7 @@ let Template = {
     "dcTrack Location Parent*": {
       type: "text",
       value: "",
-      defaultValue: () => this.value,
+
       placeholder: "Input Here",
       options: [],
       required: false,
@@ -47,7 +51,7 @@ let Template = {
     "Data Center Area*": {
       type: "number",
       value: 0,
-      defaultValue: () => this.value,
+
       options: [],
       required: false,
       aPIMatch: "",
@@ -56,7 +60,7 @@ let Template = {
     "Country*": {
       type: "select",
       value: "",
-      defaultValue: () => this.value,
+
       options: countries,
       required: false,
       aPIMatch: "",
@@ -64,33 +68,23 @@ let Template = {
     },
     "Status*": "PLANNED",
   },
-  Assets: {
-    "# Operation *": "ADD",
-    "Object *": "DEVICE-RACKABLE",
-    "Name*": {
-      type: "text",
+  //////////////////
+  Rooms: {
+    "# Operation*": "ADD",
+    "Object*": "SUBLOCATION",
+    "Sub Location Type*": {
+      type: "select",
       value: "",
-      defaultValue: () => this.value,
       placeholder: "Input Here",
-      options: [],
+      options: ["Select", "Aisle", "Row"],
       required: false,
       APIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
     },
-    "Make*": {
+    "Sub Location Name*": {
       type: "text",
       value: "",
-      defaultValue: () => this.value,
-      placeholder: "Input Here",
-      options: [],
-      required: false,
-      APIMatch: "",
-      NEXT: "HOLD FOR ADDITIONAL INFO",
-    },
-    "Model*": {
-      type: "text",
-      value: "",
-      defaultValue: () => this.value,
+
       placeholder: "Input Here",
       options: [],
       required: false,
@@ -100,7 +94,113 @@ let Template = {
     "Location*": {
       type: "text",
       value: "",
-      defaultValue: () => this.value,
+      placeholder: "Input Here",
+      options: [],
+      required: false,
+      APIMatch: "",
+      NEXT: "HOLD FOR ADDITIONAL INFO",
+    },
+
+    "Parent Sub Location": {
+      type: "text",
+      value: "",
+      placeholder: "Input Here",
+      options: [],
+      required: false,
+      APIMatch: "",
+      NEXT: "HOLD FOR ADDITIONAL INFO",
+    },
+    "Capacity(kW)": {
+      type: "number",
+      value: "",
+      placeholder: "Input Here",
+      options: [],
+      required: false,
+      APIMatch: "",
+      NEXT: "HOLD FOR ADDITIONAL INFO",
+    },
+  },
+  //////////////////
+  Racks: {
+    "Operation *": "ADD",
+    "Object *": "CABINET",
+    "Name *": "",
+    "Make *": "",
+    "Model *": "",
+    "Part Number": "",
+    "Location *": "",
+    "Location Name": "",
+    "Front Faces *": {
+      type: "select",
+      value: "",
+      placeholder: "Input Here",
+      options: ["North", "South", "East", "West"],
+      required: false,
+      APIMatch: "",
+      NEXT: "HOLD FOR ADDITIONAL INFO",
+    },
+    "Aisle Label *": "",
+    "Row Label **": "",
+    "Position in Row **": "",
+    "Power Capacity (kW)": {
+      type: "number",
+      value: "",
+      placeholder: "Input Here",
+      options: [],
+      required: false,
+      APIMatch: "",
+      NEXT: "HOLD FOR ADDITIONAL INFO",
+    },
+    "Weight Capacity": {
+      type: "number",
+      value: "",
+      placeholder: "Input Here",
+      options: [],
+      required: false,
+      APIMatch: "",
+      NEXT: "HOLD FOR ADDITIONAL INFO",
+    },
+    "Status *": "PLANNED",
+  },
+  //////////////////
+  Assets: {
+    "# Operation*": "ADD",
+    "Object*": "DEVICE-RACKABLE",
+    "Name*": {
+      type: "text",
+      value: "",
+
+      placeholder: "Input Here",
+      options: [],
+      required: false,
+      APIMatch: "",
+      NEXT: "HOLD FOR ADDITIONAL INFO",
+    },
+    "Make*": {
+      type: "text",
+      value: "",
+
+      placeholder: "Input Here",
+      options: [],
+      required: false,
+      APIMatch: "",
+      NEXT: "HOLD FOR ADDITIONAL INFO",
+    },
+    "Model*": {
+      type: "text",
+      value: "",
+
+      placeholder: "Input Here",
+      options: [],
+      required: false,
+      APIMatch: "",
+      NEXT: "HOLD FOR ADDITIONAL INFO",
+    },
+
+    "Location*": {
+      type: "text",
+      value: "",
+
       placeholder: "Input Here",
       options: [],
       required: false,
@@ -110,7 +210,7 @@ let Template = {
     "Cabinet*": {
       type: "text",
       value: "",
-      defaultValue: () => this.value,
+
       placeholder: "Input Here",
       options: [],
       required: false,
@@ -120,7 +220,7 @@ let Template = {
     "U Position*": {
       type: "number",
       value: 0,
-      defaultValue: () => this.value,
+
       options: [],
       required: false,
       aPIMatch: "",
@@ -129,7 +229,7 @@ let Template = {
     "Rails Used*": {
       type: "select",
       value: "",
-      defaultValue: () => this.value,
+
       options: [],
       required: false,
       aPIMatch: "",
@@ -138,7 +238,7 @@ let Template = {
     "Orientation*": {
       type: "select",
       value: "",
-      defaultValue: () => this.value,
+
       options: [],
       required: false,
       aPIMatch: "",
@@ -149,11 +249,15 @@ let Template = {
 };
 
 const state = {
-  Location: [Template.Location],
+  Location: [],
+  Rooms: [],
+  Racks: [],
   Assets: [],
   LoggedIn: false,
   Current: {
     Location: 0,
+    Rooms: 0,
+    Racks: 0,
     Assets: 0,
   },
 };
@@ -164,7 +268,7 @@ export { state };
 // let hold = {
 //   type: "text",
 //   value: "",
-//   defaultValue: () => this.value,
+//
 //   placeholder: "Input Here",
 //   options: [],
 //   required: false,
@@ -175,7 +279,7 @@ export { state };
 // let hold2 = {
 //   type: "number",
 //   value: 0,
-//   defaultValue: () => this.value,
+//
 //   options: [],
 //   required: false,
 //   aPIMatch: "",
@@ -185,7 +289,7 @@ export { state };
 // let hold3 = {
 //   type: "date",
 //   value: "2007-06-09",
-//   defaultValue: () => this.value,
+//
 //   options: [],
 //   required: false,
 //   aPIMatch: "",
@@ -195,7 +299,7 @@ export { state };
 // let hold4 = {
 //   type: "bool",
 //   value: false,
-//   defaultValue: () => this.value,
+//
 //   options: [],
 //   required: false,
 //   aPIMatch: "",
@@ -205,98 +309,9 @@ export { state };
 // let hold5 = {
 //   type: "select",
 //   value: "",
-//   defaultValue: () => this.value,
+//
 //   options: [],
 //   required: false,
 //   aPIMatch: "",
 //   NEXT: "HOLD FOR ADDITIONAL INFO",
 // };
-
-// const AddField = {
-//   Location: {
-//     "New dcTrack Location Code": "",
-//     "Is Default Location": false,
-//     "Location Type": "",
-//     Units: "",
-//     "Outer Room Dim - L": "",
-//     "Outer Room Dim - W": "",
-//     "Data Center Height Raised Floor": "",
-//     "Data Center Height Finished Floor to Finished Ceiling": "",
-//     "Data Center Height Finished Ceiling to Slab Ceiling": "",
-//     Street: "",
-//     "Street (Line 2)": "",
-//     City: "",
-//     State: "",
-//     "Postal Code": "",
-//     "Drawing North": "",
-//     "Grid Label": "",
-//     "Vertical Row Orientation": "",
-//     "Horizontal Row Orientation": "",
-//     "Location Picture Path": "",
-//     "Enable Virtual Power Chain": false,
-//     "Power IQ Appliance": "",
-//     "Power IQ Object Type": "",
-//     "Power IQ Object ID": "",
-//     "Power IQ Object Name": "",
-//     "Capacity(kW)": "",
-//   },
-//   Assets: {
-//     hardwareHeadingGroup: {
-//       "Part Number": "",
-//       "Serial Number": "",
-//       "Asset Tag": "",
-//       "eAsset Tag": "",
-//     },
-//     identityHeadingGroup: {
-//       "New Name": "",
-//       Alias: "",
-//       Type: "",
-//       Function: "",
-//       Customer: "",
-//     },
-//     statusHeadingGroup: {
-//       "Planned Decomm. Date": "2007-06-09",
-//       "Is Archived": false,
-//     },
-//     placementHeadingGroup: {
-//       "New Location": "",
-//       "Location Reference": "",
-//       "Planning Date": "2007-06-09",
-//     },
-//     assetAndMaintenanceHeadingGroup: {
-//       Contact: "",
-//       "Contact Team": "",
-//       "Project Number": "",
-//       "PO Number": "",
-//       "Purchase Price": 0,
-//       "Purchase Date": "2007-06-09",
-//       "Installation Date": "2007-06-09",
-//       "SLA Profile": "",
-//       "Contract Number": "",
-//       "Contract Amount": 0,
-//       "Contract Start Date": "2007-06-09",
-//       "Contract End Date": "2007-06-09",
-//       "Created On": "2007-06-09T00:00:00Z",
-//       "Last Updated On": "2007-06-09T00:00:00Z",
-//       "Created By": "",
-//       "Last Updated By": "",
-//       Notes: "",
-//     },
-//     configurationHeadingGroup: {
-//       "Operating System": "",
-//       Domain: "",
-//       "CPU Type": "",
-//       "CPU Quantity": 0,
-//       "RAM (GB)": 0,
-//       "Disk (GB)": 0,
-//       Users: 0,
-//       Processes: 0,
-//       Services: 0,
-//       "VM Manager": "",
-//       "VM Cluster": "",
-//       "is VM Host": false,
-//     },
-//   },
-// };
-
-// export { AddField };

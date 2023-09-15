@@ -1,8 +1,7 @@
-export const LocationAdditionalFields = {
+const LocationAdditionalFields = {
   "New dcTrack Location Code": {
     type: "text",
     value: "",
-    defaultValue: () => this.value,
     placeholder: "Input Here",
     options: [],
     required: false,
@@ -12,7 +11,6 @@ export const LocationAdditionalFields = {
   "Is Default Location": {
     type: "bool",
     value: false,
-    defaultValue: () => this.value,
     options: [],
     required: false,
     aPIMatch: "",
@@ -21,7 +19,6 @@ export const LocationAdditionalFields = {
   "Location Type": {
     type: "text",
     value: "",
-    defaultValue: () => this.value,
     placeholder: "Input Here",
     options: [],
     required: false,
@@ -31,7 +28,6 @@ export const LocationAdditionalFields = {
   Units: {
     type: "text",
     value: "",
-    defaultValue: () => this.value,
     placeholder: "Input Here",
     options: [],
     required: false,
@@ -41,7 +37,6 @@ export const LocationAdditionalFields = {
   "Outer Room Dim - L": {
     type: "text",
     value: "",
-    defaultValue: () => this.value,
     placeholder: "Input Here",
     options: [],
     required: false,
@@ -51,7 +46,6 @@ export const LocationAdditionalFields = {
   "Outer Room Dim - W": {
     type: "text",
     value: "",
-    defaultValue: () => this.value,
     placeholder: "Input Here",
     options: [],
     required: false,
@@ -61,7 +55,6 @@ export const LocationAdditionalFields = {
   "Data Center Height Raised Floor": {
     type: "text",
     value: "",
-    defaultValue: () => this.value,
     placeholder: "Input Here",
     options: [],
     required: false,
@@ -71,7 +64,6 @@ export const LocationAdditionalFields = {
   "Data Center Height Finished Floor to Finished Ceiling": {
     type: "text",
     value: "",
-    defaultValue: () => this.value,
     placeholder: "Input Here",
     options: [],
     required: false,
@@ -81,7 +73,6 @@ export const LocationAdditionalFields = {
   "Data Center Height Finished Ceiling to Slab Ceiling": {
     type: "text",
     value: "",
-    defaultValue: () => this.value,
     placeholder: "Input Here",
     options: [],
     required: false,
@@ -91,7 +82,6 @@ export const LocationAdditionalFields = {
   Street: {
     type: "text",
     value: "",
-    defaultValue: () => this.value,
     placeholder: "Input Here",
     options: [],
     required: false,
@@ -101,7 +91,6 @@ export const LocationAdditionalFields = {
   "Street (Line 2)": {
     type: "text",
     value: "",
-    defaultValue: () => this.value,
     placeholder: "Input Here",
     options: [],
     required: false,
@@ -111,7 +100,6 @@ export const LocationAdditionalFields = {
   City: {
     type: "text",
     value: "",
-    defaultValue: () => this.value,
     placeholder: "Input Here",
     options: [],
     required: false,
@@ -121,7 +109,6 @@ export const LocationAdditionalFields = {
   State: {
     type: "text",
     value: "",
-    defaultValue: () => this.value,
     placeholder: "Input Here",
     options: [],
     required: false,
@@ -131,7 +118,6 @@ export const LocationAdditionalFields = {
   "Postal Code": {
     type: "text",
     value: "",
-    defaultValue: () => this.value,
     placeholder: "Input Here",
     options: [],
     required: false,
@@ -141,7 +127,6 @@ export const LocationAdditionalFields = {
   "Drawing North": {
     type: "text",
     value: "",
-    defaultValue: () => this.value,
     placeholder: "Input Here",
     options: [],
     required: false,
@@ -151,7 +136,6 @@ export const LocationAdditionalFields = {
   "Grid Label": {
     type: "text",
     value: "",
-    defaultValue: () => this.value,
     placeholder: "Input Here",
     options: [],
     required: false,
@@ -161,7 +145,6 @@ export const LocationAdditionalFields = {
   "Vertical Row Orientation": {
     type: "text",
     value: "",
-    defaultValue: () => this.value,
     placeholder: "Input Here",
     options: [],
     required: false,
@@ -171,7 +154,6 @@ export const LocationAdditionalFields = {
   "Horizontal Row Orientation": {
     type: "text",
     value: "",
-    defaultValue: () => this.value,
     placeholder: "Input Here",
     options: [],
     required: false,
@@ -181,7 +163,6 @@ export const LocationAdditionalFields = {
   "Location Picture Path": {
     type: "text",
     value: "",
-    defaultValue: () => this.value,
     placeholder: "Input Here",
     options: [],
     required: false,
@@ -191,7 +172,6 @@ export const LocationAdditionalFields = {
   "Enable Virtual Power Chain": {
     type: "bool",
     value: false,
-    defaultValue: () => this.value,
     options: [],
     required: false,
     aPIMatch: "",
@@ -200,7 +180,6 @@ export const LocationAdditionalFields = {
   "Power IQ Appliance": {
     type: "text",
     value: "",
-    defaultValue: () => this.value,
     placeholder: "Input Here",
     options: [],
     required: false,
@@ -210,7 +189,6 @@ export const LocationAdditionalFields = {
   "Power IQ Object Type": {
     type: "text",
     value: "",
-    defaultValue: () => this.value,
     placeholder: "Input Here",
     options: [],
     required: false,
@@ -220,7 +198,6 @@ export const LocationAdditionalFields = {
   "Power IQ Object ID": {
     type: "text",
     value: "",
-    defaultValue: () => this.value,
     placeholder: "Input Here",
     options: [],
     required: false,
@@ -230,7 +207,6 @@ export const LocationAdditionalFields = {
   "Power IQ Object Name": {
     type: "text",
     value: "",
-    defaultValue: () => this.value,
     placeholder: "Input Here",
     options: [],
     required: false,
@@ -240,7 +216,6 @@ export const LocationAdditionalFields = {
   "Capacity(kW)": {
     type: "text",
     value: "",
-    defaultValue: () => this.value,
     placeholder: "Input Here",
     options: [],
     required: false,
@@ -248,3 +223,5 @@ export const LocationAdditionalFields = {
     NEXT: "HOLD FOR ADDITIONAL INFO",
   },
 };
+
+export default LocationAdditionalFields;

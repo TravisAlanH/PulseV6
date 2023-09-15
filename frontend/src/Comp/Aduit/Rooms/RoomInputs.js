@@ -2,8 +2,8 @@ import React from "react";
 import STDInput from "../../Reuse/STDInput";
 import { useSelector } from "react-redux";
 
-export default function RackInput() {
-  const Step = "Racks";
+export default function RoomInputs() {
+  const Step = "Rooms";
 
   const Data = useSelector((state) => state.data[Step]);
   const Current = useSelector((state) => state.data.Current[Step]);

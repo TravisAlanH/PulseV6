@@ -2,10 +2,10 @@ import React from "react";
 import { useSelector } from "react-redux";
 import SetCurrentSelection from "../../Reuse/SetCurrentSelection";
 import AddToStep from "../../Reuse/AddToStep";
-import RackInput from "./RackInput";
+import RoomInputs from "./RoomInputs";
 
-export default function RackLayout({ rackData }) {
-  let Step = "Racks";
+export default function RoomLayout() {
+  let Step = "Rooms";
   const Data = useSelector((state) => state.data[Step]);
 
   return (
@@ -14,7 +14,7 @@ export default function RackLayout({ rackData }) {
         <SetCurrentSelection Step="Rooms" />
         <AddToStep Step={Step} />
       </div>
-      {Data.length > 0 ? <RackInput /> : null}
+      {Data.length > 0 ? <RoomInputs /> : null}
     </div>
   );
 }

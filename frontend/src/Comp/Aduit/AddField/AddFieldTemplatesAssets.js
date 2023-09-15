@@ -1,9 +1,8 @@
-export const AssetsAdditionalFields = {
+const AssetsAdditionalFields = {
   hardwareHeadingGroup: {
     "Part Number": {
       type: "text",
       value: "",
-      defaultValue: () => this.value,
       placeholder: "Input Here",
       options: [],
       required: false,
@@ -13,7 +12,6 @@ export const AssetsAdditionalFields = {
     "Serial Number": {
       type: "text",
       value: "",
-      defaultValue: () => this.value,
       placeholder: "Input Here",
       options: [],
       required: false,
@@ -23,7 +21,6 @@ export const AssetsAdditionalFields = {
     "Asset Tag": {
       type: "text",
       value: "",
-      defaultValue: () => this.value,
       placeholder: "Input Here",
       options: [],
       required: false,
@@ -33,7 +30,6 @@ export const AssetsAdditionalFields = {
     "eAsset Tag": {
       type: "text",
       value: "",
-      defaultValue: () => this.value,
       placeholder: "Input Here",
       options: [],
       required: false,
@@ -45,7 +41,6 @@ export const AssetsAdditionalFields = {
     "New Name": {
       type: "text",
       value: "",
-      defaultValue: () => this.value,
       placeholder: "Input Here",
       options: [],
       required: false,
@@ -55,7 +50,6 @@ export const AssetsAdditionalFields = {
     Alias: {
       type: "text",
       value: "",
-      defaultValue: () => this.value,
       placeholder: "Input Here",
       options: [],
       required: false,
@@ -65,7 +59,6 @@ export const AssetsAdditionalFields = {
     Type: {
       type: "text",
       value: "",
-      defaultValue: () => this.value,
       placeholder: "Input Here",
       options: [],
       required: false,
@@ -75,7 +68,6 @@ export const AssetsAdditionalFields = {
     Function: {
       type: "text",
       value: "",
-      defaultValue: () => this.value,
       placeholder: "Input Here",
       options: [],
       required: false,
@@ -85,7 +77,6 @@ export const AssetsAdditionalFields = {
     Customer: {
       type: "text",
       value: "",
-      defaultValue: () => this.value,
       placeholder: "Input Here",
       options: [],
       required: false,
@@ -97,7 +88,6 @@ export const AssetsAdditionalFields = {
     "Planned Decomm. Date": {
       type: "date",
       value: "2007-06-09",
-      defaultValue: () => this.value,
       options: [],
       required: false,
       aPIMatch: "",
@@ -106,7 +96,6 @@ export const AssetsAdditionalFields = {
     "Is Archived": {
       type: "bool",
       value: false,
-      defaultValue: () => this.value,
       options: [],
       required: false,
       aPIMatch: "",
@@ -117,7 +106,6 @@ export const AssetsAdditionalFields = {
     "New Location": {
       type: "text",
       value: "",
-      defaultValue: () => this.value,
       placeholder: "Input Here",
       options: [],
       required: false,
@@ -127,7 +115,6 @@ export const AssetsAdditionalFields = {
     "Location Reference": {
       type: "text",
       value: "",
-      defaultValue: () => this.value,
       placeholder: "Input Here",
       options: [],
       required: false,
@@ -137,7 +124,6 @@ export const AssetsAdditionalFields = {
     "Planning Date": {
       type: "date",
       value: "2007-06-09",
-      defaultValue: () => this.value,
       options: [],
       required: false,
       aPIMatch: "",
@@ -148,7 +134,6 @@ export const AssetsAdditionalFields = {
     Contact: {
       type: "text",
       value: "",
-      defaultValue: () => this.value,
       placeholder: "Input Here",
       options: [],
       required: false,
@@ -158,7 +143,6 @@ export const AssetsAdditionalFields = {
     "Contact Team": {
       type: "text",
       value: "",
-      defaultValue: () => this.value,
       placeholder: "Input Here",
       options: [],
       required: false,
@@ -168,7 +152,6 @@ export const AssetsAdditionalFields = {
     "Project Number": {
       type: "text",
       value: "",
-      defaultValue: () => this.value,
       placeholder: "Input Here",
       options: [],
       required: false,
@@ -178,7 +161,6 @@ export const AssetsAdditionalFields = {
     "PO Number": {
       type: "text",
       value: "",
-      defaultValue: () => this.value,
       placeholder: "Input Here",
       options: [],
       required: false,
@@ -188,7 +170,6 @@ export const AssetsAdditionalFields = {
     "Purchase Price": {
       type: "number",
       value: 0,
-      defaultValue: () => this.value,
       options: [],
       required: false,
       aPIMatch: "",
@@ -197,7 +178,6 @@ export const AssetsAdditionalFields = {
     "Purchase Date": {
       type: "date",
       value: "2007-06-09",
-      defaultValue: () => this.value,
       options: [],
       required: false,
       aPIMatch: "",
@@ -206,7 +186,6 @@ export const AssetsAdditionalFields = {
     "Installation Date": {
       type: "date",
       value: "2007-06-09",
-      defaultValue: () => this.value,
       options: [],
       required: false,
       aPIMatch: "",
@@ -215,7 +194,6 @@ export const AssetsAdditionalFields = {
     "SLA Profile": {
       type: "text",
       value: "",
-      defaultValue: () => this.value,
       placeholder: "Input Here",
       options: [],
       required: false,
@@ -225,7 +203,6 @@ export const AssetsAdditionalFields = {
     "Contract Number": {
       type: "text",
       value: "",
-      defaultValue: () => this.value,
       placeholder: "Input Here",
       options: [],
       required: false,
@@ -235,7 +212,6 @@ export const AssetsAdditionalFields = {
     "Contract Amount": {
       type: "number",
       value: 0,
-      defaultValue: () => this.value,
       options: [],
       required: false,
       aPIMatch: "",
@@ -244,7 +220,6 @@ export const AssetsAdditionalFields = {
     "Contract Start Date": {
       type: "date",
       value: "2007-06-09",
-      defaultValue: () => this.value,
       options: [],
       required: false,
       aPIMatch: "",
@@ -253,7 +228,6 @@ export const AssetsAdditionalFields = {
     "Contract End Date": {
       type: "date",
       value: "2007-06-09",
-      defaultValue: () => this.value,
       options: [],
       required: false,
       aPIMatch: "",
@@ -262,7 +236,6 @@ export const AssetsAdditionalFields = {
     "Created On": {
       type: "date",
       value: "2007-06-09",
-      defaultValue: () => this.value,
       options: [],
       required: false,
       aPIMatch: "",
@@ -271,7 +244,6 @@ export const AssetsAdditionalFields = {
     "Last Updated On": {
       type: "date",
       value: "2007-06-09",
-      defaultValue: () => this.value,
       options: [],
       required: false,
       aPIMatch: "",
@@ -280,7 +252,6 @@ export const AssetsAdditionalFields = {
     "Created By": {
       type: "text",
       value: "",
-      defaultValue: () => this.value,
       placeholder: "Input Here",
       options: [],
       required: false,
@@ -290,7 +261,6 @@ export const AssetsAdditionalFields = {
     "Last Updated By": {
       type: "text",
       value: "",
-      defaultValue: () => this.value,
       placeholder: "Input Here",
       options: [],
       required: false,
@@ -300,7 +270,6 @@ export const AssetsAdditionalFields = {
     Notes: {
       type: "text",
       value: "",
-      defaultValue: () => this.value,
       placeholder: "Input Here",
       options: [],
       required: false,
@@ -312,7 +281,6 @@ export const AssetsAdditionalFields = {
     "Operating System": {
       type: "text",
       value: "",
-      defaultValue: () => this.value,
       placeholder: "Input Here",
       options: [],
       required: false,
@@ -322,7 +290,6 @@ export const AssetsAdditionalFields = {
     Domain: {
       type: "text",
       value: "",
-      defaultValue: () => this.value,
       placeholder: "Input Here",
       options: [],
       required: false,
@@ -332,7 +299,6 @@ export const AssetsAdditionalFields = {
     "CPU Type": {
       type: "text",
       value: "",
-      defaultValue: () => this.value,
       placeholder: "Input Here",
       options: [],
       required: false,
@@ -342,7 +308,6 @@ export const AssetsAdditionalFields = {
     "CPU Quantity": {
       type: "number",
       value: 0,
-      defaultValue: () => this.value,
       options: [],
       required: false,
       aPIMatch: "",
@@ -351,7 +316,6 @@ export const AssetsAdditionalFields = {
     "RAM (GB)": {
       type: "number",
       value: 0,
-      defaultValue: () => this.value,
       options: [],
       required: false,
       aPIMatch: "",
@@ -360,7 +324,6 @@ export const AssetsAdditionalFields = {
     "Disk (GB)": {
       type: "number",
       value: 0,
-      defaultValue: () => this.value,
       options: [],
       required: false,
       aPIMatch: "",
@@ -369,7 +332,6 @@ export const AssetsAdditionalFields = {
     Users: {
       type: "number",
       value: 0,
-      defaultValue: () => this.value,
       options: [],
       required: false,
       aPIMatch: "",
@@ -378,7 +340,6 @@ export const AssetsAdditionalFields = {
     Processes: {
       type: "number",
       value: 0,
-      defaultValue: () => this.value,
       options: [],
       required: false,
       aPIMatch: "",
@@ -387,7 +348,6 @@ export const AssetsAdditionalFields = {
     Services: {
       type: "number",
       value: 0,
-      defaultValue: () => this.value,
       options: [],
       required: false,
       aPIMatch: "",
@@ -396,7 +356,6 @@ export const AssetsAdditionalFields = {
     "VM Manager": {
       type: "text",
       value: "",
-      defaultValue: () => this.value,
       placeholder: "Input Here",
       options: [],
       required: false,
@@ -406,7 +365,6 @@ export const AssetsAdditionalFields = {
     "VM Cluster": {
       type: "text",
       value: "",
-      defaultValue: () => this.value,
       placeholder: "Input Here",
       options: [],
       required: false,
@@ -416,7 +374,6 @@ export const AssetsAdditionalFields = {
     "is VM Host": {
       type: "bool",
       value: false,
-      defaultValue: () => this.value,
       options: [],
       required: false,
       aPIMatch: "",
@@ -424,3 +381,5 @@ export const AssetsAdditionalFields = {
     },
   },
 };
+
+export default AssetsAdditionalFields;
