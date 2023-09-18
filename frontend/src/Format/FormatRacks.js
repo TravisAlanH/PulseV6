@@ -2,9 +2,9 @@ function MinimalRacks(rackData) {
   let temp = [];
   rackData.forEach((item, index) => {
     temp.push({
-      Make: item["Make *"],
-      Model: item["Model Name *"],
-      RackUnits: item["Rack Units *"],
+      Make: item["Make"],
+      Model: item["Model"],
+      RackUnits: item["RUHeight"],
       ParentIndex: index,
     });
   });
@@ -14,8 +14,8 @@ function MinimalRacks(rackData) {
 function getUniqueMakes(rackData) {
   let makeSet = new Set();
   rackData.forEach((item) => {
-    if (item["Make *"]) {
-      makeSet.add(item["Make *"]);
+    if (item["Make"]) {
+      makeSet.add(item["Make"]);
     }
   });
   return Array.from(makeSet);

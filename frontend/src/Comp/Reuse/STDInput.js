@@ -26,6 +26,7 @@ export default function STDInput({ keyName, Step }) {
     case (typeOf = "select"):
       STDInput = (
         <select
+          className="Select"
           onChange={(e) => {
             payload.value = e.target.value;
             dispatch(Actions.changeData(payload));

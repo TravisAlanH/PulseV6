@@ -9,23 +9,23 @@ import AuditLayout from "./Comp/Aduit/AuditLayout";
 
 export default function Layout() {
   const LoggedIn = useSelector((state) => state.data.LoggedIn);
-  const [rackData, setRackData] = React.useState([]);
+  const [AllData, setAllData] = React.useState([]);
   const [smallRackData, setSmallRackData] = React.useState([]);
 
   React.useEffect(() => {
-    setSmallRackData(FormatRacks.getUniqueMakes(rackData));
-  }, [rackData]);
+    setSmallRackData(FormatRacks.getUniqueMakes(AllData));
+  }, [AllData]);
 
   return (
     <Router>
       <NavBase />
       <Routes>
         <Route path="/" element={<h1>{JSON.stringify(smallRackData)}</h1>} />
-        <Route path="/login" element={<Login setRackData={setRackData} />} />
-        <Route path="/about" element={LoggedIn ? <h1>About</h1> : <Login setRackData={setRackData} />} />
+        <Route path="/login" element={<Login setAllData={setAllData} />} />
+        <Route path="/about" element={LoggedIn ? <h1>About</h1> : <Login setAllData={setAllData} />} />
         <Route
           path="/audit"
-          element={LoggedIn ? <AuditLayout rackData={rackData} /> : <Login setRackData={setRackData} />}
+          element={LoggedIn ? <AuditLayout AllData={AllData} /> : <Login setAllData={setAllData} />}
         />
       </Routes>
     </Router>

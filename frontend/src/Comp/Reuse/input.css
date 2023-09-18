@@ -50,3 +50,10 @@ select {
   line-height: inherit;
   font-size: inherit;
 }
+
+.Select {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+}

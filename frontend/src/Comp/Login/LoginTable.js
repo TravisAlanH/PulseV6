@@ -6,7 +6,7 @@ import "../../Styles/Login.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-export default function LoginTable({ setRackData }) {
+export default function LoginTable({ setAllData }) {
   const dispatch = useDispatch();
   let navigate = useNavigate();
 
@@ -14,6 +14,8 @@ export default function LoginTable({ setRackData }) {
   const basePass = process.env.REACT_APP_PASS;
   const baseURL = process.env.REACT_APP_BASE_URL;
   const rackURL = process.env.REACT_APP_RACK_URL;
+
+  const FullData = "data.json";
 
   let payload = {
     set: 1,
@@ -52,8 +54,12 @@ export default function LoginTable({ setRackData }) {
                   value: true,
                 };
                 dispatch(actions.loginLogout(payload));
-                axios.get(baseURL + rackURL).then((res) => {
-                  setRackData(res.data);
+                // axios.get(baseURL + rackURL).then((res) => {
+                //   setRackData(res.data);
+                // });
+                axios.get(baseURL + FullData).then((res) => {
+                  // console.log(res);
+                  setAllData(res.data["rows"]);
                 });
                 navigate("/");
               }

@@ -1,10 +1,10 @@
 import React from "react";
 import LoginTable from "./LoginTable";
 
-export default function Login({ setRackData }) {
+export default function Login({ setAllData }) {
   return (
     <div className="LoginBackground w-screen flex flex-row justify-center items-center">
-      <LoginTable setRackData={setRackData} />
+      <LoginTable setAllData={setAllData} />
     </div>
   );
 }

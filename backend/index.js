@@ -1,4 +1,6 @@
 const { Client } = require("pg");
+const fs = require("fs");
+// const clipboard = require("clipboard");
 
 const config = {
   user: "admin",
@@ -8,7 +10,11 @@ const config = {
   port: 5432, // Replace with your PostgreSQL port if it's different
 };
 
-const query = 'SELECT "Make" from odbc."dcModels"';
+let newQ =
+  'SELECT a."Make", a."ModelName" AS "Model", a."RUHeight" , a."CreationDate",a."Height", a."Width",a."Depth",a."Class",b."ObjectType" FROM odbc."dcModels" a join "dcModelObjectTypes" b on b."ModelName" = a."ModelName"';
+
+// const query = 'SELECT "Make" from odbc."dcModels"';
+let query = newQ;
 const client = new Client(config);
 
 async function main() {
@@ -19,18 +25,28 @@ async function main() {
     const result = await client.query(query);
     console.log("Querying database");
 
-    let data = result.rows.splice(0, 1);
-    const jsonResult = JSON.stringify(data);
-    console.log(jsonResult);
+    // let data = result.rows.splice(0, 1);
+    // const jsonResult = JSON.stringify(data);
+    // console.log(jsonResult);
+
+    let jsonResult = JSON.stringify(result);
+    // jsonResults = JSON.parse(jsonResult);
+    fs.writeFileSync("data.json", jsonResult);
 
     client.end();
+
+    // clipboard.writeText(jsonResult).then(() => {
+    //   console.log("Text has been copied to the clipboard.");
+    // });
+
+    // console.log(jsonResult);
   } catch (err) {
     console.error("Error:", err);
     client.end();
   }
 }
 
-const PORT = process.env.PORT || 3100;
+const PORT = process.env.PORT || 4100;
 const express = require("express");
 const app = express();
 

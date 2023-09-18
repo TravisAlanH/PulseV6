@@ -6,7 +6,7 @@ import LocationLayout from "../Location/LocationLayout";
 import RoomLayout from "./Rooms/RoomLayout";
 import SearchLayout from "../Search/SearchLayout";
 
-export default function AuditNav({ setCurrentAudit, rackData }) {
+export default function AuditNav({ setCurrentAudit, AllData }) {
   const buttons = document.getElementsByClassName("AuditLinks");
 
   for (var i = 0; i < buttons.length; i++) {
@@ -42,7 +42,7 @@ export default function AuditNav({ setCurrentAudit, rackData }) {
         id="AuditLinks"
         className={buttonStyle}
         onClick={() => {
-          setCurrentAudit(<RackLayout rackData={rackData} />);
+          setCurrentAudit(<RackLayout AllData={AllData} />);
         }}>
         Cabinet
       </button>
@@ -58,7 +58,9 @@ export default function AuditNav({ setCurrentAudit, rackData }) {
         id="AuditLinks"
         className={buttonStyle}
         onClick={() => {
-          setCurrentAudit(<SearchLayout />);
+          let keyName = "Make *";
+          let Step = "Racks";
+          setCurrentAudit(<SearchLayout Step={Step} AllData={AllData} KeyName={keyName} />);
         }}>
         Search
       </button>
