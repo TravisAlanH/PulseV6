@@ -1,9 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 export default function NavLinks() {
-  const dispatch = useDispatch();
   const LoggedIn = useSelector((state) => state.data.LoggedIn);
 
   window.addEventListener("click", function (e) {
@@ -29,7 +28,7 @@ export default function NavLinks() {
           <div>
             <li className="liNavMenuLink">
               <div className="w-full h-full flex flex-row justify-center items-center">
-                <a href="#" className="py-3 px-6">
+                <a href="/" className="py-3 px-6">
                   Menu
                 </a>
               </div>

@@ -29,7 +29,7 @@ export default function SetCurrentSelection({ Step }) {
     if (Selection) {
       Selection.selectedIndex = Current;
     }
-  }, [Current]);
+  }, [Current, Step]);
 
   return (
     <div>

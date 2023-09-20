@@ -8,10 +8,39 @@ const Slice = createSlice({
   initialState: initState,
   reducers: {
     changeData: (state, action) => {
+      console.log(action.payload);
       state[action.payload.Step][action.payload.Current][action.payload.Key].value = action.payload.value;
     },
     addToStep: (state, action) => {
       state[action.payload.Step] = [...state[action.payload.Step], Template[action.payload.Step]];
+    },
+    addToRacks: (state, action) => {
+      console.log(action.payload);
+      let updatedRack = {
+        ...Template["Assets"],
+        "U Position*": {
+          type: "number",
+          value: action.payload.UPosition,
+          options: [],
+          required: false,
+          aPIMatch: "",
+          NEXT: "HOLD FOR ADDITIONAL INFO",
+        },
+      };
+      updatedRack = {
+        ...updatedRack,
+        "Cabinet*": {
+          type: "text",
+          value: action.payload.Cabinet,
+          placeholder: "Input Here",
+          options: [],
+          required: false,
+          APIMatch: "",
+          NEXT: "HOLD FOR ADDITIONAL INFO",
+        },
+      };
+      console.log(updatedRack);
+      state["Assets"] = [...state["Assets"], updatedRack];
     },
     addRemoveCustomFields: (state, action) => {
       if (action.payload.checked) {
@@ -33,6 +62,13 @@ const Slice = createSlice({
   },
 });
 
-export const { addObjectToKeyValueToObject, addRemoveCustomFields, addToStep, updateCurrent, loginLogout, changeData } =
-  Slice.actions;
+export const {
+  addToRacks,
+  addObjectToKeyValueToObject,
+  addRemoveCustomFields,
+  addToStep,
+  updateCurrent,
+  loginLogout,
+  changeData,
+} = Slice.actions;
 export default Slice.reducer;

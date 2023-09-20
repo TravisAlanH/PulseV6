@@ -1,7 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import SetCurrentSelection from "../../Reuse/SetCurrentSelection";
-import AddToStep from "../../Reuse/AddToStep";
 import AssetInputs from "./AssetInputs";
 import RackRack from "../Rack/RackRack";
 

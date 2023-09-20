@@ -7,7 +7,6 @@ import * as FORMAT from "../../Format/FormatRacks";
 import { useSelector } from "react-redux";
 
 export default function SearchLayout({ KeyName, Step, AllData }) {
-  const [disabled, setDisabled] = React.useState(true);
   const current = useSelector((state) => state.data.Current[Step]);
   const state = useSelector((state) => state.data[Step][current]);
   const currentMake = useSelector((state) => state.data[Step][current]["Make *"].value);
@@ -23,13 +22,14 @@ export default function SearchLayout({ KeyName, Step, AllData }) {
       break;
     case (Step = "Assets"):
       StepDataFilter = ["Device", "Network"];
+      break;
     default:
       break;
   }
 
   useEffect(() => {
     setSearchInput(state[KeyName].value);
-  }, [current]);
+  }, [current, KeyName, state]);
 
   if (KeyName === "Make *") {
     SearchData = FORMAT.getStepData(AllData, StepDataFilter);

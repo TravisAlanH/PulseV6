@@ -13,7 +13,7 @@ export default function LoginTable({ setAllData }) {
   const baseLogin = process.env.REACT_APP_LOGIN;
   const basePass = process.env.REACT_APP_PASS;
   const baseURL = process.env.REACT_APP_BASE_URL;
-  const rackURL = process.env.REACT_APP_RACK_URL;
+  // const rackURL = process.env.REACT_APP_RACK_URL;
 
   const FullData = "data.json";
 
@@ -54,11 +54,8 @@ export default function LoginTable({ setAllData }) {
                   value: true,
                 };
                 dispatch(actions.loginLogout(payload));
-                // axios.get(baseURL + rackURL).then((res) => {
-                //   setRackData(res.data);
-                // });
+
                 axios.get(baseURL + FullData).then((res) => {
-                  // console.log(res);
                   setAllData(res.data["rows"]);
                 });
                 navigate("/");
