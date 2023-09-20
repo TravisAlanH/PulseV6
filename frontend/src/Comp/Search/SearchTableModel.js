@@ -18,9 +18,9 @@ export default function SearchTableModel({ SearchData, searchInput, Step, setSea
   return (
     <div>
       {closestMatch.map((item, index) => (
-        <div key={index} className="search-item">
+        <div key={index} className="search-item h-[2.5rem]">
           <button
-            className="text-left px-2 py-3 border-b-2 border-gray-200 bg-gray-400 hover:bg-gray-100 text-black"
+            className="text-left px-2 border-2 border-[#999] bg-gray-100 hover:bg-gray-200 text-black m-0"
             onClick={() => {
               setSearchInput(SearchData[item][APIMatch]);
               payload.value = SearchData[item][APIMatch];
@@ -33,7 +33,7 @@ export default function SearchTableModel({ SearchData, searchInput, Step, setSea
             }}>
             <div className="flex flex-row justify-between">
               <div className="w-[25rem] flex flex-col">
-                <p className="text-xs">Model</p>
+                <p className="text-xs text-[#797979]">Model</p>
                 <p>{SearchData[item].Model}</p>
               </div>
               <div className="w-[10rem] flex flex-col">
@@ -48,7 +48,6 @@ export default function SearchTableModel({ SearchData, searchInput, Step, setSea
           </button>
         </div>
       ))}
-      <button id="SearchTableButton">Close</button>
     </div>
   );
 }

@@ -14,7 +14,9 @@ export default function Layout() {
     <Router>
       <NavBase />
       <Routes>
-        <Route path="/" element={<h1>home</h1>} />
+        <Route path="/" element={<Login setAllData={setAllData} />} />
+        <Route path="/home" element={<p>home</p>} />
+
         <Route path="/login" element={<Login setAllData={setAllData} />} />
         <Route path="/about" element={LoggedIn ? <h1>About</h1> : <Login setAllData={setAllData} />} />
         <Route

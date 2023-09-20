@@ -1,7 +1,7 @@
 .LoginBackground {
   /* background: url("https://10.34.3.86/assets/raritan_assets/sunbird-login-bg-cfcde8aba14a2957fa25808c60c88d68d20c7d694dce2fb1392fd806c0d46459.jpg")
       no-repeat center center fixed; */
-  /* background: url("../Img/DCBackground.jpeg") no-repeat center center fixed; */
+  background: url("../Img/DCBackground.jpeg") no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;

@@ -10,7 +10,7 @@ export default function LocationInputPage() {
   const LocationKeys = Object.keys(LocationState);
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col gap-2">
       {LocationKeys.map((key, index) => (
         <STDInput key={index} keyName={key} Step="Location" />
       ))}

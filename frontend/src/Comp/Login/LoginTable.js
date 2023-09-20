@@ -58,7 +58,7 @@ export default function LoginTable({ setAllData }) {
                 axios.get(baseURL + FullData).then((res) => {
                   setAllData(res.data["rows"]);
                 });
-                navigate("/");
+                navigate("/home");
               }
             }}>
             Login

@@ -46,7 +46,7 @@ export default function AssetInputs({ AllData }) {
   // }
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col gap-2">
       {MapArray.map((key, index) => {
         let input = <STDInput key={index} keyName={key} Step={Step} />;
         if (key.includes("Make") === true || key.includes("Model") === true)

@@ -1,3 +1,7 @@
 .selected {
   background-color: #f00; /* Change this to your preferred color */
 }
+
+.orangeSplit {
+  background: linear-gradient(290deg, #f59439 50%, #ffffff 50%);
+}

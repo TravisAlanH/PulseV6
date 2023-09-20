@@ -48,8 +48,15 @@ export default function SearchLayout({ KeyName, Step, AllData }) {
   return (
     <div>
       <div id="SearchDiv" className="search">
-        <label className="search-label">{KeyName}</label>
-        <SearchInput setSearchInput={setSearchInput} searchInput={searchInput} KeyName={KeyName} Step={Step} />
+        <div className="flex flex-row">
+          <div className="w-[1rem] flex flex-row justify-center items-center text-red-500">
+            {KeyName.includes("*") ? "*" : ""}
+          </div>
+          <label className="search-label text-xs font-bold w-[6rem] p-1 bg-[#F7F5F1]  flex flex-col justify-center">
+            {KeyName.replace("*", "")}
+          </label>
+          <SearchInput setSearchInput={setSearchInput} searchInput={searchInput} KeyName={KeyName} Step={Step} />
+        </div>
         <div id="SearchTable" className="search-content">
           {KeyName.includes("Make") ? (
             <SearchTableMake

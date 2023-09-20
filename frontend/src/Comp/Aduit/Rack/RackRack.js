@@ -16,15 +16,16 @@ export default function RackRack({ Step }) {
     let Show = true;
     Layout.push(
       <div key={i}>
-        <div className="flex flex-row w-[10rem] justify-between">
-          <div>{i}</div>
+        <div className="flex flex-row w-[24rem] justify-start items-center border-2">
+          <div className="border-r-2 w-[2rem] flex flex-row justify-center">{i}</div>
           {Assets.map((object, index) => {
             if (object["U Position *"].value === i && object["Cabinet *"].value === RackState["Name *"].value) {
               Show = false;
+
               return (
                 <div
                   key={index}
-                  className="flex flex-row"
+                  className="flex flex-row pl-2"
                   onClick={() => {
                     let payload = {
                       Step: "Assets",
@@ -32,14 +33,20 @@ export default function RackRack({ Step }) {
                     };
                     dispatch(Action.updateCurrent(payload));
                   }}>
-                  <div className="w-[10rem]">{object["Model *"].value}</div>
-                  <div className="w-[10rem]">{object["Make *"].value}</div>
+                  <div className="flex flex-col w-[7rem] justify-center">
+                    <label className="text-xs">Make</label>
+                    <div className="">{object["Make *"].value}</div>
+                  </div>
+                  <div className="flex flex-col w-[10rem] justify-center">
+                    <label className="text-xs">Model</label>
+                    <div className="w-[10rem]">{object["Model *"].value}</div>
+                  </div>
                 </div>
               );
             } else return null;
           })}
           {Step === "Assets" && Show ? (
-            <div id="ADD">
+            <div id="ADD" className="w-full flex flex-row justify-center">
               <AddToRacks Step={"Assets"} index={i} />
             </div>
           ) : null}

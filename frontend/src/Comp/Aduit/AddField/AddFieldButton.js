@@ -13,7 +13,7 @@ export default function AddFieldButton({ Step }) {
     <div>
       <button
         id="AddFieldButton"
-        className=""
+        className="orangeButton"
         onClick={() => {
           let modal = document.getElementById("AddFieldModal");
           modal.style.display = "block";

@@ -17,15 +17,18 @@ export default function SearchTableMake({ SearchData, searchInput, Step, setSear
   return (
     <div className="bg-white">
       {closestMatch.map((item, index) => (
-        <div key={index} className="search-item">
+        <div key={index} className="search-item h-[2.5rem]">
           <button
-            className="w-[10rem] text-left px-2 py-3 border-b-2 border-gray-200 hover:bg-gray-100"
+            className="text-left px-2 border-2 border-[#999] bg-gray-100 hover:bg-gray-200 text-black m-0"
             onClick={() => {
               payload.value = SearchData[item];
               setSearchInput(SearchData[item]);
               dispatch(Action.changeData(payload));
             }}>
-            {SearchData[item]}
+            <div className="w-[25rem] flex flex-col">
+              <p className="text-xs text-[#797979]">Model</p>
+              <p>{SearchData[item]}</p>
+            </div>
           </button>
         </div>
       ))}

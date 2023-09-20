@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../../../Store/Slices/Slice";
+import "../../../Styles/Inputs.css";
 
 export default function AddToRacks({ Step, index }) {
   const dispatch = useDispatch();
@@ -15,6 +16,7 @@ export default function AddToRacks({ Step, index }) {
 
   return (
     <button
+      className="orangeButton"
       onClick={() => {
         payload = {
           Step: Step,
@@ -41,7 +43,7 @@ export default function AddToRacks({ Step, index }) {
         //   dispatch(actions.changeData(payload));
         // }, 200);
       }}>
-      Add New {Step}
+      Add to UP
     </button>
   );
 }

@@ -12,6 +12,14 @@ export default function STDInput({ keyName, Step }) {
     return null;
   }
 
+  let labelSize = "w-[6rem]";
+  let inputSize = "w-[13rem]";
+
+  if (Step === "Location") {
+    labelSize = "w-[12rem]";
+    inputSize = "w-[20rem]";
+  }
+
   let STDInput;
   let typeOf = state[current][keyName].type;
 
@@ -95,6 +103,7 @@ export default function STDInput({ keyName, Step }) {
   } else if (typeOf === "number") {
     STDInput = (
       <input
+        className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit " + inputSize}
         value={state[current][keyName].value}
         type="number"
         placeholder={state[current][keyName].placeholder}
@@ -108,7 +117,7 @@ export default function STDInput({ keyName, Step }) {
   } else if (typeOf === "select") {
     STDInput = (
       <select
-        className="Select"
+        className={"Select h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit " + inputSize}
         onChange={(e) => {
           payload.value = e.target.value;
           dispatch(Actions.changeData(payload));
@@ -123,6 +132,7 @@ export default function STDInput({ keyName, Step }) {
   } else if (typeOf === "text") {
     STDInput = (
       <input
+        className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit " + inputSize}
         value={state[current][keyName].value}
         type="text"
         placeholder={state[current][keyName].placeholder}
@@ -136,6 +146,7 @@ export default function STDInput({ keyName, Step }) {
   } else if (typeOf === "date") {
     STDInput = (
       <input
+        className={"h-[2rem] w-[13rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit " + inputSize}
         value={state[current][keyName].value}
         type="date"
         placeholder={state[current][keyName].placeholder}
@@ -149,8 +160,13 @@ export default function STDInput({ keyName, Step }) {
   }
 
   return (
-    <div>
-      <label>{keyName}</label>
+    <div className="flex flex-row">
+      <div className="w-[1rem] flex flex-row justify-center items-center text-red-500">
+        {keyName.includes("*") ? "*" : ""}
+      </div>
+      <label className={"text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center " + labelSize}>
+        {Step === "Location" ? keyName.replace("*", "") : keyName.slice(0, 12).replace("*", "")}
+      </label>
       {STDInput}
     </div>
   );

@@ -22,7 +22,7 @@ export default function NavLinks() {
   });
 
   return (
-    <div className="absolute top-0 left-0">
+    <div className="absolute top-0 right-0">
       <ul id="NAVLINKS" className="ulNav overflow-hidden h-[3rem] transition-all">
         {LoggedIn ? (
           <div>
