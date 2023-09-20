@@ -28,9 +28,7 @@ export default function NavLinks() {
           <div>
             <li className="liNavMenuLink">
               <div className="w-full h-full flex flex-row justify-center items-center">
-                <a href="/" className="py-3 px-6">
-                  Menu
-                </a>
+                <button className="py-3 px-6">Menu</button>
               </div>
             </li>
             <li className="liNav">
