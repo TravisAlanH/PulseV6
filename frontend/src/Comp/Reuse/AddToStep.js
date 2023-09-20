@@ -12,6 +12,7 @@ export default function AddToStep({ Step }) {
 
   return (
     <button
+      className="orangeButton"
       onClick={() => {
         dispatch(actions.addToStep(payload));
         payload = {
@@ -20,7 +21,7 @@ export default function AddToStep({ Step }) {
         };
         dispatch(actions.updateCurrent(payload));
       }}>
-      Add New {Step}
+      Add {Step === "Racks" ? "Cabinet" : Step}
     </button>
   );
 }

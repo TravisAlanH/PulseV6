@@ -21,32 +21,8 @@ export default function AssetInputs({ AllData }) {
     MapArray = Keys;
   }
 
-  // {
-  //   State["Make *"].value === "" || State["Model *"].value === "" || State["Name *"].value === ""
-  //     ? (Check = (
-  //         <div className="flex flex-col">
-  //           {CheckArray.map((key, index) => {
-  //             let input = <STDInput key={index} keyName={key} Step={Step} />;
-  //             if (key.includes("Make") === true || key.includes("Model") === true)
-  //               input = <SearchLayout key={index} KeyName={key} Step={Step} AllData={AllData} />;
-  //             return input;
-  //           })}
-  //         </div>
-  //       ))
-  //     : (Check = (
-  //         <div className="flex flex-col">
-  //           {Keys.map((key, index) => {
-  //             let input = <STDInput key={index} keyName={key} Step={Step} />;
-  //             if (key.includes("Make") === true || key.includes("Model") === true)
-  //               input = <SearchLayout key={index} KeyName={key} Step={Step} AllData={AllData} />;
-  //             return input;
-  //           })}
-  //         </div>
-  //       ));
-  // }
-
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 sticky top-[7rem]">
       {MapArray.map((key, index) => {
         let input = <STDInput key={index} keyName={key} Step={Step} />;
         if (key.includes("Make") === true || key.includes("Model") === true)

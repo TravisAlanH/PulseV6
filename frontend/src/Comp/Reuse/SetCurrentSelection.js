@@ -32,8 +32,12 @@ export default function SetCurrentSelection({ Step }) {
   }, [Current, Step]);
 
   return (
-    <div>
+    <div className="flex flex-row">
+      <label className={"text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center w-[8rem]"}>
+        {Step === "Racks" ? "Cabinet" : Step}
+      </label>
       <select
+        className="Select h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-[8rem]"
         id={"Selection" + Step}
         onChange={(e) => {
           let payload = {
