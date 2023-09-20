@@ -51,6 +51,20 @@ export default function STDInput({ keyName, Step }) {
         />
       );
       break;
+    case (typeOf = "number"):
+      STDInput = (
+        <input
+          value={state[current][keyName].value}
+          type="number"
+          placeholder={state[current][keyName].placeholder}
+          required={state[current][keyName].required}
+          onChange={(e) => {
+            payload.value = parseInt(e.target.value);
+            dispatch(Actions.changeData(payload));
+          }}
+        />
+      );
+      break;
     default:
       STDInput = (
         <input

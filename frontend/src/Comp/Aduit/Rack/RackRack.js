@@ -11,6 +11,7 @@ export default function RackRack({ Step }) {
   const dispatch = useDispatch();
 
   let Layout = [];
+  let show = true;
 
   for (let i = RackState.RUHeight.value; i > 0; i--) {
     Layout.push(
@@ -18,32 +19,11 @@ export default function RackRack({ Step }) {
         {Step === "Racks" ? (
           <p>view</p>
         ) : (
-          <div
-            onClick={() => {
-              setTimeout(() => {
-                let payload = {
-                  Step: Step,
-                  Current: currentAsset + 1,
-                  Key: "U Position*",
-                  value: i,
-                };
-                dispatch(Action.changeData(payload));
-                setTimeout(() => {
-                  let payload = {
-                    Step: Step,
-                    Current: currentAsset + 1,
-                    Key: "Cabinet*",
-                    value: RackState["Name *"].value,
-                  };
-                  dispatch(Action.changeData(payload));
-                }, 100);
-              }, 100);
-            }}
-            className="flex flex-row">
+          <div className="flex flex-row">
             <div>{i}</div>
             {Assets.map((object, index) => {
-              console.log(Assets);
               if (object["U Position*"].value === i && object["Cabinet*"].value === RackState["Name *"].value) {
+                show = false;
                 return (
                   <div
                     key={index}
@@ -61,7 +41,28 @@ export default function RackRack({ Step }) {
                 );
               }
             })}
-            <AddToStep Step={"Assets"} />
+            {show ? (
+              <div
+                id="ADD"
+                onClick={() => {
+                  let payload = {
+                    Step: Step,
+                    Current: currentAsset + 1,
+                    Key: "U Position*",
+                    value: i,
+                  };
+                  dispatch(Action.changeData(payload));
+                  payload = {
+                    Step: Step,
+                    Current: currentAsset + 1,
+                    Key: "Cabinet*",
+                    value: RackState["Name *"].value,
+                  };
+                  dispatch(Action.changeData(payload));
+                }}>
+                <AddToStep Step={"Assets"} />
+              </div>
+            ) : null}
           </div>
         )}
       </div>
