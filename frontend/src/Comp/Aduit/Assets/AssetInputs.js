@@ -2,12 +2,14 @@ import React from "react";
 import STDInput from "../../Reuse/STDInput";
 import { useSelector } from "react-redux";
 import SearchLayout from "../../Search/SearchLayout";
+import AddFieldButton from "../AddField/AddFieldButton";
 
 export default function AssetInputs({ AllData }) {
   const Step = "Assets";
 
   const Current = useSelector((state) => state.data.Current[Step]);
   const State = useSelector((state) => state.data[Step][Current]);
+  const StepData = useSelector((state) => state.data[Step]);
   const Keys = Object.keys(State);
 
   const CheckArray = ["Name *", "Make *", "Model *"];
@@ -51,6 +53,10 @@ export default function AssetInputs({ AllData }) {
           input = <SearchLayout key={index} KeyName={key} Step={Step} AllData={AllData} />;
         return input;
       })}
+      {StepData.length > 0 &&
+      (State["Make *"].value !== "" || State["Model *"].value !== "" || State["Name *"].value !== "") ? (
+        <AddFieldButton Step={"Assets"} />
+      ) : null}
     </div>
   );
 }

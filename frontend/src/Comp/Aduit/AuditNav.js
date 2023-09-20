@@ -3,8 +3,8 @@ import "../../Styles/BodyNav.css";
 import RackLayout from "./Rack/RackLayout";
 import AssetsLayout from "./Assets/AssetsLayout";
 import LocationLayout from "../Location/LocationLayout";
-import RoomLayout from "./Rooms/RoomLayout";
-import SearchLayout from "../Search/SearchLayout";
+
+import ExportPage from "../Export/ExportPage";
 
 export default function AuditNav({ setCurrentAudit, AllData }) {
   const buttons = document.getElementsByClassName("AuditLinks");
@@ -30,14 +30,14 @@ export default function AuditNav({ setCurrentAudit, AllData }) {
         }}>
         Location
       </button>
-      <button
+      {/* <button
         id="AuditLinks"
         className={buttonStyle}
         onClick={() => {
           setCurrentAudit(<RoomLayout />);
         }}>
         Room
-      </button>
+      </button> */}
       <button
         id="AuditLinks"
         className={buttonStyle}
@@ -58,11 +58,9 @@ export default function AuditNav({ setCurrentAudit, AllData }) {
         id="AuditLinks"
         className={buttonStyle}
         onClick={() => {
-          let keyName = "Make *";
-          let Step = "Racks";
-          setCurrentAudit(<SearchLayout Step={Step} AllData={AllData} KeyName={keyName} />);
+          setCurrentAudit(<ExportPage />);
         }}>
-        Search
+        Export
       </button>
     </div>
   );

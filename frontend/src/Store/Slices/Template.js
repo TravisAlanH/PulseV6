@@ -6,9 +6,9 @@ import countries from "./TemplateHelpers/Counties";
 let Template = {
   Location: {
     ///////////////
-    "# Operation*": "ADD",
-    "Object*": "LOCATION",
-    "dcTrack Location Code*": {
+    "# Operation *": { value: "ADD" },
+    "Object *": { value: "LOCATION" },
+    "dcTrack Location Code *": {
       type: "text",
       value: "",
       placeholder: "Input Here",
@@ -17,17 +17,7 @@ let Template = {
       APIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
     },
-    "dcTrack Location Name*": {
-      type: "text",
-      value: "",
-
-      placeholder: "Input Here",
-      options: [],
-      required: false,
-      APIMatch: "",
-      NEXT: "HOLD FOR ADDITIONAL INFO",
-    },
-    "dcTrack Location Hierarchy*": {
+    "dcTrack Location Name *": {
       type: "text",
       value: "",
 
@@ -37,17 +27,26 @@ let Template = {
       APIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
     },
-    "dcTrack Location Parent*": {
-      type: "text",
+    "dcTrack Location Hierarchy *": {
+      type: "select",
       value: "",
 
+      placeholder: "Input Here",
+      options: ["Data Center", "Floor", "Room"],
+      required: false,
+      APIMatch: "",
+      NEXT: "HOLD FOR ADDITIONAL INFO",
+    },
+    "dcTrack Location Parent": {
+      type: "text",
+      value: "",
       placeholder: "Input Here",
       options: [],
       required: false,
       APIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
     },
-    "Data Center Area*": {
+    "Data Center Area *": {
       type: "number",
       value: 0,
 
@@ -56,7 +55,7 @@ let Template = {
       aPIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
     },
-    "Country*": {
+    "Country *": {
       type: "select",
       value: "",
 
@@ -65,13 +64,13 @@ let Template = {
       aPIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
     },
-    "Status*": "PLANNED",
+    "Status *": { value: "PLANNED" },
   },
   //////////////////
   Rooms: {
-    "# Operation*": "ADD",
-    "Object*": "SUBLOCATION",
-    "Sub Location Type*": {
+    "# Operation *": { value: "ADD" },
+    "Object *": { value: "SUBLOCATION" },
+    "Sub Location Type *": {
       type: "select",
       value: "",
       placeholder: "Input Here",
@@ -80,7 +79,7 @@ let Template = {
       APIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
     },
-    "Sub Location Name*": {
+    "Sub Location Name *": {
       type: "text",
       value: "",
       placeholder: "Input Here",
@@ -89,7 +88,7 @@ let Template = {
       APIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
     },
-    "Location*": {
+    "Location *": {
       type: "text",
       value: "",
       placeholder: "Input Here",
@@ -120,8 +119,8 @@ let Template = {
   },
   //////////////////
   Racks: {
-    "# Operation*": "ADD",
-    "Object*": "CABINET",
+    "# Operation *": { value: "ADD" },
+    "Object *": { value: "CABINET" },
     "Name *": {
       type: "text",
       value: "",
@@ -176,7 +175,7 @@ let Template = {
       APIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
     },
-    "Front Faces *": {
+    "Front Faces": {
       type: "select",
       value: "",
       placeholder: "Input Here",
@@ -185,27 +184,27 @@ let Template = {
       APIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
     },
-    "Aisle Label *": {
-      type: "Programmed",
-      value: "",
-      required: false,
-      NEXT: "HOLD FOR ADDITIONAL INFO",
-    },
-    "Row Label **": {
-      type: "Programmed",
-      value: "",
-      required: false,
-      NEXT: "HOLD FOR ADDITIONAL INFO",
-    },
-    "Position in Row **": {
-      type: "number",
-      value: "",
-      placeholder: "Input Here",
-      options: [],
-      required: false,
-      APIMatch: "",
-      NEXT: "HOLD FOR ADDITIONAL INFO",
-    },
+    // "Aisle Label": {
+    //   type: "Programmed",
+    //   value: "",
+    //   required: false,
+    //   NEXT: "HOLD FOR ADDITIONAL INFO",
+    // },
+    // "Row Label **": {
+    //   type: "Programmed",
+    //   value: "",
+    //   required: false,
+    //   NEXT: "HOLD FOR ADDITIONAL INFO",
+    // },
+    // "Position in Row **": {
+    //   type: "number",
+    //   value: "",
+    //   placeholder: "Input Here",
+    //   options: [],
+    //   required: false,
+    //   APIMatch: "",
+    //   NEXT: "HOLD FOR ADDITIONAL INFO",
+    // },
     "Power Capacity (kW)": {
       type: "number",
       value: "",
@@ -224,12 +223,12 @@ let Template = {
       APIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
     },
-    "Status*": "PLANNED",
+    "Status *": { value: "PLANNED" },
   },
   //////////////////
   Assets: {
-    "# Operation*": "ADD",
-    "Object*": "DEVICE-RACKABLE",
+    "# Operation *": { value: "ADD" },
+    "Object *": "DEVICE-RACKABLE",
     "Name *": {
       type: "text",
       value: "",
@@ -258,7 +257,7 @@ let Template = {
       NEXT: "HOLD FOR ADDITIONAL INFO",
     },
 
-    "Location*": {
+    "Location *": {
       type: "text",
       value: "",
 
@@ -268,7 +267,7 @@ let Template = {
       APIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
     },
-    "Cabinet*": {
+    "Cabinet *": {
       type: "text",
       value: "",
 
@@ -278,7 +277,7 @@ let Template = {
       APIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
     },
-    "U Position*": {
+    "U Position *": {
       type: "number",
       value: 0,
       options: [],
@@ -286,7 +285,7 @@ let Template = {
       aPIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
     },
-    "Rails Used*": {
+    "Rails Used *": {
       type: "number",
       value: "",
       options: [],
@@ -294,22 +293,21 @@ let Template = {
       aPIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
     },
-    "Orientation*": {
+    "Orientation *": {
       type: "select",
       value: "",
-
-      options: [],
+      options: ["Select", "Item Rear Faces Cabinet Front", "Item Front Faces Cabinet Front"],
       required: false,
       aPIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
     },
-    "Status*": "PLANNED",
+    "Status *": { value: "PLANNED" },
   },
 };
 
 const state = {
   Location: [],
-  Rooms: [],
+  // Rooms: [],
   Racks: [],
   Assets: [],
   LoggedIn: false,

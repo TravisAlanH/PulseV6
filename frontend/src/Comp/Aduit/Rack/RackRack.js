@@ -16,10 +16,10 @@ export default function RackRack({ Step }) {
     let Show = true;
     Layout.push(
       <div key={i}>
-        <div className="flex flex-row">
+        <div className="flex flex-row w-[10rem] justify-between">
           <div>{i}</div>
           {Assets.map((object, index) => {
-            if (object["U Position*"].value === i && object["Cabinet*"].value === RackState["Name *"].value) {
+            if (object["U Position *"].value === i && object["Cabinet *"].value === RackState["Name *"].value) {
               Show = false;
               return (
                 <div

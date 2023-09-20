@@ -26,7 +26,7 @@ export default function SearchTableModel({ SearchData, searchInput, Step, setSea
               payload.value = SearchData[item][APIMatch];
               dispatch(Action.changeData(payload));
               setTimeout(() => {
-                payload.Key = Step === "Racks" ? "RUHeight" : "Rails Used*";
+                payload.Key = Step === "Racks" ? "RUHeight" : "Rails Used *";
                 payload.value = SearchData[item].RackUnits;
                 dispatch(Action.changeData(payload));
               }, 100);

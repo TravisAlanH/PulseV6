@@ -18,7 +18,7 @@ const Slice = createSlice({
       console.log(action.payload);
       let updatedRack = {
         ...Template["Assets"],
-        "U Position*": {
+        "U Position *": {
           type: "number",
           value: action.payload.UPosition,
           options: [],
@@ -29,7 +29,7 @@ const Slice = createSlice({
       };
       updatedRack = {
         ...updatedRack,
-        "Cabinet*": {
+        "Cabinet *": {
           type: "text",
           value: action.payload.Cabinet,
           placeholder: "Input Here",

@@ -8,7 +8,7 @@ export default function STDInput({ keyName, Step }) {
   const current = useSelector((state) => state.data.Current[Step]);
   const dispatch = useDispatch();
 
-  if (keyName === "Status*" || keyName === "# Operation*" || keyName === "Object*") {
+  if (keyName === "Status *" || keyName === "# Operation *" || keyName === "Object *") {
     return null;
   }
 
@@ -125,6 +125,19 @@ export default function STDInput({ keyName, Step }) {
       <input
         value={state[current][keyName].value}
         type="text"
+        placeholder={state[current][keyName].placeholder}
+        // required={state[current][keyName].required}
+        onChange={(e) => {
+          payload.value = e.target.value;
+          dispatch(Actions.changeData(payload));
+        }}
+      />
+    );
+  } else if (typeOf === "date") {
+    STDInput = (
+      <input
+        value={state[current][keyName].value}
+        type="date"
         placeholder={state[current][keyName].placeholder}
         // required={state[current][keyName].required}
         onChange={(e) => {

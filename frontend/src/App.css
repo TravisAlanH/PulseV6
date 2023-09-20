@@ -25,3 +25,41 @@
   background-color: #555;
   color: white;
 }
+
+tr {
+  font-size: 0.8rem;
+  width: fit-content;
+  padding-left: 0.3rem;
+  padding-right: 0.3rem;
+}
+
+th,
+td {
+  border: 1px solid black;
+  height: 1.5rem;
+  font-size: 0.8rem;
+  padding-left: 0.3rem;
+  padding-right: 0.3rem;
+}
+
+@media (max-width: 767px) {
+  table {
+    border-collapse: collapse;
+    font-size: 0.8rem;
+  }
+  tr {
+    display: block;
+    float: left;
+    font-size: 0.8rem;
+    width: fit-content;
+  }
+  th,
+  td {
+    display: block;
+    border: 1px solid black;
+    height: 1.5rem;
+    font-size: 0.8rem;
+    padding-left: 0.3rem;
+    padding-right: 0.3rem;
+  }
+}
