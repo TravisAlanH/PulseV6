@@ -38,7 +38,7 @@ export default function SetCurrentSelection({ Step }) {
         onChange={(e) => {
           let payload = {
             Step: Step,
-            value: e.target.value,
+            value: parseInt(e.target.value),
           };
           dispatch(actions.updateCurrent(payload));
         }}>

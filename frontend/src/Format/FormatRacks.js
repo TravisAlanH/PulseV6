@@ -5,6 +5,7 @@ function MinimalRacks(rackData) {
       Make: item["Make"],
       Model: item["Model"],
       RackUnits: item["RUHeight"],
+      Class: item["Class"],
       ParentIndex: index,
     });
   });
@@ -21,4 +22,19 @@ function getUniqueMakes(rackData) {
   return Array.from(makeSet);
 }
 
-export { MinimalRacks, getUniqueMakes };
+function filterObjectsByValue(objects, inputValue, APIMatch) {
+  const filteredObjects = objects.filter((object) => object[APIMatch] === inputValue);
+  return filteredObjects;
+}
+
+function getStepData(arrayOfObjects, filters) {
+  const filteredObjects = arrayOfObjects.filter((obj) => filters.includes(obj.Class));
+
+  return filteredObjects;
+  // Use the filter method to find objects with "Class" equal to the filter value
+  // const filteredObjects = arrayOfObjects.filter((obj) => obj["Class"] === filter);
+
+  // return filteredObjects;
+}
+
+export { MinimalRacks, getUniqueMakes, filterObjectsByValue, getStepData };

@@ -13,8 +13,27 @@ function findClosestMatches(array, input) {
   // Get the top 10 matches
   const closestMatches = sortedArray.slice(0, 10);
 
-  // Map the indexes back to the original array
-  return closestMatches.map((match) => array[match.index]);
+  // Return the indices of the closest matches
+  return closestMatches.map((match) => match.index);
+}
+
+function findClosestMatchesInArrayObject(array, input, key) {
+  // Remove special characters and convert to lowercase
+  const normalizedInput = input.replace(/[^\w\s]/g, "").toLowerCase();
+
+  // Sort the array based on the number of matching letters in the "Model" key
+  const sortedArray = array
+    .map((item, index) => ({
+      index,
+      matchingLetters: countMatchingLetters(normalizedInput, item[key].replace(/[^\w\s]/g, "").toLowerCase()),
+    }))
+    .sort((a, b) => b.matchingLetters - a.matchingLetters);
+
+  // Get the top 10 matches
+  const closestMatches = sortedArray.slice(0, 10);
+
+  // Return the indices of the closest matches
+  return closestMatches.map((match) => match.index);
 }
 
 // Function to count the number of matching letters between two strings
@@ -31,4 +50,4 @@ function countMatchingLetters(str1, str2) {
   return count;
 }
 
-export { findClosestMatches };
+export { findClosestMatches, findClosestMatchesInArrayObject };

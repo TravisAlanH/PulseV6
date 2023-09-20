@@ -11,7 +11,6 @@ let Template = {
     "dcTrack Location Code*": {
       type: "text",
       value: "",
-
       placeholder: "Input Here",
       options: [],
       required: false,
@@ -121,8 +120,8 @@ let Template = {
   },
   //////////////////
   Racks: {
-    "Operation *": "ADD",
-    "Object *": "CABINET",
+    "# Operation*": "ADD",
+    "Object*": "CABINET",
     "Name *": {
       type: "text",
       value: "",
@@ -138,11 +137,20 @@ let Template = {
       placeholder: "Input Here",
       options: [],
       required: false,
-      APIMatch: "",
+      APIMatch: "Make",
       NEXT: "HOLD FOR ADDITIONAL INFO",
     },
     "Model *": {
       type: "text",
+      value: "",
+      placeholder: "Input Here",
+      options: [],
+      required: false,
+      APIMatch: "Model",
+      NEXT: "HOLD FOR ADDITIONAL INFO",
+    },
+    RUHeight: {
+      type: "number",
       value: "",
       placeholder: "Input Here",
       options: [],
@@ -160,15 +168,6 @@ let Template = {
       NEXT: "HOLD FOR ADDITIONAL INFO",
     },
     "Location *": {
-      type: "text",
-      value: "",
-      placeholder: "Input Here",
-      options: [],
-      required: false,
-      APIMatch: "",
-      NEXT: "HOLD FOR ADDITIONAL INFO",
-    },
-    "Location Name": {
       type: "text",
       value: "",
       placeholder: "Input Here",
@@ -225,13 +224,13 @@ let Template = {
       APIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
     },
-    "Status *": "PLANNED",
+    "Status*": "PLANNED",
   },
   //////////////////
   Assets: {
     "# Operation*": "ADD",
     "Object*": "DEVICE-RACKABLE",
-    "Name*": {
+    "Name *": {
       type: "text",
       value: "",
       placeholder: "Input Here",
@@ -240,24 +239,22 @@ let Template = {
       APIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
     },
-    "Make*": {
+    "Make *": {
       type: "text",
       value: "",
-
       placeholder: "Input Here",
       options: [],
       required: false,
-      APIMatch: "",
+      APIMatch: "Make",
       NEXT: "HOLD FOR ADDITIONAL INFO",
     },
-    "Model*": {
+    "Model *": {
       type: "text",
       value: "",
-
       placeholder: "Input Here",
       options: [],
       required: false,
-      APIMatch: "",
+      APIMatch: "Model",
       NEXT: "HOLD FOR ADDITIONAL INFO",
     },
 
@@ -284,16 +281,14 @@ let Template = {
     "U Position*": {
       type: "number",
       value: 0,
-
       options: [],
       required: false,
       aPIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
     },
     "Rails Used*": {
-      type: "select",
+      type: "number",
       value: "",
-
       options: [],
       required: false,
       aPIMatch: "",

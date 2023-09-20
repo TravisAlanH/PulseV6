@@ -50,7 +50,7 @@ export default function AuditNav({ setCurrentAudit, AllData }) {
         id="AuditLinks"
         className={buttonStyle}
         onClick={() => {
-          setCurrentAudit(<AssetsLayout />);
+          setCurrentAudit(<AssetsLayout AllData={AllData} />);
         }}>
         Assets
       </button>
