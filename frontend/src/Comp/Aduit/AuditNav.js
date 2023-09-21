@@ -9,23 +9,26 @@ import ExportPage from "../Export/ExportPage";
 export default function AuditNav({ setCurrentAudit, AllData }) {
   const buttons = document.getElementsByClassName("AuditLinks");
 
-  for (var i = 0; i < buttons.length; i++) {
-    buttons[i].addEventListener("click", function () {
-      for (var j = 0; j < buttons.length; j++) {
-        buttons[j].classList.remove("selected");
-      }
-      this.classList.add("selected");
-    });
+  function removeSelected() {
+    for (var i = 0; i < buttons.length; i++) {
+      buttons[i].addEventListener("click", function () {
+        for (var j = 0; j < buttons.length; j++) {
+          buttons[j].classList.remove("selected");
+        }
+      });
+    }
   }
 
-  const buttonStyle = "bg-blue-500 text-white font-bold py-3 px-6 AuditLinks";
+  const buttonStyle = "bg-[#F7F5F1] text-[black] font-bold py-2 px-6 AuditLinks flex-grow";
 
   return (
-    <div>
+    <div className="flex flex-row">
       <button
         id="AuditLinks"
         className={buttonStyle}
-        onClick={() => {
+        onClick={(e) => {
+          removeSelected();
+          e.target.classList.add("selected");
           setCurrentAudit(<LocationLayout />);
         }}>
         Location
@@ -41,7 +44,9 @@ export default function AuditNav({ setCurrentAudit, AllData }) {
       <button
         id="AuditLinks"
         className={buttonStyle}
-        onClick={() => {
+        onClick={(e) => {
+          removeSelected();
+          e.target.classList.add("selected");
           setCurrentAudit(<RackLayout AllData={AllData} />);
         }}>
         Cabinet
@@ -49,7 +54,9 @@ export default function AuditNav({ setCurrentAudit, AllData }) {
       <button
         id="AuditLinks"
         className={buttonStyle}
-        onClick={() => {
+        onClick={(e) => {
+          removeSelected();
+          e.target.classList.add("selected");
           setCurrentAudit(<AssetsLayout AllData={AllData} />);
         }}>
         Assets
@@ -57,7 +64,9 @@ export default function AuditNav({ setCurrentAudit, AllData }) {
       <button
         id="AuditLinks"
         className={buttonStyle}
-        onClick={() => {
+        onClick={(e) => {
+          removeSelected();
+          e.target.classList.add("selected");
           setCurrentAudit(<ExportPage />);
         }}>
         Export

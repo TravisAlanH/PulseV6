@@ -17,7 +17,7 @@ export default function LocationLayout() {
         <SetCurrentSelection Step="Location" />
         <AddToStep Step={"Location"} />
       </div>
-      <div className="flex flex-row justify-between lg:justify-center gap-6 px-6">
+      <div className="flex flex-row justify-center gap-6 px-6">
         {LocationData.length > 0 ? <LocationInputPage /> : null}
       </div>
     </div>

@@ -1,5 +1,9 @@
 .selected {
-  background-color: #f00; /* Change this to your preferred color */
+  transform: translateY(-0.2rem);
+  border: 2px solid #ffffff;
+  border-radius: 1rem 1rem 0 0;
+  background-color: #e0e0e0;
+  transform: all; /* Change this to your preferred color */
 }
 
 .orangeSplit {

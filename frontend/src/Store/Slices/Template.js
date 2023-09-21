@@ -93,6 +93,7 @@ let Template = {
       value: "",
       placeholder: "Input Here",
       options: [],
+      disabled: true,
       required: false,
       APIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
@@ -171,6 +172,7 @@ let Template = {
       value: "",
       placeholder: "Input Here",
       options: [],
+      disabled: true,
       required: false,
       APIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
@@ -260,10 +262,10 @@ let Template = {
     "Location *": {
       type: "text",
       value: "",
-
       placeholder: "Input Here",
       options: [],
       required: false,
+      disabled: true,
       APIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
     },
@@ -317,6 +319,12 @@ const state = {
     Racks: 0,
     Assets: 0,
   },
+  // Survey: {
+  //   Location: [],
+  //   Rooms: [],
+  //   Racks: [],
+  //   Assets: [],
+  // },
 };
 
 export default Template;

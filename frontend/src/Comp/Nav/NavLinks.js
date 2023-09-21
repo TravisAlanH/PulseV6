@@ -41,8 +41,8 @@ export default function NavLinks() {
 
             <li className="liNav">
               <div className="w-full h-full flex flex-row justify-center items-center">
-                <Link to="/" className="py-3 px-6">
-                  home
+                <Link to="/survey" className="py-3 px-6">
+                  survey
                 </Link>
               </div>
             </li>

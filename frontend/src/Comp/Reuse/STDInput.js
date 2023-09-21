@@ -135,6 +135,7 @@ export default function STDInput({ keyName, Step }) {
         className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit " + inputSize}
         value={state[current][keyName].value}
         type="text"
+        disabled={state[current][keyName].disabled ? true : false}
         placeholder={state[current][keyName].placeholder}
         // required={state[current][keyName].required}
         onChange={(e) => {

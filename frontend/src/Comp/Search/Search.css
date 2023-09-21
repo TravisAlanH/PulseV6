@@ -5,7 +5,7 @@
 
 .search {
   position: relative;
-  /* display: inline-block; */
+  display: inline-block;
 }
 
 .search-content {

@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import NavBase from "./Comp/Nav/NavBase";
 import Login from "./Comp/Login/Login";
 import AuditLayout from "./Comp/Aduit/AuditLayout";
+import SurveyLayout from "./Comp/Survey/SurveyLayout";
 
 export default function Layout() {
   const LoggedIn = useSelector((state) => state.data.LoggedIn);
@@ -15,7 +16,7 @@ export default function Layout() {
       <NavBase />
       <Routes>
         <Route path="/" element={<Login setAllData={setAllData} />} />
-        <Route path="/home" element={<p>home</p>} />
+        <Route path="/survey" element={LoggedIn ? <SurveyLayout /> : <Login setAllData={setAllData} />} />
 
         <Route path="/login" element={<Login setAllData={setAllData} />} />
         <Route path="/about" element={LoggedIn ? <h1>About</h1> : <Login setAllData={setAllData} />} />
