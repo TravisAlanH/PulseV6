@@ -1,6 +1,7 @@
 import React from "react";
 import "../../Styles/BodyNav.css";
 import RackLayout from "./Rack/RackLayout";
+import PDULayout from "./PDU/PDULayout";
 import AssetsLayout from "./Assets/AssetsLayout";
 import LocationLayout from "../Location/LocationLayout";
 
@@ -50,6 +51,16 @@ export default function AuditNav({ setCurrentAudit, AllData }) {
           setCurrentAudit(<RackLayout AllData={AllData} />);
         }}>
         Cabinet
+      </button>
+      <button
+        id="AuditLinks"
+        className={buttonStyle}
+        onClick={(e) => {
+          removeSelected();
+          e.target.classList.add("selected");
+          setCurrentAudit(<PDULayout AllData={AllData} />);
+        }}>
+        Rack PDU
       </button>
       <button
         id="AuditLinks"

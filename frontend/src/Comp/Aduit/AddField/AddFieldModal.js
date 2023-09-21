@@ -3,10 +3,12 @@ import { useSelector, useDispatch } from "react-redux";
 import * as actions from "../../../Store/Slices/Slice";
 import TempAssets from "./AddFieldTemplatesAssets";
 import TempLocation from "./AddFieldTemplatesLocation";
+import TempPDUs from "./AddFieldTemplatesPDU";
 
 export default function AddFieldModal({ Step }) {
   const Template = {
     Assets: TempAssets,
+    PDUs: TempPDUs,
     Location: TempLocation,
   };
 

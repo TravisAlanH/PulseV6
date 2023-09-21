@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function SearchTableModel({ SearchData, searchInput, Step, setSearchInput, keyName }) {
   const current = useSelector((state) => state.data.Current[Step]);
+  console.log(keyName);
   const APIMatch = useSelector((state) => state.data[Step][current][keyName].APIMatch);
   const dispatch = useDispatch();
   let closestMatch = FIND.findClosestMatchesInArrayObject(SearchData, searchInput, APIMatch);
@@ -25,11 +26,13 @@ export default function SearchTableModel({ SearchData, searchInput, Step, setSea
               setSearchInput(SearchData[item][APIMatch]);
               payload.value = SearchData[item][APIMatch];
               dispatch(Action.changeData(payload));
-              setTimeout(() => {
-                payload.Key = Step === "Racks" ? "RUHeight" : "Rails Used *";
-                payload.value = SearchData[item].RackUnits;
-                dispatch(Action.changeData(payload));
-              }, 100);
+              if (Step === "Racks" || Step === "Assets") {
+                setTimeout(() => {
+                  payload.Key = Step === "Racks" ? "RUHeight" : "Rails Used *";
+                  payload.value = SearchData[item].RackUnits;
+                  dispatch(Action.changeData(payload));
+                }, 100);
+              }
             }}>
             <div className="flex flex-row justify-between">
               <div className="w-[25rem] flex flex-col">

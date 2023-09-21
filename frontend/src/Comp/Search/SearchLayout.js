@@ -20,6 +20,9 @@ export default function SearchLayout({ KeyName, Step, AllData }) {
     case (Step = "Racks"):
       StepDataFilter = ["Cabinet"];
       break;
+    case (Step = "PDUs"):
+      StepDataFilter = ["Rack PDU"];
+      break;
     case (Step = "Assets"):
       StepDataFilter = ["Device", "Network"];
       break;

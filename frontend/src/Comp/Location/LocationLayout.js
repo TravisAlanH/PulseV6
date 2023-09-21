@@ -1,8 +1,8 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import LocationInputPage from "./LocationInputPage";
-import SetCurrentSelection from "../Reuse/SetCurrentSelection";
-import AddToStep from "../Reuse/AddToStep";
+// import SetCurrentSelection from "../Reuse/SetCurrentSelection";
+// import AddToStep from "../Reuse/AddToStep";
 
 export default function LocationLayout() {
   const LocationData = useSelector((state) => state.data.Location);
@@ -14,8 +14,8 @@ export default function LocationLayout() {
         {Step === "Racks" ? "Cabinet" : Step}
       </div>
       <div className="flex flex-row gap-3 w-full justify-center p-2 border-b-2 mb-2">
-        <SetCurrentSelection Step="Location" />
-        <AddToStep Step={"Location"} />
+        {/* <SetCurrentSelection Step="Location" />
+        <AddToStep Step={"Location"} /> */}
       </div>
       <div className="flex flex-row justify-center gap-6 px-6">
         {LocationData.length > 0 ? <LocationInputPage /> : null}

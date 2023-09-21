@@ -228,6 +228,69 @@ let Template = {
     "Status *": { value: "PLANNED" },
   },
   //////////////////
+  PDUs: {
+    "# Operation *": { value: "ADD" },
+    "Object *": { value: "Rack PDU" },
+    "Name *": {
+      type: "text",
+      value: "",
+      placeholder: "Input Here",
+      options: [],
+      required: false,
+      APIMatch: "",
+    },
+    "Make *": {
+      type: "text",
+      value: "",
+      placeholder: "Input Here",
+      options: [],
+      required: false,
+      APIMatch: "Make",
+    },
+    "Model *": {
+      type: "text",
+      value: "",
+      placeholder: "Input Here",
+      options: [],
+      required: false,
+      APIMatch: "Model",
+    },
+    "Location *": {
+      type: "text",
+      value: "",
+      placeholder: "Input Here",
+      options: [],
+      disabled: true,
+      required: false,
+      APIMatch: "",
+    },
+    "Cabinet *": {
+      type: "text",
+      value: "",
+      placeholder: "Input Here",
+      options: [],
+      required: false,
+      APIMatch: "",
+    },
+    "CabinetSide *": {
+      type: "select",
+      value: "",
+      placeholder: "Input Here",
+      options: ["Select", "Left", "Right"],
+      required: false,
+      APIMatch: "",
+    },
+    "U Position *": {
+      type: "number",
+      value: "",
+      placeholder: "Input Here",
+      options: [],
+      required: false,
+      aPIMatch: "",
+    },
+    "Status *": { value: "PLANNED" },
+  },
+  //////////////////
   Assets: {
     "# Operation *": { value: "ADD" },
     "Object *": "DEVICE-RACKABLE",
@@ -308,15 +371,17 @@ let Template = {
 };
 
 const state = {
-  Location: [],
+  Location: [Template.Location],
   // Rooms: [],
   Racks: [],
+  PDUs: [],
   Assets: [],
   LoggedIn: false,
   Current: {
     Location: 0,
     Rooms: 0,
     Racks: 0,
+    PDUs: 0,
     Assets: 0,
   },
   // Survey: {
@@ -330,10 +395,9 @@ const state = {
 export default Template;
 export { state };
 
-// let hold = {
+// let text = {
 //   type: "text",
 //   value: "",
-//
 //   placeholder: "Input Here",
 //   options: [],
 //   required: false,
@@ -341,40 +405,36 @@ export { state };
 //   NEXT: "HOLD FOR ADDITIONAL INFO",
 // };
 
-// let hold2 = {
+// let number = {
 //   type: "number",
 //   value: 0,
-//
 //   options: [],
 //   required: false,
 //   aPIMatch: "",
 //   NEXT: "HOLD FOR ADDITIONAL INFO",
 // };
 
-// let hold3 = {
+// let date = {
 //   type: "date",
 //   value: "2007-06-09",
-//
 //   options: [],
 //   required: false,
 //   aPIMatch: "",
 //   NEXT: "HOLD FOR ADDITIONAL INFO",
 // };
 
-// let hold4 = {
+// let bool = {
 //   type: "bool",
 //   value: false,
-//
 //   options: [],
 //   required: false,
 //   aPIMatch: "",
 //   NEXT: "HOLD FOR ADDITIONAL INFO",
 // };
 
-// let hold5 = {
+// let select = {
 //   type: "select",
 //   value: "",
-//
 //   options: [],
 //   required: false,
 //   aPIMatch: "",

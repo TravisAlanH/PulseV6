@@ -26,12 +26,27 @@ const Slice = createSlice({
 
     addToStep: (state, action) => {
       let updatedRack = Template[action.payload.Step];
-      if (action.payload.Step === "Racks") {
+      if (action.payload.Step === "Racks" || action.payload.Step === "PDUs") {
         updatedRack = {
           ...updatedRack,
           "Location *": {
             type: "text",
             value: state["Location"][0]["dcTrack Location Code *"].value,
+            placeholder: "Input Here",
+            options: [],
+            disabled: true,
+            required: false,
+            APIMatch: "",
+            NEXT: "HOLD FOR ADDITIONAL INFO",
+          },
+        };
+      }
+      if (action.payload.Step === "PDUs") {
+        updatedRack = {
+          ...updatedRack,
+          "Cabinet *": {
+            type: "text",
+            value: state["Racks"][state.Current["Racks"]]["Name *"].value,
             placeholder: "Input Here",
             options: [],
             disabled: true,
