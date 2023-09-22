@@ -1,62 +1,62 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { RiMenuLine } from "react-icons/ri";
+import { IoPersonCircleOutline } from "react-icons/io5";
+import * as Actions from "../../Store/Slices/Slice";
 
 export default function NavLinks() {
   const LoggedIn = useSelector((state) => state.data.LoggedIn);
+  const dispatch = useDispatch();
 
   window.addEventListener("click", function (e) {
     const NavBar = document.getElementById("NAVLINKS");
+    const MenuIcon = document.getElementById("MenuIcon");
     if (NavBar.contains(e.target)) {
-      NavBar.classList.remove("h-[3rem]");
+      NavBar.classList.remove("h-[4rem]");
+      MenuIcon.classList.remove("rotate-0");
+      MenuIcon.classList.add("-rotate-90");
     } else {
-      NavBar.classList.add("h-[3rem]");
-    }
-
-    const NavLinks = document.getElementsByClassName("liNav");
-    for (let i = 0; i < NavLinks.length; i++) {
-      if (NavLinks[i].contains(e.target)) {
-        NavBar.classList.add("h-[3rem]");
-      }
+      NavBar.classList.add("h-[4rem]");
+      MenuIcon.classList.remove("-rotate-90");
+      MenuIcon.classList.add("rotate-0");
     }
   });
 
   return (
-    <div className="absolute top-0 right-0">
-      <ul id="NAVLINKS" className="ulNav overflow-hidden h-[3rem] transition-all">
-        {LoggedIn ? (
-          <div>
-            <li className="liNavMenuLink">
-              <div className="w-full h-full flex flex-row justify-center items-center">
-                <button className="py-3 px-6">Menu</button>
-              </div>
-            </li>
-            <li className="liNav">
-              <div className="w-full h-full flex flex-row justify-center items-center">
-                <Link to="/audit" className="py-3 px-6">
-                  audit
-                </Link>
-              </div>
-            </li>
-
-            <li className="liNav">
-              <div className="w-full h-full flex flex-row justify-center items-center">
-                <Link to="/survey" className="py-3 px-6">
-                  survey
-                </Link>
-              </div>
-            </li>
+    <div id="NAVLINKS" className="absolute top-0 right-0 overflow-hidden h-[4rem] transition-all">
+      {LoggedIn ? (
+        <div>
+          <div className="h-[4rem] flex flex-row justify-center items-center text-white">
+            {/* <button className="py-3 px-6">Menu</button> */}
+            <RiMenuLine className="w-[3rem] h-[2rem] rotate-0 transition-all" id="MenuIcon" />
           </div>
-        ) : (
-          <li className="liNav">
-            <div className="w-full h-full flex flex-row justify-center items-center">
-              <Link to="/login" className="py-3 px-6">
-                Login
-              </Link>
-            </div>
-          </li>
-        )}
-      </ul>
+          <Link
+            to="/audit"
+            className="h-[3rem] w-[5rem] bg-[#e0e0e0] flex flex-row justify-start pl-3 font-bold items-center">
+            Audit
+          </Link>
+          <Link
+            to="/survey"
+            className="h-[3rem] w-[5rem] bg-[#e0e0e0] flex flex-row justify-start pl-3 font-bold items-center">
+            Survey
+          </Link>
+          <div
+            onClick={() => {
+              const payload = {
+                LoggedIn: false,
+              };
+              dispatch(Actions.loginLogout(payload));
+            }}
+            className="h-[3rem] w-[5rem] bg-[#e0e0e0] flex flex-row justify-start pl-3 font-bold items-center">
+            Logout
+          </div>
+        </div>
+      ) : (
+        <Link to="/login" className="h-[4rem] w-[5rem] flex flex-row justify-center items-center text-white">
+          <IoPersonCircleOutline className="w-[3rem] h-[2rem] rotate-0 transition-all" id="MenuIcon" />
+        </Link>
+      )}
     </div>
   );
 }

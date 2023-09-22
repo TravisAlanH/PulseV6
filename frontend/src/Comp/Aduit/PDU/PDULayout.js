@@ -7,6 +7,7 @@ import AddToStep from "../../Reuse/AddToStep";
 export default function PDULayout({ AllData }) {
   let Step = "PDUs";
   const Data = useSelector((state) => state.data[Step]);
+  const RackLength = useSelector((state) => state.data.Racks.length);
 
   return (
     <div className="flex flex-col border-2 m-2">
@@ -15,7 +16,7 @@ export default function PDULayout({ AllData }) {
       </div>
       <div className="flex flex-row gap-3 w-full justify-center p-2 border-b-2 mb-2">
         <SetCurrentSelection Step={"Racks"} />
-        <AddToStep Step={Step} />
+        {RackLength > 0 ? <AddToStep Step={Step} /> : null}
       </div>
       <div></div>
       <div className="flex flex-row justify-between lg:justify-center gap-6 px-6">

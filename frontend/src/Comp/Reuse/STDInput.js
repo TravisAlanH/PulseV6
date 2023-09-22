@@ -15,9 +15,12 @@ export default function STDInput({ keyName, Step }) {
   let labelSize = "w-[6rem]";
   let inputSize = "w-[13rem]";
 
-  if (Step === "Location") {
+  let ShowAll = false;
+
+  if (Step === "Location" || Step.includes("Survey")) {
     labelSize = "w-[12rem]";
     inputSize = "w-[20rem]";
+    ShowAll = true;
   }
 
   let STDInput;
@@ -30,75 +33,19 @@ export default function STDInput({ keyName, Step }) {
     value: undefined,
   };
 
-  // switch (typeOf) {
-  //   case (typeOf = "select"):
-  //     STDInput = (
-  //       <select
-  //         className="Select"
-  //         onChange={(e) => {
-  //           payload.value = e.target.value;
-  //           dispatch(Actions.changeData(payload));
-  //         }}>
-  //         {state[current][keyName].options.map((option, index) => (
-  //           <option value={option} key={index}>
-  //             {option}
-  //           </option>
-  //         ))}
-  //       </select>
-  //     );
-  //     break;
-  //   case (typeOf = "bool"):
-  //     STDInput = (
-  //       <input
-  //         type="checkbox"
-  //         value={state[current][keyName].value}
-  //         onChange={() => {
-  //           payload.value = !state[current][keyName].value;
-  //           dispatch(Actions.changeData(payload));
-  //         }}
-  //       />
-  //     );
-  //     break;
-  //   case (typeOf = "number"):
-  //     STDInput = (
-  //       <input
-  //         value={state[current][keyName].value}
-  //         type="number"
-  //         placeholder={state[current][keyName].placeholder}
-  //         // required={state[current][keyName].required}
-  //         onChange={(e) => {
-  //           payload.value = parseInt(e.target.value);
-  //           dispatch(Actions.changeData(payload));
-  //         }}
-  //       />
-  //     );
-  //     break;
-  //   default:
-  //     STDInput = (
-  //       <input
-  //         value={state[current][keyName].value}
-  //         type="text"
-  //         placeholder={state[current][keyName].placeholder}
-  //         // required={state[current][keyName].required}
-  //         onChange={(e) => {
-  //           payload.value = e.target.value;
-  //           dispatch(Actions.changeData(payload));
-  //         }}
-  //       />
-  //     );
-  //     break;
-  // }
-
   if (typeOf === "bool") {
     STDInput = (
-      <input
-        type="checkbox"
-        value={state[current][keyName].value}
-        onChange={() => {
-          payload.value = !state[current][keyName].value;
-          dispatch(Actions.changeData(payload));
-        }}
-      />
+      <div className="flex flex-col justify-center pl-2">
+        <input
+          type="checkbox"
+          className="h-[1.4rem] w-[1.4rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit"
+          checked={state[current][keyName].value}
+          onChange={() => {
+            payload.value = !state[current][keyName].value;
+            dispatch(Actions.changeData(payload));
+          }}
+        />
+      </div>
     );
   } else if (typeOf === "number") {
     STDInput = (
@@ -115,18 +62,40 @@ export default function STDInput({ keyName, Step }) {
       />
     );
   } else if (typeOf === "select") {
+    const SelectedValue = state[current][keyName].value;
+    let selectedIndex = state[current][keyName].options.indexOf(SelectedValue);
+    if (selectedIndex === -1) {
+      selectedIndex = 0;
+    }
+
     STDInput = (
       <select
+        defaultValue={SelectedValue}
         className={"Select h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit " + inputSize}
         onChange={(e) => {
           payload.value = e.target.value;
           dispatch(Actions.changeData(payload));
         }}>
-        {state[current][keyName].options.map((option, index) => (
-          <option value={option} key={index}>
-            {option}
-          </option>
-        ))}
+        {state[current][keyName].options.map((option, index) => {
+          // if (index === selectedIndex) {
+          //   return (
+          //     <option value={option} key={index} selected>
+          //       {option}
+          //     </option>
+          //   );
+          // } else {
+          //   return (
+          //     <option value={option} key={index}>
+          //       {option}
+          //     </option>
+          //   );
+          // }
+          return (
+            <option value={option} key={index}>
+              {option}
+            </option>
+          );
+        })}
       </select>
     );
   } else if (typeOf === "text") {
@@ -158,6 +127,54 @@ export default function STDInput({ keyName, Step }) {
         }}
       />
     );
+  } else if (typeOf === "GPS") {
+    function showPosition(position) {
+      payload.value = position.coords.latitude + ", " + position.coords.longitude;
+    }
+
+    STDInput = (
+      <button
+        className="orangeButton"
+        onClick={() => {
+          //
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+          } else {
+          }
+          // if ("geolocation" in navigator) {
+          //   navigator.geolocation.getCurrentPosition(
+          //     (position) => {
+          //       const latitude = position.coords.latitude;
+          //       const longitude = position.coords.longitude;
+          //       payload.value = `Latitude: ${latitude}, Longitude: ${longitude}`;
+          //     },
+          //     (error) => {
+          //       payload.value = `Error: ${error.message}`;
+          //     }
+          //   );
+          // } else {
+          //   payload.value = "Not Available";
+          // }
+          //
+          dispatch(Actions.changeData(payload));
+        }}>
+        {state[current][keyName].value}
+      </button>
+    );
+  } else if (typeOf === "textarea") {
+    STDInput = (
+      <textarea
+        className={"px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit "}
+        value={state[current][keyName].value}
+        rows="4"
+        cols="50"
+        placeholder={state[current][keyName].placeholder}
+        // required={state[current][keyName].required}
+        onChange={(e) => {
+          payload.value = e.target.value;
+          dispatch(Actions.changeData(payload));
+        }}></textarea>
+    );
   }
 
   return (
@@ -166,7 +183,7 @@ export default function STDInput({ keyName, Step }) {
         {keyName.includes("*") ? "*" : ""}
       </div>
       <label className={"text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center " + labelSize}>
-        {Step === "Location" ? keyName.replace("*", "") : keyName.slice(0, 12).replace("*", "")}
+        {ShowAll ? keyName.replace("*", "") : keyName.slice(0, 12).replace("*", "")}
       </label>
       {STDInput}
     </div>

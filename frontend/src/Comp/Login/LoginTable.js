@@ -38,7 +38,7 @@ export default function LoginTable({ setAllData }) {
           />
         </li>
         <li className="w-[15.31rem] relative table">
-          <input type="text" placeholder="Password" name="pass" id="pass" className="LoginInput font-medium" />
+          <input type="password" placeholder="Password" name="pass" id="pass" className="LoginInput font-medium" />
         </li>
         <li className="w-[15.31rem] relative table">
           <input type="text" placeholder="Domain" name="domain" id="domain" className="LoginInput font-medium" />

@@ -5,7 +5,7 @@ import PDULayout from "./PDU/PDULayout";
 import AssetsLayout from "./Assets/AssetsLayout";
 import LocationLayout from "../Location/LocationLayout";
 
-import ExportPage from "../Export/ExportPage";
+import ExportPageAudit from "../Export/ExportPageAudit";
 
 export default function AuditNav({ setCurrentAudit, AllData }) {
   const buttons = document.getElementsByClassName("AuditLinks");
@@ -78,7 +78,7 @@ export default function AuditNav({ setCurrentAudit, AllData }) {
         onClick={(e) => {
           removeSelected();
           e.target.classList.add("selected");
-          setCurrentAudit(<ExportPage />);
+          setCurrentAudit(<ExportPageAudit />);
         }}>
         Export
       </button>

@@ -1,6 +1,8 @@
 import React from "react";
 import "../../Styles/BodyNav.css";
 import LocationLayout from "../Location/LocationLayout";
+import SurveyRoomLayout from "./SurveyRoom/SurveyRoomLayout";
+import ExportPageSurvey from "../Export/ExportPageSurvey";
 
 export default function SurveyNav({ setCurrentSurvey }) {
   const buttons = document.getElementsByClassName("SurveyLinks");
@@ -28,6 +30,46 @@ export default function SurveyNav({ setCurrentSurvey }) {
           setCurrentSurvey(<LocationLayout />);
         }}>
         Location
+      </button>
+      <button
+        id="SurveyLinks"
+        className={buttonStyle}
+        onClick={(e) => {
+          removeSelected();
+          e.target.classList.add("selected");
+          setCurrentSurvey(<SurveyRoomLayout Step={"SurveySecurity"} />);
+        }}>
+        Security
+      </button>
+      <button
+        id="SurveyLinks"
+        className={buttonStyle}
+        onClick={(e) => {
+          removeSelected();
+          e.target.classList.add("selected");
+          setCurrentSurvey(<SurveyRoomLayout Step={"SurveyRoom"} />);
+        }}>
+        Room
+      </button>
+      <button
+        id="SurveyLinks"
+        className={buttonStyle}
+        onClick={(e) => {
+          removeSelected();
+          e.target.classList.add("selected");
+          setCurrentSurvey(<SurveyRoomLayout Step={"SurveyFire"} />);
+        }}>
+        Fire
+      </button>
+      <button
+        id="AuditLinks"
+        className={buttonStyle}
+        onClick={(e) => {
+          removeSelected();
+          e.target.classList.add("selected");
+          setCurrentSurvey(<ExportPageSurvey />);
+        }}>
+        Export
       </button>
     </div>
   );
