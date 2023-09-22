@@ -2,6 +2,10 @@ import React from "react";
 import "./input.css";
 import { useSelector, useDispatch } from "react-redux";
 import * as Actions from "../../Store/Slices/Slice";
+// import QrScanner from "path/to/qr-scanner.min.js";
+import QrScanner from "qr-scanner";
+
+// import DATA_URL from "./Scan";
 
 export default function STDInput({ keyName, Step }) {
   const state = useSelector((state) => state.data[Step]);
@@ -174,6 +178,67 @@ export default function STDInput({ keyName, Step }) {
           payload.value = e.target.value;
           dispatch(Actions.changeData(payload));
         }}></textarea>
+    );
+  } else if (typeOf === "Scan") {
+    window.onclick = function (event) {
+      let modal = document.getElementById("ScanModal");
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
+    };
+
+    //
+    const videoElem = document.getElementById("video");
+    // To enforce the use of the new api with detailed scan results, call the constructor with an options object, see below.
+    const qrScanner = new QrScanner(videoElem, (result) => console.log("decoded qr code:", result), {
+      /* your options or returnDetailedScanResult: true if you're not specifying any other options */
+    });
+
+    //
+
+    STDInput = (
+      <div className="flex flex-row">
+        <input
+          className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit " + inputSize}
+          value={state[current][keyName].value}
+          type="text"
+          disabled={state[current][keyName].disabled ? true : false}
+          placeholder={state[current][keyName].placeholder}
+          // required={state[current][keyName].required}
+          onChange={(e) => {
+            payload.value = e.target.value;
+            dispatch(Actions.changeData(payload));
+          }}
+        />
+        <button
+          className="orangeButton w-[4rem]"
+          onClick={() => {
+            qrScanner.start();
+
+            let modal = document.getElementById("ScanModal");
+            modal.style.display = "block";
+          }}>
+          Scan
+        </button>
+        <div className="modal" id="ScanModal">
+          <div className="modal-content">
+            <span
+              className="close"
+              onClick={() => {
+                qrScanner.stop();
+                let modal = document.getElementById("ScanModal");
+                modal.style.display = "none";
+              }}>
+              &times;
+            </span>
+
+            {/*  */}
+            <video id="video"></video>
+            {/*  */}
+            <div id="result"></div>
+          </div>
+        </div>
+      </div>
     );
   }
 
