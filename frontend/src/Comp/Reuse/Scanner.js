@@ -19,7 +19,7 @@ export default function Scanner({ Step, keyName }) {
       "reader",
       {
         fps: 10,
-        qrbox: { width: 200, height: 200 },
+        qrbox: { width: 250, height: 250 },
         rememberLastUsedCamera: true,
         // Only support camera scan type.
         supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
