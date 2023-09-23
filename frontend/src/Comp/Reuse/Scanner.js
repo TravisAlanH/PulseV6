@@ -28,7 +28,6 @@ export default function Scanner({ Step, keyName }) {
     );
     Scanner.render(onScanSuccess);
     function onScanSuccess(qrCodeMessage) {
-      Scanner.stop();
       Scanner.clear();
       payload.value = qrCodeMessage;
       dispatch(Actions.changeData(payload));
