@@ -18,8 +18,8 @@ export default function Scanner({ Step, keyName }) {
     const Scanner = new Html5QrcodeScanner("reader", {
       exact: "environment",
       qrbox: {
-        width: "250px",
-        height: "250px",
+        width: 250,
+        height: 250,
       },
       fps: 5,
     });
@@ -53,7 +53,7 @@ export default function Scanner({ Step, keyName }) {
       </button>
       {/* Modal */}
       <div className="modal" id="ScanModal">
-        <div className="modal-content">
+        <div className="modal-content flex flex-col gap-2">
           <span
             className="close"
             onClick={() => {
@@ -64,7 +64,7 @@ export default function Scanner({ Step, keyName }) {
           </span>
 
           {/*  */}
-          <div className="w-[20rem] h-[20rem]" id="reader"></div>
+          <div className="" id="reader"></div>
           {/*  */}
         </div>
       </div>
