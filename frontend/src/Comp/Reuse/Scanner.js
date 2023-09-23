@@ -16,7 +16,6 @@ export default function Scanner({ Step, keyName }) {
       value: undefined,
     };
     const Scanner = new Html5QrcodeScanner("reader", {
-      exact: "environment",
       qrbox: {
         width: 250,
         height: 250,
