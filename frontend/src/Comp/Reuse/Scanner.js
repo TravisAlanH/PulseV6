@@ -1,0 +1,73 @@
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import * as Actions from "../../Store/Slices/Slice";
+
+import { Html5QrcodeScanner } from "html5-qrcode";
+
+export default function Scanner({ Step, keyName }) {
+  const current = useSelector((state) => state.data.Current[Step]);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    let payload = {
+      Step: Step,
+      Current: current,
+      Key: keyName,
+      value: undefined,
+    };
+    const Scanner = new Html5QrcodeScanner("reader", {
+      exact: "environment",
+      qrbox: {
+        width: "250px",
+        height: "250px",
+      },
+      fps: 5,
+    });
+    Scanner.render(onScanSuccess);
+    function onScanSuccess(qrCodeMessage) {
+      Scanner.stop();
+      Scanner.clear();
+      payload.value = qrCodeMessage;
+      dispatch(Actions.changeData(payload));
+      let modal = document.getElementById("ScanModal");
+      modal.style.display = "none";
+    }
+  }, [Step, keyName, current, dispatch]);
+
+  window.onclick = function (event) {
+    let modal = document.getElementById("ScanModal");
+    if (event.target === modal) {
+      modal.style.display = "none";
+    }
+  };
+
+  return (
+    <div>
+      <button
+        className="orangeButton w-[4rem]"
+        onClick={() => {
+          let modal = document.getElementById("ScanModal");
+          modal.style.display = "block";
+        }}>
+        Scan
+      </button>
+      {/* Modal */}
+      <div className="modal" id="ScanModal">
+        <div className="modal-content">
+          <span
+            className="close"
+            onClick={() => {
+              let modal = document.getElementById("ScanModal");
+              modal.style.display = "none";
+            }}>
+            &times;
+          </span>
+
+          {/*  */}
+          <div className="w-[20rem] h-[20rem]" id="reader"></div>
+          {/*  */}
+        </div>
+      </div>
+    </div>
+  );
+}

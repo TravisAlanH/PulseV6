@@ -359,14 +359,14 @@ let Template = {
       aPIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
     },
-    // "Asset ID": {
-    //   type: "Scan",
-    //   value: "",
-    //   options: [],
-    //   required: false,
-    //   aPIMatch: "",
-    //   NEXT: "HOLD FOR ADDITIONAL INFO",
-    // },
+    "Asset ID": {
+      type: "Scan",
+      value: "",
+      options: [],
+      required: false,
+      aPIMatch: "",
+      NEXT: "HOLD FOR ADDITIONAL INFO",
+    },
 
     "Orientation *": {
       type: "select",

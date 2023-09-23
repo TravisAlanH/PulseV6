@@ -2,15 +2,19 @@ import React from "react";
 import "./input.css";
 import { useSelector, useDispatch } from "react-redux";
 import * as Actions from "../../Store/Slices/Slice";
-// import QrScanner from "path/to/qr-scanner.min.js";
-import QrScanner from "qr-scanner";
-
-// import DATA_URL from "./Scan";
+import Scanner from "./Scanner";
 
 export default function STDInput({ keyName, Step }) {
   const state = useSelector((state) => state.data[Step]);
   const current = useSelector((state) => state.data.Current[Step]);
   const dispatch = useDispatch();
+
+  let payload = {
+    Step: Step,
+    Current: current,
+    Key: keyName,
+    value: undefined,
+  };
 
   if (keyName === "Status *" || keyName === "# Operation *" || keyName === "Object *") {
     return null;
@@ -29,13 +33,6 @@ export default function STDInput({ keyName, Step }) {
 
   let STDInput;
   let typeOf = state[current][keyName].type;
-
-  let payload = {
-    Step: Step,
-    Current: current,
-    Key: keyName,
-    value: undefined,
-  };
 
   if (typeOf === "bool") {
     STDInput = (
@@ -145,21 +142,6 @@ export default function STDInput({ keyName, Step }) {
             navigator.geolocation.getCurrentPosition(showPosition);
           } else {
           }
-          // if ("geolocation" in navigator) {
-          //   navigator.geolocation.getCurrentPosition(
-          //     (position) => {
-          //       const latitude = position.coords.latitude;
-          //       const longitude = position.coords.longitude;
-          //       payload.value = `Latitude: ${latitude}, Longitude: ${longitude}`;
-          //     },
-          //     (error) => {
-          //       payload.value = `Error: ${error.message}`;
-          //     }
-          //   );
-          // } else {
-          //   payload.value = "Not Available";
-          // }
-          //
           dispatch(Actions.changeData(payload));
         }}>
         {state[current][keyName].value}
@@ -180,22 +162,6 @@ export default function STDInput({ keyName, Step }) {
         }}></textarea>
     );
   } else if (typeOf === "Scan") {
-    window.onclick = function (event) {
-      let modal = document.getElementById("ScanModal");
-      if (event.target === modal) {
-        modal.style.display = "none";
-      }
-    };
-
-    //
-    const videoElem = document.getElementById("video");
-    // To enforce the use of the new api with detailed scan results, call the constructor with an options object, see below.
-    const qrScanner = new QrScanner(videoElem, (result) => console.log("decoded qr code:", result), {
-      /* your options or returnDetailedScanResult: true if you're not specifying any other options */
-    });
-
-    //
-
     STDInput = (
       <div className="flex flex-row">
         <input
@@ -210,34 +176,7 @@ export default function STDInput({ keyName, Step }) {
             dispatch(Actions.changeData(payload));
           }}
         />
-        <button
-          className="orangeButton w-[4rem]"
-          onClick={() => {
-            qrScanner.start();
-
-            let modal = document.getElementById("ScanModal");
-            modal.style.display = "block";
-          }}>
-          Scan
-        </button>
-        <div className="modal" id="ScanModal">
-          <div className="modal-content">
-            <span
-              className="close"
-              onClick={() => {
-                qrScanner.stop();
-                let modal = document.getElementById("ScanModal");
-                modal.style.display = "none";
-              }}>
-              &times;
-            </span>
-
-            {/*  */}
-            <video id="video"></video>
-            {/*  */}
-            <div id="result"></div>
-          </div>
-        </div>
+        <Scanner keyName={keyName} Step={Step} />
       </div>
     );
   }
