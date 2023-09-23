@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import * as Actions from "../../Store/Slices/Slice";
 
-import { Html5QrcodeScanner } from "html5-qrcode";
+import { Html5QrcodeScanner, Html5QrcodeScanType } from "html5-qrcode";
 
 export default function Scanner({ Step, keyName }) {
   const current = useSelector((state) => state.data.Current[Step]);
@@ -15,13 +15,17 @@ export default function Scanner({ Step, keyName }) {
       Key: keyName,
       value: undefined,
     };
-    const Scanner = new Html5QrcodeScanner("reader", {
-      qrbox: {
-        width: 250,
-        height: 250,
+    const Scanner = new Html5QrcodeScanner(
+      "reader",
+      {
+        fps: 10,
+        qrbox: { width: 200, height: 200 },
+        rememberLastUsedCamera: true,
+        // Only support camera scan type.
+        supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
       },
-      fps: 5,
-    });
+      false
+    );
     Scanner.render(onScanSuccess);
     function onScanSuccess(qrCodeMessage) {
       Scanner.stop();
