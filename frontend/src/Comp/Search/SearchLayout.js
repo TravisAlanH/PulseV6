@@ -12,6 +12,9 @@ export default function SearchLayout({ KeyName, Step, AllData }) {
   const currentMake = useSelector((state) => state.data[Step][current]["Make *"].value);
   const currentMakeAPI = useSelector((state) => state.data[Step][current]["Make *"].APIMatch);
   const [searchInput, setSearchInput] = React.useState(state[KeyName].value);
+  const [showTable, setShowTable] = React.useState(false);
+
+  console.log(showTable);
 
   let SearchData;
   let StepDataFilter = [];
@@ -58,9 +61,16 @@ export default function SearchLayout({ KeyName, Step, AllData }) {
           <label className="search-label text-xs font-bold w-[6rem] p-1 bg-[#F7F5F1]  flex flex-col justify-center">
             {KeyName.replace("*", "")}
           </label>
-          <SearchInput setSearchInput={setSearchInput} searchInput={searchInput} KeyName={KeyName} Step={Step} />
+          <SearchInput
+            setSearchInput={setSearchInput}
+            searchInput={searchInput}
+            KeyName={KeyName}
+            Step={Step}
+            setShowTable={setShowTable}
+          />
         </div>
-        <div id="SearchTable" className="search-content">
+        {/* <div id="SearchTable" className="search-content"> */}
+        <div id="SearchTable" className={showTable ? "block search-content" : "hidden search-content"}>
           {KeyName.includes("Make") ? (
             <SearchTableMake
               keyName={KeyName}

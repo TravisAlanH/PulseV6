@@ -1,4 +1,4 @@
-.searchInput {
+/* .searchInput {
   font-size: 16px;
   cursor: pointer;
 }
@@ -11,10 +11,32 @@
 .search-content {
   display: none;
   position: absolute;
-  /* box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2); */
   z-index: 1;
 }
 
 .search:hover .search-content {
   display: block;
+} */
+
+/*  */
+/*  */
+
+/* .search-content {
+  display: none;
+  position: absolute;
+  z-index: 1;
+}
+
+.searchInput:focus .search-content {
+  display: block;
+} */
+
+.search {
+  position: relative;
+  display: inline-block;
+}
+
+.search-content {
+  position: absolute;
+  z-index: 1;
 }

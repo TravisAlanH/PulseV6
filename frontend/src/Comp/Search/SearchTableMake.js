@@ -21,6 +21,7 @@ export default function SearchTableMake({ SearchData, searchInput, Step, setSear
           <button
             className="text-left px-2 border-2 border-[#999] bg-gray-100 hover:bg-gray-200 text-black m-0"
             onClick={() => {
+              console.log(SearchData[item]);
               payload.value = SearchData[item];
               setSearchInput(SearchData[item]);
               dispatch(Action.changeData(payload));

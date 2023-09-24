@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function SearchTableModel({ SearchData, searchInput, Step, setSearchInput, keyName }) {
   const current = useSelector((state) => state.data.Current[Step]);
-  console.log(keyName);
   const APIMatch = useSelector((state) => state.data[Step][current][keyName].APIMatch);
   const dispatch = useDispatch();
   let closestMatch = FIND.findClosestMatchesInArrayObject(SearchData, searchInput, APIMatch);

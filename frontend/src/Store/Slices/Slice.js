@@ -113,6 +113,9 @@ const Slice = createSlice({
     updateCurrent: (state, action) => {
       state.Current[action.payload.Step] = action.payload.value;
     },
+    replaceCurrent: (state, action) => {
+      state[action.payload.Step][action.payload.current] = action.payload.value;
+    },
     loginLogout: (state, action) => {
       state.LoggedIn = action.payload.value;
     },
@@ -120,6 +123,7 @@ const Slice = createSlice({
 });
 
 export const {
+  replaceCurrent,
   addToRacks,
   addObjectToKeyValueToObject,
   addRemoveCustomFields,
