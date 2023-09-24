@@ -12,6 +12,10 @@ export default function RackRack({ Step }) {
 
   let Layout = [];
 
+  // will need to remake this for PDU / Rack / Assets,
+  // need to check inports for a raritain PDU 30 ru, to see if all import fields will pass import (Orientation)
+  // need to check import for a Matrix C166 PUD, to see if Depth Position ** will pass import
+
   for (let i = RackState.RUHeight.value; i > 0; i--) {
     let Show = true;
     Layout.push(

@@ -3,6 +3,7 @@ import STDInput from "../../Reuse/STDInput";
 import { useSelector } from "react-redux";
 import SearchLayout from "../../Search/SearchLayout";
 import AddFieldButton from "../AddField/AddFieldButton";
+import UseLastData from "../../Reuse/UseLastData";
 
 export default function PDUInputs({ AllData }) {
   const Step = "PDUs";
@@ -29,6 +30,11 @@ export default function PDUInputs({ AllData }) {
           input = <SearchLayout key={index} KeyName={key} Step={Step} AllData={AllData} />;
         return input;
       })}
+      {/*  */}
+      {StepData.length > 0 && StepData.length !== 1 && State["Make *"].value === "" && State["Model *"].value === "" ? (
+        <UseLastData Step={Step} />
+      ) : null}
+      {/*  */}
       {StepData.length > 0 &&
       (State["Make *"].value !== "" || State["Model *"].value !== "" || State["Name *"].value !== "") ? (
         <AddFieldButton Step={"PDUs"} />
