@@ -8,33 +8,34 @@ export default function Scanner({ Step, keyName }) {
   const current = useSelector((state) => state.data.Current[Step]);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    let payload = {
-      Step: Step,
-      Current: current,
-      Key: keyName,
-      value: undefined,
-    };
-    const Scanner = new Html5QrcodeScanner(
-      "reader",
-      {
-        fps: 10,
-        qrbox: { width: 250, height: 250 },
-        rememberLastUsedCamera: true,
-        // Only support camera scan type.
-        supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
-      },
-      false
-    );
-    Scanner.render(onScanSuccess);
-    function onScanSuccess(qrCodeMessage) {
-      Scanner.clear();
-      payload.value = qrCodeMessage;
-      dispatch(Actions.changeData(payload));
-      let modal = document.getElementById("ScanModal");
-      modal.style.display = "none";
-    }
-  }, [Step, keyName, current, dispatch]);
+  // useEffect(() => {
+  //   let payload = {
+  //     Step: Step,
+  //     Current: current,
+  //     Key: keyName,
+  //     value: undefined,
+  //   };
+  //   const Scanner = new Html5QrcodeScanner(
+  //     "reader",
+  //     {
+  //       fps: 10,
+  //       qrbox: { width: 250, height: 250 },
+  //       rememberLastUsedCamera: true,
+  //       // Only support camera scan type.
+  //       supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
+  //     },
+  //     false
+  //   );
+
+  //   Scanner.render(onScanSuccess);
+  //   function onScanSuccess(qrCodeMessage) {
+  //     Scanner.clear();
+  //     payload.value = qrCodeMessage;
+  //     dispatch(Actions.changeData(payload));
+  //     let modal = document.getElementById("ScanModal");
+  //     modal.style.display = "none";
+  //   }
+  // }, [Step, keyName, current, dispatch]);
 
   window.onclick = function (event) {
     let modal = document.getElementById("ScanModal");
@@ -48,6 +49,32 @@ export default function Scanner({ Step, keyName }) {
       <button
         className="orangeButton w-[4rem]"
         onClick={() => {
+          let payload = {
+            Step: Step,
+            Current: current,
+            Key: keyName,
+            value: undefined,
+          };
+          const Scanner = new Html5QrcodeScanner(
+            "reader",
+            {
+              fps: 10,
+              qrbox: { width: 250, height: 250 },
+              rememberLastUsedCamera: true,
+              // Only support camera scan type.
+              supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
+            },
+            false
+          );
+
+          Scanner.render(onScanSuccess);
+          function onScanSuccess(qrCodeMessage) {
+            Scanner.clear();
+            payload.value = qrCodeMessage;
+            dispatch(Actions.changeData(payload));
+            let modal = document.getElementById("ScanModal");
+            modal.style.display = "none";
+          }
           let modal = document.getElementById("ScanModal");
           modal.style.display = "block";
         }}>

@@ -22,12 +22,14 @@ export default function STDInput({ keyName, Step }) {
 
   let labelSize = "w-[6rem]";
   let inputSize = "w-[13rem]";
+  let inputSizeWithButton = "w-[9rem]";
 
   let ShowAll = false;
 
   if (Step === "Location" || Step.includes("Survey")) {
     labelSize = "w-[12rem]";
     inputSize = "w-[20rem]";
+    inputSizeWithButton = "w-[16rem]";
     ShowAll = true;
   }
 
@@ -165,7 +167,7 @@ export default function STDInput({ keyName, Step }) {
     STDInput = (
       <div className="flex flex-row">
         <input
-          className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit " + inputSize}
+          className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit " + inputSizeWithButton}
           value={state[current][keyName].value}
           type="text"
           disabled={state[current][keyName].disabled ? true : false}

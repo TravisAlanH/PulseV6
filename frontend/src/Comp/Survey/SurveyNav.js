@@ -20,7 +20,7 @@ export default function SurveyNav({ setCurrentSurvey }) {
   const buttonStyle = "bg-[#F7F5F1] text-[black] font-bold py-2 px-6 SurveyLinks flex-grow";
 
   return (
-    <div className="flex flex-row">
+    <div className="flex flex-row flex-wrap">
       <button
         id="SurveyLinks"
         className={buttonStyle}

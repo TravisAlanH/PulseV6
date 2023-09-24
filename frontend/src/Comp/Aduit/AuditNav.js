@@ -23,7 +23,7 @@ export default function AuditNav({ setCurrentAudit, AllData }) {
   const buttonStyle = "bg-[#F7F5F1] text-[black] font-bold py-2 px-6 AuditLinks flex-grow";
 
   return (
-    <div className="flex flex-row">
+    <div className="flex flex-row flex-wrap">
       <button
         id="AuditLinks"
         className={buttonStyle}
