@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import SetCurrentSelection from "../../Reuse/SetCurrentSelection";
 import PDUInputs from "./PDUInputs";
 import AddToStep from "../../Reuse/AddToStep";
+import PDURack from "./PDURack";
 
 export default function PDULayout({ AllData }) {
   let Step = "PDUs";
@@ -27,6 +28,7 @@ export default function PDULayout({ AllData }) {
         ) : (
           <div className="w-[10rem]"></div>
         )}
+        <PDURack Step={Step} />
       </div>
     </div>
   );
