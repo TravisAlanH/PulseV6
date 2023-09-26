@@ -13,10 +13,11 @@ export default function PDURack({ Step }) {
 
   let Layout = [];
 
+  console.log(RackState);
   // will need to remake this for PDU / Rack / Assets,
   // need to check inports for a raritain PDU 30 ru, to see if all import fields will pass import (Orientation)
   // need to check import for a Matrix C166 PUD, to see if Depth Position ** will pass import
-
+  if (RackState === undefined) return null;
   for (let i = RackState.RUHeight.value; i > 0; i--) {
     let Show = true;
     Layout.push(
@@ -61,7 +62,7 @@ export default function PDURack({ Step }) {
   }
 
   return (
-    <div className="flex flex-row">
+    <div className="flex flex-row -z-30">
       <div className="w-[3rem] flex flex-col justify-start items-center border-2 sticky h-[30rem] top-[5rem]">
         <div className="text-vertical pt-3 h-[5rem]">R Front</div>
         <div className="flex flex-col justify-center items-center h-full w-[3rem]">

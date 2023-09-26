@@ -23,6 +23,11 @@ const Slice = createSlice({
         });
       }
     },
+    addToNewItem: (state, action) => {
+      console.log(action.payload);
+      state[action.payload.Step] = [...state[action.payload.Step], Template[action.payload.Step]];
+      state["Current"][action.payload.Step] = state[action.payload.Step].length - 1;
+    },
 
     addToStep: (state, action) => {
       let updatedRack = Template[action.payload.Step];
@@ -123,6 +128,7 @@ const Slice = createSlice({
 });
 
 export const {
+  addToNewItem,
   replaceCurrent,
   addToRacks,
   addObjectToKeyValueToObject,

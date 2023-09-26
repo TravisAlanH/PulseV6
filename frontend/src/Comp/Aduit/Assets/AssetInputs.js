@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import SearchLayout from "../../Search/SearchLayout";
 import AddFieldButton from "../AddField/AddFieldButton";
 import UseLastData from "../../Reuse/UseLastData";
+import CreateNewViewButton from "../AddNew/CreateNewViewButton";
 
 export default function AssetInputs({ AllData }) {
   const Step = "Assets";
@@ -35,10 +36,13 @@ export default function AssetInputs({ AllData }) {
         <UseLastData Step={Step} />
       ) : null}
       {/*  */}
-      {StepData.length > 0 &&
-      (State["Make *"].value !== "" || State["Model *"].value !== "" || State["Name *"].value !== "") ? (
-        <AddFieldButton Step={"Assets"} />
-      ) : null}
+      <div className="flex flex-row justify-between">
+        {StepData.length > 0 &&
+        (State["Make *"].value !== "" || State["Model *"].value !== "" || State["Name *"].value !== "") ? (
+          <AddFieldButton Step={"Assets"} />
+        ) : null}
+        <CreateNewViewButton Step={"Assets"} />
+      </div>
     </div>
   );
 }

@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import SearchLayout from "../../Search/SearchLayout";
 import AddFieldButton from "../AddField/AddFieldButton";
 import UseLastData from "../../Reuse/UseLastData";
+import CreateNewViewButton from "../AddNew/CreateNewViewButton";
 
 export default function PDUInputs({ AllData }) {
   const Step = "PDUs";
@@ -35,10 +36,13 @@ export default function PDUInputs({ AllData }) {
         <UseLastData Step={Step} />
       ) : null}
       {/*  */}
-      {StepData.length > 0 &&
-      (State["Make *"].value !== "" || State["Model *"].value !== "" || State["Name *"].value !== "") ? (
-        <AddFieldButton Step={"PDUs"} />
-      ) : null}
+      <div className="flex flex-row justify-between">
+        {StepData.length > 0 &&
+        (State["Make *"].value !== "" || State["Model *"].value !== "" || State["Name *"].value !== "") ? (
+          <AddFieldButton Step={"PDUs"} />
+        ) : null}
+        <CreateNewViewButton Step={"PDUs"} />
+      </div>
     </div>
   );
 }

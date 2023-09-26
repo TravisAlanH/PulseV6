@@ -1,5 +1,8 @@
 import countries from "./TemplateHelpers/Counties";
 import * as Survey from "./TemplateHelpers/SurveyArrays";
+import CreateTemplatesAssets from "../../Comp/Aduit/AddNew/CreateTemplatesAssets";
+import CreateTemplatesRacks from "../../Comp/Aduit/AddNew/CreateNewTemplatesRacks";
+import CreateTemplatesPDU from "../../Comp/Aduit/AddNew/CreateTemplatesPDU";
 
 //* ADD OR REMOVE OPTIONS FROM THE DROP DOWNS WHEN ADDING DATA
 //* ie: ADD ROW => ADD TO OPTION IN THE CABINET DROP DOWN
@@ -603,6 +606,9 @@ let Template = {
       APIMatch: "",
     },
   },
+  NewAssets: CreateTemplatesAssets,
+  NewRacks: CreateTemplatesRacks,
+  NewPDUs: CreateTemplatesPDU,
 };
 
 const state = {
@@ -618,10 +624,16 @@ const state = {
     Racks: 0,
     PDUs: 0,
     Assets: 0,
+    NewRacks: 0,
+    NewPDUs: 0,
+    NewAssets: 0,
     SurveyRoom: 0,
     SurveySecurity: 0,
     SurveyFire: 0,
   },
+  NewRacks: [],
+  NewPDUs: [],
+  NewAssets: [],
   SurveyRoom: [Template.SurveyRoom],
   SurveySecurity: [Template.SurveySecurity],
   SurveyFire: [Template.SurveyFire],

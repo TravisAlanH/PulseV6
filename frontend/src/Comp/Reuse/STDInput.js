@@ -26,7 +26,7 @@ export default function STDInput({ keyName, Step }) {
 
   let ShowAll = false;
 
-  if (Step === "Location" || Step.includes("Survey")) {
+  if (Step === "Location" || Step.includes("Survey") || Step.includes("New")) {
     labelSize = "w-[12rem]";
     inputSize = "w-[20rem]";
     inputSizeWithButton = "w-[16rem]";

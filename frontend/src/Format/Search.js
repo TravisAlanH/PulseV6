@@ -1,5 +1,6 @@
 function findClosestMatches(array, input) {
   // Remove special characters and convert to lowercase
+  console.log(input);
   const normalizedInput = input.replace(/[^\w\s]/g, "").toLowerCase();
 
   // Sort the array based on the number of matching letters
@@ -30,7 +31,8 @@ function findClosestMatchesInArrayObject(array, input, key) {
     .sort((a, b) => b.matchingLetters - a.matchingLetters);
 
   // Get the top 10 matches
-  const closestMatches = sortedArray.slice(0, 10);
+  const closestMatches = sortedArray.slice(0, 30);
+  // const closestMatches = sortedArray;
 
   // Return the indices of the closest matches
   return closestMatches.map((match) => match.index);

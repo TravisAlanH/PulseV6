@@ -2,10 +2,12 @@ import React from "react";
 import * as FIND from "../../Format/Search";
 import * as Action from "../../Store/Slices/Slice";
 import { useDispatch, useSelector } from "react-redux";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
-export default function SearchTableModel({ SearchData, searchInput, Step, setSearchInput, keyName }) {
+export default function SearchTableModel({ SearchData, searchInput, Step, setSearchInput, keyName, setShowTable }) {
   const current = useSelector((state) => state.data.Current[Step]);
   const APIMatch = useSelector((state) => state.data[Step][current][keyName].APIMatch);
+  const newData = useSelector((state) => state.data["New" + Step]);
   const dispatch = useDispatch();
   let closestMatch = FIND.findClosestMatchesInArrayObject(SearchData, searchInput, APIMatch);
 
@@ -15,41 +17,247 @@ export default function SearchTableModel({ SearchData, searchInput, Step, setSea
     Key: keyName,
   };
 
-  return (
-    <div>
-      {closestMatch.map((item, index) => (
-        <div key={index} className="search-item h-[2.5rem]">
-          <button
-            className="text-left px-2 border-2 border-[#999] bg-gray-100 hover:bg-gray-200 text-black m-0"
-            onClick={() => {
-              setSearchInput(SearchData[item][APIMatch]);
-              payload.value = SearchData[item][APIMatch];
-              dispatch(Action.changeData(payload));
-              if (Step === "Racks" || Step === "Assets") {
-                setTimeout(() => {
-                  payload.Key = Step === "Racks" ? "RUHeight" : "Rails Used *";
-                  payload.value = SearchData[item].RackUnits;
-                  dispatch(Action.changeData(payload));
-                }, 100);
-              }
-            }}>
-            <div className="flex flex-row justify-between">
-              <div className="w-[25rem] flex flex-col">
-                <p className="text-xs text-[#797979]">Model</p>
-                <p>{SearchData[item].Model}</p>
-              </div>
-              <div className="w-[10rem] flex flex-col">
-                <p className="text-xs">Make</p>
-                <p>{SearchData[item].Make}</p>
-              </div>
-              <div className="w-[5rem] flex flex-col">
-                <p className="text-xs">RU</p>
-                <p>{SearchData[item].RackUnits}</p>
+  //
+  function sort(ascending, columnClassName, tableId) {
+    var tbody = document.getElementById(tableId).getElementsByTagName("tbody")[0];
+    var rows = tbody.getElementsByTagName("tr");
+    var unsorted = true;
+    while (unsorted) {
+      unsorted = false;
+      for (var r = 0; r < rows.length - 1; r++) {
+        var row = rows[r];
+        var nextRow = rows[r + 1];
+        var value = row.getElementsByClassName(columnClassName)[0].innerHTML;
+        var nextValue = nextRow.getElementsByClassName(columnClassName)[0].innerHTML;
+        value = value.replace(",", ""); // in case a comma is used in float number
+        nextValue = nextValue.replace(",", "");
+        if (!isNaN(value)) {
+          value = parseFloat(value);
+          nextValue = parseFloat(nextValue);
+        }
+        if (ascending ? value > nextValue : value < nextValue) {
+          tbody.insertBefore(nextRow, row);
+          unsorted = true;
+        }
+      }
+    }
+  }
+
+  // console.log(SearchData);
+  // console.log(closestMatch)
+
+  let tableContent = closestMatch.map((item, index) => (
+    <tr
+      key={index}
+      onClick={() => {
+        setSearchInput(SearchData[item][APIMatch]);
+        payload.value = SearchData[item][APIMatch];
+        dispatch(Action.changeData(payload));
+        if (Step === "Racks" || Step === "Assets") {
+          setTimeout(() => {
+            payload.Key = Step === "Racks" ? "RUHeight" : "Rails Used *";
+            payload.value = SearchData[item].RackUnits;
+            dispatch(Action.changeData(payload));
+            setShowTable(false);
+          }, 100);
+        }
+      }}>
+      <td data-label="Model" className="Model">
+        {SearchData[item].Model}
+      </td>
+      <td data-label="Make" className="composer">
+        {SearchData[item].Make}
+      </td>
+      <td data-label="RackUnits" className="RackUnits">
+        {SearchData[item].RackUnits}
+      </td>
+    </tr>
+  ));
+
+  // let newData = [];
+
+  let tableAdd = newData.map((item, index) => (
+    <tr
+      key={index}
+      onClick={() => {
+        setSearchInput(item["Model Name *"].value);
+        payload.value = item["Model Name *"].value;
+        dispatch(Action.changeData(payload));
+        if (Step === "Racks" || Step === "Assets") {
+          setTimeout(() => {
+            payload.Key = Step === "Racks" ? "RUHeight" : "Rails Used *";
+            payload.value = item.RackUnits;
+            dispatch(Action.changeData(payload));
+            setShowTable(false);
+          }, 100);
+        }
+      }}>
+      <td data-label="Model" className="Model">
+        {item["Model Name *"].value}
+      </td>
+      <td data-label="Make" className="composer">
+        {item["Make *"].value}
+      </td>
+      <td data-label="RackUnits" className="RackUnits">
+        {item["Rack Units *"].value}
+      </td>
+    </tr>
+  ));
+
+  let newTableContent = newData.length > 0 ? <tbody>{tableAdd}</tbody> : null;
+  let newTableView =
+    newData.length > 0 ? (
+      <thead className="sticky top-0 bg-white">
+        <tr>
+          <th className="Model bg-white">
+            <div className="flex flex-row items-center justify-between w-[20rem] bg-white h-full">
+              New Model
+              <div className="sort-table-arrows flex flex-row gap-2 items-center justify-end w-[5rem]">
+                <button
+                  className="button orangeButton"
+                  onClick={(e) => {
+                    sort(true, "Model", "content-table3");
+                  }}
+                  title="Sort Model Descending">
+                  <FaChevronUp />
+                </button>
+                <button
+                  className="button orangeButton"
+                  onClick={(e) => {
+                    sort(false, "Model", "content-table3");
+                  }}
+                  title="Sort Model Ascending">
+                  <FaChevronDown />
+                </button>
               </div>
             </div>
-          </button>
-        </div>
-      ))}
+          </th>
+          <th className="composer">New Make</th>
+          <th className="RackUnits bg-white">
+            <div className="flex flex-row items-center justify-between w-[10rem] bg-white h-full">
+              New RackUnits
+              <div className="sort-table-arrows flex flex-row gap-2 items-center justify-end w-[5rem]">
+                <button
+                  className="button orangeButton"
+                  onClick={(e) => {
+                    sort(true, "RackUnits", "content-table3");
+                  }}
+                  title="Sort RackUnits Descending">
+                  <FaChevronUp />
+                </button>
+                <button
+                  className="button orangeButton"
+                  onClick={(e) => {
+                    sort(false, "RackUnits", "content-table3");
+                  }}
+                  title="Sort RackUnits Ascending">
+                  <FaChevronDown />
+                </button>
+              </div>
+            </div>
+          </th>
+        </tr>
+      </thead>
+    ) : null;
+
+  return (
+    <div className="search-item h-[20rem] overflow-scroll border-2 bg-white" id="SearchTable">
+      <table id={"content-table3"} className="content-table3">
+        {/*  */}
+        {newTableView}
+        {newTableContent}
+        {/*  */}
+        <thead className="sticky top-0 bg-white">
+          <tr>
+            <th className="Model bg-white">
+              <div className="flex flex-row items-center justify-between w-[20rem] bg-white h-full">
+                Model
+                <div className="sort-table-arrows flex flex-row gap-2 items-center justify-end w-[5rem]">
+                  <button
+                    className="button orangeButton"
+                    onClick={(e) => {
+                      sort(true, "Model", "content-table3");
+                    }}
+                    title="Sort Model Descending">
+                    <FaChevronUp />
+                  </button>
+                  <button
+                    className="button orangeButton"
+                    onClick={(e) => {
+                      sort(false, "Model", "content-table3");
+                    }}
+                    title="Sort Model Ascending">
+                    <FaChevronDown />
+                  </button>
+                </div>
+              </div>
+            </th>
+            <th className="composer">Make</th>
+            <th className="RackUnits bg-white">
+              <div className="flex flex-row items-center justify-between w-[10rem] bg-white h-full">
+                RackUnits
+                <div className="sort-table-arrows flex flex-row gap-2 items-center justify-end w-[5rem]">
+                  <button
+                    className="button orangeButton"
+                    onClick={(e) => {
+                      sort(true, "RackUnits", "content-table3");
+                    }}
+                    title="Sort RackUnits Descending">
+                    <FaChevronUp />
+                  </button>
+                  <button
+                    className="button orangeButton"
+                    onClick={(e) => {
+                      sort(false, "RackUnits", "content-table3");
+                    }}
+                    title="Sort RackUnits Ascending">
+                    <FaChevronDown />
+                  </button>
+                </div>
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>{tableContent}</tbody>
+      </table>
     </div>
   );
+
+  // return (
+  //   <div>
+  //     {closestMatch.map((item, index) => (
+  //       <div key={index} className="search-item h-[2.5rem]">
+  //         <button
+  //           className="text-left px-2 border-2 border-[#999] bg-gray-100 hover:bg-gray-200 text-black m-0"
+  // onClick={() => {
+  //   setSearchInput(SearchData[item][APIMatch]);
+  //   payload.value = SearchData[item][APIMatch];
+  //   dispatch(Action.changeData(payload));
+  //   if (Step === "Racks" || Step === "Assets") {
+  //     setTimeout(() => {
+  //       payload.Key = Step === "Racks" ? "RUHeight" : "Rails Used *";
+  //       payload.value = SearchData[item].RackUnits;
+  //       dispatch(Action.changeData(payload));
+  //     }, 100);
+  //   }
+  //           }}>
+  //           <div className="flex flex-row justify-between">
+  //             <div className="w-[25rem] flex flex-col">
+  //               <p className="text-xs text-[#797979]">Model</p>
+  //               <p>{SearchData[item].Model}</p>
+  //             </div>
+  //             <div className="w-[10rem] flex flex-col">
+  //               <p className="text-xs">Make</p>
+  //               <p>{SearchData[item].Make}</p>
+  //             </div>
+  //             <div className="w-[5rem] flex flex-col">
+  //               <p className="text-xs">RU</p>
+  //               <p>{SearchData[item].RackUnits}</p>
+  //             </div>
+  //           </div>
+  //         </button>
+  //       </div>
+  //     ))}
+  //   </div>
+  // );
 }

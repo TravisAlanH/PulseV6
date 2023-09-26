@@ -14,8 +14,6 @@ export default function SearchLayout({ KeyName, Step, AllData }) {
   const [searchInput, setSearchInput] = React.useState(state[KeyName].value);
   const [showTable, setShowTable] = React.useState(false);
 
-  console.log(searchInput);
-
   let SearchData;
   let StepDataFilter = [];
 
@@ -51,21 +49,23 @@ export default function SearchLayout({ KeyName, Step, AllData }) {
     }
   }
 
-  useEffect(() => {
-    let table = document.getElementById("SearchDiv" + KeyName);
-    window.addEventListener("click", function (e) {
-      if (table.contains(e.target)) {
-      } else {
-        setShowTable(false);
-      }
-      e.stopPropagation();
-    });
-  }, []);
-
   return (
-    <div id={"SearchDiv" + KeyName}>
-      <div>
-        <div className="search">
+    <div
+      onClick={() => {
+        window.addEventListener("click", function (e) {
+          if (document.getElementById("SearchDiv").contains(e.target)) {
+            setShowTable(true);
+          } else {
+            setShowTable(false);
+          }
+        });
+      }}>
+      <div
+        className="SearchLayout"
+        onClick={() => {
+          console.log("in search div");
+        }}>
+        <div id="SearchDiv" className="search">
           <div className="flex flex-row">
             <div className="w-[1rem] flex flex-row justify-center items-center text-red-500">
               {KeyName.includes("*") ? "*" : ""}
@@ -90,7 +90,6 @@ export default function SearchLayout({ KeyName, Step, AllData }) {
                 searchInput={searchInput}
                 Step={Step}
                 setSearchInput={setSearchInput}
-                setShowTable={setShowTable}
               />
             ) : (
               <SearchTableModel
@@ -99,7 +98,6 @@ export default function SearchLayout({ KeyName, Step, AllData }) {
                 searchInput={searchInput}
                 Step={Step}
                 setSearchInput={setSearchInput}
-                setShowTable={setShowTable}
               />
             )}
           </div>

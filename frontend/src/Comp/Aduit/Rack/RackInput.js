@@ -2,6 +2,7 @@ import React from "react";
 import STDInput from "../../Reuse/STDInput";
 import { useSelector } from "react-redux";
 import SearchLayout from "../../Search/SearchLayout";
+import CreateNewViewButton from "../AddNew/CreateNewViewButton";
 
 export default function RackInput({ AllData }) {
   const Step = "Racks";
@@ -27,6 +28,7 @@ export default function RackInput({ AllData }) {
           input = <SearchLayout key={index} KeyName={key} Step={Step} AllData={AllData} />;
         return input;
       })}
+      <CreateNewViewButton Step={"Racks"} />
     </div>
   );
 }
