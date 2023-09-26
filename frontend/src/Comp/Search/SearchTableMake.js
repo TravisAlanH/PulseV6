@@ -56,7 +56,7 @@ export default function SearchTableModel({ SearchData, searchInput, Step, setSea
       <thead className="sticky top-0 bg-white">
         <tr>
           <th className="Make bg-white">
-            <div className="flex flex-row items-center justify-between w-[20rem] bg-white h-full">Make</div>
+            <div className="flex flex-row items-center justify-between w-[20rem] bg-white h-full">{"Make (ADDED)"}</div>
           </th>
         </tr>
       </thead>

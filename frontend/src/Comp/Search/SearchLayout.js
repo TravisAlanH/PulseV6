@@ -60,7 +60,7 @@ export default function SearchLayout({ KeyName, Step, AllData }) {
       }
       e.stopPropagation();
     });
-  }, []);
+  }, [KeyName]);
 
   return (
     <div id={"SearchDiv" + KeyName}>

@@ -43,9 +43,6 @@ export default function SearchTableModel({ SearchData, searchInput, Step, setSea
     }
   }
 
-  // console.log(SearchData);
-  // console.log(closestMatch)
-
   let tableContent = closestMatch.map((item, index) => (
     <tr
       key={index}
@@ -111,7 +108,7 @@ export default function SearchTableModel({ SearchData, searchInput, Step, setSea
         <tr>
           <th className="Model bg-white">
             <div className="flex flex-row items-center justify-between w-[20rem] bg-white h-full">
-              New Model
+              {"Model (ADDED)"}
               <div className="sort-table-arrows flex flex-row gap-2 items-center justify-end w-[5rem]">
                 <button
                   className="button orangeButton"
@@ -132,10 +129,12 @@ export default function SearchTableModel({ SearchData, searchInput, Step, setSea
               </div>
             </div>
           </th>
-          <th className="composer">New Make</th>
+          <th className="Make">
+            <div className=" w-[8rem]">{"Make (ADDED)"}</div>
+          </th>
           <th className="RackUnits bg-white">
             <div className="flex flex-row items-center justify-between w-[10rem] bg-white h-full">
-              New RackUnits
+              {"RU (ADDED)"}
               <div className="sort-table-arrows flex flex-row gap-2 items-center justify-end w-[5rem]">
                 <button
                   className="button orangeButton"
@@ -222,42 +221,4 @@ export default function SearchTableModel({ SearchData, searchInput, Step, setSea
       </table>
     </div>
   );
-
-  // return (
-  //   <div>
-  //     {closestMatch.map((item, index) => (
-  //       <div key={index} className="search-item h-[2.5rem]">
-  //         <button
-  //           className="text-left px-2 border-2 border-[#999] bg-gray-100 hover:bg-gray-200 text-black m-0"
-  // onClick={() => {
-  //   setSearchInput(SearchData[item][APIMatch]);
-  //   payload.value = SearchData[item][APIMatch];
-  //   dispatch(Action.changeData(payload));
-  //   if (Step === "Racks" || Step === "Assets") {
-  //     setTimeout(() => {
-  //       payload.Key = Step === "Racks" ? "RUHeight" : "Rails Used *";
-  //       payload.value = SearchData[item].RackUnits;
-  //       dispatch(Action.changeData(payload));
-  //     }, 100);
-  //   }
-  //           }}>
-  //           <div className="flex flex-row justify-between">
-  //             <div className="w-[25rem] flex flex-col">
-  //               <p className="text-xs text-[#797979]">Model</p>
-  //               <p>{SearchData[item].Model}</p>
-  //             </div>
-  //             <div className="w-[10rem] flex flex-col">
-  //               <p className="text-xs">Make</p>
-  //               <p>{SearchData[item].Make}</p>
-  //             </div>
-  //             <div className="w-[5rem] flex flex-col">
-  //               <p className="text-xs">RU</p>
-  //               <p>{SearchData[item].RackUnits}</p>
-  //             </div>
-  //           </div>
-  //         </button>
-  //       </div>
-  //     ))}
-  //   </div>
-  // );
 }
