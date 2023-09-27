@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import * as Actions from "../../Store/Slices/Slice";
 
-export default function UseLastData({ Step }) {
+export default function UseLastData({ Step, DepthSide }) {
   const current = useSelector((state) => state.data.Current[Step]);
   const currentState = useSelector((state) => state.data[Step][current]);
   const stepState = useSelector((state) => state.data[Step]);
@@ -16,7 +16,6 @@ export default function UseLastData({ Step }) {
       break;
     }
   }
-  console.log(newData);
 
   return (
     <div>
@@ -24,7 +23,8 @@ export default function UseLastData({ Step }) {
         <label className={"text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center  w-full"}>{"Make"}</label>
         <input
           className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-full"}
-          value={newData.empty ? newData["Make *"].value : ""}
+          // value={newData.empty ? newData["Make *"].value : ""}
+          value={newData["Make *"].value}
           type="text"
           disabled={true}
         />
@@ -33,7 +33,8 @@ export default function UseLastData({ Step }) {
         <label className={"text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center w-full"}>{"Model"}</label>
         <input
           className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-full"}
-          value={newData.empty ? newData["Model *"].value : ""}
+          // value={newData.empty ? newData["Model *"].value : ""}
+          value={newData["Model *"].value}
           type="text"
           disabled={true}
         />
@@ -57,11 +58,32 @@ export default function UseLastData({ Step }) {
               },
             };
           }
+          if (replaceData.hasOwnProperty("Cabinet Side *")) {
+            replaceData = {
+              ...replaceData,
+              "Cabinet Side *": {
+                ...newData["Cabinet Side *"],
+                value: DepthSide.Side,
+              },
+            };
+          }
+          if (replaceData.hasOwnProperty("Depth Position *")) {
+            replaceData = {
+              ...replaceData,
+              "Depth Position *": {
+                ...newData["Depth Position *"],
+                value: DepthSide.Depth,
+              },
+            };
+          }
+
           let payload = {
             Step: Step,
             current: current,
             value: replaceData,
           };
+          console.log("payload", payload);
+
           dispatch(Actions.replaceCurrent(payload));
         }}>
         Use Prior

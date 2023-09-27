@@ -70,6 +70,8 @@ export default function STDInput({ keyName, Step }) {
     if (selectedIndex === -1) {
       selectedIndex = 0;
     }
+    // console.log("selectedIndex", selectedIndex);
+    // console.log("SelectedValue", SelectedValue);
 
     STDInput = (
       <select
@@ -80,24 +82,24 @@ export default function STDInput({ keyName, Step }) {
           dispatch(Actions.changeData(payload));
         }}>
         {state[current][keyName].options.map((option, index) => {
-          // if (index === selectedIndex) {
-          //   return (
-          //     <option value={option} key={index} selected>
-          //       {option}
-          //     </option>
-          //   );
-          // } else {
-          //   return (
-          //     <option value={option} key={index}>
-          //       {option}
-          //     </option>
-          //   );
-          // }
-          return (
-            <option value={option} key={index}>
-              {option}
-            </option>
-          );
+          if (index === selectedIndex) {
+            return (
+              <option value={option} key={index} selected>
+                {option}
+              </option>
+            );
+          } else {
+            return (
+              <option value={option} key={index}>
+                {option}
+              </option>
+            );
+          }
+          // return (
+          //   <option value={option} key={index}>
+          //     {option}
+          //   </option>
+          // );
         })}
       </select>
     );

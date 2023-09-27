@@ -6,7 +6,7 @@ import AddFieldButton from "../AddField/AddFieldButton";
 import UseLastData from "../../Reuse/UseLastData";
 import CreateNewViewButton from "../AddNew/CreateNewViewButton";
 
-export default function PDUInputs({ AllData }) {
+export default function PDUInputs({ AllData, DepthSide }) {
   const Step = "PDUs";
 
   const Current = useSelector((state) => state.data.Current[Step]);
@@ -33,7 +33,7 @@ export default function PDUInputs({ AllData }) {
       })}
       {/*  */}
       {StepData.length > 0 && StepData.length !== 1 && State["Make *"].value === "" && State["Model *"].value === "" ? (
-        <UseLastData Step={Step} />
+        <UseLastData Step={Step} DepthSide={DepthSide} />
       ) : null}
       {/*  */}
       <div className="flex flex-row justify-between">

@@ -3,7 +3,8 @@ import { useSelector } from "react-redux";
 import SetCurrentSelection from "../../Reuse/SetCurrentSelection";
 import AddToStep from "../../Reuse/AddToStep";
 import RackInput from "./RackInput";
-import RackRack from "./RackRack";
+// import RackRack from "./RackRack";
+import RackFull from "./RackFull";
 
 export default function RackLayout({ AllData }) {
   let Step = "Racks";
@@ -21,7 +22,8 @@ export default function RackLayout({ AllData }) {
       {Data.length > 0 ? (
         <div className="flex flex-row justify-between lg:justify-center gap-6 px-6">
           <RackInput AllData={AllData} Step={Step} />
-          <RackRack Step={Step} />
+          {/* <RackRack Step={Step} /> */}
+          <RackFull Step={Step} />
         </div>
       ) : null}
     </div>

@@ -9,6 +9,7 @@ export default function PDULayout({ AllData }) {
   let Step = "PDUs";
   const Data = useSelector((state) => state.data[Step]);
   const RackLength = useSelector((state) => state.data.Racks.length);
+  const [DepthSide, setDepthSide] = React.useState({ Depth: "", Side: "" });
 
   return (
     <div className="flex flex-col border-2 m-2">
@@ -17,18 +18,18 @@ export default function PDULayout({ AllData }) {
       </div>
       <div className="flex flex-row gap-3 w-full justify-center p-2 border-b-2 mb-2">
         <SetCurrentSelection Step={"Racks"} />
-        {RackLength > 0 ? <AddToStep Step={Step} /> : null}
+        {/* {RackLength > 0 ? <AddToStep Step={Step} /> : null} */}
       </div>
       <div></div>
       <div className="flex flex-row justify-between lg:justify-center gap-6 px-6">
         {Data.length > 0 ? (
           <div className="sticky top-16">
-            <PDUInputs AllData={AllData} Step={Step} />
+            <PDUInputs AllData={AllData} Step={Step} DepthSide={DepthSide} />
           </div>
         ) : (
           <div className="w-[10rem]"></div>
         )}
-        <PDURack Step={Step} />
+        <PDURack Step={Step} setDepthSide={setDepthSide} />
       </div>
     </div>
   );

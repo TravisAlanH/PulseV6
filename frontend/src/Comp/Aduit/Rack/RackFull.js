@@ -2,10 +2,10 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import * as Action from "../../../Store/Slices/Slice";
 import "../../../Styles/PDU.css";
-import PDUViewVertical from "./PDUViewVertical";
+import PDUViewVertical from "../PDU/PDUViewVertical";
 // import AddToRacks from "./AddToRacks";
 
-export default function PDURack({ Step, setDepthSide }) {
+export default function RackFull({ Step, setDepthSide }) {
   const current = useSelector((state) => state.data.Current["Racks"]);
   const Assets = useSelector((state) => state.data["Assets"]);
   const PDUs = useSelector((state) => state.data["PDUs"]);
