@@ -105,6 +105,7 @@ export default function STDInput({ keyName, Step }) {
   } else if (typeOf === "text") {
     STDInput = (
       <input
+        id={keyName + Step}
         className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit " + inputSize}
         value={state[current][keyName].value}
         type="text"
@@ -112,6 +113,9 @@ export default function STDInput({ keyName, Step }) {
         placeholder={state[current][keyName].placeholder}
         // required={state[current][keyName].required}
         onChange={(e) => {
+          if (keyName === "Name *") {
+            document.getElementById("NameRequired").style.opacity = "0";
+          }
           payload.value = e.target.value;
           dispatch(Actions.changeData(payload));
         }}

@@ -25,6 +25,9 @@ export default function AssetInputs({ AllData }) {
 
   return (
     <div className="flex flex-col gap-2 sticky top-[7rem]">
+      <div id="NameRequired" className="text-sm text-red-500 FadeError">
+        Name Required
+      </div>
       {MapArray.map((key, index) => {
         let input = <STDInput key={index} keyName={key} Step={Step} />;
         if (key.includes("Make") === true || key.includes("Model") === true)

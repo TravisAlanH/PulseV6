@@ -22,6 +22,9 @@ export default function RackInput({ AllData }) {
 
   return (
     <div className="flex flex-col gap-2">
+      <div id="NameRequired" className="text-sm text-red-500 FadeError">
+        Name Required
+      </div>
       {MapArray.map((key, index) => {
         let input = <STDInput key={index} keyName={key} Step={Step} />;
         if (key.includes("Make") === true || key.includes("Model") === true)

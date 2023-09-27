@@ -1,3 +1,8 @@
+.FadeError {
+  transition: opacity 0.5s ease-in-out;
+  opacity: 0;
+}
+
 .ulNav {
   list-style-type: none;
   position: relative;
