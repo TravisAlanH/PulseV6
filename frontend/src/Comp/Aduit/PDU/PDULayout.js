@@ -2,13 +2,13 @@ import React from "react";
 import { useSelector } from "react-redux";
 import SetCurrentSelection from "../../Reuse/SetCurrentSelection";
 import PDUInputs from "./PDUInputs";
-import AddToStep from "../../Reuse/AddToStep";
+// import AddToStep from "../../Reuse/AddToStep";
 import PDURack from "./PDURack";
 
 export default function PDULayout({ AllData }) {
   let Step = "PDUs";
   const Data = useSelector((state) => state.data[Step]);
-  const RackLength = useSelector((state) => state.data.Racks.length);
+  // const RackLength = useSelector((state) => state.data.Racks.length);
   const [DepthSide, setDepthSide] = React.useState({ Depth: "", Side: "" });
 
   return (
