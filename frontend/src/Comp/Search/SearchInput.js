@@ -1,15 +1,15 @@
 import React from "react";
 import "./Search.css";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import * as Action from "../../Store/Slices/Slice";
 
 export default function SearchInput({ searchInput, setSearchInput, KeyName, Step, setShowTable }) {
   const current = useSelector((state) => state.data.Current[Step]);
   const state = useSelector((state) => state.data[Step][current]);
+  const dispatch = useDispatch();
   const Name = state["Name *"].value;
 
   return (
-    // <div className="searchInput ">
-    // <div className="searchInput">
     <div>
       <input
         type="text"
@@ -23,12 +23,16 @@ export default function SearchInput({ searchInput, setSearchInput, KeyName, Step
             setShowTable(true);
           }
         }}
-        // onBlur={() =>
-        //   setTimeout(() => {
-        //     setShowTable(false);
-        //   }, 100)
-        // }
-        onChange={(e) => setSearchInput(e.target.value)}
+        onChange={(e) => {
+          let payload = {
+            Step: Step,
+            Current: current,
+            Key: KeyName,
+            value: e.target.value,
+          };
+          dispatch(Action.changeData(payload));
+          setSearchInput(e.target.value);
+        }}
       />
     </div>
   );

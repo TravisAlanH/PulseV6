@@ -8,6 +8,7 @@ export default function SearchTableModel({ SearchData, searchInput, Step, setSea
   const current = useSelector((state) => state.data.Current[Step]);
   const APIMatch = useSelector((state) => state.data[Step][current][keyName].APIMatch);
   const newData = useSelector((state) => state.data["New" + Step]);
+
   const dispatch = useDispatch();
   let closestMatch = FIND.findClosestMatchesInArrayObject(SearchData, searchInput, APIMatch);
 

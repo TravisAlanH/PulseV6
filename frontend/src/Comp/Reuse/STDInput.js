@@ -3,6 +3,7 @@ import "./input.css";
 import { useSelector, useDispatch } from "react-redux";
 import * as Actions from "../../Store/Slices/Slice";
 import Scanner from "./Scanner";
+import SetName from "./SetName";
 
 export default function STDInput({ keyName, Step }) {
   const state = useSelector((state) => state.data[Step]);
@@ -103,24 +104,48 @@ export default function STDInput({ keyName, Step }) {
       </select>
     );
   } else if (typeOf === "text") {
-    STDInput = (
-      <input
-        id={keyName + Step}
-        className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit " + inputSize}
-        value={state[current][keyName].value}
-        type="text"
-        disabled={state[current][keyName].disabled ? true : false}
-        placeholder={state[current][keyName].placeholder}
-        // required={state[current][keyName].required}
-        onChange={(e) => {
-          if (keyName === "Name *") {
-            document.getElementById("NameRequired").style.opacity = "0";
-          }
-          payload.value = e.target.value;
-          dispatch(Actions.changeData(payload));
-        }}
-      />
-    );
+    if (keyName === "Name *") {
+      STDInput = (
+        <div>
+          <input
+            id={keyName + Step}
+            className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit " + inputSizeWithButton}
+            value={state[current][keyName].value}
+            type="text"
+            disabled={state[current][keyName].disabled ? true : false}
+            placeholder={state[current][keyName].placeholder}
+            // required={state[current][keyName].required}
+            onChange={(e) => {
+              if (keyName === "Name *") {
+                document.getElementById("NameRequired").style.opacity = "0";
+              }
+              payload.value = e.target.value;
+              dispatch(Actions.changeData(payload));
+            }}
+          />
+          <SetName Step={Step} />
+        </div>
+      );
+    } else {
+      STDInput = (
+        <input
+          id={keyName + Step}
+          className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit " + inputSize}
+          value={state[current][keyName].value}
+          type="text"
+          disabled={state[current][keyName].disabled ? true : false}
+          placeholder={state[current][keyName].placeholder}
+          // required={state[current][keyName].required}
+          onChange={(e) => {
+            if (keyName === "Name *") {
+              document.getElementById("NameRequired").style.opacity = "0";
+            }
+            payload.value = e.target.value;
+            dispatch(Actions.changeData(payload));
+          }}
+        />
+      );
+    }
   } else if (typeOf === "date") {
     STDInput = (
       <input

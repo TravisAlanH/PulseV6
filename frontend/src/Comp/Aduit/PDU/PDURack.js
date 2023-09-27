@@ -110,13 +110,13 @@ export default function PDURack({ Step, setDepthSide }) {
 
   return (
     <div className="flex flex-row">
-      <PDUViewVertical CabinetSide={"Right Side"} DepthPosition={"Front"} setDepthSide={setDepthSide} Step={Step} />
-      <PDUViewVertical CabinetSide={"Right Side"} DepthPosition={"Center"} setDepthSide={setDepthSide} Step={Step} />
-      <PDUViewVertical CabinetSide={"Right Side"} DepthPosition={"Back"} setDepthSide={setDepthSide} Step={Step} />
-      <div className="flex flex-col">{Layout}</div>
-      <PDUViewVertical CabinetSide={"Left Side"} DepthPosition={"Back"} setDepthSide={setDepthSide} Step={Step} />
-      <PDUViewVertical CabinetSide={"Left Side"} DepthPosition={"Center"} setDepthSide={setDepthSide} Step={Step} />
       <PDUViewVertical CabinetSide={"Left Side"} DepthPosition={"Front"} setDepthSide={setDepthSide} Step={Step} />
+      <PDUViewVertical CabinetSide={"Left Side"} DepthPosition={"Center"} setDepthSide={setDepthSide} Step={Step} />
+      <PDUViewVertical CabinetSide={"Left Side"} DepthPosition={"Back"} setDepthSide={setDepthSide} Step={Step} />
+      <div className="flex flex-col">{Layout}</div>
+      <PDUViewVertical CabinetSide={"Right Side"} DepthPosition={"Back"} setDepthSide={setDepthSide} Step={Step} />
+      <PDUViewVertical CabinetSide={"Right Side"} DepthPosition={"Center"} setDepthSide={setDepthSide} Step={Step} />
+      <PDUViewVertical CabinetSide={"Right Side"} DepthPosition={"Front"} setDepthSide={setDepthSide} Step={Step} />
     </div>
   );
 }
