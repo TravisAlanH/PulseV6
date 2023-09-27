@@ -8,7 +8,7 @@ export default function UseLastData({ Step }) {
   const stepState = useSelector((state) => state.data[Step]);
   const dispatch = useDispatch();
 
-  let newData = {};
+  let newData = { empty: false };
 
   for (let index = stepState.length - 1; index >= 0; index--) {
     if (stepState[index]["Make *"].value !== "" && stepState[index]["Model *"].value !== "") {
@@ -16,6 +16,7 @@ export default function UseLastData({ Step }) {
       break;
     }
   }
+  console.log(newData);
 
   return (
     <div>
@@ -23,7 +24,7 @@ export default function UseLastData({ Step }) {
         <label className={"text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center  w-full"}>{"Make"}</label>
         <input
           className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-full"}
-          value={newData["Make *"].value}
+          value={newData.empty ? newData["Make *"].value : ""}
           type="text"
           disabled={true}
         />
@@ -32,7 +33,7 @@ export default function UseLastData({ Step }) {
         <label className={"text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center w-full"}>{"Model"}</label>
         <input
           className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-full"}
-          value={newData["Model *"].value}
+          value={newData.empty ? newData["Model *"].value : ""}
           type="text"
           disabled={true}
         />

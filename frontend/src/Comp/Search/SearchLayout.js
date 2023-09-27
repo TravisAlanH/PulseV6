@@ -14,8 +14,6 @@ export default function SearchLayout({ KeyName, Step, AllData }) {
   const [searchInput, setSearchInput] = React.useState(state[KeyName].value);
   const [showTable, setShowTable] = React.useState(false);
 
-  console.log(searchInput);
-
   let SearchData;
   let StepDataFilter = [];
 
@@ -108,14 +106,3 @@ export default function SearchLayout({ KeyName, Step, AllData }) {
     </div>
   );
 }
-
-// "Make *": {
-//   type: "text",
-//   value: "",
-//   placeholder: "Input Here",
-//   options: [],
-//   required: false,
-//   APIMatch: "",
-//   NEXT: "HOLD FOR ADDITIONAL INFO",
-// },
-// "Model *": {

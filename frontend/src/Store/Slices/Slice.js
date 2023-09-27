@@ -104,6 +104,67 @@ const Slice = createSlice({
       console.log(updatedRack);
       state["Assets"] = [...state["Assets"], updatedRack];
     },
+    addToPDU: (state, action) => {
+      let updatedPUD = {
+        ...Template["PDUs"],
+        "Cabinet Side *": {
+          type: "select",
+          value: action.payload.CabinetSide,
+          placeholder: "Input Here",
+          options: ["Select", "Left Side", "Right Side"],
+          required: false,
+          APIMatch: "",
+        },
+      };
+      updatedPUD = {
+        ...updatedPUD,
+        "Depth Position *": {
+          type: "select",
+          value: action.payload.DepthPosition,
+          placeholder: "Input Here",
+          options: ["Select", "Front", "Center", "Back"],
+          required: false,
+          APIMatch: "",
+        },
+      };
+      updatedPUD = {
+        ...updatedPUD,
+        "Location *": {
+          type: "text",
+          value: state["Location"][0]["dcTrack Location Code *"].value,
+          placeholder: "Input Here",
+          options: [],
+          disabled: true,
+          required: false,
+          APIMatch: "",
+        },
+      };
+      updatedPUD = {
+        ...updatedPUD,
+        "Cabinet *": {
+          type: "text",
+          value: action.payload.Cabinet,
+          placeholder: "Input Here",
+          options: [],
+          disabled: true,
+          required: false,
+          APIMatch: "",
+        },
+      };
+      updatedPUD = {
+        ...updatedPUD,
+        "U Position *": {
+          type: "number",
+          value: action.payload.UPosition,
+          placeholder: "Input Here",
+          options: [],
+          required: false,
+          aPIMatch: "",
+        },
+      };
+      state["PDUs"] = [...state["PDUs"], updatedPUD];
+      state["Current"]["PDUs"] = state["PDUs"].length - 1;
+    },
     addRemoveCustomFields: (state, action) => {
       if (action.payload.checked) {
         for (let i = 0; i < state[action.payload.Step].length; i++) {
@@ -128,6 +189,7 @@ const Slice = createSlice({
 });
 
 export const {
+  addToPDU,
   addToNewItem,
   replaceCurrent,
   addToRacks,

@@ -276,11 +276,19 @@ let Template = {
       required: false,
       APIMatch: "",
     },
-    "CabinetSide *": {
+    "Cabinet Side *": {
       type: "select",
       value: "",
       placeholder: "Input Here",
-      options: ["Select", "Left", "Right"],
+      options: ["Select", "Left Side", "Right Side"],
+      required: false,
+      APIMatch: "",
+    },
+    "Depth Position *": {
+      type: "select",
+      value: "",
+      placeholder: "Input Here",
+      options: ["Select", "Front", "Center", "Back"],
       required: false,
       APIMatch: "",
     },

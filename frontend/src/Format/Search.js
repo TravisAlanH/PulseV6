@@ -1,6 +1,5 @@
 function findClosestMatches(array, input) {
   // Remove special characters and convert to lowercase
-  console.log(input);
   const normalizedInput = input.replace(/[^\w\s]/g, "").toLowerCase();
 
   // Sort the array based on the number of matching letters

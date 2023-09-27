@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import * as Action from "../../../Store/Slices/Slice";
 import "../../../Styles/PDU.css";
+import PDUViewVertical from "./PDUViewVertical";
 // import AddToRacks from "./AddToRacks";
 
 export default function PDURack({ Step }) {
@@ -13,7 +14,6 @@ export default function PDURack({ Step }) {
 
   let Layout = [];
 
-  console.log(RackState);
   // will need to remake this for PDU / Rack / Assets,
   // need to check inports for a raritain PDU 30 ru, to see if all import fields will pass import (Orientation)
   // need to check import for a Matrix C166 PUD, to see if Depth Position ** will pass import
@@ -62,19 +62,14 @@ export default function PDURack({ Step }) {
   }
 
   return (
-    <div className="flex flex-row -z-30">
-      <div className="w-[3rem] flex flex-col justify-start items-center border-2 sticky h-[30rem] top-[5rem]">
-        <div className="text-vertical pt-3 h-[5rem]">R Front</div>
-        <div className="flex flex-col justify-center items-center h-full w-[3rem]">
-          <button className=" text-verticalButton w-[5rem] orangeButtonVertical">Add PDU</button>
-        </div>
-      </div>
-      <div className="border-2 sticky h-[5rem] top-[5rem]">test</div>
-      <div className="border-2 sticky h-[5rem] top-[5rem]">test</div>
+    <div className="flex flex-row">
+      <PDUViewVertical CabinetSide={"Right Side"} DepthPosition={"Front"} />
+      <PDUViewVertical CabinetSide={"Right Side"} DepthPosition={"Center"} />
+      <PDUViewVertical CabinetSide={"Right Side"} DepthPosition={"Back"} />
       <div className="flex flex-col">{Layout}</div>
-      <div className="border-2 sticky h-[5rem] top-[5rem]">test</div>
-      <div className="border-2 sticky h-[5rem] top-[5rem]">test</div>
-      <div className="border-2 sticky h-[5rem] top-[5rem]">test</div>
+      <PDUViewVertical CabinetSide={"Left Side"} DepthPosition={"Back"} />
+      <PDUViewVertical CabinetSide={"Left Side"} DepthPosition={"Center"} />
+      <PDUViewVertical CabinetSide={"Left Side"} DepthPosition={"Front"} />
     </div>
   );
 }
