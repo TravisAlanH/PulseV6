@@ -1,11 +1,11 @@
 .text-verticalButton {
-  writing-mode: vertical-rl; /* Vertical text from top to bottom */
-  text-orientation: mixed; /* Optional: Controls text orientation */
-  transform: rotate(90deg); /* Optional: Rotate text if needed */
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  /* transform: rotate(90deg); */
 }
 
 .text-vertical {
-  writing-mode: vertical-rl; /* Vertical text from top to bottom */
-  text-orientation: mixed; /* Optional: Controls text orientation */
-  transform: rotate(0deg); /* Optional: Rotate text if needed */
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  /* transform: rotate(0deg); */
 }

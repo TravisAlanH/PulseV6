@@ -19,7 +19,8 @@ export default function SearchTableModel({ SearchData, searchInput, Step, setSea
 
   //
   function sort(ascending, columnClassName, tableId) {
-    var tbody = document.getElementById(tableId).getElementsByTagName("tbody")[0];
+    // var tbody = document.getElementById(tableId).getElementsByTagName("tbody")[0];
+    var tbody = document.getElementById("tbodyContent");
     var rows = tbody.getElementsByTagName("tr");
     var unsorted = true;
     while (unsorted) {
@@ -62,7 +63,7 @@ export default function SearchTableModel({ SearchData, searchInput, Step, setSea
       <td data-label="Model" className="Model">
         {SearchData[item].Model}
       </td>
-      <td data-label="Make" className="composer">
+      <td data-label="Make" className="Make">
         {SearchData[item].Make}
       </td>
       <td data-label="RackUnits" className="RackUnits">
@@ -89,15 +90,9 @@ export default function SearchTableModel({ SearchData, searchInput, Step, setSea
           }, 100);
         }
       }}>
-      <td data-label="Model" className="Model">
-        {item["Model Name *"].value}
-      </td>
-      <td data-label="Make" className="composer">
-        {item["Make *"].value}
-      </td>
-      <td data-label="RackUnits" className="RackUnits">
-        {item["Rack Units *"].value}
-      </td>
+      <td className="">{item["Model Name *"].value}</td>
+      <td className="">{item["Make *"].value}</td>
+      <td className="">{item["Rack Units *"].value}</td>
     </tr>
   ));
 
@@ -109,7 +104,7 @@ export default function SearchTableModel({ SearchData, searchInput, Step, setSea
           <th className="Model bg-white">
             <div className="flex flex-row items-center justify-between w-[20rem] bg-white h-full">
               {"Model (ADDED)"}
-              <div className="sort-table-arrows flex flex-row gap-2 items-center justify-end w-[5rem]">
+              {/* <div className="sort-table-arrows flex flex-row gap-2 items-center justify-end w-[5rem]">
                 <button
                   className="button orangeButton"
                   onClick={(e) => {
@@ -126,7 +121,7 @@ export default function SearchTableModel({ SearchData, searchInput, Step, setSea
                   title="Sort Model Ascending">
                   <FaChevronDown />
                 </button>
-              </div>
+              </div> */}
             </div>
           </th>
           <th className="Make">
@@ -135,7 +130,7 @@ export default function SearchTableModel({ SearchData, searchInput, Step, setSea
           <th className="RackUnits bg-white">
             <div className="flex flex-row items-center justify-between w-[10rem] bg-white h-full">
               {"RU (ADDED)"}
-              <div className="sort-table-arrows flex flex-row gap-2 items-center justify-end w-[5rem]">
+              {/* <div className="sort-table-arrows flex flex-row gap-2 items-center justify-end w-[5rem]">
                 <button
                   className="button orangeButton"
                   onClick={(e) => {
@@ -152,7 +147,7 @@ export default function SearchTableModel({ SearchData, searchInput, Step, setSea
                   title="Sort RackUnits Ascending">
                   <FaChevronDown />
                 </button>
-              </div>
+              </div> */}
             </div>
           </th>
         </tr>
@@ -217,7 +212,7 @@ export default function SearchTableModel({ SearchData, searchInput, Step, setSea
             </th>
           </tr>
         </thead>
-        <tbody>{tableContent}</tbody>
+        <tbody id="tbodyContent">{tableContent}</tbody>
       </table>
     </div>
   );

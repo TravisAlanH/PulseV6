@@ -75,7 +75,6 @@ export default function STDInput({ keyName, Step }) {
 
     STDInput = (
       <select
-        defaultValue={SelectedValue}
         className={"Select h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit " + inputSize}
         onChange={(e) => {
           payload.value = e.target.value;

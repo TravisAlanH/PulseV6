@@ -87,7 +87,7 @@ export default function PDURack({ Step, setDepthSide }) {
           {(Step === "Assets" || Step === "PDUs") && Show ? (
             <div id="ADD" className="w-full flex flex-row justify-center">
               <button
-                className="w-[9rem] orangeButtonVertical"
+                className="w-[9rem] orangeButton"
                 onClick={() => {
                   setDepthSide({ Depth: "", Side: "" });
                   let payload = {

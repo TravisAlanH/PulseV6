@@ -13,7 +13,7 @@ export default function PDUViewVertical({ CabinetSide, DepthPosition, setDepthSi
     Step === "PDUs" ? (
       <div className="text-vertical flex flex-row gap-4 justify-center items-center w-[3rem] h-[24.5rem] pt-3">
         <button
-          className=" text-verticalButton w-[5rem] orangeButtonVertical"
+          className="orangeButtonVertical flex flex-row items-center justify-center"
           onClick={() => {
             setDepthSide({ Depth: DepthPosition, Side: CabinetSide });
             let payload = {
@@ -25,7 +25,7 @@ export default function PDUViewVertical({ CabinetSide, DepthPosition, setDepthSi
             };
             dispatch(Action.addToPDU(payload));
           }}>
-          Add PDU
+          <div className="text-vertical">Add PDU</div>
         </button>
       </div>
     ) : (
@@ -65,7 +65,7 @@ export default function PDUViewVertical({ CabinetSide, DepthPosition, setDepthSi
   let Label = `${CabinetSide.replace("Side", "")} - ${DepthPosition.slice(0, 1)}`;
 
   return (
-    <div className="w-[2rem] flex flex-col justify-start items-center border-2 sticky h-[34rem] top-[5rem]">
+    <div className="w-[2rem] flex flex-col justify-start items-center border-2 h-[34rem] top-[5rem]">
       <div className="text-vertical h-[7.5rem] border-b-2 w-full flex flex-row justify-center items-center">
         {Label}
       </div>
