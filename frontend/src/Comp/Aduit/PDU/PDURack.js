@@ -19,7 +19,7 @@ export default function PDURack({ Step, setDepthSide }) {
   // need to check inports for a raritain PDU 30 ru, to see if all import fields will pass import (Orientation)
   // need to check import for a Matrix C166 PUD, to see if Depth Position ** will pass import
   if (RackState === undefined) return null;
-  for (let i = RackState.RUHeight.value; i > 0; i--) {
+  for (let i = RackState["RU Height"].value; i > 0; i--) {
     let Show = true;
     Layout.push(
       <div key={i}>

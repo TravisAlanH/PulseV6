@@ -16,7 +16,7 @@ export default function RackRack({ Step }) {
   // need to check inports for a raritain PDU 30 ru, to see if all import fields will pass import (Orientation)
   // need to check import for a Matrix C166 PUD, to see if Depth Position ** will pass import
 
-  for (let i = 1; i < RackState["RU Height"].value + 1; i++) {
+  for (let i = RackState["RU Height"].value; i > 0; i--) {
     let Show = true;
     Layout.push(
       <div key={i}>
@@ -25,8 +25,8 @@ export default function RackRack({ Step }) {
           {Assets.map((object, index) => {
             if (object["U Position *"].value === i && object["Cabinet *"].value === RackState["Name *"].value) {
               Show = false;
-
-              i = i + object["RU Height"].value - 1;
+              i = i - 1;
+              // i = i + object["RU Height"].value;
               return (
                 <div
                   key={index}
@@ -60,5 +60,5 @@ export default function RackRack({ Step }) {
     );
   }
 
-  return <div className="flex flex-col-reverse">{Layout}</div>;
+  return <div className="flex flex-col">{Layout}</div>;
 }

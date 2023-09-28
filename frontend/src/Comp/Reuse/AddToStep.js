@@ -20,6 +20,12 @@ export default function AddToStep({ Step }) {
           value: state.length,
         };
         dispatch(actions.updateCurrent(payload));
+        if (Step === "Racks") {
+          payload = {
+            value: [],
+          };
+          dispatch(actions.addToOpenRU(payload));
+        }
       }}>
       Add {Step === "Racks" ? "Cabinet" : Step}
     </button>

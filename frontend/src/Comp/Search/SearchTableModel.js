@@ -52,9 +52,9 @@ export default function SearchTableModel({ SearchData, searchInput, Step, setSea
         setSearchInput(SearchData[item][APIMatch]);
         payload.value = SearchData[item][APIMatch];
         dispatch(Action.changeData(payload));
-        if (Step === "Racks" || Step === "Assets") {
+        if (Step === "Racks" || Step === "Assets" || Step === "PDUs") {
           setTimeout(() => {
-            payload.Key = Step === "Racks" ? "RUHeight" : "Rails Used *";
+            payload.Key = "RU Height";
             payload.value = SearchData[item].RackUnits;
             dispatch(Action.changeData(payload));
             setShowTable(false);
@@ -82,9 +82,9 @@ export default function SearchTableModel({ SearchData, searchInput, Step, setSea
         setSearchInput(item["Model Name *"].value);
         payload.value = item["Model Name *"].value;
         dispatch(Action.changeData(payload));
-        if (Step === "Racks" || Step === "Assets") {
+        if (Step === "Racks" || Step === "Assets" || Step === "PDUs") {
           setTimeout(() => {
-            payload.Key = Step === "Racks" ? "RUHeight" : "Rails Used *";
+            payload.Key = "RU Height";
             payload.value = item.RackUnits;
             dispatch(Action.changeData(payload));
             setShowTable(false);
@@ -93,7 +93,7 @@ export default function SearchTableModel({ SearchData, searchInput, Step, setSea
       }}>
       <td className="">{item["Model Name *"].value}</td>
       <td className="">{item["Make *"].value}</td>
-      <td className="">{item["Rack Units *"].value}</td>
+      <td className="">{item["RU Height"].value}</td>
     </tr>
   ));
 

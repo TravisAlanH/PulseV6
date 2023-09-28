@@ -126,6 +126,9 @@ let Template = {
   Racks: {
     "# Operation *": { value: "ADD" },
     "Object *": { value: "CABINET" },
+    "!!!OpenRUArray": {
+      value: [],
+    },
     "Name *": {
       type: "text",
       value: "",
@@ -153,12 +156,13 @@ let Template = {
       APIMatch: "Model",
       NEXT: "HOLD FOR ADDITIONAL INFO",
     },
-    RUHeight: {
+    "RU Height": {
       type: "number",
-      value: "",
+      value: 1,
       placeholder: "Input Here",
       options: [],
       required: false,
+      disabled: true,
       APIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
     },
@@ -274,6 +278,7 @@ let Template = {
       placeholder: "Input Here",
       options: [],
       required: false,
+      disabled: true,
       APIMatch: "",
     },
     "Cabinet Side *": {
@@ -299,6 +304,16 @@ let Template = {
       options: [],
       required: false,
       aPIMatch: "",
+    },
+    "RU Height": {
+      type: "number",
+      value: 1,
+      placeholder: "Input Here",
+      options: [],
+      required: false,
+      disabled: true,
+      APIMatch: "",
+      NEXT: "HOLD FOR ADDITIONAL INFO",
     },
     "Status *": { value: "PLANNED" },
   },
@@ -333,7 +348,6 @@ let Template = {
       APIMatch: "Model",
       NEXT: "HOLD FOR ADDITIONAL INFO",
     },
-
     "Location *": {
       type: "text",
       value: "",
@@ -347,12 +361,11 @@ let Template = {
     "Cabinet *": {
       type: "text",
       value: "",
-
       placeholder: "Input Here",
       options: [],
       required: false,
+      disabled: true,
       APIMatch: "",
-      NEXT: "HOLD FOR ADDITIONAL INFO",
     },
     "U Position *": {
       type: "number",
@@ -362,15 +375,25 @@ let Template = {
       aPIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
     },
-    "Rails Used *": {
+    "RU Height": {
       type: "number",
-      value: "",
+      value: 1,
+      placeholder: "Input Here",
       options: [],
+      required: false,
+      disabled: true,
+      APIMatch: "",
+      NEXT: "HOLD FOR ADDITIONAL INFO",
+    },
+    "Rails Used *": {
+      type: "select",
+      value: "",
+      options: ["Select", "Both", "Front", "Back"],
       required: false,
       aPIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
     },
-    "Asset ID": {
+    "Asset Tag": {
       type: "Scan",
       value: "",
       options: [],
@@ -626,6 +649,7 @@ const state = {
   PDUs: [],
   Assets: [],
   LoggedIn: false,
+  OpenRU: [],
   Current: {
     Location: 0,
     Rooms: 0,

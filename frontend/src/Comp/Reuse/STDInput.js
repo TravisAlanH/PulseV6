@@ -9,7 +9,13 @@ export default function STDInput({ keyName, Step }) {
   const state = useSelector((state) => state.data[Step]);
   const current = useSelector((state) => state.data.Current[Step]);
   const fullState = useSelector((state) => state.data);
+
+  const currentRack = useSelector((state) => state.data.Current["Racks"]);
+  const OpenRU = useSelector((state) => state.data.OpenRU[currentRack]);
   const dispatch = useDispatch();
+
+  let OpenRUHold = [...OpenRU];
+  console.log("OpenRUHold", OpenRUHold);
 
   let payload = {
     Step: Step,
@@ -18,7 +24,7 @@ export default function STDInput({ keyName, Step }) {
     value: undefined,
   };
 
-  if (keyName === "Status *" || keyName === "# Operation *" || keyName === "Object *") {
+  if (keyName === "Status *" || keyName === "# Operation *" || keyName === "Object *" || keyName.includes("!!!")) {
     return null;
   }
 
@@ -58,11 +64,38 @@ export default function STDInput({ keyName, Step }) {
         className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit " + inputSize}
         value={state[current][keyName].value}
         type="number"
+        id={keyName + Step}
+        disabled={state[current][keyName].disabled ? true : false}
         placeholder={state[current][keyName].placeholder}
         // required={state[current][keyName].required}
         onChange={(e) => {
-          payload.value = parseInt(e.target.value);
-          dispatch(Actions.changeData(payload));
+          if (e.target.value === "") e.target.value = "";
+          if (keyName === "U Position *") {
+            let holdUP = state[current][keyName].value;
+            for (let i = 0; i < state[current]["RU Height"].value; i++) {
+              OpenRUHold[holdUP - 1 + i] = 0;
+            }
+            let fit = true;
+            for (let i = 0; i < state[current]["RU Height"].value; i++) {
+              if (OpenRUHold[e.target.value - 1 + i] === 1) {
+                fit = false;
+              }
+            }
+            if (fit) {
+              payload.value = parseInt(e.target.value);
+              dispatch(Actions.changeData(payload));
+            } else {
+              payload.value = holdUP;
+              dispatch(Actions.changeData(payload));
+              let Input = document.getElementById(keyName + Step);
+              Input.value = holdUP;
+              Input.blur();
+              alert("Not enough space");
+            }
+          } else {
+            payload.value = parseInt(e.target.value);
+            dispatch(Actions.changeData(payload));
+          }
         }}
       />
     );

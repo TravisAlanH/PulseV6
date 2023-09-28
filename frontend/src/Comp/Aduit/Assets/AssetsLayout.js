@@ -2,7 +2,8 @@ import React from "react";
 import { useSelector } from "react-redux";
 import SetCurrentSelection from "../../Reuse/SetCurrentSelection";
 import AssetInputs from "./AssetInputs";
-import RackRack from "../Rack/RackRack";
+// import RackRack from "../Rack/RackRack";
+import RackFull from "../Rack/RackFull";
 
 export default function AssetsLayout({ AllData }) {
   let Step = "Assets";
@@ -26,7 +27,8 @@ export default function AssetsLayout({ AllData }) {
         ) : (
           <div className="w-[10rem]"></div>
         )}
-        {RackState.length > 0 ? <RackRack Step={Step} /> : null}
+        {/* {RackState.length > 0 ? <RackRack Step={Step} /> : null} */}
+        {RackState.length > 0 ? <RackFull Step={Step} /> : null}
       </div>
     </div>
   );

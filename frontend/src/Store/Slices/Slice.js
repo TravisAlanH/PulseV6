@@ -23,6 +23,12 @@ const Slice = createSlice({
         });
       }
     },
+    addToOpenRU: (state, action) => {
+      state.OpenRU = [...state.OpenRU, action.payload.value];
+    },
+    updateOpenRu: (state, action) => {
+      state.OpenRU[action.payload.Current] = action.payload.value;
+    },
     addToNewItem: (state, action) => {
       console.log(action.payload);
       state[action.payload.Step] = [...state[action.payload.Step], Template[action.payload.Step]];
@@ -84,6 +90,7 @@ const Slice = createSlice({
           placeholder: "Input Here",
           options: [],
           required: false,
+          disabled: true,
           APIMatch: "",
           NEXT: "HOLD FOR ADDITIONAL INFO",
         },
@@ -189,6 +196,8 @@ const Slice = createSlice({
 });
 
 export const {
+  updateOpenRu,
+  addToOpenRU,
   addToPDU,
   addToNewItem,
   replaceCurrent,
