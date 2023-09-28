@@ -20,18 +20,11 @@ export default function RackFull({ Step, setDepthSide }) {
 
   let Layout = [];
 
-  let filled = 0;
-
   // will need to remake this for PDU / Rack / Assets,
   // need to check inports for a raritain PDU 30 ru, to see if all import fields will pass import (Orientation)
   // need to check import for a Matrix C166 PUD, to see if Depth Position ** will pass import
   if (RackState === undefined) return null;
   for (let i = 1; i < RackState["RU Height"].value + 1; i++) {
-    if (filled > 0) {
-      filled = filled - 1;
-      holdOpenRU.push(1);
-      continue;
-    }
     let Show = true;
     Layout.push(
       <div key={i}>
@@ -40,7 +33,10 @@ export default function RackFull({ Step, setDepthSide }) {
           {Assets.map((object, index) => {
             if (object["U Position *"].value === i && object["Cabinet *"].value === RackState["Name *"].value) {
               Show = false;
-              filled = object["RU Height"].value - 1;
+              for (let j = 0; j < object["RU Height"].value - 1; j++) {
+                holdOpenRU.push(1);
+              }
+              i = object["RU Height"].value + i - 1;
 
               return (
                 <div
@@ -80,7 +76,10 @@ export default function RackFull({ Step, setDepthSide }) {
               object["Depth Position *"].value === ""
             ) {
               Show = false;
-              filled = object["RU Height"].value - 1;
+              for (let j = 0; j < object["RU Height"].value - 1; j++) {
+                holdOpenRU.push(1);
+              }
+              i = object["RU Height"].value + i - 1;
 
               return (
                 <div

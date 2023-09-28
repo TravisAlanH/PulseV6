@@ -51,4 +51,11 @@ function countMatchingLetters(str1, str2) {
   return count;
 }
 
-export { findClosestMatches, findClosestMatchesInArrayObject };
+function filterByUPosition(objects, inputValue) {
+  console.log(objects);
+  const filteredObjects = objects.filter((object) => object["RackUnits"] > inputValue + 1);
+  console.log(filteredObjects);
+  return filteredObjects;
+}
+
+export { findClosestMatches, findClosestMatchesInArrayObject, filterByUPosition };

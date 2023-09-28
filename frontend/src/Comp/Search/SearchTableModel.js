@@ -9,7 +9,20 @@ export default function SearchTableModel({ SearchData, searchInput, Step, setSea
   const APIMatch = useSelector((state) => state.data[Step][current][keyName].APIMatch);
   const newData = useSelector((state) => state.data["New" + Step]);
 
+  // const currentData = useSelector((state) => state.data[Step][current]);
   const dispatch = useDispatch();
+
+  // let currentUPosition = 0;
+  // let closestMatch;
+  // if (currentData.hasOwnProperty("U Position *")) {
+  //   currentUPosition = currentData["U Position *"].value;
+  //   console.log(currentUPosition);
+  //   closestMatch = FIND.filterByUPosition(SearchData, currentUPosition);
+  //   closestMatch = FIND.findClosestMatchesInArrayObject(closestMatch, searchInput, APIMatch);
+  //   console.log(closestMatch);
+  // } else {
+  //   closestMatch = FIND.findClosestMatchesInArrayObject(SearchData, searchInput, APIMatch);
+  // }
   let closestMatch = FIND.findClosestMatchesInArrayObject(SearchData, searchInput, APIMatch);
 
   let payload = {
@@ -17,6 +30,8 @@ export default function SearchTableModel({ SearchData, searchInput, Step, setSea
     Current: current,
     Key: keyName,
   };
+
+  console.log(closestMatch);
 
   //
   function sort(ascending, columnClassName, tableId) {

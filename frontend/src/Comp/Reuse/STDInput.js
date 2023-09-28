@@ -15,7 +15,6 @@ export default function STDInput({ keyName, Step }) {
   const dispatch = useDispatch();
 
   let OpenRUHold = [...OpenRU];
-  console.log("OpenRUHold", OpenRUHold);
 
   let payload = {
     Step: Step,
