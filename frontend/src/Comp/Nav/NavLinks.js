@@ -41,6 +41,11 @@ export default function NavLinks() {
             className="h-[3rem] w-[5rem] bg-[#e0e0e0] flex flex-row justify-start pl-3 font-bold items-center">
             Survey
           </Link>
+          <Link
+            to="/electrical"
+            className="h-[3rem] w-[5rem] bg-[#e0e0e0] flex flex-row justify-start pl-3 font-bold items-center">
+            Electrical
+          </Link>
           <div
             onClick={() => {
               const payload = {

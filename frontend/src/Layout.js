@@ -6,6 +6,7 @@ import NavBase from "./Comp/Nav/NavBase";
 import Login from "./Comp/Login/Login";
 import AuditLayout from "./Comp/Aduit/AuditLayout";
 import SurveyLayout from "./Comp/Survey/SurveyLayout";
+import ElectricalLayout from "./Comp/Electrical/ElectricalLayout";
 
 export default function Layout() {
   const LoggedIn = useSelector((state) => state.data.LoggedIn);
@@ -17,6 +18,10 @@ export default function Layout() {
       <Routes>
         <Route path="/" element={<Login setAllData={setAllData} />} />
         <Route path="/survey" element={LoggedIn ? <SurveyLayout /> : <Login setAllData={setAllData} />} />
+        <Route
+          path="/electrical"
+          element={LoggedIn ? <ElectricalLayout AllData={AllData} /> : <Login setAllData={setAllData} />}
+        />
 
         <Route path="/login" element={<Login setAllData={setAllData} />} />
         <Route path="/about" element={LoggedIn ? <h1>About</h1> : <Login setAllData={setAllData} />} />

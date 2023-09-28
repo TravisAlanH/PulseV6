@@ -8,6 +8,7 @@ import SetName from "./SetName";
 export default function STDInput({ keyName, Step }) {
   const state = useSelector((state) => state.data[Step]);
   const current = useSelector((state) => state.data.Current[Step]);
+  const fullState = useSelector((state) => state.data);
   const dispatch = useDispatch();
 
   let payload = {
@@ -104,7 +105,7 @@ export default function STDInput({ keyName, Step }) {
       </select>
     );
   } else if (typeOf === "text") {
-    if (keyName === "Name *") {
+    if (keyName === "Name *" && Step !== "Racks") {
       STDInput = (
         <div>
           <input
@@ -125,6 +126,43 @@ export default function STDInput({ keyName, Step }) {
           />
           <SetName Step={Step} />
         </div>
+      );
+    } else if (keyName === "Name *" && Step === "Racks") {
+      STDInput = (
+        <input
+          id={keyName + Step}
+          className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit " + inputSizeWithButton}
+          value={state[current][keyName].value}
+          type="text"
+          disabled={state[current][keyName].disabled ? true : false}
+          placeholder={state[current][keyName].placeholder}
+          // required={state[current][keyName].required}
+          onChange={(e) => {
+            console.log("e.target.value", e.target.value);
+            let CurrentRackName = fullState.Racks[fullState.Current.Racks]["Name *"].value;
+            if (keyName === "Name *") {
+              document.getElementById("NameRequired").style.opacity = "0";
+            }
+            payload.value = e.target.value;
+            dispatch(Actions.changeData(payload));
+            Object.keys(fullState).forEach((key) => {
+              if (Array.isArray(fullState[key]) && fullState[key].length > 0) {
+                for (let i = 0; i < fullState[key].length; i++) {
+                  if (
+                    fullState[key][i].hasOwnProperty("Cabinet *") &&
+                    fullState[key][i]["Cabinet *"].value === CurrentRackName
+                  ) {
+                    payload.value = e.target.value;
+                    payload.Step = key;
+                    payload.Current = i;
+                    payload.Key = "Cabinet *";
+                    dispatch(Actions.changeData(payload));
+                  }
+                }
+              }
+            });
+          }}
+        />
       );
     } else {
       STDInput = (
