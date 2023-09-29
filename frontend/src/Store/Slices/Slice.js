@@ -22,17 +22,21 @@ const Slice = createSlice({
           }
         });
       }
+      if (state.Settings.localStorage) localStorage.setItem("PulseStateData", JSON.stringify(state));
     },
     addToOpenRU: (state, action) => {
       state.OpenRU = [...state.OpenRU, action.payload.value];
+      if (state.Settings.localStorage) localStorage.setItem("PulseStateData", JSON.stringify(state));
     },
     updateOpenRu: (state, action) => {
       state.OpenRU[action.payload.Current] = action.payload.value;
+      if (state.Settings.localStorage) localStorage.setItem("PulseStateData", JSON.stringify(state));
     },
     addToNewItem: (state, action) => {
       console.log(action.payload);
       state[action.payload.Step] = [...state[action.payload.Step], Template[action.payload.Step]];
       state["Current"][action.payload.Step] = state[action.payload.Step].length - 1;
+      if (state.Settings.localStorage) localStorage.setItem("PulseStateData", JSON.stringify(state));
     },
 
     addToStep: (state, action) => {
@@ -68,6 +72,7 @@ const Slice = createSlice({
         };
       }
       state[action.payload.Step] = [...state[action.payload.Step], updatedRack];
+      if (state.Settings.localStorage) localStorage.setItem("PulseStateData", JSON.stringify(state));
     },
     addToRacks: (state, action) => {
       console.log(action.payload);
@@ -110,6 +115,7 @@ const Slice = createSlice({
       };
       console.log(updatedRack);
       state["Assets"] = [...state["Assets"], updatedRack];
+      if (state.Settings.localStorage) localStorage.setItem("PulseStateData", JSON.stringify(state));
     },
     addToPDU: (state, action) => {
       let updatedPUD = {
@@ -171,6 +177,7 @@ const Slice = createSlice({
       };
       state["PDUs"] = [...state["PDUs"], updatedPUD];
       state["Current"]["PDUs"] = state["PDUs"].length - 1;
+      if (state.Settings.localStorage) localStorage.setItem("PulseStateData", JSON.stringify(state));
     },
     addRemoveCustomFields: (state, action) => {
       if (action.payload.checked) {
@@ -182,24 +189,37 @@ const Slice = createSlice({
           delete state[action.payload.Step][i][action.payload.keyName];
         }
       }
+      if (state.Settings.localStorage) localStorage.setItem("PulseStateData", JSON.stringify(state));
     },
     updateCurrent: (state, action) => {
       state.Current[action.payload.Step] = action.payload.value;
+      if (state.Settings.localStorage) localStorage.setItem("PulseStateData", JSON.stringify(state));
     },
     replaceCurrent: (state, action) => {
       state[action.payload.Step][action.payload.current] = action.payload.value;
+      if (state.Settings.localStorage) localStorage.setItem("PulseStateData", JSON.stringify(state));
     },
     loginLogout: (state, action) => {
       state.LoggedIn = action.payload.value;
+      if (state.Settings.localStorage) localStorage.setItem("PulseStateData", JSON.stringify(state));
     },
     deleteCurrentIndex: (state, action) => {
       state.Current[action.payload.Step] = state.Current[action.payload.Step] - 1;
       state[action.payload.Step].splice(action.payload.Current, 1);
+      if (state.Settings.localStorage) localStorage.setItem("PulseStateData", JSON.stringify(state));
+    },
+    setLocalStorage: (state, action) => {
+      state.Settings.localStorage = action.payload.value;
+    },
+    loadLocalStorage: (state) => {
+      state = JSON.parse(localStorage.getItem("PulseStateData"));
     },
   },
 });
 
 export const {
+  setLocalStorage,
+  loadLocalStorage,
   deleteCurrentIndex,
   updateOpenRu,
   addToOpenRU,

@@ -7,6 +7,7 @@ import Login from "./Comp/Login/Login";
 import AuditLayout from "./Comp/Aduit/AuditLayout";
 import SurveyLayout from "./Comp/Survey/SurveyLayout";
 import ElectricalLayout from "./Comp/Electrical/ElectricalLayout";
+import Settings from "./Comp/Settings/Settings";
 
 export default function Layout() {
   const LoggedIn = useSelector((state) => state.data.LoggedIn);
@@ -24,7 +25,9 @@ export default function Layout() {
         />
 
         <Route path="/login" element={<Login setAllData={setAllData} />} />
-        <Route path="/about" element={LoggedIn ? <h1>About</h1> : <Login setAllData={setAllData} />} />
+        <Route path="/home" element={LoggedIn ? <h1>home</h1> : <Login setAllData={setAllData} />} />
+        <Route path="/settings" element={LoggedIn ? <Settings /> : <Login setAllData={setAllData} />} />
+
         <Route
           path="/audit"
           element={LoggedIn ? <AuditLayout AllData={AllData} /> : <Login setAllData={setAllData} />}

@@ -649,6 +649,9 @@ const state = {
   PDUs: [],
   Assets: [],
   LoggedIn: false,
+  Settings: {
+    localStorage: true,
+  },
   OpenRU: [],
   Current: {
     Location: 0,
