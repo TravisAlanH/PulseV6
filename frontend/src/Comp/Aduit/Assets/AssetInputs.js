@@ -5,6 +5,7 @@ import SearchLayout from "../../Search/SearchLayout";
 import AddFieldButton from "../AddField/AddFieldButton";
 import UseLastData from "../../Reuse/UseLastData";
 import CreateNewViewButton from "../AddNew/CreateNewViewButton";
+import DeleteButton from "../../Reuse/DeleteButton";
 
 export default function AssetInputs({ AllData }) {
   const Step = "Assets";
@@ -24,7 +25,7 @@ export default function AssetInputs({ AllData }) {
   }
 
   return (
-    <div className="flex flex-col gap-2 sticky top-[7rem]">
+    <div className="flex flex-col gap-2">
       <div id="NameRequired" className="text-sm text-red-500 FadeError">
         Name Required
       </div>
@@ -39,10 +40,13 @@ export default function AssetInputs({ AllData }) {
         <UseLastData Step={Step} />
       ) : null}
       {/*  */}
-      <div className="flex flex-row justify-between">
+      <div className="flex flex-col justify-between gap-2">
         {StepData.length > 0 &&
         (State["Make *"].value !== "" || State["Model *"].value !== "" || State["Name *"].value !== "") ? (
-          <AddFieldButton Step={"Assets"} />
+          <div className="flex flex-row justify-between">
+            <AddFieldButton Step={"Assets"} />
+            <DeleteButton Step={"Assets"} />
+          </div>
         ) : null}
         <CreateNewViewButton Step={"Assets"} />
       </div>

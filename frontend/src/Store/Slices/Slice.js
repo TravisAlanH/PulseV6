@@ -192,10 +192,15 @@ const Slice = createSlice({
     loginLogout: (state, action) => {
       state.LoggedIn = action.payload.value;
     },
+    deleteCurrentIndex: (state, action) => {
+      state.Current[action.payload.Step] = state.Current[action.payload.Step] - 1;
+      state[action.payload.Step].splice(action.payload.Current, 1);
+    },
   },
 });
 
 export const {
+  deleteCurrentIndex,
   updateOpenRu,
   addToOpenRU,
   addToPDU,

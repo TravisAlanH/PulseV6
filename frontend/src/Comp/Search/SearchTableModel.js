@@ -8,21 +8,29 @@ export default function SearchTableModel({ SearchData, searchInput, Step, setSea
   const current = useSelector((state) => state.data.Current[Step]);
   const APIMatch = useSelector((state) => state.data[Step][current][keyName].APIMatch);
   const newData = useSelector((state) => state.data["New" + Step]);
+  let newDataCopy = [...newData];
+  console.log(newDataCopy);
+  const currentRack = useSelector((state) => state.data.Current["Racks"]);
+  const OpenRU = useSelector((state) => state.data["OpenRU"][currentRack]);
 
-  // const currentData = useSelector((state) => state.data[Step][current]);
+  const currentData = useSelector((state) => state.data[Step][current]);
   const dispatch = useDispatch();
 
-  // let currentUPosition = 0;
-  // let closestMatch;
-  // if (currentData.hasOwnProperty("U Position *")) {
-  //   currentUPosition = currentData["U Position *"].value;
-  //   console.log(currentUPosition);
-  //   closestMatch = FIND.filterByUPosition(SearchData, currentUPosition);
-  //   closestMatch = FIND.findClosestMatchesInArrayObject(closestMatch, searchInput, APIMatch);
-  //   console.log(closestMatch);
-  // } else {
-  //   closestMatch = FIND.findClosestMatchesInArrayObject(SearchData, searchInput, APIMatch);
-  // }
+  let Gap = 1;
+  let currentUPosition = 0;
+  if (currentData.hasOwnProperty("U Position *")) {
+    currentUPosition = currentData["U Position *"].value;
+    for (let i = currentUPosition; i < OpenRU.length; i++) {
+      if (OpenRU[i] === 0) {
+        Gap = Gap + 1;
+      } else {
+        break;
+      }
+    }
+    SearchData = FIND.filterByUPosition(SearchData, Gap, "RackUnits");
+    newDataCopy = FIND.filterByUPositionWithValue(newDataCopy, Gap, "Rack Units *");
+    console.log(newDataCopy);
+  }
   let closestMatch = FIND.findClosestMatchesInArrayObject(SearchData, searchInput, APIMatch);
 
   let payload = {
@@ -30,8 +38,6 @@ export default function SearchTableModel({ SearchData, searchInput, Step, setSea
     Current: current,
     Key: keyName,
   };
-
-  console.log(closestMatch);
 
   //
   function sort(ascending, columnClassName, tableId) {
@@ -90,7 +96,7 @@ export default function SearchTableModel({ SearchData, searchInput, Step, setSea
 
   // let newData = [];
 
-  let tableAdd = newData.map((item, index) => (
+  let tableAdd = newDataCopy.map((item, index) => (
     <tr
       key={index}
       onClick={() => {
@@ -100,7 +106,7 @@ export default function SearchTableModel({ SearchData, searchInput, Step, setSea
         if (Step === "Racks" || Step === "Assets" || Step === "PDUs") {
           setTimeout(() => {
             payload.Key = "RU Height";
-            payload.value = item.RackUnits;
+            payload.value = item["Rack Units *"].value;
             dispatch(Action.changeData(payload));
             setShowTable(false);
           }, 100);
@@ -108,13 +114,13 @@ export default function SearchTableModel({ SearchData, searchInput, Step, setSea
       }}>
       <td className="">{item["Model Name *"].value}</td>
       <td className="">{item["Make *"].value}</td>
-      <td className="">{item["RU Height"].value}</td>
+      <td className="">{item["Rack Units *"].value}</td>
     </tr>
   ));
 
-  let newTableContent = newData.length > 0 ? <tbody>{tableAdd}</tbody> : null;
+  let newTableContent = newDataCopy.length > 0 ? <tbody>{tableAdd}</tbody> : null;
   let newTableView =
-    newData.length > 0 ? (
+    newDataCopy.length > 0 ? (
       <thead className="sticky top-0 bg-white">
         <tr>
           <th className="Model bg-white">

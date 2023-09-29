@@ -52,7 +52,7 @@ const CreateTemplatesRacks = {
     APIMatch: "",
     NEXT: "HOLD FOR ADDITIONAL INFO",
   },
-  "RU Height": {
+  "Rack Units *": {
     type: "number",
     value: 1,
     placeholder: "Input Here",

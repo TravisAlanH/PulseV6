@@ -5,6 +5,7 @@ import AddToStep from "../../Reuse/AddToStep";
 import RackInput from "./RackInput";
 // import RackRack from "./RackRack";
 import RackFull from "./RackFull";
+import PDUViewVerticalComp from "../PDU/PDUViewVerticalComp";
 
 export default function RackLayout({ AllData }) {
   let Step = "Racks";
@@ -20,8 +21,11 @@ export default function RackLayout({ AllData }) {
         <AddToStep Step={Step} />
       </div>
       {Data.length > 0 ? (
-        <div className="flex flex-row justify-between lg:justify-center gap-6 px-6">
-          <RackInput AllData={AllData} Step={Step} />
+        <div className="flex flex-row justify-center lg:justify-center gap-6 px-6">
+          <div>
+            <RackInput AllData={AllData} Step={Step} />
+            <PDUViewVerticalComp Step={Step} />
+          </div>
           {/* <RackRack Step={Step} /> */}
           <RackFull Step={Step} />
         </div>

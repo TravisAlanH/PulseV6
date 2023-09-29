@@ -28,8 +28,8 @@ export default function RackFull({ Step, setDepthSide }) {
     let Show = true;
     Layout.push(
       <div key={i}>
-        <div className="flex flex-row w-[18rem] justify-start items-center  border-2">
-          <div className="border-r-2 w-[2rem] flex flex-row justify-center h-full">{i}</div>
+        <div className="flex flex-row w-[19rem] justify-start items-center  border-2">
+          <div className="border-r-2 w-[1.75rem] flex flex-row justify-center h-full">{i}</div>
           {Assets.map((object, index) => {
             if (object["U Position *"].value === i && object["Cabinet *"].value === RackState["Name *"].value) {
               Show = false;
@@ -150,29 +150,52 @@ export default function RackFull({ Step, setDepthSide }) {
   // dispatch(Action.changeData(payload));
 
   return (
-    <div className="flex flex-row">
-      {Step === "Assets" ? null : (
-        <div className="flex flex-row">
-          <PDUViewVertical CabinetSide={"Left Side"} DepthPosition={"Front"} setDepthSide={setDepthSide} Step={Step} />
-          <PDUViewVertical CabinetSide={"Left Side"} DepthPosition={"Center"} setDepthSide={setDepthSide} Step={Step} />
-          <PDUViewVertical CabinetSide={"Left Side"} DepthPosition={"Back"} setDepthSide={setDepthSide} Step={Step} />
-        </div>
-      )}
-
-      <div className="flex flex-col-reverse">{Layout}</div>
-
-      {Step === "Assets" ? null : (
-        <div className="flex flex-row">
-          <PDUViewVertical CabinetSide={"Right Side"} DepthPosition={"Back"} setDepthSide={setDepthSide} Step={Step} />
-          <PDUViewVertical
-            CabinetSide={"Right Side"}
-            DepthPosition={"Center"}
-            setDepthSide={setDepthSide}
-            Step={Step}
-          />
-          <PDUViewVertical CabinetSide={"Right Side"} DepthPosition={"Front"} setDepthSide={setDepthSide} Step={Step} />
-        </div>
-      )}
+    <div>
+      <div className="hidden lg:flex flex-row">
+        {Step === "Assets" ? null : (
+          <div className="flex flex-row">
+            <PDUViewVertical
+              CabinetSide={"Left Side"}
+              DepthPosition={"Front"}
+              setDepthSide={setDepthSide}
+              Step={Step}
+            />
+            <PDUViewVertical
+              CabinetSide={"Left Side"}
+              DepthPosition={"Center"}
+              setDepthSide={setDepthSide}
+              Step={Step}
+            />
+            <PDUViewVertical CabinetSide={"Left Side"} DepthPosition={"Back"} setDepthSide={setDepthSide} Step={Step} />
+          </div>
+        )}
+        <div className="flex flex-col-reverse">{Layout}</div>
+        {Step === "Assets" ? null : (
+          <div className="flex flex-row">
+            <PDUViewVertical
+              CabinetSide={"Right Side"}
+              DepthPosition={"Back"}
+              setDepthSide={setDepthSide}
+              Step={Step}
+            />
+            <PDUViewVertical
+              CabinetSide={"Right Side"}
+              DepthPosition={"Center"}
+              setDepthSide={setDepthSide}
+              Step={Step}
+            />
+            <PDUViewVertical
+              CabinetSide={"Right Side"}
+              DepthPosition={"Front"}
+              setDepthSide={setDepthSide}
+              Step={Step}
+            />
+          </div>
+        )}
+      </div>
+      <div className="lg:hidden flex flex-row">
+        <div className="flex flex-col-reverse">{Layout}</div>
+      </div>
     </div>
   );
 }

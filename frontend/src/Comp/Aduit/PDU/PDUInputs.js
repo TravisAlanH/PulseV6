@@ -5,6 +5,7 @@ import SearchLayout from "../../Search/SearchLayout";
 import AddFieldButton from "../AddField/AddFieldButton";
 import UseLastData from "../../Reuse/UseLastData";
 import CreateNewViewButton from "../AddNew/CreateNewViewButton";
+import DeleteButton from "../../Reuse/DeleteButton";
 
 export default function PDUInputs({ AllData, DepthSide }) {
   const Step = "PDUs";
@@ -24,7 +25,7 @@ export default function PDUInputs({ AllData, DepthSide }) {
   }
 
   return (
-    <div className="flex flex-col gap-2 sticky top-[7rem]">
+    <div className="flex flex-col gap-2">
       <div id="NameRequired" className="text-sm text-red-500 FadeError">
         Name Required
       </div>
@@ -39,10 +40,13 @@ export default function PDUInputs({ AllData, DepthSide }) {
         <UseLastData Step={Step} DepthSide={DepthSide} />
       ) : null}
       {/*  */}
-      <div className="flex flex-row justify-between">
+      <div className="flex flex-col justify-between gap-2">
         {StepData.length > 0 &&
         (State["Make *"].value !== "" || State["Model *"].value !== "" || State["Name *"].value !== "") ? (
-          <AddFieldButton Step={"PDUs"} />
+          <div className="flex flex-row justify-between">
+            <AddFieldButton Step={"PDUs"} />
+            <DeleteButton Step={"PDUs"} />
+          </div>
         ) : null}
         <CreateNewViewButton Step={"PDUs"} />
       </div>
