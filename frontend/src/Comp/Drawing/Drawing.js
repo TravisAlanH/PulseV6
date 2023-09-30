@@ -5,7 +5,7 @@ import { fabric } from "fabric";
 export default function Drawing() {
   useEffect(() => {
     var canvas = new fabric.Canvas("c", { selection: false });
-    var grid = 10;
+    var grid = 20;
     var unitScale = 10;
     var canvasWidth = 100 * unitScale;
     var canvasHeight = 100 * unitScale;
@@ -109,6 +109,34 @@ export default function Drawing() {
         })
       );
     }
+
+    //
+    function addWall(event) {
+      var min = 99;
+      var max = 9999999;
+
+      var random = Math.floor(Math.random() * (max - min + 1)) + min;
+      var id = new Date().getTime() + random + "wall";
+      canvas.add(
+        new fabric.Rect({
+          left: 1,
+          top: 1,
+          width: 500,
+          height: 20,
+          type: "rectangle",
+          /* The `fill: "#fab"` property is setting the fill color of the rectangle objects in the
+          canvas to a specific shade of yellow. The color is represented in hexadecimal format. */
+          fill: "#fab",
+          stroke: "",
+          originX: "left",
+          originY: "top",
+          id: id,
+          hasControls: true,
+          centeredRotation: true,
+        })
+      );
+    }
+
     // export json string of array of objects in format {x,y, w, h, id}
     function exportAllObjects(event) {
       var objects = canvas.getObjects();
@@ -223,6 +251,9 @@ export default function Drawing() {
     var addObject = document.getElementById("addnew");
     addObject.addEventListener("click", addObjectCanvas);
 
+    var addObject = document.getElementById("addWall");
+    addObject.addEventListener("click", addWall);
+
     var exportObjects = document.getElementById("export");
     exportObjects.addEventListener("click", exportAllObjects);
 
@@ -267,6 +298,9 @@ export default function Drawing() {
         <button id="addnew" className="orangeButton">
           Create
         </button>
+        <button id="addWall" className="orangeButton">
+          Add Wall
+        </button>
         <button id="delete" className="orangeButton">
           Clear
         </button>
@@ -283,8 +317,8 @@ export default function Drawing() {
           Stop
         </button>
       </div>
-      <textarea id="zone" rows="5"></textarea>
       <canvas id="c"></canvas>
+      <textarea id="zone" rows="5"></textarea>
     </div>
   );
 }
