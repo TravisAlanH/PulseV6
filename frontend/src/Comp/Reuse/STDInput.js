@@ -11,10 +11,13 @@ export default function STDInput({ keyName, Step }) {
   const fullState = useSelector((state) => state.data);
 
   const currentRack = useSelector((state) => state.data.Current["Racks"]);
-  const OpenRU = useSelector((state) => state.data.OpenRU[currentRack]);
+  const OpenRU = useSelector((state) => state.data.OpenRU);
   const dispatch = useDispatch();
 
-  let OpenRUHold = [...OpenRU];
+  console.log(OpenRU.length);
+
+  let OpenRUHold = [];
+  if (OpenRU.length > 0) OpenRUHold = [...OpenRU[currentRack]];
 
   let payload = {
     Step: Step,

@@ -5,6 +5,7 @@ import * as actions from "../../Store/Slices/Slice";
 export default function Settings() {
   const dispatch = useDispatch();
   const localStorageBool = useSelector((state) => state.data.Settings.localStorage);
+  console.log(localStorageBool);
 
   return (
     <div className="flex flex-col border-2 m-2">
@@ -40,10 +41,28 @@ export default function Settings() {
                 className="h-[1.4rem] w-[1.4rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit"
                 checked={localStorageBool}
                 onChange={() => {
-                  dispatch(actions.setLocalStorage(!localStorageBool));
+                  let payload = {
+                    value: !localStorageBool,
+                  };
+                  dispatch(actions.setLocalStorage(payload));
                 }}
               />
             </div>
+          </div>
+        </div>
+        {/* CLEAR LOCAL STORAGE AND DATA */}
+        <div className="flex flex-row justify-start gap-6 px-6 w-[15rem]">
+          <div className="py-2 flex flex-row">
+            <label className={"text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center w-[8rem]"}>
+              Clear Data
+            </label>
+            <button
+              className="redButton"
+              onClick={() => {
+                dispatch(actions.clearData());
+              }}>
+              Reset All
+            </button>
           </div>
         </div>
       </div>

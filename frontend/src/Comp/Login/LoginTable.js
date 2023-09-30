@@ -56,6 +56,7 @@ export default function LoginTable({ setAllData }) {
                   value: true,
                 };
                 dispatch(actions.loginLogout(payload));
+                console.log(localStorageBool);
                 if (localStorageBool) dispatch(actions.loadLocalStorage());
                 axios.get(baseURL + FullData).then((res) => {
                   setAllData(res.data["rows"]);

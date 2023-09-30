@@ -33,22 +33,22 @@ export default function NavLinks() {
           </div>
           <Link
             to="/audit"
-            className="h-[3rem] w-[5rem] bg-[#e0e0e0] flex flex-row justify-start pl-3 font-bold items-center">
+            className="h-[3rem] w-[8rem] bg-[#e0e0e0] flex flex-row justify-start pl-3 font-bold items-center hover:bg-[#f59439]">
             Audit
           </Link>
           <Link
             to="/survey"
-            className="h-[3rem] w-[5rem] bg-[#e0e0e0] flex flex-row justify-start pl-3 font-bold items-center">
+            className="h-[3rem] w-[8rem] bg-[#e0e0e0] flex flex-row justify-start pl-3 font-bold items-center hover:bg-[#f59439]">
             Survey
           </Link>
           <Link
             to="/electrical"
-            className="h-[3rem] w-[5rem] bg-[#e0e0e0] flex flex-row justify-start pl-3 font-bold items-center">
+            className="h-[3rem] w-[8rem] bg-[#e0e0e0] flex flex-row justify-start pl-3 font-bold items-center hover:bg-[#f59439]">
             Electrical
           </Link>
           <Link
             to="/settings"
-            className="h-[3rem] w-[5rem] bg-[#e0e0e0] flex flex-row justify-start pl-3 font-bold items-center">
+            className="h-[3rem] w-[8rem] bg-[#e0e0e0] flex flex-row justify-start pl-3 font-bold items-center hover:bg-[#f59439]">
             Settings
           </Link>
           <div
@@ -58,7 +58,7 @@ export default function NavLinks() {
               };
               dispatch(Actions.loginLogout(payload));
             }}
-            className="h-[3rem] w-[5rem] bg-[#e0e0e0] flex flex-row justify-start pl-3 font-bold items-center">
+            className="h-[3rem] w-[8rem] bg-[#e0e0e0] flex flex-row justify-start pl-3 font-bold items-center hover:bg-[#f59439]">
             Logout
           </div>
         </div>

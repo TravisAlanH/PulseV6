@@ -214,10 +214,15 @@ const Slice = createSlice({
     loadLocalStorage: (state) => {
       state = JSON.parse(localStorage.getItem("PulseStateData"));
     },
+    clearData: (state) => {
+      localStorage.setItem("PulseStateData", JSON.stringify(""));
+      state.LoggedIn = false;
+    },
   },
 });
 
 export const {
+  clearData,
   setLocalStorage,
   loadLocalStorage,
   deleteCurrentIndex,
