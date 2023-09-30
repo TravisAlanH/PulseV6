@@ -251,8 +251,8 @@ export default function Drawing() {
     var addObject = document.getElementById("addnew");
     addObject.addEventListener("click", addObjectCanvas);
 
-    var addObject = document.getElementById("addWall");
-    addObject.addEventListener("click", addWall);
+    var addWallButton = document.getElementById("addWall");
+    addWallButton.addEventListener("click", addWall);
 
     var exportObjects = document.getElementById("export");
     exportObjects.addEventListener("click", exportAllObjects);
