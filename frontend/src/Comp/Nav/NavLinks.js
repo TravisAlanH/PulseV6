@@ -47,6 +47,11 @@ export default function NavLinks() {
             Electrical
           </Link>
           <Link
+            to="/drawing"
+            className="h-[3rem] w-[8rem] bg-[#e0e0e0] flex flex-row justify-start pl-3 font-bold items-center hover:bg-[#f59439]">
+            Drawing
+          </Link>
+          <Link
             to="/settings"
             className="h-[3rem] w-[8rem] bg-[#e0e0e0] flex flex-row justify-start pl-3 font-bold items-center hover:bg-[#f59439]">
             Settings
