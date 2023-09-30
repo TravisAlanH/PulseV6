@@ -5,7 +5,7 @@ import { fabric } from "fabric";
 export default function Drawing() {
   useEffect(() => {
     var canvas = new fabric.Canvas("c", { selection: false });
-    var grid = 10;
+    var grid = 50;
     var unitScale = 10;
     var canvasWidth = 100 * unitScale;
     var canvasHeight = 100 * unitScale;
@@ -15,16 +15,16 @@ export default function Drawing() {
 
     // create grid
 
-    for (var i = 0; i < canvasWidth / grid; i++) {
+    for (var i = 0; i < (canvasWidth / grid) * 2; i++) {
       canvas.add(
-        new fabric.Line([i * grid, 0, i * grid, canvasHeight], {
+        new fabric.Line([(i * grid) / 2, 0, (i * grid) / 2, canvasHeight], {
           type: "line",
           stroke: "#ccc",
           selectable: false,
         })
       );
       canvas.add(
-        new fabric.Line([0, i * grid, canvasWidth, i * grid], {
+        new fabric.Line([0, (i * grid) / 2, canvasWidth, (i * grid) / 2], {
           type: "line",
           stroke: "#ccc",
           selectable: false,
@@ -143,8 +143,8 @@ export default function Drawing() {
           }
         }
         len = list.length;
-        for (var j = 0; j < len; j += 1) {
-          canvas.remove(list[j]);
+        for (var i = 0; i < len; i += 1) {
+          canvas.remove(list[i]);
         }
       }
     }
@@ -252,7 +252,7 @@ export default function Drawing() {
 
     document.addEventListener("keydown", function (event) {
       var keyPressed = event.keyCode;
-      if (keyPressed === 46) {
+      if (keyPressed == 46) {
         var activeObject = canvas.getActiveObject();
         if (activeObject !== null && activeObject.type === "rectangle") {
           canvas.remove(activeObject);
