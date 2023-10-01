@@ -12,13 +12,14 @@ export default function SearchTableModel({ SearchData, searchInput, Step, setSea
   console.log(newDataCopy);
   const currentRack = useSelector((state) => state.data.Current["Racks"]);
   const OpenRU = useSelector((state) => state.data["OpenRU"][currentRack]);
+  const racks = useSelector((state) => state.data["Racks"]);
 
   const currentData = useSelector((state) => state.data[Step][current]);
   const dispatch = useDispatch();
 
   let Gap = 1;
   let currentUPosition = 0;
-  if (currentData.hasOwnProperty("U Position *")) {
+  if (currentData.hasOwnProperty("U Position *") && racks.length > 0) {
     currentUPosition = currentData["U Position *"].value;
     for (let i = currentUPosition; i < OpenRU.length; i++) {
       if (OpenRU[i] === 0) {
@@ -73,7 +74,7 @@ export default function SearchTableModel({ SearchData, searchInput, Step, setSea
         setSearchInput(SearchData[item][APIMatch]);
         payload.value = SearchData[item][APIMatch];
         dispatch(Action.changeData(payload));
-        if (Step === "Racks" || Step === "Assets" || Step === "PDUs") {
+        if (Step === "Racks" || Step === "Assets" || Step === "PDUs" || Step === "UPSs") {
           setTimeout(() => {
             payload.Key = "RU Height";
             payload.value = SearchData[item].RackUnits;
@@ -103,7 +104,7 @@ export default function SearchTableModel({ SearchData, searchInput, Step, setSea
         setSearchInput(item["Model Name *"].value);
         payload.value = item["Model Name *"].value;
         dispatch(Action.changeData(payload));
-        if (Step === "Racks" || Step === "Assets" || Step === "PDUs") {
+        if (Step === "Racks" || Step === "Assets" || Step === "PDUs" || Step === "UPSs") {
           setTimeout(() => {
             payload.Key = "RU Height";
             payload.value = item["Rack Units *"].value;

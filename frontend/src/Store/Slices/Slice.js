@@ -41,6 +41,20 @@ const Slice = createSlice({
 
     addToStep: (state, action) => {
       let updatedRack = Template[action.payload.Step];
+      if (action.payload.Step === "UPSs") {
+        updatedRack = {
+          ...updatedRack,
+          "Location Type": {
+            type: "text",
+            value: action.payload.value,
+            placeholder: "Input Here",
+            options: [],
+            required: false,
+            disabled: true,
+            APIMatch: "",
+          },
+        };
+      }
       if (action.payload.Step === "Racks" || action.payload.Step === "PDUs") {
         updatedRack = {
           ...updatedRack,

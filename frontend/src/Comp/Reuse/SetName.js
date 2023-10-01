@@ -6,9 +6,11 @@ export default function SetName({ Step }) {
   const fullState = useSelector((state) => state.data);
   const currentStep = useSelector((state) => state.data.Current[Step]);
   const currentAsset = useSelector((state) => state.data["Assets"][currentStep]);
+
   const currentRack = useSelector((state) => state.data.Current["Racks"]);
-  const currentRackName = useSelector((state) => state.data.Racks[currentRack]["Name *"].value);
-  const currentLocationName = useSelector((state) => state.data.Location[0]["dcTrack Location Code *"].value);
+  const racks = useSelector((state) => state.data.Racks);
+
+  const currentLocation = useSelector((state) => state.data["Location"][0]);
   const currentPDU = useSelector((state) => state.data.Current["PDUs"]);
   const PDU = useSelector((state) => state.data.PDUs[currentPDU]);
   const dispatch = useDispatch();
@@ -23,7 +25,9 @@ export default function SetName({ Step }) {
           SetName = (
             "CAB-A" +
             (currentStep + 1) +
-            (currentLocationName !== "" ? "-" + currentLocationName.slice(0, 2) : "")
+            (currentLocation["dcTrack Location Code *"].value !== ""
+              ? "-" + currentLocation["dcTrack Location Code *"].value.slice(0, 2)
+              : "")
           ).toUpperCase();
         }
         if (Step === "PDUs") {
@@ -32,7 +36,9 @@ export default function SetName({ Step }) {
               "PDU" +
               "-" +
               //CABINET
-              (currentRackName.split("-").length > 1 ? currentRackName.split("-")[1] : currentRackName.slice(0, 2)) +
+              (racks[currentRack]["Name *"].value.split("-").length > 1
+                ? racks[currentRack]["Name *"].value.split("-")[1]
+                : racks[currentRack]["Name *"].value.slice(0, 2)) +
               (PDU["Cabinet Side *"].value === ""
                 ? ""
                 : "-" +
@@ -46,20 +52,24 @@ export default function SetName({ Step }) {
           SetName = //CABINET
             (
               "DEV-" +
-              (currentRackName.split("-").length > 1 ? currentRackName.split("-")[1] : currentRackName.slice(0, 2)) +
+              (racks[currentRack]["Name *"].value.split("-").length > 1
+                ? racks[currentRack]["Name *"].value.split("-")[1]
+                : racks[currentRack]["Name *"].value.slice(0, 2)) +
               "-U" +
               //U POSITION
               currentAsset["U Position *"].value
             ).toUpperCase();
         }
 
+        // This error is because the rack name is being set before
         if (Step === "Racks") {
           Object.keys(fullState).forEach((key) => {
             if (Array.isArray(fullState[key]) && fullState[key].length > 0) {
               for (let i = 0; i < fullState[key].length; i++) {
+                console.log(racks[currentRack]);
                 if (
                   fullState[key][i].hasOwnProperty("Cabinet *") &&
-                  fullState[key][i]["Cabinet *"].value === currentRackName
+                  fullState[key][i]["Cabinet *"].value === racks[currentRack]["Name *"].value
                 ) {
                   let payload = {};
                   payload.value = SetName;
@@ -72,6 +82,7 @@ export default function SetName({ Step }) {
             }
           });
         }
+
         let payload = {
           Step: Step,
           Current: currentStep,

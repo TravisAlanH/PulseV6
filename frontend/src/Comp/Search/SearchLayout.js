@@ -27,6 +27,9 @@ export default function SearchLayout({ KeyName, Step, AllData }) {
     case (Step = "Assets"):
       StepDataFilter = ["Device", "Network"];
       break;
+    case (Step = "UPSs"):
+      StepDataFilter = ["UPS"];
+      break;
     default:
       break;
   }

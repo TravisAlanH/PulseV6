@@ -8,8 +8,8 @@ import RackFull from "../Rack/RackFull";
 export default function AssetsLayout({ AllData }) {
   let Step = "Assets";
   const Data = useSelector((state) => state.data[Step]);
-  const currentRacks = useSelector((state) => state.data.Current["Racks"]);
-  const RackState = useSelector((state) => state.data["Racks"][currentRacks]["RU Height"].value);
+  // const currentRacks = useSelector((state) => state.data.Current["Racks"]);
+  const RackState = useSelector((state) => state.data["Racks"]);
 
   return (
     <div className="flex flex-col border-2 m-2">
@@ -30,7 +30,7 @@ export default function AssetsLayout({ AllData }) {
           <div className="w-[12rem]"></div>
         )}
         {/* {RackState.length > 0 ? <RackRack Step={Step} /> : null} */}
-        {RackState > 1 ? <RackFull Step={Step} /> : null}
+        {RackState.length > 0 ? <RackFull Step={Step} /> : null}
       </div>
     </div>
   );

@@ -2,6 +2,7 @@ import React from "react";
 import "../../Styles/BodyNav.css";
 import LocationLayout from "../Location/LocationLayout";
 import PDULayout from "../Aduit/PDU/PDULayout";
+import UPSLayout from "./UPS/UPSLayout";
 
 export default function ElectricalNav({ setCurrentElectrical, AllData }) {
   const buttons = document.getElementsByClassName("SurveyLinks");
@@ -31,7 +32,7 @@ export default function ElectricalNav({ setCurrentElectrical, AllData }) {
         Location
       </button>
       <button
-        id="AuditLinks"
+        id="SurveyLinks"
         className={buttonStyle}
         onClick={(e) => {
           removeSelected();
@@ -39,6 +40,16 @@ export default function ElectricalNav({ setCurrentElectrical, AllData }) {
           setCurrentElectrical(<PDULayout AllData={AllData} />);
         }}>
         Rack PDU
+      </button>
+      <button
+        id="SurveyLinks"
+        className={buttonStyle}
+        onClick={(e) => {
+          removeSelected();
+          e.target.classList.add("selected");
+          setCurrentElectrical(<UPSLayout AllData={AllData} />);
+        }}>
+        UPS
       </button>
     </div>
   );
