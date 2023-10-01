@@ -15,7 +15,7 @@ export default function UPSRacksData({ Step, AllData }) {
   }
 
   return (
-    <div className="flex flex-row justify-center">
+    <div className="flex flex-row justify-center gap-6">
       <div className="">{Input}</div>
       {RackState.length > 0 ? <RackFull Step={Step} /> : null}
     </div>

@@ -1,13 +1,13 @@
 import React from "react";
-import STDInput from "../../Reuse/STDInput";
 import { useSelector } from "react-redux";
+import STDInput from "../../Reuse/STDInput";
 import SearchLayout from "../../Search/SearchLayout";
 import UseLastData from "../../Reuse/UseLastData";
 import DeleteButton from "../../Reuse/DeleteButton";
 // import CreateNewViewButton from "../../Aduit/AddNew/CreateNewViewButton";
 
-export default function UPSInputs({ AllData, DepthSide }) {
-  const Step = "UPSs";
+export default function ATSInputs({ AllData }) {
+  const Step = "ATSs";
 
   const Current = useSelector((state) => state.data.Current[Step]);
   const State = useSelector((state) => state.data[Step][Current]);
@@ -36,14 +36,13 @@ export default function UPSInputs({ AllData, DepthSide }) {
       })}
       {/*  */}
       {StepData.length > 0 && StepData.length !== 1 && State["Make *"].value === "" && State["Model *"].value === "" ? (
-        <UseLastData Step={Step} DepthSide={DepthSide} />
+        <UseLastData Step={Step} />
       ) : null}
       {/*  */}
       <div className="flex flex-col justify-between gap-2">
         {StepData.length > 0 &&
         (State["Make *"].value !== "" || State["Model *"].value !== "" || State["Name *"].value !== "") ? (
           <div className="flex flex-row justify-between">
-            {/* <AddFieldButton Step={Step} /> */}
             <DeleteButton Step={Step} />
           </div>
         ) : null}

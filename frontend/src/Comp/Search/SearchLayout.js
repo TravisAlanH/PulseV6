@@ -30,6 +30,9 @@ export default function SearchLayout({ KeyName, Step, AllData }) {
     case (Step = "UPSs"):
       StepDataFilter = ["UPS"];
       break;
+    case (Step = "ATSs"):
+      StepDataFilter = ["UPS"];
+      break;
     default:
       break;
   }

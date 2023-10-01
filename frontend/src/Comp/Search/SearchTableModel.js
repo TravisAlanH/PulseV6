@@ -74,7 +74,7 @@ export default function SearchTableModel({ SearchData, searchInput, Step, setSea
         setSearchInput(SearchData[item][APIMatch]);
         payload.value = SearchData[item][APIMatch];
         dispatch(Action.changeData(payload));
-        if (Step === "Racks" || Step === "Assets" || Step === "PDUs" || Step === "UPSs") {
+        if (Step === "Racks" || Step === "Assets" || Step === "PDUs" || Step === "UPSs" || Step === "ATSs") {
           setTimeout(() => {
             payload.Key = "RU Height";
             payload.value = SearchData[item].RackUnits;
@@ -104,7 +104,7 @@ export default function SearchTableModel({ SearchData, searchInput, Step, setSea
         setSearchInput(item["Model Name *"].value);
         payload.value = item["Model Name *"].value;
         dispatch(Action.changeData(payload));
-        if (Step === "Racks" || Step === "Assets" || Step === "PDUs" || Step === "UPSs") {
+        if (Step === "Racks" || Step === "Assets" || Step === "PDUs" || Step === "UPSs" || Step === "ATSs") {
           setTimeout(() => {
             payload.Key = "RU Height";
             payload.value = item["Rack Units *"].value;

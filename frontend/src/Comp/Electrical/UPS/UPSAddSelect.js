@@ -21,8 +21,8 @@ export default function UPSAddSelect({ Step, keyName, setMountType }) {
         <div className="w-[1rem] flex flex-row justify-center items-center text-red-500">
           {keyName.includes("*") ? "*" : ""}
         </div>
-        <label className={"text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center w-[8rem]"}>
-          {keyName ? keyName.replace("*", "") : keyName.slice(0, 12).replace("*", "")}
+        <label className={"text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center w-[12rem]"}>
+          Add to {keyName ? keyName.replace("*", "") : keyName.slice(0, 12).replace("*", "")}
         </label>
         <select
           id="select"

@@ -3,6 +3,9 @@ import "../../Styles/BodyNav.css";
 import LocationLayout from "../Location/LocationLayout";
 import PDULayout from "../Aduit/PDU/PDULayout";
 import UPSLayout from "./UPS/UPSLayout";
+import ATSLayout from "./ATS/ATSLayout";
+import RackLayout from "../Aduit/Rack/RackLayout";
+import PanRecepLayout from "./PanRecep/PanRecepLayout";
 
 export default function ElectricalNav({ setCurrentElectrical, AllData }) {
   const buttons = document.getElementsByClassName("SurveyLinks");
@@ -37,9 +40,39 @@ export default function ElectricalNav({ setCurrentElectrical, AllData }) {
         onClick={(e) => {
           removeSelected();
           e.target.classList.add("selected");
+          setCurrentElectrical(<RackLayout AllData={AllData} />);
+        }}>
+        Cabinet
+      </button>
+      <button
+        id="SurveyLinks"
+        className={buttonStyle}
+        onClick={(e) => {
+          removeSelected();
+          e.target.classList.add("selected");
           setCurrentElectrical(<PDULayout AllData={AllData} />);
         }}>
         Rack PDU
+      </button>
+      <button
+        id="SurveyLinks"
+        className={buttonStyle}
+        onClick={(e) => {
+          removeSelected();
+          e.target.classList.add("selected");
+          setCurrentElectrical(<ATSLayout AllData={AllData} />);
+        }}>
+        Rack ATS
+      </button>
+      <button
+        id="SurveyLinks"
+        className={buttonStyle}
+        onClick={(e) => {
+          removeSelected();
+          e.target.classList.add("selected");
+          setCurrentElectrical(<PanRecepLayout />);
+        }}>
+        Panel / Receptacle
       </button>
       <button
         id="SurveyLinks"

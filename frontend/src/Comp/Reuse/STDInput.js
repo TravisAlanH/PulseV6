@@ -14,8 +14,6 @@ export default function STDInput({ keyName, Step }) {
   const OpenRU = useSelector((state) => state.data.OpenRU);
   const dispatch = useDispatch();
 
-  console.log(OpenRU.length);
-
   let OpenRUHold = [];
   if (OpenRU.length > 0) OpenRUHold = [...OpenRU[currentRack]];
 

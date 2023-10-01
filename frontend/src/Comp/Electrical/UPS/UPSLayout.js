@@ -11,7 +11,6 @@ export default function UPSLayout({ AllData }) {
   const [mountType, setMountType] = React.useState("Location");
 
   ///////
-  //! I NEED TO SPLIT THE LOCATION AND CABINET ADDS INTO TWO COMPONENTS
   ///////
 
   return (
