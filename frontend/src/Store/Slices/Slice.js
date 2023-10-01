@@ -91,7 +91,7 @@ const Slice = createSlice({
     addToRacks: (state, action) => {
       console.log(action.payload);
       let updatedRack = {
-        ...Template["Assets"],
+        ...Template[action.payload.Step],
         "U Position *": {
           type: "number",
           value: action.payload.UPosition,
@@ -127,8 +127,22 @@ const Slice = createSlice({
           NEXT: "HOLD FOR ADDITIONAL INFO",
         },
       };
+      if (action.payload.Step === "UPSs") {
+        updatedRack = {
+          ...updatedRack,
+          "Location Type": {
+            type: "text",
+            value: "Cabinet",
+            placeholder: "Input Here",
+            options: [],
+            required: false,
+            disabled: true,
+            APIMatch: "",
+          },
+        };
+      }
       console.log(updatedRack);
-      state["Assets"] = [...state["Assets"], updatedRack];
+      state[action.payload.Step] = [...state[action.payload.Step], updatedRack];
       if (state.Settings.localStorage) localStorage.setItem("PulseStateData", JSON.stringify(state));
     },
     addToPDU: (state, action) => {

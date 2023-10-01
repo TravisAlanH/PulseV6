@@ -43,7 +43,7 @@ export default function AddToRacks({ Step, index }) {
         //   dispatch(actions.changeData(payload));
         // }, 200);
       }}>
-      Add Asset
+      Add {Step}
     </button>
   );
 }

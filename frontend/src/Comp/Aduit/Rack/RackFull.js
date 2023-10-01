@@ -10,6 +10,7 @@ export default function RackFull({ Step, setDepthSide }) {
   const current = useSelector((state) => state.data.Current["Racks"]);
   const Assets = useSelector((state) => state.data["Assets"]);
   const PDUs = useSelector((state) => state.data["PDUs"]);
+  const UPSs = useSelector((state) => state.data["UPSs"]);
   const RackState = useSelector((state) => state.data["Racks"][current]);
   // const openRU = useSelector((state) => state.data["Racks"][current]["!!!OpenRUArray"]);
   // const currentAsset = useSelector((state) => state.data.Current["Assets"]);
@@ -111,6 +112,44 @@ export default function RackFull({ Step, setDepthSide }) {
               );
             } else return null;
           })}
+          {UPSs.map((object, index) => {
+            if (object["U Position *"].value === i && object["Cabinet *"].value === RackState["Name *"].value) {
+              Show = false;
+              for (let j = 0; j < object["RU Height"].value - 1; j++) {
+                holdOpenRU.push(1);
+              }
+              i = object["RU Height"].value + i - 1;
+
+              return (
+                <div
+                  key={index}
+                  className="flex flex-row pl-2 py-1"
+                  onClick={() => {
+                    let payload = {
+                      Step: "UPSs",
+                      value: index,
+                    };
+                    dispatch(Action.updateCurrent(payload));
+                  }}>
+                  <div>
+                    <div className="rounded-full bg-red-500 w-[.5rem] h-[.5rem] mt-[.1rem] mr-1"></div>
+                  </div>
+                  <div className="flex flex-col w-[4rem] justify-center">
+                    <label className="text-xs h-[.75rem] flex flex-col justify-center">Make</label>
+                    <div className="w-[10rem] h-[1rem] flex flex-col justify-center">
+                      {object["Make *"].value.slice(0, 5)}
+                    </div>
+                  </div>
+                  <div className="flex flex-col w-[7rem] justify-center">
+                    <label className="text-xs h-[.75rem] flex flex-col justify-center">Model</label>
+                    <div className="w-[10rem] h-[1rem] flex flex-col justify-center">
+                      {object["Model *"].value.slice(0, 16)}
+                    </div>
+                  </div>
+                </div>
+              );
+            } else return null;
+          })}
           {Step === "PDUs" && Show ? (
             <div id="ADD" className="w-full flex flex-row justify-center">
               <button
@@ -130,9 +169,9 @@ export default function RackFull({ Step, setDepthSide }) {
               </button>
             </div>
           ) : null}
-          {Step === "Assets" && Show ? (
+          {Step === "Assets" || (Step === "UPSs" && Show) ? (
             <div id="ADD" className="w-full flex flex-row justify-center">
-              <AddToRacks Step={"Assets"} index={i} />
+              <AddToRacks Step={Step} index={i} />
             </div>
           ) : null}
         </div>
@@ -152,7 +191,7 @@ export default function RackFull({ Step, setDepthSide }) {
   return (
     <div>
       <div className="hidden lg:flex flex-row">
-        {Step === "Assets" ? null : (
+        {Step === "Assets" || Step === "UPSs" ? null : (
           <div className="flex flex-row">
             <PDUViewVertical
               CabinetSide={"Left Side"}
@@ -170,7 +209,7 @@ export default function RackFull({ Step, setDepthSide }) {
           </div>
         )}
         <div className="flex flex-col-reverse">{Layout}</div>
-        {Step === "Assets" ? null : (
+        {Step === "Assets" || Step === "UPSs" ? null : (
           <div className="flex flex-row">
             <PDUViewVertical
               CabinetSide={"Right Side"}
