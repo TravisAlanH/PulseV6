@@ -60,6 +60,30 @@ export default function SetName({ Step }) {
               currentAsset["U Position *"].value
             ).toUpperCase();
         }
+        if (Step === "ATSs") {
+          SetName = //CABINET
+            (
+              "ATS-" +
+              (racks[currentRack]["Name *"].value.split("-").length > 1
+                ? racks[currentRack]["Name *"].value.split("-")[1]
+                : racks[currentRack]["Name *"].value.slice(0, 2)) +
+              "-U" +
+              //U POSITION
+              currentAsset["U Position *"].value
+            ).toUpperCase();
+        }
+        if (Step === "UPSs") {
+          SetName = //CABINET
+            (
+              "UPS-" +
+              (racks[currentRack]["Name *"].value.split("-").length > 1
+                ? racks[currentRack]["Name *"].value.split("-")[1]
+                : racks[currentRack]["Name *"].value.slice(0, 2)) +
+              "-U" +
+              //U POSITION
+              currentAsset["U Position *"].value
+            ).toUpperCase();
+        }
 
         // This error is because the rack name is being set before
         if (Step === "Racks") {

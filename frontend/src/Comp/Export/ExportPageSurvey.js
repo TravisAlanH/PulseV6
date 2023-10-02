@@ -7,8 +7,29 @@ import download_to_excel from "../../Format/ExportExcel";
 export default function ExportPageSurvey() {
   const Data = useSelector((state) => state.data);
   const keys = Object.keys(Data);
+  // const [AllData, setAllData] = React.useState([]);
 
   // const [modalBlock, setModalBlock] = React.useState();
+
+  // useEffect(() => {
+  //   keys.map((key, index) => {
+  //     if (key === "Current" || key === "LoggedIn" || key.includes("New")) return null;
+  //     let Input = Data[key];
+  //     for (let i = 0; i < Input.length; i++) {
+  //       let temp = {};
+  //       for (let key in Input[i]) {
+  //         if (key === "Status *") continue;
+  //         if (key === "RUHeight") continue;
+  //         temp[key] = Input[i][key].value;
+  //       }
+
+  //       setAllData((prev) => [...prev, temp]);
+  //     }
+  //   });
+  //   console.log(AllData);
+  // }, [Data, keys]);
+
+  // createTable(AllData, "ExportTable");
 
   return (
     <div className="w-screen h-screen p-3">
