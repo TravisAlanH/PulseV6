@@ -1,4 +1,5 @@
 import countries from "./TemplateHelpers/Counties";
+import * as Elect from "./TemplateHelpers/ElectricalArrays";
 import * as Survey from "./TemplateHelpers/SurveyArrays";
 import CreateTemplatesAssets from "../../Comp/Aduit/AddNew/CreateTemplatesAssets";
 import CreateTemplatesRacks from "../../Comp/Aduit/AddNew/CreateNewTemplatesRacks";
@@ -680,6 +681,71 @@ let Template = {
       NEXT: "HOLD FOR ADDITIONAL INFO",
     },
   },
+  Panels: {
+    "# Operation *": { value: "ADD" },
+    "Object *": "DEVICE-RACKABLE",
+    "Name *": {
+      type: "text",
+      value: "",
+      placeholder: "Input Here",
+      options: [],
+      required: false,
+      APIMatch: "",
+    },
+    "Location *": {
+      type: "text",
+      value: "",
+      placeholder: "Input Here",
+      options: [],
+      disabled: true,
+      required: false,
+      APIMatch: "",
+    },
+    "Upstream Connection": {
+      type: "select",
+      value: "",
+      placeholder: "Input Here",
+      options: Elect.Upstream,
+      required: false,
+      APIMatch: "",
+    },
+  },
+  Receptacles: {
+    "# Operation *": { value: "ADD" },
+    "Object *": "DEVICE-RACKABLE",
+    "Location *": {
+      type: "text",
+      value: "",
+      placeholder: "Input Here",
+      options: [],
+      disabled: true,
+      required: false,
+      APIMatch: "",
+    },
+    Placement: {
+      type: "select",
+      value: "",
+      placeholder: "Input Here",
+      options: ["Select", "Cabinet", "Wall"],
+    },
+    "Cabinet Placement": {
+      type: "select",
+      value: "",
+      placeholder: "Input Here",
+      options: [],
+      required: false,
+      APIMatch: "",
+    },
+    "Wall Placement": {
+      type: "select",
+      value: "",
+      placeholder: "Input Here",
+      options: [],
+      required: false,
+      APIMatch: "",
+    },
+  },
+
   //////////////////
   SurveyRoom: {
     "Room Number *": {
@@ -918,6 +984,8 @@ const state = {
   Assets: [],
   UPSs: [],
   ATSs: [],
+  Panels: [],
+  Receptacles: [],
   LoggedIn: false,
   Settings: {
     localStorage: true,
@@ -931,6 +999,8 @@ const state = {
     Assets: 0,
     UPSs: 0,
     ATSs: 0,
+    Panels: 0,
+    Receptacles: 0,
     NewRacks: 0,
     NewPDUs: 0,
     NewAssets: 0,

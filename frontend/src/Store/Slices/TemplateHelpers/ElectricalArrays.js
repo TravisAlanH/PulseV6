@@ -1,0 +1,25 @@
+const Upstream = [
+  "Select",
+  "Utility Transformer",
+  "Main Distribution Panel",
+  "Generator",
+  "Substation",
+  "Feeder Pillar",
+  "Solar Power System",
+  "Wind Turbine",
+  "Hydroelectric Power Plant",
+  "Battery Backup System",
+  "Grid Interconnection Point",
+  "Service Entrance",
+  "Main Switchboard",
+  "Emergency Power Supply",
+  "Uninterruptible Power Supply (UPS)",
+  "Power Inverter",
+  "Metering Equipment",
+  "Power Factor Correction Equipment",
+  "Automatic Transfer Switch (ATS)",
+  "Wind Farm Connection Point",
+  "Photovoltaic (PV) Inverter",
+];
+
+export { Upstream };

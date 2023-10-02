@@ -1,4 +1,6 @@
 import React from "react";
+import PanLayout from "./PanLayout";
+import RecepLayout from "./RecepLayout";
 
 export default function PanRecepLayout() {
   const Step = "Panels & Receptacles";
@@ -13,8 +15,8 @@ export default function PanRecepLayout() {
       </div>
       <div></div>
       <div className="flex flex-row justify-center lg:justify-center gap-6 px-6">
-        <p>Left</p>
-        <p>Right</p>
+        <PanLayout />
+        <RecepLayout />
       </div>
     </div>
   );

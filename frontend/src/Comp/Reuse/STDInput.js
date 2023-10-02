@@ -41,6 +41,13 @@ export default function STDInput({ keyName, Step }) {
     ShowAll = true;
   }
 
+  if (Step === "Panels" || Step === "Receptacles") {
+    labelSize = "w-[8rem]";
+    inputSize = "w-[13rem]";
+    inputSizeWithButton = "w-[9rem]";
+    ShowAll = true;
+  }
+
   let STDInput;
   let typeOf = state[current][keyName].type;
 
