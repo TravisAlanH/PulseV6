@@ -215,38 +215,38 @@ export default function Drawing() {
       importList(objects);
     }
 
-    var index = 0,
-      duration = 500,
-      time;
-    function animateStateCanvas(event) {
-      var zone = document.getElementById("zone");
-      var frames = JSON.parse(zone.value);
+    // var index = 0,
+    //   duration = 500,
+    //   time;
+    // function animateStateCanvas(event) {
+    //   var zone = document.getElementById("zone");
+    //   var frames = JSON.parse(zone.value);
 
-      importList(frames[index]);
+    //   importList(frames[index]);
 
-      time = setInterval(function () {
-        if (index > frames.length - 1) {
-          index = 0;
-          importList(frames[index]);
-        } else {
-          canvas.clear();
-          for (var i = 0; i < canvasWidth / grid; i++) {
-            canvas.add(
-              new fabric.Line([i * grid, 0, i * grid, canvasHeight], {
-                type: "line",
-                stroke: "#ccc",
-                selectable: false,
-              })
-            );
-            canvas.add(
-              new fabric.Line([0, i * grid, canvasWidth, i * grid], { type: "line", stroke: "#ccc", selectable: false })
-            );
-          }
-          index++;
-          importList(frames[index]);
-        }
-      }, duration);
-    }
+    //   time = setInterval(function () {
+    //     if (index > frames.length - 1) {
+    //       index = 0;
+    //       importList(frames[index]);
+    //     } else {
+    //       canvas.clear();
+    //       for (var i = 0; i < canvasWidth / grid; i++) {
+    //         canvas.add(
+    //           new fabric.Line([i * grid, 0, i * grid, canvasHeight], {
+    //             type: "line",
+    //             stroke: "#ccc",
+    //             selectable: false,
+    //           })
+    //         );
+    //         canvas.add(
+    //           new fabric.Line([0, i * grid, canvasWidth, i * grid], { type: "line", stroke: "#ccc", selectable: false })
+    //         );
+    //       }
+    //       index++;
+    //       importList(frames[index]);
+    //     }
+    //   }, duration);
+    // }
 
     var addObject = document.getElementById("addnew");
     addObject.addEventListener("click", addObjectCanvas);
@@ -263,23 +263,23 @@ export default function Drawing() {
     var importObjects = document.getElementById("import");
     importObjects.addEventListener("click", importObjectCanvas);
 
-    var animateStates = document.getElementById("animate");
-    animateStates.addEventListener("click", animateStateCanvas);
+    // var animateStates = document.getElementById("animate");
+    // animateStates.addEventListener("click", animateStateCanvas);
 
-    var stopAnimateStates = document.getElementById("stop");
-    stopAnimateStates.addEventListener("click", function () {
-      canvas.clear();
-      for (var i = 0; i < canvasWidth / grid; i++) {
-        canvas.add(
-          new fabric.Line([i * grid, 0, i * grid, canvasHeight], { type: "line", stroke: "#ccc", selectable: false })
-        );
-        canvas.add(
-          new fabric.Line([0, i * grid, canvasWidth, i * grid], { type: "line", stroke: "#ccc", selectable: false })
-        );
-      }
-      index = 0;
-      clearInterval(time);
-    });
+    // var stopAnimateStates = document.getElementById("stop");
+    // stopAnimateStates.addEventListener("click", function () {
+    //   canvas.clear();
+    //   for (var i = 0; i < canvasWidth / grid; i++) {
+    //     canvas.add(
+    //       new fabric.Line([i * grid, 0, i * grid, canvasHeight], { type: "line", stroke: "#ccc", selectable: false })
+    //     );
+    //     canvas.add(
+    //       new fabric.Line([0, i * grid, canvasWidth, i * grid], { type: "line", stroke: "#ccc", selectable: false })
+    //     );
+    //   }
+    //   index = 0;
+    //   clearInterval(time);
+    // });
 
     document.addEventListener("keydown", function (event) {
       var keyPressed = event.keyCode;
@@ -310,12 +310,12 @@ export default function Drawing() {
         <button id="import" className="orangeButton">
           Import
         </button>
-        <button id="animate" className="orangeButton">
+        {/* <button id="animate" className="orangeButton">
           Animate
         </button>
         <button id="stop" className="orangeButton">
           Stop
-        </button>
+        </button> */}
       </div>
       <canvas id="c"></canvas>
       <textarea id="zone" rows="5"></textarea>
