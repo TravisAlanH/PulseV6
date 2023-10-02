@@ -112,8 +112,6 @@ export default function STDInput({ keyName, Step }) {
     if (selectedIndex === -1) {
       selectedIndex = 0;
     }
-    // console.log("selectedIndex", selectedIndex);
-    // console.log("SelectedValue", SelectedValue);
 
     STDInput = (
       <select
@@ -136,11 +134,6 @@ export default function STDInput({ keyName, Step }) {
               </option>
             );
           }
-          // return (
-          //   <option value={option} key={index}>
-          //     {option}
-          //   </option>
-          // );
         })}
       </select>
     );
@@ -157,7 +150,7 @@ export default function STDInput({ keyName, Step }) {
             placeholder={state[current][keyName].placeholder}
             // required={state[current][keyName].required}
             onChange={(e) => {
-              if (keyName === "Name *") {
+              if (keyName === "Name *" && Step !== "Panels") {
                 document.getElementById("NameRequired").style.opacity = "0";
               }
               payload.value = e.target.value;
