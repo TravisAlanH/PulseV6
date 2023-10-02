@@ -67,6 +67,7 @@ const Slice = createSlice({
             required: false,
             APIMatch: "",
             NEXT: "HOLD FOR ADDITIONAL INFO",
+            Export: "Location *",
           },
         };
       }
@@ -82,6 +83,7 @@ const Slice = createSlice({
             required: false,
             APIMatch: "",
             NEXT: "HOLD FOR ADDITIONAL INFO",
+            Export: "Cabinet **",
           },
         };
       }
@@ -99,6 +101,7 @@ const Slice = createSlice({
           required: false,
           aPIMatch: "",
           NEXT: "HOLD FOR ADDITIONAL INFO",
+          Export: "U Position **",
         },
       };
       updatedRack = {
@@ -112,6 +115,7 @@ const Slice = createSlice({
           disabled: true,
           APIMatch: "",
           NEXT: "HOLD FOR ADDITIONAL INFO",
+          Export: "Cabinet **",
         },
       };
       updatedRack = {
@@ -125,6 +129,7 @@ const Slice = createSlice({
           required: false,
           APIMatch: "",
           NEXT: "HOLD FOR ADDITIONAL INFO",
+          Export: "Location *",
         },
       };
       if (action.payload.Step === "UPSs") {
@@ -155,6 +160,7 @@ const Slice = createSlice({
           options: ["Select", "Left Side", "Right Side"],
           required: false,
           APIMatch: "",
+          Export: "Cabinet Side **",
         },
       };
       updatedPUD = {
@@ -166,6 +172,7 @@ const Slice = createSlice({
           options: ["Select", "Front", "Center", "Back"],
           required: false,
           APIMatch: "",
+          Export: "Depth Position **",
         },
       };
       updatedPUD = {
@@ -178,6 +185,7 @@ const Slice = createSlice({
           disabled: true,
           required: false,
           APIMatch: "",
+          Export: "Location *",
         },
       };
       updatedPUD = {
@@ -190,6 +198,8 @@ const Slice = createSlice({
           disabled: true,
           required: false,
           APIMatch: "",
+          NEXT: "HOLD FOR ADDITIONAL INFO",
+          Export: "Cabinet **",
         },
       };
       updatedPUD = {
@@ -201,6 +211,8 @@ const Slice = createSlice({
           options: [],
           required: false,
           aPIMatch: "",
+          NEXT: "HOLD FOR ADDITIONAL INFO",
+          Export: "U Position **",
         },
       };
       state["PDUs"] = [...state["PDUs"], updatedPUD];

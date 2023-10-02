@@ -11,8 +11,8 @@ import CreateTemplatesPDU from "../../Comp/Aduit/AddNew/CreateTemplatesPDU";
 let Template = {
   Location: {
     ///////////////
-    "# Operation *": { value: "ADD" },
-    "Object *": { value: "LOCATION" },
+    "# Operation *": { value: "ADD", Export: "# Operation *" },
+    "Object *": { value: "LOCATION", Export: "Object *" },
     "dcTrack Location Code *": {
       type: "text",
       value: "",
@@ -21,26 +21,27 @@ let Template = {
       required: false,
       APIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
+      Export: "dcTrack Location Code *",
     },
     "dcTrack Location Name *": {
       type: "text",
       value: "",
-
       placeholder: "Input Here",
       options: [],
       required: false,
       APIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
+      Export: "dcTrack Location Name *",
     },
     "dcTrack Location Hierarchy *": {
       type: "select",
       value: "",
-
       placeholder: "Input Here",
       options: ["Data Center", "Floor", "Room"],
       required: false,
       APIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
+      Export: "dcTrack Location Hierarchy *",
     },
     "dcTrack Location Parent": {
       type: "text",
@@ -50,86 +51,98 @@ let Template = {
       required: false,
       APIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
+      Export: "dcTrack Location Parent",
     },
     "Data Center Area *": {
       type: "number",
       value: 0,
-
       options: [],
       required: false,
       aPIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
+      Export: "Data Center Area *",
     },
     "Country *": {
       type: "select",
       value: "",
-
       options: countries,
       required: false,
       aPIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
+      Export: "Country *",
     },
-    "Status *": { value: "PLANNED" },
+    "Custom Field Testing 1 *": {
+      type: "number",
+      value: 555,
+      options: [],
+      required: false,
+      aPIMatch: "",
+      NEXT: "HOLD FOR ADDITIONAL INFO",
+      Export: "",
+    },
+    "Status *": { value: "PLANNED", Export: "Status *" },
   },
   //////////////////
-  Rooms: {
-    "# Operation *": { value: "ADD" },
-    "Object *": { value: "SUBLOCATION" },
-    "Sub Location Type *": {
-      type: "select",
-      value: "",
-      placeholder: "Input Here",
-      options: ["Select", "Aisle", "Row"],
-      required: false,
-      APIMatch: "",
-      NEXT: "HOLD FOR ADDITIONAL INFO",
-    },
-    "Sub Location Name *": {
-      type: "text",
-      value: "",
-      placeholder: "Input Here",
-      options: [],
-      required: false,
-      APIMatch: "",
-      NEXT: "HOLD FOR ADDITIONAL INFO",
-    },
-    "Location *": {
-      type: "text",
-      value: "",
-      placeholder: "Input Here",
-      options: [],
-      disabled: true,
-      required: false,
-      APIMatch: "",
-      NEXT: "HOLD FOR ADDITIONAL INFO",
-    },
+  // Rooms: {
+  //   "# Operation *": { value: "ADD" },
+  //   "Object *": { value: "SUBLOCATION" },
+  //   "Sub Location Type *": {
+  //     type: "select",
+  //     value: "",
+  //     placeholder: "Input Here",
+  //     options: ["Select", "Aisle", "Row"],
+  //     required: false,
+  //     APIMatch: "",
+  //     NEXT: "HOLD FOR ADDITIONAL INFO",
+  //     Export: "",
+  //   },
+  //   "Sub Location Name *": {
+  //     type: "text",
+  //     value: "",
+  //     placeholder: "Input Here",
+  //     options: [],
+  //     required: false,
+  //     APIMatch: "",
+  //     NEXT: "HOLD FOR ADDITIONAL INFO",
+  //     Export: "",
+  //   },
+  //   "Location *": {
+  //     type: "text",
+  //     value: "",
+  //     placeholder: "Input Here",
+  //     options: [],
+  //     disabled: true,
+  //     required: false,
+  //     APIMatch: "",
+  //     NEXT: "HOLD FOR ADDITIONAL INFO",
+  //     Export: "",
+  //   },
 
-    "Parent Sub Location": {
-      type: "text",
-      value: "",
-      placeholder: "Input Here",
-      options: [],
-      required: false,
-      APIMatch: "",
-      NEXT: "HOLD FOR ADDITIONAL INFO",
-    },
-    "Capacity(kW)": {
-      type: "number",
-      value: "",
-      placeholder: "Input Here",
-      options: [],
-      required: false,
-      APIMatch: "",
-      NEXT: "HOLD FOR ADDITIONAL INFO",
-    },
-  },
+  //   "Parent Sub Location": {
+  //     type: "text",
+  //     value: "",
+  //     placeholder: "Input Here",
+  //     options: [],
+  //     required: false,
+  //     APIMatch: "",
+  //     NEXT: "HOLD FOR ADDITIONAL INFO",
+  //     Export: "",
+  //   },
+  //   "Capacity(kW)": {
+  //     type: "number",
+  //     value: "",
+  //     placeholder: "Input Here",
+  //     options: [],
+  //     required: false,
+  //     APIMatch: "",
+  //     NEXT: "HOLD FOR ADDITIONAL INFO",
+  //     Export: "",
+  //   },
+  // },
   //////////////////
   Racks: {
-    "# Operation *": { value: "ADD" },
-    "Object *": { value: "CABINET" },
-    "!!!OpenRUArray": {
-      value: [],
-    },
+    "# Operation *": { value: "ADD", Export: "# Operation *" },
+    "Object *": { value: "CABINET", Export: "Object *" },
     "Name *": {
       type: "text",
       value: "",
@@ -138,6 +151,7 @@ let Template = {
       required: false,
       APIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
+      Export: "Name *",
     },
     "Make *": {
       type: "text",
@@ -147,6 +161,7 @@ let Template = {
       required: false,
       APIMatch: "Make",
       NEXT: "HOLD FOR ADDITIONAL INFO",
+      Export: "Make *",
     },
     "Model *": {
       type: "text",
@@ -156,6 +171,7 @@ let Template = {
       required: false,
       APIMatch: "Model",
       NEXT: "HOLD FOR ADDITIONAL INFO",
+      Export: "Model *",
     },
     "RU Height": {
       type: "number",
@@ -166,15 +182,7 @@ let Template = {
       disabled: true,
       APIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
-    },
-    "Part Number": {
-      type: "text",
-      value: "",
-      placeholder: "Input Here",
-      options: [],
-      required: false,
-      APIMatch: "",
-      NEXT: "HOLD FOR ADDITIONAL INFO",
+      Export: "",
     },
     "Location *": {
       type: "text",
@@ -185,6 +193,7 @@ let Template = {
       required: false,
       APIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
+      Export: "Location *",
     },
     "Front Faces": {
       type: "select",
@@ -194,18 +203,19 @@ let Template = {
       required: false,
       APIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
+      Export: "Front Faces",
     },
     // "Aisle Label": {
     //   type: "Programmed",
     //   value: "",
     //   required: false,
-    //   NEXT: "HOLD FOR ADDITIONAL INFO",
+    //   NEXT: "HOLD FOR ADDITIONAL INFO", Export: "",
     // },
     // "Row Label **": {
     //   type: "Programmed",
     //   value: "",
     //   required: false,
-    //   NEXT: "HOLD FOR ADDITIONAL INFO",
+    //   NEXT: "HOLD FOR ADDITIONAL INFO", Export: "",
     // },
     // "Position in Row **": {
     //   type: "number",
@@ -214,32 +224,14 @@ let Template = {
     //   options: [],
     //   required: false,
     //   APIMatch: "",
-    //   NEXT: "HOLD FOR ADDITIONAL INFO",
+    //   NEXT: "HOLD FOR ADDITIONAL INFO", Export: "",
     // },
-    "Power Capacity (kW)": {
-      type: "number",
-      value: "",
-      placeholder: "Input Here",
-      options: [],
-      required: false,
-      APIMatch: "",
-      NEXT: "HOLD FOR ADDITIONAL INFO",
-    },
-    "Weight Capacity": {
-      type: "number",
-      value: "",
-      placeholder: "Input Here",
-      options: [],
-      required: false,
-      APIMatch: "",
-      NEXT: "HOLD FOR ADDITIONAL INFO",
-    },
-    "Status *": { value: "PLANNED" },
+    "Status *": { value: "PLANNED", Export: "Status *" },
   },
   //////////////////
   PDUs: {
-    "# Operation *": { value: "ADD" },
-    "Object *": { value: "Rack PDU" },
+    "# Operation *": { value: "ADD", Export: "# Operation *" },
+    "Object *": { value: "Rack PDU", Export: "Object *" },
     "Name *": {
       type: "text",
       value: "",
@@ -247,6 +239,7 @@ let Template = {
       options: [],
       required: false,
       APIMatch: "",
+      Export: "Name *",
     },
     "Make *": {
       type: "text",
@@ -255,6 +248,7 @@ let Template = {
       options: [],
       required: false,
       APIMatch: "Make",
+      Export: "Make *",
     },
     "Model *": {
       type: "text",
@@ -263,6 +257,7 @@ let Template = {
       options: [],
       required: false,
       APIMatch: "Model",
+      Export: "Model *",
     },
     "Location *": {
       type: "text",
@@ -272,6 +267,7 @@ let Template = {
       disabled: true,
       required: false,
       APIMatch: "",
+      Export: "Location *",
     },
     "Cabinet *": {
       type: "text",
@@ -281,6 +277,7 @@ let Template = {
       required: false,
       disabled: true,
       APIMatch: "",
+      Export: "Cabinet **",
     },
     "Cabinet Side *": {
       type: "select",
@@ -289,6 +286,7 @@ let Template = {
       options: ["Select", "Left Side", "Right Side"],
       required: false,
       APIMatch: "",
+      Export: "Cabinet Side **",
     },
     "Depth Position *": {
       type: "select",
@@ -297,6 +295,7 @@ let Template = {
       options: ["Select", "Front", "Center", "Back"],
       required: false,
       APIMatch: "",
+      Export: "Depth Position **",
     },
     "U Position *": {
       type: "number",
@@ -305,6 +304,7 @@ let Template = {
       options: [],
       required: false,
       aPIMatch: "",
+      Export: "U Position **",
     },
     "RU Height": {
       type: "number",
@@ -315,13 +315,14 @@ let Template = {
       disabled: true,
       APIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
+      Export: "",
     },
     "Status *": { value: "PLANNED" },
   },
   //////////////////
   Assets: {
-    "# Operation *": { value: "ADD" },
-    "Object *": "DEVICE-RACKABLE",
+    "# Operation *": { value: "ADD", Export: "# Operation *" },
+    "Object *": { value: "DEVICE-RACKABLE", Export: "Object *" },
     "Name *": {
       type: "text",
       value: "",
@@ -330,6 +331,7 @@ let Template = {
       required: false,
       APIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
+      Export: "Name *",
     },
     "Make *": {
       type: "text",
@@ -339,6 +341,7 @@ let Template = {
       required: false,
       APIMatch: "Make",
       NEXT: "HOLD FOR ADDITIONAL INFO",
+      Export: "Make *",
     },
     "Model *": {
       type: "text",
@@ -348,6 +351,7 @@ let Template = {
       required: false,
       APIMatch: "Model",
       NEXT: "HOLD FOR ADDITIONAL INFO",
+      Export: "Model *",
     },
     "Location *": {
       type: "text",
@@ -358,6 +362,7 @@ let Template = {
       disabled: true,
       APIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
+      Export: "Location *",
     },
     "Cabinet *": {
       type: "text",
@@ -366,7 +371,7 @@ let Template = {
       options: [],
       required: false,
       disabled: true,
-      APIMatch: "",
+      APIMatch: "Cabinet **",
     },
     "U Position *": {
       type: "number",
@@ -375,6 +380,7 @@ let Template = {
       required: false,
       aPIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
+      Export: "U Position **",
     },
     "RU Height": {
       type: "number",
@@ -385,6 +391,7 @@ let Template = {
       disabled: true,
       APIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
+      Export: "",
     },
     "Asset Tag": {
       type: "Scan",
@@ -393,6 +400,7 @@ let Template = {
       required: false,
       aPIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
+      Export: "Asset Tag",
     },
     "Rails Used *": {
       type: "select",
@@ -401,8 +409,8 @@ let Template = {
       required: false,
       aPIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
+      Export: "Rails Used **",
     },
-
     "Orientation *": {
       type: "select",
       value: "",
@@ -410,9 +418,11 @@ let Template = {
       required: false,
       aPIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
+      Export: "Orientation **",
     },
-    "Status *": { value: "PLANNED" },
+    "Status *": { value: "PLANNED", Export: "Status" },
   },
+  //////////////////
   UPSs: {
     "# Operation *": { value: "ADD" },
     "Object *": "DEVICE-RACKABLE",
@@ -424,6 +434,7 @@ let Template = {
       required: false,
       APIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
+      Export: "",
     },
     "Make *": {
       type: "text",
@@ -433,6 +444,7 @@ let Template = {
       required: false,
       APIMatch: "Make",
       NEXT: "HOLD FOR ADDITIONAL INFO",
+      Export: "",
     },
     "Model *": {
       type: "text",
@@ -442,6 +454,7 @@ let Template = {
       required: false,
       APIMatch: "Model",
       NEXT: "HOLD FOR ADDITIONAL INFO",
+      Export: "",
     },
     "Location *": {
       type: "text",
@@ -452,6 +465,7 @@ let Template = {
       disabled: true,
       APIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
+      Export: "",
     },
     "Cabinet *": {
       type: "text",
@@ -478,6 +492,7 @@ let Template = {
       required: false,
       aPIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
+      Export: "",
     },
     "RU Height": {
       type: "number",
@@ -488,6 +503,7 @@ let Template = {
       disabled: true,
       APIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
+      Export: "",
     },
     "kw Rating *": {
       type: "number",
@@ -498,6 +514,7 @@ let Template = {
       disabled: false,
       APIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
+      Export: "",
     },
     "Utilized kw": {
       type: "number",
@@ -508,6 +525,7 @@ let Template = {
       disabled: false,
       APIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
+      Export: "",
     },
     "Network connected": {
       type: "bool",
@@ -518,6 +536,7 @@ let Template = {
       disabled: false,
       APIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
+      Export: "",
     },
     "Asset Tag": {
       type: "Scan",
@@ -526,6 +545,7 @@ let Template = {
       required: false,
       aPIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
+      Export: "",
     },
     "Total connections": {
       type: "number",
@@ -536,6 +556,7 @@ let Template = {
       disabled: false,
       APIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
+      Export: "",
     },
     "Type of Connections": {
       type: "select",
@@ -545,8 +566,10 @@ let Template = {
       required: false,
       aPIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
+      Export: "",
     },
   },
+  //////////////////
   ATSs: {
     "# Operation *": { value: "ADD" },
     "Object *": "DEVICE-RACKABLE",
@@ -558,6 +581,7 @@ let Template = {
       required: false,
       APIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
+      Export: "",
     },
     "Make *": {
       type: "text",
@@ -567,6 +591,7 @@ let Template = {
       required: false,
       APIMatch: "Make",
       NEXT: "HOLD FOR ADDITIONAL INFO",
+      Export: "",
     },
     "Model *": {
       type: "text",
@@ -576,6 +601,7 @@ let Template = {
       required: false,
       APIMatch: "Model",
       NEXT: "HOLD FOR ADDITIONAL INFO",
+      Export: "",
     },
     "Location *": {
       type: "text",
@@ -586,6 +612,7 @@ let Template = {
       disabled: true,
       APIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
+      Export: "",
     },
     "Cabinet *": {
       type: "text",
@@ -612,6 +639,7 @@ let Template = {
       required: false,
       aPIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
+      Export: "",
     },
     "RU Height": {
       type: "number",
@@ -622,6 +650,7 @@ let Template = {
       disabled: true,
       APIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
+      Export: "",
     },
     "kw Rating *": {
       type: "number",
@@ -632,6 +661,7 @@ let Template = {
       disabled: false,
       APIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
+      Export: "",
     },
     "Utilized kw": {
       type: "number",
@@ -642,6 +672,7 @@ let Template = {
       disabled: false,
       APIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
+      Export: "",
     },
     "Network connected": {
       type: "bool",
@@ -652,6 +683,7 @@ let Template = {
       disabled: false,
       APIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
+      Export: "",
     },
     "Asset Tag": {
       type: "Scan",
@@ -660,6 +692,7 @@ let Template = {
       required: false,
       aPIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
+      Export: "",
     },
     "Total connections": {
       type: "number",
@@ -670,6 +703,7 @@ let Template = {
       disabled: false,
       APIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
+      Export: "",
     },
     "Type of Connections": {
       type: "select",
@@ -679,8 +713,10 @@ let Template = {
       required: false,
       aPIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
+      Export: "",
     },
   },
+  //////////////////
   Panels: {
     "# Operation *": { value: "ADD" },
     "Object *": "DEVICE-RACKABLE",
@@ -710,6 +746,7 @@ let Template = {
       APIMatch: "",
     },
   },
+  //////////////////
   Receptacles: {
     "# Operation *": { value: "ADD" },
     "Object *": "DEVICE-RACKABLE",
@@ -745,7 +782,6 @@ let Template = {
       APIMatch: "",
     },
   },
-
   //////////////////
   SurveyRoom: {
     "Room Number *": {
@@ -1034,7 +1070,7 @@ export { state };
 //   options: [],
 //   required: false,
 //   APIMatch: "",
-//   NEXT: "HOLD FOR ADDITIONAL INFO",
+//   NEXT: "HOLD FOR ADDITIONAL INFO", Export: "",
 // };
 
 // let number = {
@@ -1043,7 +1079,7 @@ export { state };
 //   options: [],
 //   required: false,
 //   aPIMatch: "",
-//   NEXT: "HOLD FOR ADDITIONAL INFO",
+//   NEXT: "HOLD FOR ADDITIONAL INFO", Export: "",
 // };
 
 // let date = {
@@ -1052,7 +1088,7 @@ export { state };
 //   options: [],
 //   required: false,
 //   aPIMatch: "",
-//   NEXT: "HOLD FOR ADDITIONAL INFO",
+//   NEXT: "HOLD FOR ADDITIONAL INFO", Export: "",
 // };
 
 // let bool = {
@@ -1061,7 +1097,7 @@ export { state };
 //   options: [],
 //   required: false,
 //   aPIMatch: "",
-//   NEXT: "HOLD FOR ADDITIONAL INFO",
+//   NEXT: "HOLD FOR ADDITIONAL INFO", Export: "",
 // };
 
 // let select = {
@@ -1070,5 +1106,5 @@ export { state };
 //   options: [],
 //   required: false,
 //   aPIMatch: "",
-//   NEXT: "HOLD FOR ADDITIONAL INFO",
+//   NEXT: "HOLD FOR ADDITIONAL INFO", Export: "",
 // };

@@ -1,0 +1,8 @@
+td {
+  color: black;
+  text-wrap: nowrap;
+}
+
+th {
+  text-wrap: nowrap;
+}

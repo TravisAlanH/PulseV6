@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import createTable from "../../Format/CreateTable";
 import download_to_excel from "../../Format/ExportExcel";
+import "./Export.css";
 // import * as transitionData from "../../Components/CustomField/CustomFieldExportTemplates";
 
 export default function ExportPageAudit() {
@@ -9,6 +10,39 @@ export default function ExportPageAudit() {
   const keys = Object.keys(Data);
 
   // const [modalBlock, setModalBlock] = React.useState();
+
+  useEffect(() => {
+    let OutputAll = [];
+    Object.keys(Data).forEach((key) => {
+      OutputAll = [];
+      if (Data[key].length === 0) return;
+      if (
+        key === "Current" ||
+        key === "LoggedIn" ||
+        key.includes("Survey") ||
+        key === "Settings" ||
+        key.includes("New") ||
+        key === "OpenRU"
+      )
+        return;
+      let Input = Data[key];
+
+      for (let i = 0; i < Input.length; i++) {
+        let temp = {};
+        for (let key in Input[i]) {
+          if (key === "Status *") continue;
+          if (key === "RUHeight") continue;
+          if (Input[i][key]["Export"] === "") continue;
+          // temp[key] = Input[i][key].value;
+          temp[Input[i][key]["Export"]] = Input[i][key].value;
+        }
+
+        OutputAll.push(temp);
+        console.log(OutputAll);
+      }
+      createTable(OutputAll, "ExportTable");
+    });
+  }, [Data]);
 
   return (
     <div className="w-screen h-screen p-3">
@@ -38,9 +72,12 @@ export default function ExportPageAudit() {
                   for (let i = 0; i < Input.length; i++) {
                     let temp = {};
                     for (let key in Input[i]) {
+                      console.log(Input[i][key]);
                       if (key === "Status *") continue;
                       if (key === "RUHeight") continue;
-                      temp[key] = Input[i][key].value;
+                      if (Input[i][key]["Export"] === "") continue;
+                      // temp[key] = Input[i][key].value;
+                      temp[Input[i][key]["Export"]] = Input[i][key].value;
                     }
 
                     Output.push(temp);
