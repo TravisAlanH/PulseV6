@@ -283,7 +283,7 @@ let Template = {
       type: "select",
       value: "",
       placeholder: "Input Here",
-      options: ["Select", "Left Side", "Right Side"],
+      options: ["Select", "Left", "Right"],
       required: false,
       APIMatch: "",
       Export: "Cabinet Side **",

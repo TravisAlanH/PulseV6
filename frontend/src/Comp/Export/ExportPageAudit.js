@@ -3,19 +3,26 @@ import { useSelector } from "react-redux";
 import createTable from "../../Format/CreateTable";
 import download_to_excel from "../../Format/ExportExcel";
 import "./Export.css";
+import * as format from "./FormatPDU";
 // import * as transitionData from "../../Components/CustomField/CustomFieldExportTemplates";
 
 export default function ExportPageAudit() {
   const Data = useSelector((state) => state.data);
-  const keys = Object.keys(Data);
+
+  let adjustedData = structuredClone(Data);
+  adjustedData = format.formatDataForPDU(adjustedData);
+
+  const keys = Object.keys(adjustedData);
+
+  console.log(adjustedData);
 
   // const [modalBlock, setModalBlock] = React.useState();
 
   useEffect(() => {
     let OutputAll = [];
-    Object.keys(Data).forEach((key) => {
+    Object.keys(adjustedData).forEach((key) => {
       OutputAll = [];
-      if (Data[key].length === 0) return;
+      if (adjustedData[key].length === 0) return;
       if (
         key === "Current" ||
         key === "LoggedIn" ||
@@ -25,7 +32,7 @@ export default function ExportPageAudit() {
         key === "OpenRU"
       )
         return;
-      let Input = Data[key];
+      let Input = adjustedData[key];
 
       for (let i = 0; i < Input.length; i++) {
         let temp = {};
@@ -38,11 +45,10 @@ export default function ExportPageAudit() {
         }
 
         OutputAll.push(temp);
-        console.log(OutputAll);
       }
       createTable(OutputAll, "ExportTable");
     });
-  }, [Data]);
+  }, [adjustedData]);
 
   return (
     <div className="w-screen h-screen p-3">
@@ -66,7 +72,7 @@ export default function ExportPageAudit() {
                   }
 
                   // setModalBlock(e.target.value);
-                  let Input = Data[e.target.value];
+                  let Input = adjustedData[e.target.value];
                   let Output = [];
 
                   for (let i = 0; i < Input.length; i++) {
