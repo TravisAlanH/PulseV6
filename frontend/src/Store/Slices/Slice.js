@@ -1,7 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import Template, { state } from "./Template";
+import Template, * as TemplateState from "./Template";
 
-const initState = state;
+// const initState = state;
+console.log(JSON.parse(localStorage.getItem("PulseStateData")));
+let initState = JSON.parse(localStorage.getItem("PulseStateData"));
 
 const Slice = createSlice({
   name: "Template",
@@ -249,14 +251,18 @@ const Slice = createSlice({
       if (state.Settings.localStorage) localStorage.setItem("PulseStateData", JSON.stringify(state));
     },
     setLocalStorage: (state, action) => {
+      console.log("called");
       state.Settings.localStorage = action.payload.value;
     },
-    loadLocalStorage: (state) => {
-      state = JSON.parse(localStorage.getItem("PulseStateData"));
-    },
+    // loadLocalStorage: (state, action) => {
+    //   console.log(action.payload.Local);
+    //   console.log(state);
+    //   state = action.payload.Local;
+    // },
     clearData: (state) => {
-      localStorage.setItem("PulseStateData", JSON.stringify(""));
-      state.LoggedIn = false;
+      localStorage.setItem("PulseStateData", JSON.stringify(TemplateState.state));
+      window.location.reload();
+      state = TemplateState.state;
     },
   },
 });
@@ -264,7 +270,7 @@ const Slice = createSlice({
 export const {
   clearData,
   setLocalStorage,
-  loadLocalStorage,
+  // loadLocalStorage,
   deleteCurrentIndex,
   updateOpenRu,
   addToOpenRU,

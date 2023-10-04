@@ -1,6 +1,6 @@
 import React from "react";
 import Logo from "../../Img/sunbird-logo-white.png";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import * as actions from "../../Store/Slices/Slice";
 import "../../Styles/Login.css";
 import { useNavigate } from "react-router-dom";
@@ -20,8 +20,6 @@ export default function LoginTable({ setAllData }) {
   let payload = {
     set: 1,
   };
-
-  const localStorageBool = useSelector((state) => state.data.Settings.localStorage);
 
   return (
     <div className="h-[31rem] w-[17.5rem] flex flex-col pt-[1rem] justify-center items-center relative bg-[rgba(16,16,16,0.68);] rounded-md">
@@ -52,12 +50,13 @@ export default function LoginTable({ setAllData }) {
               let user = document.getElementById("user").value;
               let pass = document.getElementById("pass").value;
               if (user === baseLogin && pass === basePass) {
+                // payload.Local = JSON.parse(localStorage.getItem("PulseStateData"));
+                // console.log(payload.Local);
+                // dispatch(actions.loadLocalStorage(payload));
                 payload = {
                   value: true,
                 };
                 dispatch(actions.loginLogout(payload));
-                console.log(localStorageBool);
-                if (localStorageBool) dispatch(actions.loadLocalStorage());
                 axios.get(baseURL + FullData).then((res) => {
                   setAllData(res.data["rows"]);
                 });

@@ -6,6 +6,7 @@ import AssetsLayout from "./Assets/AssetsLayout";
 import LocationLayout from "../Location/LocationLayout";
 
 import ExportPageAudit from "../Export/ExportPageAudit";
+import StructuredCablingLayout from "./StructuredCabling/StructuredCablingLayout";
 
 export default function AuditNav({ setCurrentAudit, AllData }) {
   const buttons = document.getElementsByClassName("AuditLinks");
@@ -71,6 +72,16 @@ export default function AuditNav({ setCurrentAudit, AllData }) {
           setCurrentAudit(<AssetsLayout AllData={AllData} />);
         }}>
         Assets
+      </button>
+      <button
+        id="AuditLinks"
+        className={buttonStyle}
+        onClick={(e) => {
+          removeSelected();
+          e.target.classList.add("selected");
+          setCurrentAudit(<StructuredCablingLayout />);
+        }}>
+        Structured Cabling
       </button>
       <button
         id="AuditLinks"

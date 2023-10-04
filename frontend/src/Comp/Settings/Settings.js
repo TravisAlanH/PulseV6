@@ -14,7 +14,7 @@ export default function Settings() {
       </div>
       <div className="flex flex-col justify-items items-center w-full">
         {/* LOAD LOCAL STORAGE */}
-        <div className="flex flex-row justify-start gap-6 px-6 w-[15rem]">
+        {/* <div className="flex flex-row justify-start gap-6 px-6 w-[15rem]">
           <div className="py-2 flex flex-row">
             <label className={"text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center w-[8rem]"}>
               Local Storage
@@ -27,7 +27,7 @@ export default function Settings() {
               Load Data
             </button>
           </div>
-        </div>
+        </div> */}
 
         {/* LOCAL STORAGE ON OFF */}
         <div className="flex flex-row justify-start  gap-6 px-6 w-[15rem]">
