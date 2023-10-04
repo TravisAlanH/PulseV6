@@ -31,6 +31,8 @@ export default function PDUInputs({ AllData, DepthSide }) {
       </div>
       {MapArray.map((key, index) => {
         let input = <STDInput key={index} keyName={key} Step={Step} />;
+        if (State["Depth Position *"].value === "" && (key === "Depth Position *" || key === "Cabinet Side *"))
+          input = null;
         if (key.includes("Make") === true || key.includes("Model") === true)
           input = <SearchLayout key={index} KeyName={key} Step={Step} AllData={AllData} />;
         return input;
