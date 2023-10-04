@@ -420,11 +420,11 @@ let Template = {
       NEXT: "HOLD FOR ADDITIONAL INFO",
       Export: "Orientation **",
     },
-    "Ports" : {
-      type: "select",
+    Ports: {
+      type: "number",
       value: 0,
       placeholder: "Input Here",
-      options: ["Select",2,4,6,8,12,16,24,32,48],
+      options: [],
       required: false,
       disabled: false,
       APIMatch: "",
