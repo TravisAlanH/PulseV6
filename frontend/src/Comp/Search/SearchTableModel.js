@@ -9,7 +9,6 @@ export default function SearchTableModel({ SearchData, searchInput, Step, setSea
   const APIMatch = useSelector((state) => state.data[Step][current][keyName].APIMatch);
   const newData = useSelector((state) => state.data["New" + Step]);
   let newDataCopy = [...newData];
-  console.log(newDataCopy);
   const currentRack = useSelector((state) => state.data.Current["Racks"]);
   const OpenRU = useSelector((state) => state.data["OpenRU"][currentRack]);
   const racks = useSelector((state) => state.data["Racks"]);
@@ -30,7 +29,6 @@ export default function SearchTableModel({ SearchData, searchInput, Step, setSea
     }
     SearchData = FIND.filterByUPosition(SearchData, Gap, "RackUnits");
     newDataCopy = FIND.filterByUPositionWithValue(newDataCopy, Gap, "Rack Units *");
-    console.log(newDataCopy);
   }
   let closestMatch = FIND.findClosestMatchesInArrayObject(SearchData, searchInput, APIMatch);
 
@@ -73,6 +71,11 @@ export default function SearchTableModel({ SearchData, searchInput, Step, setSea
       onClick={() => {
         setSearchInput(SearchData[item][APIMatch]);
         payload.value = SearchData[item][APIMatch];
+        dispatch(Action.changeData(payload));
+        console.log(SearchData[item]);
+
+        payload.Key = "Ports";
+        payload.value = SearchData[item]["DataPortsCount"];
         dispatch(Action.changeData(payload));
         if (Step === "Racks" || Step === "Assets" || Step === "PDUs" || Step === "UPSs" || Step === "ATSs") {
           setTimeout(() => {
@@ -127,51 +130,13 @@ export default function SearchTableModel({ SearchData, searchInput, Step, setSea
           <th className="Model bg-white">
             <div className="flex flex-row items-center justify-between w-[20rem] bg-white h-full">
               {"Model (ADDED)"}
-              {/* <div className="sort-table-arrows flex flex-row gap-2 items-center justify-end w-[5rem]">
-                <button
-                  className="button orangeButton"
-                  onClick={(e) => {
-                    sort(true, "Model", "content-table3");
-                  }}
-                  title="Sort Model Descending">
-                  <FaChevronUp />
-                </button>
-                <button
-                  className="button orangeButton"
-                  onClick={(e) => {
-                    sort(false, "Model", "content-table3");
-                  }}
-                  title="Sort Model Ascending">
-                  <FaChevronDown />
-                </button>
-              </div> */}
             </div>
           </th>
           <th className="Make">
             <div className=" w-[8rem]">{"Make (ADDED)"}</div>
           </th>
           <th className="RackUnits bg-white">
-            <div className="flex flex-row items-center justify-between w-[10rem] bg-white h-full">
-              {"RU (ADDED)"}
-              {/* <div className="sort-table-arrows flex flex-row gap-2 items-center justify-end w-[5rem]">
-                <button
-                  className="button orangeButton"
-                  onClick={(e) => {
-                    sort(true, "RackUnits", "content-table3");
-                  }}
-                  title="Sort RackUnits Descending">
-                  <FaChevronUp />
-                </button>
-                <button
-                  className="button orangeButton"
-                  onClick={(e) => {
-                    sort(false, "RackUnits", "content-table3");
-                  }}
-                  title="Sort RackUnits Ascending">
-                  <FaChevronDown />
-                </button>
-              </div> */}
-            </div>
+            <div className="flex flex-row items-center justify-between w-[10rem] bg-white h-full">{"RU (ADDED)"}</div>
           </th>
         </tr>
       </thead>

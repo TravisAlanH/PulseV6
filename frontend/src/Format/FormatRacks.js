@@ -6,6 +6,7 @@ function MinimalRacks(rackData) {
       Model: item["Model"],
       RackUnits: item["RUHeight"],
       Class: item["Class"],
+      DataPortsCount: item["DataPortsCount"],
       ParentIndex: index,
     });
   });
