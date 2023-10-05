@@ -10,6 +10,7 @@ export default function StructuredCablingInput({ startItem, endItem }) {
   keys.map((item) => {
     if (!item.includes("Starting")) otherData.push(item);
     if (!item.includes("Ending")) otherData.push(item);
+    return null;
   });
 
   return <div className="w-[20rem] flex flex-row justify-center"></div>;
