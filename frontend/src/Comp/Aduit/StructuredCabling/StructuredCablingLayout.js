@@ -35,13 +35,13 @@ export default function StructuredCablingLayout() {
               </select>
             </div>
             <div>
-              <StructuredCablingStartCab setStartItem={setStartItem} RackIndex={RackIndex} />
+              <StructuredCablingStartCab setStartItem={setStartItem} RackIndex={RackIndex} startItem={startItem} />
             </div>
           </div>
           {/*  */}
-          <div className="hidden lg:block">
+          {/* <div className="hidden lg:block">
             <StructuredCablingInput startItem={startItem} endItem={endItem} />
-          </div>
+          </div> */}
           {/*  */}
           <div className="w-[20rem] mb-3 flex flex-col border-[#F3EEE7] border-2">
             <div className="w-full h-[2rem] bg-[#F3EEE7] flex flex-row items-center justify-center">
@@ -65,9 +65,9 @@ export default function StructuredCablingLayout() {
         </div>
       </div>
       {/*  */}
-      <div className="lg:hidden block">
+      {/* <div className="lg:hidden block">
         <StructuredCablingInput startItem={startItem} endItem={endItem} />
-      </div>
+      </div> */}
       {/*  */}
     </div>
   );
