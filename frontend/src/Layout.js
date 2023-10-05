@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useSelector } from "react-redux";
+
 // import * as actions from "./Store/Slices/Slice";
 import NavBase from "./Comp/Nav/NavBase";
 import Login from "./Comp/Login/Login";
@@ -11,7 +11,16 @@ import Settings from "./Comp/Settings/Settings";
 import Drawing from "./Comp/Drawing/Drawing";
 
 export default function Layout() {
-  const LoggedIn = useSelector((state) => state.data.LoggedIn);
+  let LoggedIn;
+
+  if (localStorage.getItem("PulseStateData") === null) {
+    LoggedIn = false;
+  } else {
+    LoggedIn = JSON.parse(localStorage.getItem("PulseStateData")).LoggedIn;
+  }
+
+  // let loginCheck = useSelector((state) => state.data.LoggedIn);
+  // const LoggedIn = loginCheck === null ? false : loginCheck;
   const [AllData, setAllData] = React.useState([]);
 
   return (

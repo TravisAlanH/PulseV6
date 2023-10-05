@@ -1,10 +1,10 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import * as actions from "../../Store/Slices/Slice";
 
 export default function Settings() {
   const dispatch = useDispatch();
-  const localStorageBool = useSelector((state) => state.data.Settings.localStorage);
+  const localStorageBool = true;
   console.log(localStorageBool);
 
   return (

@@ -1,12 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { RiMenuLine } from "react-icons/ri";
 import { IoPersonCircleOutline } from "react-icons/io5";
 import * as Actions from "../../Store/Slices/Slice";
 
 export default function NavLinks() {
-  const LoggedIn = useSelector((state) => state.data.LoggedIn);
+  let LoggedIn;
+
+  if (localStorage.getItem("PulseStateData") === null) {
+    LoggedIn = false;
+  } else {
+    LoggedIn = JSON.parse(localStorage.getItem("PulseStateData")).LoggedIn;
+  }
+  // const LoggedIn = useSelector((state) => state.data.LoggedIn);
   const dispatch = useDispatch();
 
   window.addEventListener("click", function (e) {

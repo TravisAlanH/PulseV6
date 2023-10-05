@@ -29,7 +29,11 @@ export default function StructuredCablingLayout() {
                 <option value="0">Select</option>
                 {Racks.length > 0
                   ? Racks.map((item, index) => {
-                      return <option value={index}>{item["Name *"].value}</option>;
+                      return (
+                        <option key={index} value={index}>
+                          {item["Name *"].value}
+                        </option>
+                      );
                     })
                   : null}
               </select>
@@ -39,9 +43,9 @@ export default function StructuredCablingLayout() {
             </div>
           </div>
           {/*  */}
-          {/* <div className="hidden lg:block">
+          <div className="hidden lg:block">
             <StructuredCablingInput startItem={startItem} endItem={endItem} />
-          </div> */}
+          </div>
           {/*  */}
           <div className="w-[20rem] mb-3 flex flex-col border-[#F3EEE7] border-2">
             <div className="w-full h-[2rem] bg-[#F3EEE7] flex flex-row items-center justify-center">
@@ -53,21 +57,25 @@ export default function StructuredCablingLayout() {
                 <option value="0">Select</option>
                 {Racks.length > 0
                   ? Racks.map((item, index) => {
-                      return <option value={index}>{item["Name *"].value}</option>;
+                      return (
+                        <option key={index} value={index}>
+                          {item["Name *"].value}
+                        </option>
+                      );
                     })
                   : null}
               </select>
             </div>
             <div>
-              <StructuredCablingEndCab setEndItem={setEndItem} RackIndex={EndRackIndex} />
+              <StructuredCablingEndCab setEndItem={setEndItem} RackIndex={EndRackIndex} endItem={endItem} />
             </div>
           </div>
         </div>
       </div>
       {/*  */}
-      {/* <div className="lg:hidden block">
+      <div className="lg:hidden block">
         <StructuredCablingInput startItem={startItem} endItem={endItem} />
-      </div> */}
+      </div>
       {/*  */}
     </div>
   );

@@ -3,6 +3,11 @@ import Template, * as TemplateState from "./Template";
 
 // const initState = state;
 console.log(JSON.parse(localStorage.getItem("PulseStateData")));
+
+if (localStorage.getItem("PulseStateData") === null) {
+  localStorage.setItem("PulseStateData", JSON.stringify(TemplateState.state));
+}
+
 let initState = JSON.parse(localStorage.getItem("PulseStateData"));
 
 const Slice = createSlice({
@@ -242,7 +247,7 @@ const Slice = createSlice({
       if (state.Settings.localStorage) localStorage.setItem("PulseStateData", JSON.stringify(state));
     },
     loginLogout: (state, action) => {
-      state.LoggedIn = action.payload.value;
+      state.LoggedIn = JSON.parse(action.payload.value);
       if (state.Settings.localStorage) localStorage.setItem("PulseStateData", JSON.stringify(state));
     },
     deleteCurrentIndex: (state, action) => {
@@ -260,7 +265,8 @@ const Slice = createSlice({
     //   state = action.payload.Local;
     // },
     clearData: (state) => {
-      localStorage.setItem("PulseStateData", JSON.stringify(TemplateState.state));
+      localStorage.removeItem("PulseStateData");
+      // localStorage.setItem("PulseStateData", JSON.stringify(TemplateState.state));
       window.location.reload();
       state = TemplateState.state;
     },

@@ -628,7 +628,7 @@ let Template = {
       Export: "Starting Item Location *",
     },
     "Starting Item Name *": {
-      type: "select",
+      type: "text",
       value: "",
       placeholder: "Input Here",
       options: [],
@@ -662,7 +662,7 @@ let Template = {
     },
     "Starting Port Connector *": {
       type: "select",
-      value: "",
+      value: "RJ45",
       placeholder: "Input Here",
       options: ["Select", "RJ45", "LC", "SC", "ST", "MPO"],
       required: false,
@@ -673,7 +673,7 @@ let Template = {
     },
     "Cable Grade *": {
       type: "select",
-      value: "",
+      value: "Cat6",
       placeholder: "Input Here",
       options: ["Select", "Cat5e", "Cat6", "Cat6A", "Cat7", "Cat8"],
       required: false,
@@ -684,9 +684,9 @@ let Template = {
     },
     "Media **": {
       type: "select",
-      value: "",
+      value: "Twisted Pair",
       placeholder: "Input Here",
-      options: ["Select", "Copper", "Fiber"],
+      options: ["Select", "Twisted Pair", "Fiber"],
       required: false,
       disabled: true,
       APIMatch: "",
@@ -708,7 +708,7 @@ let Template = {
       type: "select",
       value: "US",
       placeholder: "Input Here",
-      options: ["US", "Metric"],
+      options: ["Select", "US", "Metric"],
       required: false,
       disabled: true,
       APIMatch: "",
@@ -717,7 +717,7 @@ let Template = {
     },
     "Color *": {
       type: "select",
-      value: "",
+      value: "Blue",
       placeholder: "Input Here",
       options: ["Select", "Blue", "Green", "Yellow", "Orange", "Purple", "White", "Black"],
       required: false,

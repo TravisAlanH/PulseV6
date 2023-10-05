@@ -123,7 +123,7 @@ export default function STDInput({ keyName, Step }) {
         {state[current][keyName].options.map((option, index) => {
           if (index === selectedIndex) {
             return (
-              <option value={option} key={index} selected>
+              <option value={option} key={index} selected={true}>
                 {option}
               </option>
             );
