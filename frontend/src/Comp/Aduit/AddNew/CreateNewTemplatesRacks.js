@@ -166,6 +166,17 @@ const CreateTemplatesRacks = {
     aPIMatch: "",
     NEXT: "HOLD FOR ADDITIONAL INFO",
   },
+  Ports: {
+    type: "number",
+    value: 0,
+    placeholder: "Input Here",
+    options: [],
+    required: false,
+    disabled: false,
+    APIMatch: "DataPortsCount",
+    NEXT: "HOLD FOR ADDITIONAL INFO",
+    Export: "",
+  },
   Notes: {
     type: "textarea",
     value: "",

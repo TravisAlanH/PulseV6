@@ -1,11 +1,20 @@
 import React from "react";
+import Template from "../../../Store/Slices/Template";
 
 export default function StructuredCablingInput({ startItem, endItem }) {
   console.log(startItem);
 
   let startMap = [];
   let endMap = [];
-  let startPortSpacing = 0;
+
+  let StartingArray = [];
+  let EndingArray = [];
+
+  let keys = Object.keys(Template.StructuredCabling);
+  keys.map((item) => {
+    if (item.includes("Starting")) StartingArray.push(item);
+    if (item.includes("Ending")) EndingArray.push(item);
+  });
 
   if (Object.keys(startItem).length > 0) {
     for (let i = 0; i < startItem["Ports"].value; i++) {
@@ -28,7 +37,7 @@ export default function StructuredCablingInput({ startItem, endItem }) {
             <div className="flex flex-row items-end justify-between">
               <p className="font-semibold">Start Port: </p>
               <p className="text-sm">
-                {(endItem["Name *"].value + "@ U" + endItem["U Position *"].value).slice(0, 20)}
+                {(startItem["Model *"].value + "@ U" + startItem["U Position *"].value).slice(0, 20)}
               </p>
             </div>
             <div
@@ -57,7 +66,25 @@ export default function StructuredCablingInput({ startItem, endItem }) {
                 })}
               </div>
             </div>
-            <div id="inputs">{/* standard text input that i have used in the project with lable*/}</div>
+            <div id="inputs" className="flex flex-col gap-1 pt-2">
+              {/* standard text input that i have used in the project with lable*/}
+              {StartingArray.map((item, index) => {
+                return (
+                  <div className="flex flex-row">
+                    <div className="flex flex-col justify-center items-center text-red-500 w-[1rem] h-full">
+                      {item.includes("*") ? "*" : null}
+                    </div>
+                    <label className={"text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center w-[7rem]"}>
+                      {item.replace("*", "").replace("Starting", "")}
+                    </label>
+                    <input
+                      type={Template.StructuredCabling[item].value}
+                      className="h-[2rem] w-[8rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit "
+                    />
+                  </div>
+                );
+              })}
+            </div>
           </div>
         ) : null}
         <div className="flex flex-row justify-center">TO</div>
@@ -67,7 +94,7 @@ export default function StructuredCablingInput({ startItem, endItem }) {
             <div className="flex flex-row items-end justify-between">
               <p className="font-semibold">End Port: </p>
               <p className="text-sm">
-                {(endItem["Name *"].value + "@ U" + endItem["U Position *"].value).slice(0, 20)}
+                {(endItem["Model *"].value + "@ U" + endItem["U Position *"].value).slice(0, 20)}
               </p>
             </div>
             <div

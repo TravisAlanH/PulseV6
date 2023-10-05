@@ -38,6 +38,17 @@ const CreateTemplatesAssets = {
   "Part Number": text,
   "New Part Number": text,
   Description: textarea,
+  Ports: {
+    type: "number",
+    value: 0,
+    placeholder: "Input Here",
+    options: [],
+    required: false,
+    disabled: false,
+    APIMatch: "DataPortsCount",
+    NEXT: "HOLD FOR ADDITIONAL INFO",
+    Export: "",
+  },
   "Made in": {
     type: "select",
     value: "",
