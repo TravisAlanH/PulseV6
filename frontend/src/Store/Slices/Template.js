@@ -783,7 +783,7 @@ let Template = {
     },
     "Ending Port Connector *": {
       type: "select",
-      value: "",
+      value: "RJ45",
       placeholder: "Input Here",
       options: ["Select", "RJ45", "LC", "SC", "ST", "MPO"],
       required: false,
