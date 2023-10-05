@@ -180,7 +180,7 @@ export default function StructuredCablingStartCab({ setStartItem, RackIndex, sta
           <div key={i}>
             <div
               id={"StartItem" + i}
-              className="StartDevices border-2 transition-all h-[2.5rem] overflow-clip"
+              className="StartDevices border-2 transition-all h-[2.5rem] overflow-hidden"
               onClick={() => {
                 setStartItem(object);
                 removeSelected();

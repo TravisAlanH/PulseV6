@@ -33,7 +33,7 @@ export default function StructuredCablingDropInput({ RackIndex, startItem }) {
       </div>
       <div
         id="portsList"
-        className={"w-[18rem] h-[6rem] overflow-x-scroll border-2 flex flex-col gap-1 justify-center p-1"}>
+        className={"w-[18rem] h-[7rem] overflow-x-scroll border-2 flex flex-col gap-1 justify-center p-1"}>
         <div className="flex gap-1 flex-row">
           {startMap.map((item, index) => {
             if (index % 2 === 0) {
