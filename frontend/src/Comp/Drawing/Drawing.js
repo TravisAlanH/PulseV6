@@ -1,324 +1,65 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./drawing.css";
-import { fabric } from "fabric";
+import Draggable from "react-draggable";
 
 export default function Drawing() {
-  useEffect(() => {
-    var canvas = new fabric.Canvas("c", { selection: false });
-    var grid = 20;
-    var unitScale = 10;
-    var canvasWidth = 100 * unitScale;
-    var canvasHeight = 100 * unitScale;
+  const [width, setWidth] = React.useState(10);
+  const [height, setHeight] = React.useState(10);
 
-    canvas.setWidth(canvasWidth);
-    canvas.setHeight(canvasHeight);
-
-    // create grid
-
-    for (var i = 0; i < canvasWidth / grid; i++) {
-      canvas.add(
-        new fabric.Line([i * grid, 0, i * grid, canvasHeight], {
-          type: "line",
-          stroke: "#ccc",
-          selectable: false,
-        })
-      );
-      canvas.add(
-        new fabric.Line([0, i * grid, canvasWidth, i * grid], {
-          type: "line",
-          stroke: "#ccc",
-          selectable: false,
-        })
-      );
-    }
-
-    // snap to grid
-
-    // for (var key in canvas.on) {
-    //   if (typeof canvas.on[key] === "function") {
-    //     console.log(key);
-    //   }
-    // }
-
-    canvas.on("object:moving", function (options) {
-      var target = options.target;
-
-      // Calculate the angle in radians
-      var angle = (target.angle * Math.PI) / 180;
-
-      // Snap the angle to 45-degree intervals
-      var snapAngle = Math.PI / 4; // 45 degrees in radians
-      var snappedAngle = Math.round(angle / snapAngle) * snapAngle;
-
-      // Set the snapped angle back to degrees
-      target.angle = (snappedAngle * 180) / Math.PI;
-
-      // Calculate the new position after snapping
-      var dx = target.left - options.target.left;
-      var dy = target.top - options.target.top;
-      var rotatedDx = dx * Math.cos(snappedAngle) - dy * Math.sin(snappedAngle);
-      var rotatedDy = dx * Math.sin(snappedAngle) + dy * Math.cos(snappedAngle);
-
-      // Snap the position to grid after rotation
-      target.set({
-        left: Math.round((options.target.left + rotatedDx) / grid) * grid,
-        top: Math.round((options.target.top + rotatedDy) / grid) * grid,
-      });
-
-      canvas.renderAll();
-    });
-
-    canvas.on("object:modified", function (options) {
-      // console.log(options.target.getLocalPointer());
-      // for (var key in options.target) {
-      //   if (typeof options.target[key] === "function") {
-      //     console.log(key);
-      //   }
-      // }
-      var newWidth = Math.round(options.target.getScaledWidth() / grid) * grid;
-      var newHeight = Math.round(options.target.getScaledHeight() / grid) * grid;
-
-      options.target.set({
-        width: newWidth,
-        height: newHeight,
-        scaleX: 1,
-        scaleY: 1,
-      });
-    });
-
-    function addObjectCanvas(event) {
-      var min = 99;
-      var max = 9999999;
-
-      var random = Math.floor(Math.random() * (max - min + 1)) + min;
-      var id = new Date().getTime() + random;
-      canvas.add(
-        new fabric.Rect({
-          left: 50,
-          top: 50,
-          width: 50,
-          height: 50,
-          type: "rectangle",
-          fill: "#fab",
-          stroke: "",
-          originX: "left",
-          originY: "top",
-          id: id,
-          hasControls: true,
-          centeredRotation: true,
-        })
-      );
-    }
-
-    //
-    function addWall(event) {
-      var min = 99;
-      var max = 9999999;
-
-      var random = Math.floor(Math.random() * (max - min + 1)) + min;
-      var id = new Date().getTime() + random + "wall";
-      canvas.add(
-        new fabric.Rect({
-          left: 1,
-          top: 1,
-          width: 500,
-          height: 20,
-          type: "rectangle",
-          /* The `fill: "#fab"` property is setting the fill color of the rectangle objects in the
-          canvas to a specific shade of yellow. The color is represented in hexadecimal format. */
-          fill: "#fab",
-          stroke: "",
-          originX: "left",
-          originY: "top",
-          id: id,
-          hasControls: true,
-          centeredRotation: true,
-        })
-      );
-    }
-
-    // export json string of array of objects in format {x,y, w, h, id}
-    function exportAllObjects(event) {
-      var objects = canvas.getObjects();
-      var len = objects.length;
-      var list = [];
-      for (var i = 0; i < len; i += 1) {
-        var item = objects[i];
-        var tmp = {};
-        if (item.type === "rectangle") {
-          // console.info(item);
-          tmp.x = Math.round(item.left) / unitScale;
-          tmp.y = Math.round(item.top) / unitScale;
-          tmp.w = Math.round(item.width) / unitScale;
-          tmp.h = Math.round(item.height) / unitScale;
-          tmp.id = item.id;
-          list.push(tmp);
-        }
-      }
-      //console.info(JSON.stringify(list));
-      var zone = document.getElementById("zone");
-      zone.value = JSON.stringify(list);
-    }
-
-    function deleteList(listItems) {
-      if (listItems !== undefined) {
-        var len = listItems.length;
-        var list = [];
-        for (var i = 0; i < len; i += 1) {
-          var item = listItems[i];
-          if (item.type === "rectangle") {
-            list.push(item);
-          }
-        }
-        len = list.length;
-        for (var j = 0; j < len; j += 1) {
-          canvas.remove(list[j]);
-        }
-      }
-    }
-
-    function deleteAllObjects(event) {
-      var objects = canvas.getObjects();
-      deleteList(objects);
-    }
-
-    function importList(listItems) {
-      if (listItems !== undefined) {
-        var len = listItems.length;
-        for (var i = 0; i < len; i += 1) {
-          var item = listItems[i];
-          canvas.add(
-            new fabric.Rect({
-              left: item.x * unitScale,
-              top: item.y * unitScale,
-              width: item.w * unitScale,
-              height: item.h * unitScale,
-              type: "rectangle",
-              fill: "#fab",
-              stroke: "",
-              originX: "left",
-              originY: "top",
-              id: item.id !== undefined ? item.id : "",
-              hasControls: true,
-              centeredRotation: true,
-            })
-          );
-        }
-        canvas.renderAll();
-      }
-    }
-
-    function importObjectCanvas(event) {
-      var zone = document.getElementById("zone");
-      var objects = JSON.parse(zone.value);
-
-      importList(objects);
-    }
-
-    // var index = 0,
-    //   duration = 500,
-    //   time;
-    // function animateStateCanvas(event) {
-    //   var zone = document.getElementById("zone");
-    //   var frames = JSON.parse(zone.value);
-
-    //   importList(frames[index]);
-
-    //   time = setInterval(function () {
-    //     if (index > frames.length - 1) {
-    //       index = 0;
-    //       importList(frames[index]);
-    //     } else {
-    //       canvas.clear();
-    //       for (var i = 0; i < canvasWidth / grid; i++) {
-    //         canvas.add(
-    //           new fabric.Line([i * grid, 0, i * grid, canvasHeight], {
-    //             type: "line",
-    //             stroke: "#ccc",
-    //             selectable: false,
-    //           })
-    //         );
-    //         canvas.add(
-    //           new fabric.Line([0, i * grid, canvasWidth, i * grid], { type: "line", stroke: "#ccc", selectable: false })
-    //         );
-    //       }
-    //       index++;
-    //       importList(frames[index]);
-    //     }
-    //   }, duration);
-    // }
-
-    var addObject = document.getElementById("addnew");
-    addObject.addEventListener("click", addObjectCanvas);
-
-    var addWallButton = document.getElementById("addWall");
-    addWallButton.addEventListener("click", addWall);
-
-    var exportObjects = document.getElementById("export");
-    exportObjects.addEventListener("click", exportAllObjects);
-
-    var deleteObjects = document.getElementById("delete");
-    deleteObjects.addEventListener("click", deleteAllObjects);
-
-    var importObjects = document.getElementById("import");
-    importObjects.addEventListener("click", importObjectCanvas);
-
-    // var animateStates = document.getElementById("animate");
-    // animateStates.addEventListener("click", animateStateCanvas);
-
-    // var stopAnimateStates = document.getElementById("stop");
-    // stopAnimateStates.addEventListener("click", function () {
-    //   canvas.clear();
-    //   for (var i = 0; i < canvasWidth / grid; i++) {
-    //     canvas.add(
-    //       new fabric.Line([i * grid, 0, i * grid, canvasHeight], { type: "line", stroke: "#ccc", selectable: false })
-    //     );
-    //     canvas.add(
-    //       new fabric.Line([0, i * grid, canvasWidth, i * grid], { type: "line", stroke: "#ccc", selectable: false })
-    //     );
-    //   }
-    //   index = 0;
-    //   clearInterval(time);
-    // });
-
-    document.addEventListener("keydown", function (event) {
-      var keyPressed = event.keyCode;
-      if (keyPressed === 46) {
-        var activeObject = canvas.getActiveObject();
-        if (activeObject !== null && activeObject.type === "rectangle") {
-          canvas.remove(activeObject);
-        }
-      }
-    });
-  }, []);
+  React.useEffect(() => {
+    document.getElementById("GRIDDiv").style.width = width * 25 + "px";
+    document.getElementById("GRIDDiv").style.height = height * 25 + "px";
+  }, [width, height]);
 
   return (
     <div>
-      <div class="buttons">
-        <button id="addnew" className="orangeButton">
-          Create
-        </button>
-        <button id="addWall" className="orangeButton">
-          Add Wall
-        </button>
-        <button id="delete" className="orangeButton">
-          Clear
-        </button>
-        <button id="export" className="orangeButton">
-          Export
-        </button>
-        <button id="import" className="orangeButton">
-          Import
-        </button>
-        {/* <button id="animate" className="orangeButton">
-          Animate
-        </button>
-        <button id="stop" className="orangeButton">
-          Stop
-        </button> */}
+      <label>width ft:</label>
+      <input type="number" value={width} onChange={(e) => setWidth(e.target.value)} />
+      <label>height ft:</label>
+      <input type="number" value={height} onChange={(e) => setHeight(e.target.value)} />
+      <div id="GRIDDiv" className="outline-2 grid overflow-hidden">
+        <Draggable
+          axis="both"
+          handle=".handle"
+          defaultPosition={{ x: 0, y: 0 }}
+          // position={null}
+          grid={[25, 25]}
+          scale={1}
+          bounds={document.getElementById("GRIDDiv")}
+          // onStart={this.handleStart}
+          // onDrag={this.handleDrag}
+          // onStop={this.handleStop}
+        >
+          <div className="handle border-[1px] w-[200px] h-[200px] bg-slate-300">
+            <div>Drag from here</div>
+          </div>
+        </Draggable>
+
+        <Draggable
+          id={"Drag1"}
+          axis="both"
+          handle=".handle1"
+          defaultPosition={{ x: 0, y: 0 }}
+          position={null}
+          grid={[25, 25]}
+          scale={1}
+          cancel=".just-name"
+          // onStart={this.handleStart}
+          // onDrag={this.handleDrag}
+          // onStop={this.handleStop}
+        >
+          <div className="handle1 border-[1px] w-[100px] h-[100px] bg-white wall" id={"Drag1"}>
+            <input
+              type="number"
+              className="just-name"
+              onChange={(e) => {
+                e.preventDefault();
+                document.getElementById("Drag1").style.width = e.target.value + "px";
+              }}
+            />
+          </div>
+        </Draggable>
       </div>
-      <canvas id="c"></canvas>
-      <textarea id="zone" rows="5"></textarea>
     </div>
   );
 }

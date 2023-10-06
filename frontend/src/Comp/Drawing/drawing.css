@@ -1,12 +1,5 @@
-.buttons {
-  margin-top: 15px;
-  margin-left: 15px;
-  margin-bottom: 15px;
-  display: block;
-}
-#zone {
-  width: 1000px;
-}
-canvas {
-  border: 1px solid #ccc;
+.grid {
+  background-image: repeating-linear-gradient(#ccc 0 1px, transparent 1px 100%),
+    repeating-linear-gradient(90deg, #ccc 0 1px, transparent 1px 100%);
+  background-size: 25px 25px;
 }

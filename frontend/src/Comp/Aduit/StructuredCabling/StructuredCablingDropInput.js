@@ -46,8 +46,6 @@ export default function StructuredCablingDropInput({ RackIndex, startItem }) {
                     changes["Starting Item Name *"].value = startItem["Name *"].value;
                     changes["Starting Item Location *"].value = RackState["Location *"].value;
                     changes["Starting Port Name *"].value = startItem["U Position *"].value + "-P" + item;
-                    console.log(changes);
-
                     setNewObject(changes);
                   }}>
                   {item}
@@ -68,7 +66,6 @@ export default function StructuredCablingDropInput({ RackIndex, startItem }) {
                     changes["Starting Item Name *"].value = startItem["Name *"].value;
                     changes["Starting Item Location *"].value = RackState["Location *"].value;
                     changes["Starting Port Name *"].value = startItem["U Position *"].value + "-P" + item;
-                    console.log(changes);
                     setNewObject(changes);
                   }}>
                   {item}
