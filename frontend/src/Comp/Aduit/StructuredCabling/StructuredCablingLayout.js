@@ -10,6 +10,8 @@ export default function StructuredCablingLayout() {
   const [endItem, setEndItem] = React.useState({});
   const [RackIndex, setRackIndex] = React.useState(0);
   const [EndRackIndex, setEndRackIndex] = React.useState(0);
+  const [StartSCData, setStartSCData] = React.useState({});
+  // const [EndSCData, setEndSCData] = React.useState({});
 
   return (
     <div className="w-screen h-screen p-3">
@@ -39,12 +41,17 @@ export default function StructuredCablingLayout() {
               </select>
             </div>
             <div>
-              <StructuredCablingStartCab setStartItem={setStartItem} RackIndex={RackIndex} startItem={startItem} />
+              <StructuredCablingStartCab
+                setStartItem={setStartItem}
+                RackIndex={RackIndex}
+                startItem={startItem}
+                setStartSCData={setStartSCData}
+              />
             </div>
           </div>
           {/*  */}
           <div className="hidden lg:block">
-            <StructuredCablingInput startItem={startItem} endItem={endItem} />
+            <StructuredCablingInput startItem={startItem} endItem={endItem} StartSCData={StartSCData} />
           </div>
           {/*  */}
           <div className="w-[20rem] mb-3 flex flex-col border-[#F3EEE7] border-2">
@@ -74,7 +81,7 @@ export default function StructuredCablingLayout() {
       </div>
       {/*  */}
       <div className="lg:hidden block">
-        <StructuredCablingInput startItem={startItem} endItem={endItem} />
+        <StructuredCablingInput startItem={startItem} endItem={endItem} StartSCData={StartSCData} />
       </div>
       {/*  */}
     </div>

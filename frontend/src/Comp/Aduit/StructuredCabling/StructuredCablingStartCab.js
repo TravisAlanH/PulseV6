@@ -8,7 +8,7 @@ import "./StructuredCabling.css";
 import Template from "../../../Store/Slices/Template";
 import StructuredCablingDropInput from "./StructuredCablingDropInput";
 
-export default function StructuredCablingStartCab({ setStartItem, RackIndex, startItem }) {
+export default function StructuredCablingStartCab({ setStartItem, RackIndex, startItem, setStartSCData }) {
   const Assets = useSelector((state) => state.data["Assets"]);
   const PDUs = useSelector((state) => state.data["PDUs"]);
   const UPSs = useSelector((state) => state.data["UPSs"]);
@@ -36,16 +36,32 @@ export default function StructuredCablingStartCab({ setStartItem, RackIndex, sta
   }
 
   const buttons = document.getElementsByClassName("StartDevices");
+  const arrowsHidden = document.getElementsByClassName("ArrowHidden");
+  const arrowsDisplay = document.getElementsByClassName("ArrowDisplay");
 
   function removeSelected() {
     for (var i = 0; i < buttons.length; i++) {
       buttons[i].addEventListener("click", function () {
         for (var j = 0; j < buttons.length; j++) {
           buttons[j].classList.remove("selectedStructuredCable");
+          arrowsDisplay[j].classList.add("hidden");
+          arrowsHidden[j].classList.remove("hidden");
         }
       });
     }
   }
+
+  // function removeArrow() {
+  //   for (var i = 0; i < arrows.length; i++) {
+  //     arrows[i].addEventListener("click", function () {
+  //       console.log("removeArrow");
+  //       for (var j = 0; j < arrows.length; j++) {
+  //         arrows[j].classList.remove("orangeButton");
+  //         // arrows[j].classList.add("orangeButtonClear");
+  //       }
+  //     });
+  //   }
+  // }
 
   let holdOpenRU = [];
 
@@ -76,6 +92,9 @@ export default function StructuredCablingStartCab({ setStartItem, RackIndex, sta
               onClick={() => {
                 setStartItem(object);
                 removeSelected();
+                // removeArrow();
+                document.getElementById("arrowButtonHidden" + index).classList.add("hidden");
+                document.getElementById("arrowButtonDisplay" + index).classList.remove("hidden");
                 document.getElementById("StartItem" + i).classList.add("selectedStructuredCable");
               }}>
               <div className="h-[2.5rem]  flex flex-row w-[19rem] justify-between items-center border-2">
@@ -101,12 +120,25 @@ export default function StructuredCablingStartCab({ setStartItem, RackIndex, sta
                     </div>
                   </div>
                 </div>
-                <button className="orangeButton flex flex-row justify-center items-center text-[1.7rem] mr-2 ">
+                <button
+                  id={`arrowButtonHidden${index}`}
+                  className="orangeButtonClear outline-2 flex flex-row justify-center items-center text-[1.7rem] mr-2 ArrowHidden">
+                  <BiArrowFromLeft />
+                </button>
+                <button
+                  id={`arrowButtonDisplay${index}`}
+                  className="orangeButton flex flex-row justify-center items-center text-[1.7rem] mr-2 ArrowDisplay hidden">
                   <BiArrowFromLeft />
                 </button>
               </div>
               <div className="flex flex-col items-center">
-                {<StructuredCablingDropInput RackIndex={RackIndex} startItem={object} />}
+                {
+                  <StructuredCablingDropInput
+                    RackIndex={RackIndex}
+                    startItem={object}
+                    setStartSCData={setStartSCData}
+                  />
+                }
                 {/* need to send Step and object Index */}
               </div>
             </div>

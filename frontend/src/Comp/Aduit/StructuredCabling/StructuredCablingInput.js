@@ -1,7 +1,7 @@
 import React from "react";
 import Template from "../../../Store/Slices/Template";
 
-export default function StructuredCablingInput({ startItem, endItem }) {
+export default function StructuredCablingInput({ startItem, endItem, StartSCData }) {
   let otherData = [];
 
   let keys = Object.keys(Template.StructuredCabling);
@@ -11,5 +11,5 @@ export default function StructuredCablingInput({ startItem, endItem }) {
     return null;
   });
 
-  return <div className="w-[20rem] flex flex-row justify-center"></div>;
+  return <div className="w-[20rem] flex flex-row justify-center">{JSON.stringify(StartSCData)}</div>;
 }

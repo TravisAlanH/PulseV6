@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import * as Actions from "../../../Store/Slices/Slice";
 import { BsEthernet } from "react-icons/bs";
 
-export default function StructuredCablingDropInput({ RackIndex, startItem }) {
+export default function StructuredCablingDropInput({ RackIndex, startItem, setStartSCData }) {
   const RackState = useSelector((state) => state.data["Racks"][RackIndex]);
   const [portIndex, setPortIndex] = React.useState();
   const portsArray = useSelector((state) => state.data[startItem.Step][startItem.Index]["Ports"]);
@@ -126,6 +126,7 @@ export default function StructuredCablingDropInput({ RackIndex, startItem }) {
                       changes[item].value = e.target.value;
                       payload.PortIndex = portIndex;
                       payload.value = changes;
+                      setStartSCData(changes);
                       dispatch(Actions.fillPortContent(payload));
                     }}>
                     {portsArray[portIndex][item].options.map((option) => {
@@ -146,6 +147,7 @@ export default function StructuredCablingDropInput({ RackIndex, startItem }) {
                       changes[item].value = e.target.value;
                       payload.PortIndex = portIndex;
                       payload.value = changes;
+                      setStartSCData(changes);
                       dispatch(Actions.fillPortContent(payload));
                     }}
                   />
@@ -157,12 +159,21 @@ export default function StructuredCablingDropInput({ RackIndex, startItem }) {
             <button
               className="orangeButton w-[5rem]"
               onClick={() => {
+                changes["Starting Item Location *"].value = RackState["Location *"].value;
                 changes["Starting Port Index *"].value = portIndex + 1;
                 changes["Starting Item Name *"].value = startItem["Name *"].value;
                 changes["Starting Item Location *"].value = RackState["Location *"].value;
-                changes["Starting Port Name *"].value = startItem["U Position *"].value + "-P" + (portIndex + 1);
+                changes["Starting Port Name *"].value =
+                  (RackState["Name *"].value.split("-").length > 1
+                    ? RackState["Name *"].value.split("-")[1]
+                    : RackState["Name *"].value.slice(0, 3)) +
+                  "-U" +
+                  startItem["U Position *"].value +
+                  "-P" +
+                  (portIndex + 1);
                 payload.PortIndex = portIndex;
                 payload.value = changes;
+                setStartSCData(changes);
                 dispatch(Actions.fillPortContent(payload));
               }}>
               Fill
