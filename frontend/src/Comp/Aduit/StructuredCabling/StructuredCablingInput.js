@@ -2,8 +2,6 @@ import React from "react";
 import Template from "../../../Store/Slices/Template";
 
 export default function StructuredCablingInput({ startItem, endItem }) {
-  console.log(startItem);
-
   let otherData = [];
 
   let keys = Object.keys(Template.StructuredCabling);

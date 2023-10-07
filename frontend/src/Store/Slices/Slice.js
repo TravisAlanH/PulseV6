@@ -31,6 +31,20 @@ const Slice = createSlice({
       }
       if (state.Settings.localStorage) localStorage.setItem("PulseStateData", JSON.stringify(state));
     },
+    fillPorts: (state, action) => {
+      console.log(action);
+      if (state[action.payload.Step][action.payload.Current].hasOwnProperty("Ports")) {
+        let PortsArray = [];
+        for (let i = 0; i < action.payload.value; i++) {
+          PortsArray.push(Template.StructuredCabling);
+        }
+        state[action.payload.Step][action.payload.Current]["Ports"] = [...PortsArray];
+      }
+    },
+    fillPortContent: (state, action) => {
+      console.log(action);
+      state[action.payload.Step][action.payload.Current]["Ports"][action.payload.PortIndex] = action.payload.value;
+    },
     addToOpenRU: (state, action) => {
       state.OpenRU = [...state.OpenRU, action.payload.value];
       if (state.Settings.localStorage) localStorage.setItem("PulseStateData", JSON.stringify(state));
@@ -247,7 +261,8 @@ const Slice = createSlice({
       if (state.Settings.localStorage) localStorage.setItem("PulseStateData", JSON.stringify(state));
     },
     loginLogout: (state, action) => {
-      state.LoggedIn = JSON.parse(action.payload.value);
+      state.LoggedIn = action.payload.value;
+
       if (state.Settings.localStorage) localStorage.setItem("PulseStateData", JSON.stringify(state));
     },
     deleteCurrentIndex: (state, action) => {
@@ -274,6 +289,8 @@ const Slice = createSlice({
 });
 
 export const {
+  fillPortContent,
+  fillPorts,
   clearData,
   setLocalStorage,
   // loadLocalStorage,

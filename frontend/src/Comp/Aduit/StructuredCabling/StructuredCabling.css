@@ -1,5 +1,5 @@
 .selectedStructuredCable {
-  height: 23rem;
+  height: 25rem;
 }
 
 .OrangeAddPort {
@@ -8,4 +8,9 @@
   background-color: #ff8c00;
   color: white;
   font-size: 1.5rem;
+}
+
+.selectedPort {
+  background-color: #ff8c00;
+  color: white;
 }

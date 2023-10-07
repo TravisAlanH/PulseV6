@@ -76,7 +76,7 @@ export default function SearchTableModel({ SearchData, searchInput, Step, setSea
 
         payload.Key = "Ports";
         payload.value = SearchData[item]["DataPortsCount"];
-        dispatch(Action.changeData(payload));
+        dispatch(Action.fillPorts(payload));
         if (Step === "Racks" || Step === "Assets" || Step === "PDUs" || Step === "UPSs" || Step === "ATSs") {
           setTimeout(() => {
             payload.Key = "RU Height";

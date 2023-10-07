@@ -51,7 +51,12 @@ export default function StructuredCablingStartCab({ setStartItem, RackIndex, sta
 
   let Layout = [];
 
-  let Data = [...Assets, ...PDUs, ...UPSs, ...ATSs];
+  let AssetsCopy = Assets.map((obj, index) => ({ ...obj, Step: "Assets", Index: index }));
+  let PDUsCopy = PDUs.map((obj, index) => ({ ...obj, Step: "PDUs", Index: index }));
+  let UPSsCopy = UPSs.map((obj, index) => ({ ...obj, Step: "UPSs", Index: index }));
+  let ATSsCopy = ATSs.map((obj, index) => ({ ...obj, Step: "ATSs", Index: index }));
+
+  let Data = [...AssetsCopy, ...PDUsCopy, ...UPSsCopy, ...ATSsCopy];
 
   if (RackState === undefined) return null;
   for (let i = 1; i < RackState["RU Height"].value + 1; i++) {
@@ -96,14 +101,13 @@ export default function StructuredCablingStartCab({ setStartItem, RackIndex, sta
                     </div>
                   </div>
                 </div>
-                <button
-                  className="orangeButton flex flex-row justify-center items-center text-[1.7rem] mr-2"
-                  onClick={() => {}}>
+                <button className="orangeButton flex flex-row justify-center items-center text-[1.7rem] mr-2 ">
                   <BiArrowFromLeft />
                 </button>
               </div>
               <div className="flex flex-col items-center">
                 {<StructuredCablingDropInput RackIndex={RackIndex} startItem={object} />}
+                {/* need to send Step and object Index */}
               </div>
             </div>
           </div>
