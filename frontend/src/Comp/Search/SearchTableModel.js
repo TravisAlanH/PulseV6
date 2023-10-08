@@ -72,10 +72,9 @@ export default function SearchTableModel({ SearchData, searchInput, Step, setSea
         setSearchInput(SearchData[item][APIMatch]);
         payload.value = SearchData[item][APIMatch];
         dispatch(Action.changeData(payload));
-        console.log(SearchData[item]);
-
         payload.Key = "Ports";
         payload.value = SearchData[item]["DataPortsCount"];
+        console.log(payload);
         dispatch(Action.fillPorts(payload));
         if (Step === "Racks" || Step === "Assets" || Step === "PDUs" || Step === "UPSs" || Step === "ATSs") {
           setTimeout(() => {
@@ -107,6 +106,12 @@ export default function SearchTableModel({ SearchData, searchInput, Step, setSea
         setSearchInput(item["Model Name *"].value);
         payload.value = item["Model Name *"].value;
         dispatch(Action.changeData(payload));
+        console.log(item["Ports"].value);
+        payload.Key = "Ports";
+        console.log(payload.Key);
+        console.log(item["Ports"].value);
+        payload.value = item["Ports"].value;
+        dispatch(Action.fillPorts(payload));
         if (Step === "Racks" || Step === "Assets" || Step === "PDUs" || Step === "UPSs" || Step === "ATSs") {
           setTimeout(() => {
             payload.Key = "RU Height";

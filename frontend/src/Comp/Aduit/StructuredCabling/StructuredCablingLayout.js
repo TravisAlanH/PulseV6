@@ -11,7 +11,7 @@ export default function StructuredCablingLayout() {
   const [RackIndex, setRackIndex] = React.useState(0);
   const [EndRackIndex, setEndRackIndex] = React.useState(0);
   const [StartSCData, setStartSCData] = React.useState({});
-  // const [EndSCData, setEndSCData] = React.useState({});
+  const [EndSCData, setEndSCData] = React.useState({});
 
   return (
     <div className="w-screen h-screen p-3">
@@ -46,6 +46,7 @@ export default function StructuredCablingLayout() {
                 RackIndex={RackIndex}
                 startItem={startItem}
                 setStartSCData={setStartSCData}
+                EndSCData={EndSCData}
               />
             </div>
           </div>
@@ -74,7 +75,13 @@ export default function StructuredCablingLayout() {
               </select>
             </div>
             <div>
-              <StructuredCablingEndCab setEndItem={setEndItem} RackIndex={EndRackIndex} endItem={endItem} />
+              <StructuredCablingEndCab
+                setEndItem={setEndItem}
+                RackIndex={EndRackIndex}
+                endItem={endItem}
+                setEndSCData={setEndSCData}
+                StartSCData={StartSCData}
+              />
             </div>
           </div>
         </div>

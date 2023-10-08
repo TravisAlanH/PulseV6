@@ -1,17 +1,15 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Template from "../../../Store/Slices/Template";
 import { BiPlus } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import * as Actions from "../../../Store/Slices/Slice";
 import { BsEthernet } from "react-icons/bs";
 
-export default function StructuredCablingDropInput({ RackIndex, startItem, setStartSCData, EndSCData }) {
+export default function StructuredCablingDropInputEnd({ RackIndex, endItem, setEndSCData, EndSCData }) {
   const RackState = useSelector((state) => state.data["Racks"][RackIndex]);
   const [portIndex, setPortIndex] = React.useState();
-  const portsArray = useSelector((state) => state.data[startItem.Step][startItem.Index]["Ports"]);
+  const portsArray = useSelector((state) => state.data[endItem.Step][endItem.Index]["Ports"]);
   const dispatch = useDispatch();
-
-  let changes = structuredClone(portsArray[portIndex]);
 
   if (portsArray.length === 0) {
     return (
@@ -23,6 +21,8 @@ export default function StructuredCablingDropInput({ RackIndex, startItem, setSt
     );
   }
 
+  let changes = structuredClone(portsArray[portIndex]);
+
   let StartingArray = [];
   let startMap = [];
 
@@ -31,15 +31,15 @@ export default function StructuredCablingDropInput({ RackIndex, startItem, setSt
     if (item.includes("Starting")) StartingArray.push(item);
     return null;
   });
-  if (Object.keys(startItem).length > 0) {
-    for (let i = 0; i < startItem["Ports"].value; i++) {
+  if (Object.keys(endItem).length > 0) {
+    for (let i = 0; i < endItem["Ports"].value; i++) {
       startMap.push(i + 1);
     }
   }
 
   let payload = {
-    Step: startItem.Step,
-    Current: startItem.Index,
+    Step: endItem.Step,
+    Current: endItem.Index,
     PortIndex: 0,
   };
 
@@ -59,19 +59,20 @@ export default function StructuredCablingDropInput({ RackIndex, startItem, setSt
     <div id="start">
       <div className="flex flex-row items-end justify-between px-2">
         <p className="font-semibold">Start Port: </p>
-        <p className="text-sm">{(startItem["Name *"].value + " @U" + startItem["U Position *"].value).slice(0, 20)}</p>
+        <p className="text-sm">{(endItem["Name *"].value + " @U" + endItem["U Position *"].value).slice(0, 20)}</p>
       </div>
       <div
         id="portsList"
         className={"w-[18rem] h-[7rem] overflow-x-scroll border-2 flex flex-col gap-1 justify-center p-1"}>
         <div className="flex gap-1 flex-row">
-          {startItem["Ports"].map((item, index) => {
+          {endItem["Ports"].map((item, index) => {
             if (index % 2 === 0) {
               return (
                 <div
                   className="portButton w-[2.5rem] h-[2.5rem] border-2 rounded-md flex flex-row items-center justify-center flex-shrink-0"
                   onClick={(e) => {
                     setPortIndex(index);
+                    setEndSCData(changes);
                     removeSelected();
                     e.target.classList.add("selectedPort");
                   }}>
@@ -82,13 +83,14 @@ export default function StructuredCablingDropInput({ RackIndex, startItem, setSt
           })}
         </div>
         <div className="flex gap-1 flex-row">
-          {startItem["Ports"].map((item, index) => {
+          {endItem["Ports"].map((item, index) => {
             if (index % 2 !== 0) {
               return (
                 <div
                   className="portButton w-[2.5rem] h-[2.5rem] border-2 rounded-md flex flex-row items-center justify-center flex-shrink-0"
                   onClick={(e) => {
                     setPortIndex(index);
+                    setEndSCData(changes);
                     removeSelected();
                     e.target.classList.add("selectedPort");
                   }}>
@@ -123,7 +125,7 @@ export default function StructuredCablingDropInput({ RackIndex, startItem, setSt
                       changes[item].value = e.target.value;
                       payload.PortIndex = portIndex;
                       payload.value = changes;
-                      setStartSCData(changes);
+                      setEndSCData(changes);
                       dispatch(Actions.fillPortContent(payload));
                     }}>
                     {portsArray[portIndex][item].options.map((option) => {
@@ -144,7 +146,7 @@ export default function StructuredCablingDropInput({ RackIndex, startItem, setSt
                       changes[item].value = e.target.value;
                       payload.PortIndex = portIndex;
                       payload.value = changes;
-                      setStartSCData(changes);
+                      setEndSCData(changes);
                       dispatch(Actions.fillPortContent(payload));
                     }}
                   />
@@ -158,19 +160,19 @@ export default function StructuredCablingDropInput({ RackIndex, startItem, setSt
               onClick={() => {
                 changes["Starting Item Location *"].value = RackState["Location *"].value;
                 changes["Starting Port Index *"].value = portIndex + 1;
-                changes["Starting Item Name *"].value = startItem["Name *"].value;
+                changes["Starting Item Name *"].value = endItem["Name *"].value;
                 changes["Starting Item Location *"].value = RackState["Location *"].value;
                 changes["Starting Port Name *"].value =
                   (RackState["Name *"].value.split("-").length > 1
                     ? RackState["Name *"].value.split("-")[1]
                     : RackState["Name *"].value.slice(0, 3)) +
                   "-U" +
-                  startItem["U Position *"].value +
+                  endItem["U Position *"].value +
                   "-P" +
                   (portIndex + 1);
                 payload.PortIndex = portIndex;
                 payload.value = changes;
-                setStartSCData(changes);
+                setEndSCData(changes);
                 dispatch(Actions.fillPortContent(payload));
               }}>
               Fill
