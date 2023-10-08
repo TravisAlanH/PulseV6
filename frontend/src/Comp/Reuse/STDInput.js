@@ -76,9 +76,9 @@ export default function STDInput({ keyName, Step }) {
         placeholder={state[current][keyName].placeholder}
         // required={state[current][keyName].required}
         onChange={(e) => {
+          let holdUP = state[current][keyName].value;
           if (e.target.value === "") e.target.value = "";
           if (keyName === "U Position *") {
-            let holdUP = state[current][keyName].value;
             for (let i = 0; i < state[current]["RU Height"].value; i++) {
               OpenRUHold[holdUP - 1 + i] = 0;
             }
@@ -100,6 +100,15 @@ export default function STDInput({ keyName, Step }) {
               alert("Not enough space");
             }
           } else {
+            // let holdUP = state[current][keyName].value;
+            // if (keyName === "Rack Units *" && e.target.value < 1 && e.target.value !== "") {
+            //   e.target.value = holdUP;
+            //   let Input = document.getElementById(keyName + Step);
+            //   Input.value = holdUP === "" ? 1 : holdUP;
+            //   Input.blur();
+            //   alert("Rack Units Must Be 1 or More");
+            // }
+
             payload.value = parseInt(e.target.value);
             dispatch(Actions.changeData(payload));
           }

@@ -750,7 +750,7 @@ let Template = {
       Export: "Ending Item Location *",
     },
     "Ending Item Name *": {
-      type: "select",
+      type: "text",
       value: "",
       placeholder: "Input Here",
       options: [],

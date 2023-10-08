@@ -52,7 +52,12 @@ export default function StructuredCablingLayout() {
           </div>
           {/*  */}
           <div className="hidden lg:block">
-            <StructuredCablingInput startItem={startItem} endItem={endItem} StartSCData={StartSCData} />
+            <StructuredCablingInput
+              startItem={startItem}
+              endItem={endItem}
+              StartSCData={StartSCData}
+              EndSCData={EndSCData}
+            />
           </div>
           {/*  */}
           <div className="w-[20rem] mb-3 flex flex-col border-[#F3EEE7] border-2">
@@ -88,7 +93,12 @@ export default function StructuredCablingLayout() {
       </div>
       {/*  */}
       <div className="lg:hidden block">
-        <StructuredCablingInput startItem={startItem} endItem={endItem} StartSCData={StartSCData} />
+        <StructuredCablingInput
+          startItem={startItem}
+          endItem={endItem}
+          StartSCData={StartSCData}
+          EndSCData={EndSCData}
+        />
       </div>
       {/*  */}
     </div>

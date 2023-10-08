@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Template from "../../../Store/Slices/Template";
 import { BiPlus } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
@@ -72,6 +72,7 @@ export default function StructuredCablingDropInput({ RackIndex, startItem, setSt
                   className="portButton w-[2.5rem] h-[2.5rem] border-2 rounded-md flex flex-row items-center justify-center flex-shrink-0"
                   onClick={(e) => {
                     setPortIndex(index);
+                    setStartSCData(portsArray[index]);
                     removeSelected();
                     e.target.classList.add("selectedPort");
                   }}>
@@ -89,6 +90,7 @@ export default function StructuredCablingDropInput({ RackIndex, startItem, setSt
                   className="portButton w-[2.5rem] h-[2.5rem] border-2 rounded-md flex flex-row items-center justify-center flex-shrink-0"
                   onClick={(e) => {
                     setPortIndex(index);
+                    setStartSCData(portsArray[index]);
                     removeSelected();
                     e.target.classList.add("selectedPort");
                   }}>

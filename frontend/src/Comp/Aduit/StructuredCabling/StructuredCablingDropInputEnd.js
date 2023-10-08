@@ -23,12 +23,12 @@ export default function StructuredCablingDropInputEnd({ RackIndex, endItem, setE
 
   let changes = structuredClone(portsArray[portIndex]);
 
-  let StartingArray = [];
+  let EndingArray = [];
   let startMap = [];
 
   let keys = Object.keys(Template.StructuredCabling);
   keys.map((item) => {
-    if (item.includes("Starting")) StartingArray.push(item);
+    if (item.includes("Ending")) EndingArray.push(item);
     return null;
   });
   if (Object.keys(endItem).length > 0) {
@@ -72,7 +72,7 @@ export default function StructuredCablingDropInputEnd({ RackIndex, endItem, setE
                   className="portButton w-[2.5rem] h-[2.5rem] border-2 rounded-md flex flex-row items-center justify-center flex-shrink-0"
                   onClick={(e) => {
                     setPortIndex(index);
-                    setEndSCData(changes);
+                    setEndSCData(portsArray[index]);
                     removeSelected();
                     e.target.classList.add("selectedPort");
                   }}>
@@ -90,7 +90,7 @@ export default function StructuredCablingDropInputEnd({ RackIndex, endItem, setE
                   className="portButton w-[2.5rem] h-[2.5rem] border-2 rounded-md flex flex-row items-center justify-center flex-shrink-0"
                   onClick={(e) => {
                     setPortIndex(index);
-                    setEndSCData(changes);
+                    setEndSCData(portsArray[index]);
                     removeSelected();
                     e.target.classList.add("selectedPort");
                   }}>
@@ -109,14 +109,14 @@ export default function StructuredCablingDropInputEnd({ RackIndex, endItem, setE
       {portIndex !== undefined ? (
         <div id="inputs" className="flex flex-col gap-1 pt-2">
           {/* standard text input that i have used in the project with lable*/}
-          {StartingArray.map((item, index) => {
+          {EndingArray.map((item, index) => {
             return (
               <div className="flex flex-row">
                 <div className="flex flex-col justify-center items-center text-red-500 w-[1rem] h-full">
                   {item.includes("*") ? "*" : null}
                 </div>
                 <label className={"text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center w-[7rem]"}>
-                  {item.replace("*", "").replace("Starting", "")}
+                  {item.replace("*", "").replace("Ending", "")}
                 </label>
                 {portsArray[portIndex][item].type === "select" ? (
                   <select
@@ -158,11 +158,11 @@ export default function StructuredCablingDropInputEnd({ RackIndex, endItem, setE
             <button
               className="orangeButton w-[5rem]"
               onClick={() => {
-                changes["Starting Item Location *"].value = RackState["Location *"].value;
-                changes["Starting Port Index *"].value = portIndex + 1;
-                changes["Starting Item Name *"].value = endItem["Name *"].value;
-                changes["Starting Item Location *"].value = RackState["Location *"].value;
-                changes["Starting Port Name *"].value =
+                changes["Ending Item Location *"].value = RackState["Location *"].value;
+                changes["Ending Port Index *"].value = portIndex + 1;
+                changes["Ending Item Name *"].value = endItem["Name *"].value;
+                changes["Ending Item Location *"].value = RackState["Location *"].value;
+                changes["Ending Port Name *"].value =
                   (RackState["Name *"].value.split("-").length > 1
                     ? RackState["Name *"].value.split("-")[1]
                     : RackState["Name *"].value.slice(0, 3)) +
