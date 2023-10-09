@@ -17,7 +17,7 @@ export default function Drawing() {
       <input type="number" value={width} onChange={(e) => setWidth(e.target.value)} />
       <label>height ft:</label>
       <input type="number" value={height} onChange={(e) => setHeight(e.target.value)} />
-      <div id="GRIDDiv" className="outline-2 grid overflow-hidden">
+      <div id="GRIDDiv" className="outline-2 DrawingGrid overflow-hidden">
         <Draggable
           axis="both"
           handle=".handle"

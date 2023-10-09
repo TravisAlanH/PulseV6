@@ -28,7 +28,7 @@ export default function StructuredCablingLayout() {
                 onChange={(e) => {
                   setRackIndex(e.target.value);
                 }}>
-                <option value="0">Select</option>
+                {/* <option value="0">Select</option> */}
                 {Racks.length > 0
                   ? Racks.map((item, index) => {
                       return (
@@ -67,7 +67,7 @@ export default function StructuredCablingLayout() {
                 onChange={(e) => {
                   setEndRackIndex(e.target.value);
                 }}>
-                <option value="0">Select</option>
+                {/* <option value="0">Select</option> */}
                 {Racks.length > 0
                   ? Racks.map((item, index) => {
                       return (

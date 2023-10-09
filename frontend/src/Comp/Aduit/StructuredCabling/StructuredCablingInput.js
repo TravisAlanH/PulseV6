@@ -47,7 +47,7 @@ export default function StructuredCablingInput({ startItem, endItem, StartSCData
   return (
     <div className="w-[20rem] flex flex-row justify-center">
       {Object.keys(StartSCData).length > 0 && Object.keys(EndSCData).length > 0 ? (
-        <form onSubmit={UpdateBothPortData}>
+        <form onSubmit={UpdateBothPortData} className="flex flex-col gap-1">
           {otherData.map((item, index) => {
             return (
               <div className="flex flex-row" key={index}>

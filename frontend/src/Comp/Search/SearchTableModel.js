@@ -64,6 +64,7 @@ export default function SearchTableModel({ SearchData, searchInput, Step, setSea
       }
     }
   }
+  console.log(SearchData[closestMatch[0]]);
 
   let tableContent = closestMatch.map((item, index) => (
     <tr
@@ -72,6 +73,7 @@ export default function SearchTableModel({ SearchData, searchInput, Step, setSea
         setSearchInput(SearchData[item][APIMatch]);
         payload.value = SearchData[item][APIMatch];
         dispatch(Action.changeData(payload));
+
         payload.Key = "Ports";
         payload.value = SearchData[item]["DataPortsCount"];
         console.log(payload);
@@ -94,10 +96,15 @@ export default function SearchTableModel({ SearchData, searchInput, Step, setSea
       <td data-label="RackUnits" className="RackUnits">
         {SearchData[item].RackUnits}
       </td>
+
+      <td data-label="DataPorts" className="DataPorts">
+        {SearchData[item].DataPortsCount}
+      </td>
     </tr>
   ));
 
   // let newData = [];
+  console.log(newDataCopy);
 
   let tableAdd = newDataCopy.map((item, index) => (
     <tr
@@ -124,6 +131,7 @@ export default function SearchTableModel({ SearchData, searchInput, Step, setSea
       <td className="">{item["Model Name *"].value}</td>
       <td className="">{item["Make *"].value}</td>
       <td className="">{item["Rack Units *"].value}</td>
+      <td className="">{item["Ports"].value}</td>
     </tr>
   ));
 
@@ -142,6 +150,11 @@ export default function SearchTableModel({ SearchData, searchInput, Step, setSea
           </th>
           <th className="RackUnits bg-white">
             <div className="flex flex-row items-center justify-between w-[10rem] bg-white h-full">{"RU (ADDED)"}</div>
+          </th>
+          <th className="DataPorts bg-white">
+            <div className="flex flex-row items-center justify-between w-[10rem] bg-white h-full">
+              {"Data Ports (ADDED)"}
+            </div>
           </th>
         </tr>
       </thead>
@@ -198,6 +211,29 @@ export default function SearchTableModel({ SearchData, searchInput, Step, setSea
                       sort(false, "RackUnits", "content-table3");
                     }}
                     title="Sort RackUnits Ascending">
+                    <FaChevronDown />
+                  </button>
+                </div>
+              </div>
+            </th>
+            <th className="DataPorts bg-white">
+              <div className="flex flex-row items-center justify-between w-[10rem] bg-white h-full">
+                Data Ports
+                <div className="sort-table-arrows flex flex-row gap-2 items-center justify-end w-[5rem]">
+                  <button
+                    className="button orangeButton"
+                    onClick={(e) => {
+                      sort(true, "DataPorts", "content-table3");
+                    }}
+                    title="Sort DataPorts Descending">
+                    <FaChevronUp />
+                  </button>
+                  <button
+                    className="button orangeButton"
+                    onClick={(e) => {
+                      sort(false, "DataPorts", "content-table3");
+                    }}
+                    title="Sort DataPorts Ascending">
                     <FaChevronDown />
                   </button>
                 </div>
