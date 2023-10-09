@@ -15,7 +15,15 @@ export default function StructuredCablingDropInputEnd({ RackIndex, endItem, setE
     return (
       <div
         className="rounded-md flex flex-row items-center justify-center flex-shrink-0 OrangeAddPort"
-        onClick={() => {}}>
+        onClick={() => {
+          //! ADD PORT TO CURRENT DEVICE
+          // let payload = {
+          //   Step: endItem.Step,
+          //   Current: endItem.Index,
+          //   PortIndex: portsArray.length,
+          // };
+          // dispatch(Actions.addPort(payload));
+        }}>
         <BiPlus />
       </div>
     );
@@ -43,7 +51,7 @@ export default function StructuredCablingDropInputEnd({ RackIndex, endItem, setE
     PortIndex: 0,
   };
 
-  let PortButtons = document.querySelectorAll(".portButton");
+  let PortButtons = document.querySelectorAll(".EndPortButton");
 
   function removeSelected() {
     for (var i = 0; i < PortButtons.length; i++) {
@@ -58,7 +66,7 @@ export default function StructuredCablingDropInputEnd({ RackIndex, endItem, setE
   return (
     <div id="start">
       <div className="flex flex-row items-end justify-between px-2">
-        <p className="font-semibold">Start Port: </p>
+        <p className="font-semibold">Ending Port: </p>
         <p className="text-sm">{(endItem["Name *"].value + " @U" + endItem["U Position *"].value).slice(0, 20)}</p>
       </div>
       <div
@@ -69,10 +77,19 @@ export default function StructuredCablingDropInputEnd({ RackIndex, endItem, setE
             if (index % 2 === 0) {
               return (
                 <div
-                  className="portButton w-[2.5rem] h-[2.5rem] border-2 rounded-md flex flex-row items-center justify-center flex-shrink-0"
+                  className="EndPortButton w-[2.5rem] h-[2.5rem] border-2 rounded-md flex flex-row items-center justify-center flex-shrink-0"
                   onClick={(e) => {
                     setPortIndex(index);
-                    setEndSCData(portsArray[index]);
+                    setEndSCData(
+                      Object.keys(portsArray[index])
+                        .filter((key) => key.includes("Ending"))
+                        .reduce((obj, key) => {
+                          obj[key] = portsArray[index][key];
+                          return obj;
+                        }, {})
+                    );
+
+                    // setEndSCData(portsArray[index]);
                     removeSelected();
                     e.target.classList.add("selectedPort");
                   }}>
@@ -87,10 +104,18 @@ export default function StructuredCablingDropInputEnd({ RackIndex, endItem, setE
             if (index % 2 !== 0) {
               return (
                 <div
-                  className="portButton w-[2.5rem] h-[2.5rem] border-2 rounded-md flex flex-row items-center justify-center flex-shrink-0"
+                  className="EndPortButton w-[2.5rem] h-[2.5rem] border-2 rounded-md flex flex-row items-center justify-center flex-shrink-0"
                   onClick={(e) => {
                     setPortIndex(index);
-                    setEndSCData(portsArray[index]);
+                    setEndSCData(
+                      Object.keys(portsArray[index])
+                        .filter((key) => key.includes("Ending"))
+                        .reduce((obj, key) => {
+                          obj[key] = portsArray[index][key];
+                          return obj;
+                        }, {})
+                    );
+                    // setEndSCData(portsArray[index]);
                     removeSelected();
                     e.target.classList.add("selectedPort");
                   }}>
@@ -125,7 +150,15 @@ export default function StructuredCablingDropInputEnd({ RackIndex, endItem, setE
                       changes[item].value = e.target.value;
                       payload.PortIndex = portIndex;
                       payload.value = changes;
-                      setEndSCData(changes);
+                      setEndSCData(
+                        Object.keys(changes)
+                          .filter((key) => key.includes("Ending"))
+                          .reduce((obj, key) => {
+                            obj[key] = changes[key];
+                            return obj;
+                          }, {})
+                      );
+                      // setEndSCData(changes);
                       dispatch(Actions.fillPortContent(payload));
                     }}>
                     {portsArray[portIndex][item].options.map((option) => {
@@ -146,7 +179,15 @@ export default function StructuredCablingDropInputEnd({ RackIndex, endItem, setE
                       changes[item].value = e.target.value;
                       payload.PortIndex = portIndex;
                       payload.value = changes;
-                      setEndSCData(changes);
+                      setEndSCData(
+                        Object.keys(changes)
+                          .filter((key) => key.includes("Ending"))
+                          .reduce((obj, key) => {
+                            obj[key] = changes[key];
+                            return obj;
+                          }, {})
+                      );
+                      // setEndSCData(changes);
                       dispatch(Actions.fillPortContent(payload));
                     }}
                   />
@@ -172,7 +213,15 @@ export default function StructuredCablingDropInputEnd({ RackIndex, endItem, setE
                   (portIndex + 1);
                 payload.PortIndex = portIndex;
                 payload.value = changes;
-                setEndSCData(changes);
+                setEndSCData(
+                  Object.keys(changes)
+                    .filter((key) => key.includes("Ending"))
+                    .reduce((obj, key) => {
+                      obj[key] = changes[key];
+                      return obj;
+                    }, {})
+                );
+                // setEndSCData(changes);
                 dispatch(Actions.fillPortContent(payload));
               }}>
               Fill

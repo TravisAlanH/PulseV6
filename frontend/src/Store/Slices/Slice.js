@@ -45,6 +45,13 @@ const Slice = createSlice({
       console.log(action);
       state[action.payload.Step][action.payload.Current]["Ports"][action.payload.PortIndex] = action.payload.value;
     },
+    fillPortData: (state, action) => {
+      console.log(action);
+      state[action.payload.StartStep][action.payload.StartIndex]["Ports"][action.payload.StartPortIndex] =
+        action.payload.value;
+      state[action.payload.EndStep][action.payload.EndIndex]["Ports"][action.payload.EndPortIndex] =
+        action.payload.value;
+    },
     addToOpenRU: (state, action) => {
       state.OpenRU = [...state.OpenRU, action.payload.value];
       if (state.Settings.localStorage) localStorage.setItem("PulseStateData", JSON.stringify(state));
@@ -289,6 +296,7 @@ const Slice = createSlice({
 });
 
 export const {
+  fillPortData,
   fillPortContent,
   fillPorts,
   clearData,

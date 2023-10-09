@@ -72,7 +72,15 @@ export default function StructuredCablingDropInput({ RackIndex, startItem, setSt
                   className="portButton w-[2.5rem] h-[2.5rem] border-2 rounded-md flex flex-row items-center justify-center flex-shrink-0"
                   onClick={(e) => {
                     setPortIndex(index);
-                    setStartSCData(portsArray[index]);
+                    setStartSCData(
+                      Object.keys(portsArray[index])
+                        .filter((key) => !key.includes("Ending"))
+                        .reduce((obj, key) => {
+                          obj[key] = portsArray[index][key];
+                          return obj;
+                        }, {})
+                    );
+                    // setStartSCData(portsArray[index]);
                     removeSelected();
                     e.target.classList.add("selectedPort");
                   }}>
@@ -90,7 +98,15 @@ export default function StructuredCablingDropInput({ RackIndex, startItem, setSt
                   className="portButton w-[2.5rem] h-[2.5rem] border-2 rounded-md flex flex-row items-center justify-center flex-shrink-0"
                   onClick={(e) => {
                     setPortIndex(index);
-                    setStartSCData(portsArray[index]);
+                    setStartSCData(
+                      Object.keys(portsArray[index])
+                        .filter((key) => !key.includes("Ending"))
+                        .reduce((obj, key) => {
+                          obj[key] = portsArray[index][key];
+                          return obj;
+                        }, {})
+                    );
+                    // setStartSCData(portsArray[index]);
                     removeSelected();
                     e.target.classList.add("selectedPort");
                   }}>
@@ -125,7 +141,15 @@ export default function StructuredCablingDropInput({ RackIndex, startItem, setSt
                       changes[item].value = e.target.value;
                       payload.PortIndex = portIndex;
                       payload.value = changes;
-                      setStartSCData(changes);
+                      setStartSCData(
+                        Object.keys(changes)
+                          .filter((key) => !key.includes("Ending"))
+                          .reduce((obj, key) => {
+                            obj[key] = changes[key];
+                            return obj;
+                          }, {})
+                      );
+                      // setStartSCData(changes);
                       dispatch(Actions.fillPortContent(payload));
                     }}>
                     {portsArray[portIndex][item].options.map((option) => {
@@ -146,7 +170,15 @@ export default function StructuredCablingDropInput({ RackIndex, startItem, setSt
                       changes[item].value = e.target.value;
                       payload.PortIndex = portIndex;
                       payload.value = changes;
-                      setStartSCData(changes);
+                      setStartSCData(
+                        Object.keys(changes)
+                          .filter((key) => !key.includes("Ending"))
+                          .reduce((obj, key) => {
+                            obj[key] = changes[key];
+                            return obj;
+                          }, {})
+                      );
+                      // setStartSCData(changes);
                       dispatch(Actions.fillPortContent(payload));
                     }}
                   />
@@ -172,7 +204,15 @@ export default function StructuredCablingDropInput({ RackIndex, startItem, setSt
                   (portIndex + 1);
                 payload.PortIndex = portIndex;
                 payload.value = changes;
-                setStartSCData(changes);
+                setStartSCData(
+                  Object.keys(changes)
+                    .filter((key) => !key.includes("Ending"))
+                    .reduce((obj, key) => {
+                      obj[key] = changes[key];
+                      return obj;
+                    }, {})
+                );
+                // setStartSCData(changes);
                 dispatch(Actions.fillPortContent(payload));
               }}>
               Fill
