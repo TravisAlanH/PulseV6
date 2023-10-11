@@ -115,8 +115,6 @@ function UserSignOut() {
   signOut(auth)
     .then((response) => {
       return response;
-      // Sign-out successful.
-      console.log("Sign out");
     })
     .catch((error) => {
       // An error happened.
