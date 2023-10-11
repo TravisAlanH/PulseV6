@@ -7,6 +7,7 @@ import {
   setPersistence,
   browserSessionPersistence,
   updateProfile,
+  sendEmailVerification,
 } from "firebase/auth";
 import { getDatabase, onValue, ref } from "firebase/database";
 import app from "./firebase";
@@ -55,6 +56,20 @@ async function getData() {
 //   if (!isValidEmail(user.email)) return;
 // }
 
+function VerificationEmail() {
+  sendEmailVerification(auth.currentUser)
+    .then(() => {
+      // Email verification sent!
+      // ...
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+      // ...
+    });
+}
+
 function signup(user) {
   setPersistence(auth, browserSessionPersistence);
   const db = getFirestore(app);
@@ -76,6 +91,7 @@ function signup(user) {
       });
     })
     .then(() => {
+      VerificationEmail();
       console.log("Document successfully written!");
       UserSignOut(auth);
     })

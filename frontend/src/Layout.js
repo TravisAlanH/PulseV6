@@ -16,24 +16,36 @@ export default function Layout() {
 
   const [AllData, setAllData] = React.useState([]);
 
+  console.log(auth);
+
   return (
     <Router>
       <NavBase />
       <Routes>
         <Route path="/" element={<Login setAllData={setAllData} />} />
-        <Route path="/survey" element={auth ? <SurveyLayout /> : <Login setAllData={setAllData} />} />
+        <Route
+          path="/survey"
+          element={auth && auth.emailVerified ? <SurveyLayout /> : <Login setAllData={setAllData} />}
+        />
         <Route
           path="/electrical"
-          element={auth ? <ElectricalLayout AllData={AllData} /> : <Login setAllData={setAllData} />}
+          element={
+            auth && auth.emailVerified ? <ElectricalLayout AllData={AllData} /> : <Login setAllData={setAllData} />
+          }
+        />
+        <Route path="/login" element={<Login setAllData={setAllData} />} />
+        <Route path="/drawing" element={auth && auth.emailVerified ? <Drawing /> : <Login setAllData={setAllData} />} />
+
+        <Route path="/home" element={auth && auth.emailVerified ? <h1>home</h1> : <Login setAllData={setAllData} />} />
+        <Route
+          path="/settings"
+          element={auth && auth.emailVerified ? <Settings /> : <Login setAllData={setAllData} />}
         />
 
-        <Route path="/login" element={<Login setAllData={setAllData} />} />
-        <Route path="/drawing" element={auth ? <Drawing /> : <Login setAllData={setAllData} />} />
-
-        <Route path="/home" element={auth ? <h1>home</h1> : <Login setAllData={setAllData} />} />
-        <Route path="/settings" element={auth ? <Settings /> : <Login setAllData={setAllData} />} />
-
-        <Route path="/audit" element={auth ? <AuditLayout AllData={AllData} /> : <Login setAllData={setAllData} />} />
+        <Route
+          path="/audit"
+          element={auth && auth.emailVerified ? <AuditLayout AllData={AllData} /> : <Login setAllData={setAllData} />}
+        />
       </Routes>
     </Router>
   );

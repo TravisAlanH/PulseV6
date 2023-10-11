@@ -6,8 +6,10 @@ import "../../Styles/Login.css";
 import { useNavigate } from "react-router-dom";
 // import axios from "axios";
 import * as FireActions from "../../FireActions";
+// import MessageBox from "../Reuse/MessageBox";
 
 export default function LoginTable({ setAllData }) {
+  // const [messageVerify, setMessageVerify] = React.useState(false);
   const [createAccount, setCreateAccount] = React.useState(false);
   const [hidePass, setHidePass] = React.useState(true);
   const [user, setUser] = React.useState({
@@ -33,6 +35,7 @@ export default function LoginTable({ setAllData }) {
   // let payload = {
   //   set: 1,
   // };
+  console.log(FireActions.auth);
 
   function isValidEmail(email) {
     const testAgainst = process.env.REACT_APP_AUTHORIZED_EMAIL_DOMAIN;
@@ -170,11 +173,12 @@ export default function LoginTable({ setAllData }) {
                   alert("Invalid email used");
                   return;
                 }
-
                 try {
                   await FireActions.signIn(user);
                   const data = await FireActions.getData();
                   setAllData(data);
+                  console.log(FireActions.auth);
+                  alert(FireActions.auth.currentUser.emailVerified ? "Login Successful" : "Please verify your email");
                   navigate("/home");
                 } catch (error) {
                   console.error("Error occurred during login:", error);
@@ -218,6 +222,7 @@ export default function LoginTable({ setAllData }) {
                     FullName: "",
                   });
                   FireActions.signup(createUser);
+                  alert("Account Created, Please verify your email ");
                 }
               }}>
               Create
@@ -230,6 +235,9 @@ export default function LoginTable({ setAllData }) {
         Access to this system is prohibited unless authorized. Accessing programs or data unrelated to your job is
         prohibited.
       </p>
+      <div className="absolute top-[7.5rem]">
+        {/* <MessageBox messageVerify={messageVerify} setMessageVerify={setMessageVerify} />; */}
+      </div>
     </div>
   );
 }
