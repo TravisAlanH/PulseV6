@@ -6,6 +6,7 @@ import {
   signOut,
   setPersistence,
   browserSessionPersistence,
+  updateProfile,
 } from "firebase/auth";
 import { getDatabase, onValue, ref } from "firebase/database";
 import app from "./firebase";
@@ -41,8 +42,16 @@ function signup(user) {
   setPersistence(auth, browserSessionPersistence);
   const db = getFirestore(app);
   console.log(db);
+
   createUserWithEmailAndPassword(auth, user.email, user.password, user.phoneNumber)
     .then((userCredential) => {
+      // Set the display name for the user
+      return updateProfile(userCredential.user, {
+        displayName: user.FullName, // Assuming FullName is the display name
+      }).then(() => userCredential);
+    })
+    .then((userCredential) => {
+      // Now you can use userCredential to access the user's properties
       return setDoc(doc(db, "users", userCredential.user.uid), {
         Email: user.email,
         FullName: user.FullName,
@@ -57,7 +66,7 @@ function signup(user) {
       const errorCode = error.code;
       const errorMessage = error.message;
       console.log(errorCode, errorMessage);
-      // ..
+      // Handle error
     });
 }
 

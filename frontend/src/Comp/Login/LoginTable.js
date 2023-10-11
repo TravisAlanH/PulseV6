@@ -166,6 +166,12 @@ export default function LoginTable({ setAllData }) {
             <button
               className="LoginButton mt-3"
               onClick={() => {
+                if (!isValidEmail(user.email)) {
+                  alert("Invalid email used");
+                  return;
+                } else {
+                  FireActions.signIn(user);
+                }
                 // let user = document.getElementById("user").value;
                 // let pass = document.getElementById("pass").value;
                 // if (user === baseLogin && pass === basePass) {
