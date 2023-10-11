@@ -1,5 +1,12 @@
 import "./App.css";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  setPersistence,
+  browserSessionPersistence,
+} from "firebase/auth";
 import { getDatabase, onValue, ref } from "firebase/database";
 import app from "./firebase";
 import { arrayUnion, doc, getDoc, getFirestore, setDoc, updateDoc } from "firebase/firestore";
@@ -19,18 +26,19 @@ const getData = () => {
   });
 };
 
-function isValidEmail(email) {
-  const testAgainst = process.env.REACT_APP_AUTHORIZED_EMAIL_DOMAIN;
-  const emailDomain = email.split("@")[1];
-  if (emailDomain === testAgainst) {
-    return true;
-  }
-  console.log("invalid email");
-  return false;
-}
+// function isValidEmail(email) {
+//   const testAgainst = process.env.REACT_APP_AUTHORIZED_EMAIL_DOMAIN;
+//   const emailDomain = email.split("@")[1];
+//   if (emailDomain === testAgainst) {
+//     return true;
+//   }
+//   console.log("invalid email");
+//   return false;
+//   if (!isValidEmail(user.email)) return;
+// }
 
 function signup(user) {
-  if (!isValidEmail(user.email)) return;
+  setPersistence(auth, browserSessionPersistence);
   const db = getFirestore(app);
   console.log(db);
   createUserWithEmailAndPassword(auth, user.email, user.password, user.phoneNumber)
@@ -43,6 +51,7 @@ function signup(user) {
     })
     .then(() => {
       console.log("Document successfully written!");
+      UserSignOut(auth);
     })
     .catch((error) => {
       const errorCode = error.code;
@@ -107,7 +116,7 @@ async function changeLocationAtIndex(index, data, user) {
   });
 }
 
-function UserSignOut() {
+function UserSignOut(auth) {
   if (!auth.currentUser) {
     console.log("no user");
     return;
@@ -123,6 +132,7 @@ function UserSignOut() {
 }
 
 function signIn(user) {
+  setPersistence(auth, browserSessionPersistence);
   signInWithEmailAndPassword(auth, user.email, user.password)
     .then((userCredential) => {
       // Signed in

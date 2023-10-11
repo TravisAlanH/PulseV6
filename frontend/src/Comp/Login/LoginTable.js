@@ -1,14 +1,16 @@
 import React from "react";
 import Logo from "../../Img/sunbird-logo-white.png";
 import { useDispatch } from "react-redux";
-import * as actions from "../../Store/Slices/Slice";
+// import * as actions from "../../Store/Slices/Slice";
 import "../../Styles/Login.css";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+// import axios from "axios";
 import * as FireActions from "../../FireActions";
 
 export default function LoginTable({ setAllData }) {
   const [createAccount, setCreateAccount] = React.useState(false);
+  console.log(FireActions.auth);
+  const [hidePass, setHidePass] = React.useState(true);
   const [user, setUser] = React.useState({
     email: "",
     password: "",
@@ -32,6 +34,18 @@ export default function LoginTable({ setAllData }) {
   let payload = {
     set: 1,
   };
+
+  function isValidEmail(email) {
+    // const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    // if (email === "" || emailRegex.test(email)) return false;
+    const testAgainst = process.env.REACT_APP_AUTHORIZED_EMAIL_DOMAIN;
+    const emailDomain = email.split("@")[1];
+    if (emailDomain === testAgainst) {
+      return true;
+    }
+    console.log("invalid email", emailDomain, email);
+    return false;
+  }
 
   return (
     <div className="w-[17.5rem] flex flex-col pt-[1rem] justify-center items-center relative bg-[rgba(16,16,16,0.68);] rounded-md">
@@ -91,7 +105,7 @@ export default function LoginTable({ setAllData }) {
         {!createAccount && (
           <li className="w-[15.31rem] relative table">
             <input
-              type="password"
+              type={hidePass ? "password" : "text"}
               placeholder="Password"
               name="pass"
               id="pass"
@@ -107,10 +121,10 @@ export default function LoginTable({ setAllData }) {
           <div>
             <li className="w-[15.31rem] relative table mb-3">
               <input
-                type="text"
+                id="passCreate"
+                type={hidePass ? "password" : "text"}
                 placeholder="Password"
                 name="pass"
-                id="pass"
                 className="LoginInput font-medium"
                 onChange={(e) => {
                   setCreateUser({ ...createUser, password: e.target.value });
@@ -120,10 +134,10 @@ export default function LoginTable({ setAllData }) {
             {/* //! CREATE PASS CHECK */}
             <li className="w-[15.31rem] relative table">
               <input
-                type="text"
+                id="passConfirm"
+                type={hidePass ? "password" : "text"}
                 placeholder="Confirm Password"
                 name="domain"
-                id="domain"
                 className="LoginInput font-medium"
                 onChange={(e) => {
                   setCreateUser({ ...createUser, confirmPassword: e.target.value });
@@ -132,27 +146,41 @@ export default function LoginTable({ setAllData }) {
             </li>
           </div>
         )}
+        <li>
+          {/* show and hide password checkbox */}
+          <input
+            type="checkbox"
+            id="showPass"
+            className="mr-2"
+            onChange={() => {
+              setHidePass(!hidePass);
+            }}
+          />
+          <label htmlFor="showPass" className="text-white text-xs">
+            Show Password
+          </label>
+        </li>
         {/* //! LOGIN */}
         {!createAccount && (
           <li>
             <button
               className="LoginButton mt-3"
               onClick={() => {
-                let user = document.getElementById("user").value;
-                let pass = document.getElementById("pass").value;
-                if (user === baseLogin && pass === basePass) {
-                  // payload.Local = JSON.parse(localStorage.getItem("PulseStateData"));
-                  // console.log(payload.Local);
-                  // dispatch(actions.loadLocalStorage(payload));
-                  payload = {
-                    value: true,
-                  };
-                  dispatch(actions.loginLogout(payload));
-                  axios.get(baseURL + FullData).then((res) => {
-                    setAllData(res.data["rows"]);
-                  });
-                  navigate("/home");
-                }
+                // let user = document.getElementById("user").value;
+                // let pass = document.getElementById("pass").value;
+                // if (user === baseLogin && pass === basePass) {
+                //   // payload.Local = JSON.parse(localStorage.getItem("PulseStateData"));
+                //   // console.log(payload.Local);
+                //   // dispatch(actions.loadLocalStorage(payload));
+                //   payload = {
+                //     value: true,
+                //   };
+                //   dispatch(actions.loginLogout(payload));
+                //   axios.get(baseURL + FullData).then((res) => {
+                //     setAllData(res.data["rows"]);
+                //   });
+                //   navigate("/home");
+                // }
               }}>
               Login
             </button>
@@ -176,8 +204,22 @@ export default function LoginTable({ setAllData }) {
             <button
               className="LoginButton mt-3 mb-8"
               onClick={() => {
-                setCreateAccount(false);
-                FireActions.signup(createUser);
+                if (createUser.password !== createUser.confirmPassword) {
+                  alert("Passwords do not match");
+                  return;
+                } else if (!isValidEmail(createUser.email)) {
+                  alert("Invalid email used");
+                  return;
+                } else {
+                  setCreateAccount(false);
+                  setCreateUser({
+                    email: "",
+                    password: "",
+                    confirmPassword: "",
+                    FullName: "",
+                  });
+                  FireActions.signup(createUser);
+                }
               }}>
               Create
             </button>
