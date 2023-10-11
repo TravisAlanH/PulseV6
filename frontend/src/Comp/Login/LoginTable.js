@@ -1,6 +1,6 @@
 import React from "react";
 import Logo from "../../Img/sunbird-logo-white.png";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 // import * as actions from "../../Store/Slices/Slice";
 import "../../Styles/Login.css";
 import { useNavigate } from "react-router-dom";
@@ -9,7 +9,6 @@ import * as FireActions from "../../FireActions";
 
 export default function LoginTable({ setAllData }) {
   const [createAccount, setCreateAccount] = React.useState(false);
-  console.log(FireActions.auth);
   const [hidePass, setHidePass] = React.useState(true);
   const [user, setUser] = React.useState({
     email: "",
@@ -21,29 +20,30 @@ export default function LoginTable({ setAllData }) {
     confirmPassword: "",
     FullName: "",
   });
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   let navigate = useNavigate();
 
-  const baseLogin = process.env.REACT_APP_LOGIN;
-  const basePass = process.env.REACT_APP_PASS;
-  const baseURL = process.env.REACT_APP_BASE_URL;
+  // const baseLogin = process.env.REACT_APP_LOGIN;
+  // const basePass = process.env.REACT_APP_PASS;
+  // const baseURL = process.env.REACT_APP_BASE_URL;
   // const rackURL = process.env.REACT_APP_RACK_URL;
 
-  const FullData = "data.json";
+  // const FullData = "data.json";
 
-  let payload = {
-    set: 1,
-  };
+  // let payload = {
+  //   set: 1,
+  // };
 
   function isValidEmail(email) {
-    // const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    // if (email === "" || emailRegex.test(email)) return false;
     const testAgainst = process.env.REACT_APP_AUTHORIZED_EMAIL_DOMAIN;
-    const emailDomain = email.split("@")[1];
-    if (emailDomain === testAgainst) {
+    const providedEmailDomain = email.split("@")[1].toLowerCase(); // Convert to lowercase
+    const authorizedEmailDomain = testAgainst.toLowerCase(); // Convert to lowercase
+
+    if (providedEmailDomain === authorizedEmailDomain) {
       return true;
     }
-    console.log("invalid email", emailDomain, email);
+
+    console.log("Invalid email domain:", providedEmailDomain, email);
     return false;
   }
 
@@ -165,28 +165,21 @@ export default function LoginTable({ setAllData }) {
           <li>
             <button
               className="LoginButton mt-3"
-              onClick={() => {
+              onClick={async () => {
                 if (!isValidEmail(user.email)) {
                   alert("Invalid email used");
                   return;
-                } else {
-                  FireActions.signIn(user);
                 }
-                // let user = document.getElementById("user").value;
-                // let pass = document.getElementById("pass").value;
-                // if (user === baseLogin && pass === basePass) {
-                //   // payload.Local = JSON.parse(localStorage.getItem("PulseStateData"));
-                //   // console.log(payload.Local);
-                //   // dispatch(actions.loadLocalStorage(payload));
-                //   payload = {
-                //     value: true,
-                //   };
-                //   dispatch(actions.loginLogout(payload));
-                //   axios.get(baseURL + FullData).then((res) => {
-                //     setAllData(res.data["rows"]);
-                //   });
-                //   navigate("/home");
-                // }
+
+                try {
+                  await FireActions.signIn(user);
+                  const data = await FireActions.getData();
+                  setAllData(data);
+                  navigate("/home");
+                } catch (error) {
+                  console.error("Error occurred during login:", error);
+                  // Handle error as needed
+                }
               }}>
               Login
             </button>

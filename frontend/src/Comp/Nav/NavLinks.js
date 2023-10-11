@@ -1,20 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 import { RiMenuLine } from "react-icons/ri";
 import { IoPersonCircleOutline } from "react-icons/io5";
-import * as Actions from "../../Store/Slices/Slice";
+// import * as Actions from "../../Store/Slices/Slice";
+import * as FireActions from "../../FireActions";
+import { useNavigate } from "react-router-dom";
 
 export default function NavLinks() {
-  let LoggedIn;
+  const LoggedIn = FireActions.auth.currentUser;
+  const auth = FireActions.auth;
 
-  if (localStorage.getItem("PulseStateData") === null) {
-    LoggedIn = false;
-  } else {
-    LoggedIn = JSON.parse(localStorage.getItem("PulseStateData")).LoggedIn;
-  }
-  // const LoggedIn = useSelector((state) => state.data.LoggedIn);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   window.addEventListener("click", function (e) {
     const NavBar = document.getElementById("NAVLINKS");
@@ -65,10 +63,8 @@ export default function NavLinks() {
           </Link>
           <div
             onClick={() => {
-              const payload = {
-                LoggedIn: false,
-              };
-              dispatch(Actions.loginLogout(payload));
+              FireActions.UserSignOut(auth);
+              navigate("/login");
             }}
             className="h-[3rem] w-[8rem] bg-[#e0e0e0] flex flex-row justify-start pl-3 font-bold items-center hover:bg-[#f59439]">
             Logout

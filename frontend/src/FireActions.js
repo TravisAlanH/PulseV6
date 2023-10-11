@@ -14,19 +14,36 @@ import { arrayUnion, doc, getDoc, getFirestore, setDoc, updateDoc } from "fireba
 
 const auth = getAuth(app);
 
-const getData = () => {
+async function getData() {
+  const auth = getAuth();
   if (!auth.currentUser) {
-    console.log("no user");
-    return;
+    console.log("No user authenticated");
+    return null;
   }
-  const db = getDatabase(app);
 
+  const db = getDatabase();
   const dbRef = ref(db);
-  onValue(dbRef, (snapshot) => {
-    console.log(snapshot.val().rows[0]);
-  });
-};
 
+  return new Promise((resolve, reject) => {
+    onValue(
+      dbRef,
+      (snapshot) => {
+        const data = snapshot.val();
+        if (data) {
+          console.log(data.rows);
+          resolve(data.rows);
+        } else {
+          console.log("No data available");
+          resolve(null);
+        }
+      },
+      (error) => {
+        console.error("Error fetching data:", error);
+        reject(error);
+      }
+    );
+  });
+}
 // function isValidEmail(email) {
 //   const testAgainst = process.env.REACT_APP_AUTHORIZED_EMAIL_DOMAIN;
 //   const emailDomain = email.split("@")[1];

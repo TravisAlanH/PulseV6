@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import * as FireActions from "./FireActions";
 
 // import * as actions from "./Store/Slices/Slice";
 import NavBase from "./Comp/Nav/NavBase";
@@ -11,16 +12,8 @@ import Settings from "./Comp/Settings/Settings";
 import Drawing from "./Comp/Drawing/Drawing";
 
 export default function Layout() {
-  let LoggedIn;
+  const auth = FireActions.auth.currentUser;
 
-  if (localStorage.getItem("PulseStateData") === null) {
-    LoggedIn = false;
-  } else {
-    LoggedIn = JSON.parse(localStorage.getItem("PulseStateData")).LoggedIn;
-  }
-
-  // let loginCheck = useSelector((state) => state.data.LoggedIn);
-  // const LoggedIn = loginCheck === null ? false : loginCheck;
   const [AllData, setAllData] = React.useState([]);
 
   return (
@@ -28,22 +21,19 @@ export default function Layout() {
       <NavBase />
       <Routes>
         <Route path="/" element={<Login setAllData={setAllData} />} />
-        <Route path="/survey" element={LoggedIn ? <SurveyLayout /> : <Login setAllData={setAllData} />} />
+        <Route path="/survey" element={auth ? <SurveyLayout /> : <Login setAllData={setAllData} />} />
         <Route
           path="/electrical"
-          element={LoggedIn ? <ElectricalLayout AllData={AllData} /> : <Login setAllData={setAllData} />}
+          element={auth ? <ElectricalLayout AllData={AllData} /> : <Login setAllData={setAllData} />}
         />
 
         <Route path="/login" element={<Login setAllData={setAllData} />} />
-        <Route path="/drawing" element={LoggedIn ? <Drawing /> : <Login setAllData={setAllData} />} />
+        <Route path="/drawing" element={auth ? <Drawing /> : <Login setAllData={setAllData} />} />
 
-        <Route path="/home" element={LoggedIn ? <h1>home</h1> : <Login setAllData={setAllData} />} />
-        <Route path="/settings" element={LoggedIn ? <Settings /> : <Login setAllData={setAllData} />} />
+        <Route path="/home" element={auth ? <h1>home</h1> : <Login setAllData={setAllData} />} />
+        <Route path="/settings" element={auth ? <Settings /> : <Login setAllData={setAllData} />} />
 
-        <Route
-          path="/audit"
-          element={LoggedIn ? <AuditLayout AllData={AllData} /> : <Login setAllData={setAllData} />}
-        />
+        <Route path="/audit" element={auth ? <AuditLayout AllData={AllData} /> : <Login setAllData={setAllData} />} />
       </Routes>
     </Router>
   );
