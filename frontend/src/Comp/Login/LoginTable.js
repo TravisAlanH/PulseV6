@@ -179,6 +179,11 @@ export default function LoginTable({ setAllData }) {
                   setAllData(data);
                   console.log(FireActions.auth);
                   alert(FireActions.auth.currentUser.emailVerified ? "Login Successful" : "Please verify your email");
+                  if (!FireActions.auth.currentUser.emailVerified) {
+                    FireActions.VerifyEmail();
+                    FireActions.UserSignOut(FireActions.auth);
+                    return;
+                  }
                   navigate("/home");
                 } catch (error) {
                   console.error("Error occurred during login:", error);

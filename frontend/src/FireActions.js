@@ -188,4 +188,4 @@ function signIn(user) {
     });
 }
 
-export { signup, signIn, UserSignOut, addToLocations, changeLocationAtIndex, getData, auth };
+export { signup, signIn, UserSignOut, addToLocations, changeLocationAtIndex, getData, auth, VerificationEmail };
