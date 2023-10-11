@@ -12,7 +12,7 @@ const getData = () => {
     return;
   }
   const db = getDatabase(app);
-  d;
+
   const dbRef = ref(db);
   onValue(dbRef, (snapshot) => {
     console.log(snapshot.val().rows[0]);
@@ -75,26 +75,22 @@ function signup(user) {
 
 // console.log(count);
 
-const addToLocations = async () => {
-  setCount(count + 1);
+async function addToLocations(user, data) {
   const db = getFirestore(app);
   let currentLocationList = [];
   const docRef = doc(db, "users", user.uid);
   const docSnap = await getDoc(docRef);
   if (docSnap.exists()) {
-    currentLocationList = [
-      ...docSnap.data().LocationsList,
-      { name: "TravisAlan", age: 30, location: "Portland", count: count },
-    ];
+    currentLocationList = [...docSnap.data().LocationsList, data];
   }
   await updateDoc(doc(db, "users", user.uid), {
     LocationsList: arrayUnion(...currentLocationList),
   }).catch((error) => {
     console.error("Error adding document: ", error);
   });
-};
+}
 
-const changeLocationAtIndex = async (index, data) => {
+async function changeLocationAtIndex(index, data, user) {
   const db = getFirestore(app);
   let currentLocationList = [];
   const docRef = doc(db, "users", user.uid);
@@ -103,13 +99,13 @@ const changeLocationAtIndex = async (index, data) => {
     currentLocationList = docSnap.data().LocationsList;
   }
   //! need to get the data before updating so i am only updating what i need
-  currentLocationList[index] = { name: data, age: 30, location: "Portland", count: count };
+  // currentLocationList[index] = { name: data, age: 30, location: "Portland", count: count };
   await setDoc(doc(db, "users", user.uid), {
     LocationsList: arrayUnion(...currentLocationList),
   }).catch((error) => {
     console.error("Error adding document: ", error);
   });
-};
+}
 
 function UserSignOut() {
   if (!auth.currentUser) {
@@ -128,14 +124,11 @@ function UserSignOut() {
     });
 }
 
-const signIn = () => {
-  console.log(user);
+function signIn(user) {
   signInWithEmailAndPassword(auth, user.email, user.password)
     .then((userCredential) => {
       // Signed in
-      const user = userCredential.user;
-      setUser({ ...user, uid: user.uid });
-      console.log(user);
+      console.log(userCredential);
       // ...
     })
     .catch((error) => {
@@ -143,6 +136,6 @@ const signIn = () => {
       const errorMessage = error.message;
       console.log(errorCode, errorMessage);
     });
-};
+}
 
 export { signup, signIn, UserSignOut, addToLocations, changeLocationAtIndex, getData, auth };
