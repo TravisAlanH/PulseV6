@@ -193,6 +193,7 @@ export default function HomeLayout() {
         )}
       </div>
       {loading ? <LoadingSpinner /> : null}
+      <LoadingSpinner />
     </div>
   );
 }
