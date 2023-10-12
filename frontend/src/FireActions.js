@@ -145,34 +145,52 @@ async function addToLocations(user, data, reload) {
   }
 }
 
+// async function changeLocationAtIndex(ChangeIndex, item, user) {
+//   try {
+//     const db = getFirestore(app);
+//     const docRef = doc(db, "users", user.uid);
+//     const docSnap = await getDoc(docRef);
+
+//     if (docSnap.exists()) {
+//       const currentLocationList = docSnap.data().LocationsList.slice(); // Create a shallow copy of the array
+
+//       // Update the specific index with new data
+//       currentLocationList[ChangeIndex] = item;
+
+//       // Update the document in Firestore
+//       await setDoc(docRef, {
+//         LocationsList: currentLocationList,
+//       });
+
+//       setTimeout(() => {
+//         return false;
+//       }, 500);
+//       console.log("Location updated successfully!"); // Log the success message
+//     } else {
+//       console.error("User document not found!");
+//     }
+//   } catch (error) {
+//     console.error("Error updating document: ", error);
+//     throw error; // Re-throw the error to handle it in the calling function if necessary
+//   }
+// }
+
 async function changeLocationAtIndex(ChangeIndex, item, user) {
-  try {
-    const db = getFirestore(app);
-    const docRef = doc(db, "users", user.uid);
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-      const currentLocationList = docSnap.data().LocationsList.slice(); // Create a shallow copy of the array
-
-      // Update the specific index with new data
-      currentLocationList[ChangeIndex] = item;
-
-      // Update the document in Firestore
-      await setDoc(docRef, {
-        LocationsList: currentLocationList,
-      });
-
-      setTimeout(() => {
-        return false;
-      }, 500);
-      console.log("Location updated successfully!"); // Log the success message
-    } else {
-      console.error("User document not found!");
-    }
-  } catch (error) {
-    console.error("Error updating document: ", error);
-    throw error; // Re-throw the error to handle it in the calling function if necessary
+  const db = getFirestore(app);
+  let currentLocationList = [];
+  const docRef = doc(db, "users", user.uid);
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    currentLocationList = docSnap.data().LocationsList;
   }
+  console.log("currentLocationList", currentLocationList);
+  //! need to get the data before updating so i am only updating what i need
+  currentLocationList[ChangeIndex] = structuredClone(item);
+  await setDoc(doc(db, "users", user.uid), {
+    LocationsList: currentLocationList,
+  }).catch((error) => {
+    console.error("Error adding document: ", error);
+  });
 }
 
 function UserSignOut(auth) {

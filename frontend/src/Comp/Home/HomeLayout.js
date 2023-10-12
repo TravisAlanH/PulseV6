@@ -2,7 +2,7 @@ import React from "react";
 import * as FireActions from "../../FireActions";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
 import app from "../../firebase";
-
+import { state } from "../../Store/Slices/Template";
 import LoadingSpinner from "../Reuse/LoadingSpinner/Spinner";
 import { TbDownload } from "react-icons/tb";
 import { v4 as uuidv4 } from "uuid";
@@ -86,8 +86,14 @@ export default function HomeLayout() {
   }
 
   function setStateData(item) {
-    const changeIndex = locationData.findIndex((location) => UUID === location.Current.DataBaseUUID);
-
+    let changeIndex = -1;
+    for (let i = 0; i < locationData.length; i++) {
+      if (locationData[i].Current.DataBaseUUID === UUID) {
+        changeIndex = i;
+        console.log(changeIndex);
+      }
+    }
+    // const changeIndex = locationData.findIndex((location) => UUID === location.Current.DataBaseUUID);
     if (changeIndex !== -1) {
       FireActions.changeLocationAtIndex(changeIndex, item, user).then(() => {
         const payload = { value: item };
