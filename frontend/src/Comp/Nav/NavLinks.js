@@ -44,33 +44,38 @@ export default function NavLinks() {
     <div id="NAVLINKS" className="absolute top-0 right-0 overflow-hidden h-[4rem] transition-all">
       {LoggedIn ? (
         <div>
-          <div className="h-[4rem] flex flex-row justify-center items-center text-white">
+          <div className="h-[4rem] flex flex-row justify-end items-center text-white">
             {/* <button className="py-3 px-6">Menu</button> */}
-            <RiMenuLine className="w-[3rem] h-[2rem] rotate-0 transition-all" id="MenuIcon" />
+            <RiMenuLine className="w-[3rem] h-[2rem] rotate-0 transition-all mr-[2rem]" id="MenuIcon" />
           </div>
           <Link
+            to="/home"
+            className="h-[3rem] w-[12rem] bg-[#e0e0e0] flex flex-row justify-start pl-3 font-bold items-center hover:bg-[#f59439]">
+            Created Locations
+          </Link>
+          <Link
             to="/audit"
-            className="h-[3rem] w-[8rem] bg-[#e0e0e0] flex flex-row justify-start pl-3 font-bold items-center hover:bg-[#f59439]">
+            className="h-[3rem] w-[12rem] bg-[#e0e0e0] flex flex-row justify-start pl-3 font-bold items-center hover:bg-[#f59439]">
             Audit
           </Link>
           <Link
             to="/survey"
-            className="h-[3rem] w-[8rem] bg-[#e0e0e0] flex flex-row justify-start pl-3 font-bold items-center hover:bg-[#f59439]">
+            className="h-[3rem] w-[12rem] bg-[#e0e0e0] flex flex-row justify-start pl-3 font-bold items-center hover:bg-[#f59439]">
             Survey
           </Link>
           <Link
             to="/electrical"
-            className="h-[3rem] w-[8rem] bg-[#e0e0e0] flex flex-row justify-start pl-3 font-bold items-center hover:bg-[#f59439]">
+            className="h-[3rem] w-[12rem] bg-[#e0e0e0] flex flex-row justify-start pl-3 font-bold items-center hover:bg-[#f59439]">
             Electrical
           </Link>
           <Link
             to="/drawing"
-            className="h-[3rem] w-[8rem] bg-[#e0e0e0] flex flex-row justify-start pl-3 font-bold items-center hover:bg-[#f59439]">
+            className="h-[3rem] w-[12rem] bg-[#e0e0e0] flex flex-row justify-start pl-3 font-bold items-center hover:bg-[#f59439]">
             Drawing
           </Link>
           <Link
             to="/settings"
-            className="h-[3rem] w-[8rem] bg-[#e0e0e0] flex flex-row justify-start pl-3 font-bold items-center hover:bg-[#f59439]">
+            className="h-[3rem] w-[12rem] bg-[#e0e0e0] flex flex-row justify-start pl-3 font-bold items-center hover:bg-[#f59439]">
             Settings
           </Link>
           <div
@@ -78,7 +83,7 @@ export default function NavLinks() {
               FireActions.UserSignOut(auth);
               navigate("/login");
             }}
-            className="h-[3rem] w-[8rem] bg-[#e0e0e0] flex flex-row justify-start pl-3 font-bold items-center hover:bg-[#f59439]">
+            className="h-[3rem] w-[12rem] bg-[#e0e0e0] flex flex-row justify-start pl-3 font-bold items-center hover:bg-[#f59439]">
             Logout
           </div>
         </div>

@@ -41,8 +41,6 @@ export default function SearchLayout({ KeyName, Step, AllData }) {
     setSearchInput(state[KeyName].value);
   }, [current, KeyName, state]);
 
-  console.log(AllData);
-
   if (KeyName === "Make *") {
     SearchData = FORMAT.getStepData(AllData, StepDataFilter);
     SearchData = FORMAT.getUniqueMakes(SearchData);

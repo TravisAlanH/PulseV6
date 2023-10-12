@@ -11,6 +11,7 @@ import LoadingSpinner from "../Reuse/LoadingSpinner/Spinner";
 
 export default function LoginTable({ setAllData }) {
   // const [messageVerify, setMessageVerify] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
   const [createAccount, setCreateAccount] = React.useState(false);
   const [hidePass, setHidePass] = React.useState(true);
   const [user, setUser] = React.useState({
@@ -173,12 +174,13 @@ export default function LoginTable({ setAllData }) {
                   alert("Invalid email used");
                   return;
                 }
+                setLoading(true);
                 try {
                   await FireActions.signIn(user);
                   const data = await FireActions.getData();
                   setAllData(data);
                   console.log(FireActions.auth);
-                  alert(FireActions.auth.currentUser.emailVerified ? "Login Successful" : "Please verify your email");
+                  !FireActions.auth.currentUser.emailVerified ? alert("Please verify your email") : null;
                   if (!FireActions.auth.currentUser.emailVerified) {
                     FireActions.VerificationEmail();
                     FireActions.UserSignOut(FireActions.auth);
@@ -188,6 +190,8 @@ export default function LoginTable({ setAllData }) {
                 } catch (error) {
                   console.error("Error occurred during login:", error);
                   // Handle error as needed
+                } finally {
+                  setLoading(false);
                 }
               }}>
               Login
@@ -241,7 +245,7 @@ export default function LoginTable({ setAllData }) {
         prohibited.
       </p>
       <div className="absolute top-[7.5rem]">
-        <LoadingSpinner />
+        {loading ? <LoadingSpinner /> : null}
         {/* <MessageBox messageVerify={messageVerify} setMessageVerify={setMessageVerify} />; */}
       </div>
     </div>

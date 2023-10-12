@@ -64,7 +64,6 @@ export default function SearchTableModel({ SearchData, searchInput, Step, setSea
       }
     }
   }
-  console.log(SearchData[closestMatch[0]]);
 
   let tableContent = closestMatch.map((item, index) => (
     <tr
@@ -76,7 +75,6 @@ export default function SearchTableModel({ SearchData, searchInput, Step, setSea
 
         payload.Key = "Ports";
         payload.value = SearchData[item]["DataPortsCount"];
-        console.log(payload);
         dispatch(Action.fillPorts(payload));
         if (Step === "Racks" || Step === "Assets" || Step === "PDUs" || Step === "UPSs" || Step === "ATSs") {
           setTimeout(() => {
@@ -104,7 +102,6 @@ export default function SearchTableModel({ SearchData, searchInput, Step, setSea
   ));
 
   // let newData = [];
-  console.log(newDataCopy);
 
   let tableAdd = newDataCopy.map((item, index) => (
     <tr

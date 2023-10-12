@@ -3,7 +3,7 @@ import "./LoadingSpinner.css";
 
 const LoadingSpinner = () => {
   return (
-    <div className="flex flex-col justify-center items-center z-50 w-screen h-screen fixed top-0 left-0 overflow-visible bg-[#ffffff95]">
+    <div className="flex flex-col justify-center items-center z-50 w-screen h-screen fixed top-0 left-0 overflow-visible bg-[#ffffff38]">
       <div className="rounded-full bg-[#00000092] h-[14rem] w-[14rem] flex flex-row items-center justify-center overflow-visible">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -103,7 +103,7 @@ const LoadingSpinner = () => {
           </g>
         </svg>
       </div>
-      <p className="text-lg font-bold">Down for Maintenance, Please wait...Expected up @ 0900 CST 10/12/2023</p>
+      {/* <p className="text-lg font-bold">Down for Maintenance, Please wait...Expected up @ 0900 CST 10/12/2023</p> */}
     </div>
   );
 };

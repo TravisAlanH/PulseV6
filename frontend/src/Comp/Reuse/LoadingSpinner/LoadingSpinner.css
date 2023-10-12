@@ -3,16 +3,16 @@
 }
 @keyframes fadeInOut {
   0% {
-    opacity: 0;
+    opacity: 0.2;
   }
-  25% {
+  30% {
     opacity: 1;
   }
-  65% {
+  70% {
     opacity: 1;
   }
   100% {
-    opacity: 0;
+    opacity: 0.2;
   }
 }
 

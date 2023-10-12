@@ -7,7 +7,7 @@ export default function NavBase() {
     <div className="z-50 pb-[4rem] overflow-clip">
       <div className="w-screen h-[4rem] fixed top-0 orangeSplit z-50 ">
         <div className="flex flex-row justify-between items-center h-full w-full z-50">
-          <div>
+          <div className="flex flex-row w-full">
             <img src={logo} alt="sunbird" className="pl-3 h-[4rem]" />
           </div>
           <NavLinks />

@@ -10,6 +10,7 @@ import SurveyLayout from "./Comp/Survey/SurveyLayout";
 import ElectricalLayout from "./Comp/Electrical/ElectricalLayout";
 import Settings from "./Comp/Settings/Settings";
 import Drawing from "./Comp/Drawing/Drawing";
+import HomeLayout from "./Comp/Home/HomeLayout";
 
 export default function Layout() {
   const auth = FireActions.auth.currentUser;
@@ -36,7 +37,7 @@ export default function Layout() {
         <Route path="/login" element={<Login setAllData={setAllData} />} />
         <Route path="/drawing" element={auth && auth.emailVerified ? <Drawing /> : <Login setAllData={setAllData} />} />
 
-        <Route path="/home" element={auth && auth.emailVerified ? <h1>home</h1> : <Login setAllData={setAllData} />} />
+        <Route path="/home" element={auth && auth.emailVerified ? <HomeLayout /> : <Login setAllData={setAllData} />} />
         <Route
           path="/settings"
           element={auth && auth.emailVerified ? <Settings /> : <Login setAllData={setAllData} />}
