@@ -73,7 +73,6 @@ function VerificationEmail() {
 function signup(user) {
   setPersistence(auth, browserSessionPersistence);
   const db = getFirestore(app);
-  console.log(db);
 
   createUserWithEmailAndPassword(auth, user.email, user.password, user.phoneNumber)
     .then((userCredential) => {
@@ -126,36 +125,54 @@ function signup(user) {
 
 // console.log(count);
 
-async function addToLocations(user, data) {
-  const db = getFirestore(app);
-  let currentLocationList = [];
-  const docRef = doc(db, "users", user.uid);
-  const docSnap = await getDoc(docRef);
-  if (docSnap.exists()) {
-    currentLocationList = [...docSnap.data().LocationsList, data];
+async function addToLocations(user, data, reload) {
+  try {
+    const db = getFirestore(app);
+    const docRef = doc(db, "users", user.uid);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      const currentLocationList = [...docSnap.data().LocationsList, data];
+      await updateDoc(docRef, {
+        LocationsList: arrayUnion(...currentLocationList),
+      });
+      return currentLocationList;
+    } else {
+      console.error("User document not found!");
+    }
+  } catch (error) {
+    console.error("Error updating document: ", error);
   }
-  await updateDoc(doc(db, "users", user.uid), {
-    LocationsList: arrayUnion(...currentLocationList),
-  }).catch((error) => {
-    console.error("Error adding document: ", error);
-  });
 }
 
-async function changeLocationAtIndex(index, data, user) {
-  const db = getFirestore(app);
-  let currentLocationList = [];
-  const docRef = doc(db, "users", user.uid);
-  const docSnap = await getDoc(docRef);
-  if (docSnap.exists()) {
-    currentLocationList = docSnap.data().LocationsList;
+async function changeLocationAtIndex(ChangeIndex, item, user) {
+  try {
+    const db = getFirestore(app);
+    const docRef = doc(db, "users", user.uid);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      const currentLocationList = docSnap.data().LocationsList.slice(); // Create a shallow copy of the array
+
+      // Update the specific index with new data
+      currentLocationList[ChangeIndex] = item;
+
+      // Update the document in Firestore
+      await setDoc(docRef, {
+        LocationsList: currentLocationList,
+      });
+
+      setTimeout(() => {
+        return false;
+      }, 500);
+      console.log("Location updated successfully!"); // Log the success message
+    } else {
+      console.error("User document not found!");
+    }
+  } catch (error) {
+    console.error("Error updating document: ", error);
+    throw error; // Re-throw the error to handle it in the calling function if necessary
   }
-  //! need to get the data before updating so i am only updating what i need
-  // currentLocationList[index] = { name: data, age: 30, location: "Portland", count: count };
-  await setDoc(doc(db, "users", user.uid), {
-    LocationsList: arrayUnion(...currentLocationList),
-  }).catch((error) => {
-    console.error("Error adding document: ", error);
-  });
 }
 
 function UserSignOut(auth) {

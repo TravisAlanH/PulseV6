@@ -292,10 +292,15 @@ const Slice = createSlice({
       window.location.reload();
       state = TemplateState.state;
     },
+    setAllStateDataToActionPayloadValue: (state, action) => {
+      console.log("changed");
+      return action.payload.value;
+    },
   },
 });
 
 export const {
+  setAllStateDataToActionPayloadValue,
   fillPortData,
   fillPortContent,
   fillPorts,
