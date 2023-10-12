@@ -180,8 +180,8 @@ export default function LoginTable({ setAllData }) {
                   const data = await FireActions.getData();
                   setAllData(data);
                   console.log(FireActions.auth);
-                  !FireActions.auth.currentUser.emailVerified ? alert("Please verify your email") : null;
                   if (!FireActions.auth.currentUser.emailVerified) {
+                    alert("Please verify your email");
                     FireActions.VerificationEmail();
                     FireActions.UserSignOut(FireActions.auth);
                     return;
