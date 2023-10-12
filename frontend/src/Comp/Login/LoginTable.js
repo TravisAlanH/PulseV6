@@ -35,7 +35,6 @@ export default function LoginTable({ setAllData }) {
   // let payload = {
   //   set: 1,
   // };
-  console.log(FireActions.auth);
 
   function isValidEmail(email) {
     const testAgainst = process.env.REACT_APP_AUTHORIZED_EMAIL_DOMAIN;
@@ -180,7 +179,7 @@ export default function LoginTable({ setAllData }) {
                   console.log(FireActions.auth);
                   alert(FireActions.auth.currentUser.emailVerified ? "Login Successful" : "Please verify your email");
                   if (!FireActions.auth.currentUser.emailVerified) {
-                    FireActions.VerifyEmail();
+                    FireActions.VerificationEmail();
                     FireActions.UserSignOut(FireActions.auth);
                     return;
                   }

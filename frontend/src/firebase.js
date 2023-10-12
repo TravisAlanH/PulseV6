@@ -1,5 +1,4 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, getDocs } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -12,16 +11,5 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-
-const db = getFirestore();
-
-const colFef = collection(db, "books");
-
-// get collection data
-getDocs(colFef).then((snapshot) => {
-  snapshot.docs.forEach((doc) => {
-    console.log(doc.data());
-  });
-});
 
 export default app;
