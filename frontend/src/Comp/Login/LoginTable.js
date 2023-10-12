@@ -6,6 +6,7 @@ import "../../Styles/Login.css";
 import { useNavigate } from "react-router-dom";
 // import axios from "axios";
 import * as FireActions from "../../FireActions";
+import LoadingSpinner from "../Reuse/LoadingSpinner/Spinner";
 // import MessageBox from "../Reuse/MessageBox";
 
 export default function LoginTable({ setAllData }) {
@@ -240,6 +241,7 @@ export default function LoginTable({ setAllData }) {
         prohibited.
       </p>
       <div className="absolute top-[7.5rem]">
+        <LoadingSpinner />
         {/* <MessageBox messageVerify={messageVerify} setMessageVerify={setMessageVerify} />; */}
       </div>
     </div>

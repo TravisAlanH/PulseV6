@@ -8,7 +8,19 @@ import * as FireActions from "../../FireActions";
 import { useNavigate } from "react-router-dom";
 
 export default function NavLinks() {
-  const LoggedIn = FireActions.auth.currentUser;
+  const [LoggedIn, setLoggedIn] = React.useState(false);
+
+  React.useEffect(() => {
+    FireActions.auth.onAuthStateChanged((user) => {
+      if (user) {
+        setLoggedIn(true);
+      } else {
+        setLoggedIn(false);
+      }
+    });
+  }, []);
+
+  // const LoggedIn = FireActions.auth.currentUser;
   const auth = FireActions.auth;
 
   // const dispatch = useDispatch();
