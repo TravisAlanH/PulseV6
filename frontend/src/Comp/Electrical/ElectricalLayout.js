@@ -1,9 +1,9 @@
 import React from "react";
 import ElectricalNav from "./ElectricalNav";
-import ElectricalHome from "./ElectricalHome";
+import LocationLayout from "../Location/LocationLayout";
 
 export default function ElectricalLayout({ AllData }) {
-  const [currentElectrical, setCurrentElectrical] = React.useState(<ElectricalHome />);
+  const [currentElectrical, setCurrentElectrical] = React.useState(<LocationLayout />);
 
   return (
     <div>

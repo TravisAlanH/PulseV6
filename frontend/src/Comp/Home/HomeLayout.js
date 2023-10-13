@@ -16,12 +16,14 @@ export default function HomeLayout() {
   const [reload, setReload] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const UUID = useSelector((state) => state.data.Current.DataBaseUUID);
+  const fullState = useSelector((state) => state.data);
 
   console.log(UUID);
 
   const dispatch = useDispatch();
 
   const user = FireActions.auth.currentUser;
+  console.log(user);
 
   React.useEffect(() => {
     setLoading(true);
@@ -86,22 +88,29 @@ export default function HomeLayout() {
   }
 
   function setStateData(item) {
+    setLoading(true);
     let changeIndex = -1;
+    let ChangedItem = null;
     for (let i = 0; i < locationData.length; i++) {
       if (locationData[i].Current.DataBaseUUID === UUID) {
         changeIndex = i;
-        console.log(changeIndex);
+        ChangedItem = locationData[i];
       }
     }
     // const changeIndex = locationData.findIndex((location) => UUID === location.Current.DataBaseUUID);
     if (changeIndex !== -1) {
-      FireActions.changeLocationAtIndex(changeIndex, item, user).then(() => {
-        const payload = { value: item };
-        dispatch(Actions.setAllStateDataToActionPayloadValue(payload));
-      });
+      FireActions.changeLocationAtIndex(ChangedItem, fullState, user)
+        .then(() => {
+          const payload = { value: item };
+          dispatch(Actions.setAllStateDataToActionPayloadValue(payload));
+        })
+        .then(() => {
+          setLoading(false);
+        });
     } else {
       const payload = { value: item };
       dispatch(Actions.setAllStateDataToActionPayloadValue(payload));
+      setLoading(false);
     }
   }
 
@@ -135,8 +144,15 @@ export default function HomeLayout() {
         {locationData.length > 0 ? (
           <div>
             {locationData.map((item, index) => {
+              let bg = "bg-white";
+              let showButton = true;
+              if (item.Current.DataBaseUUID === UUID) {
+                item = fullState;
+                bg = "bg-[#f59439]";
+                showButton = false;
+              }
               return (
-                <div key={index} className="border-b-2 w-full py-3">
+                <div key={index} className={"border-b-2 w-full py-3 " + bg}>
                   <div className="lg:flex lg:flex-row justify-between md:grid md:grid-cols-2">
                     <div className="flex flex-row">
                       <div>
@@ -163,6 +179,7 @@ export default function HomeLayout() {
                           type="text"
                           className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-[10rem]"}
                           defaultValue={item.Location[0]["dcTrack Location Name *"].value}
+                          placeholder="Location Tab"
                         />
                       </div>
                     </div>
@@ -177,12 +194,17 @@ export default function HomeLayout() {
                           type="text"
                           className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-[10rem]"}
                           defaultValue={item.Location[0]["dcTrack Location Hierarchy *"].value}
+                          placeholder="Location Tab"
                         />
                       </div>
                     </div>
-                    <button className="orangeButton w-[2.5rem]" onClick={() => setStateData(item)}>
-                      <TbDownload />
-                    </button>
+                    {showButton ? (
+                      <button className="orangeButton w-[2.5rem]" onClick={() => setStateData(item)}>
+                        <TbDownload />
+                      </button>
+                    ) : (
+                      <div className="w-[2.5rem]"></div>
+                    )}
                   </div>
                 </div>
               );
@@ -193,7 +215,7 @@ export default function HomeLayout() {
         )}
       </div>
       {loading ? <LoadingSpinner /> : null}
-      <LoadingSpinner />
+      {/* <LoadingSpinner /> */}
     </div>
   );
 }

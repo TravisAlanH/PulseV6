@@ -11,7 +11,7 @@ import {
 } from "firebase/auth";
 import { getDatabase, onValue, ref } from "firebase/database";
 import app from "./firebase";
-import { arrayUnion, doc, getDoc, getFirestore, setDoc, updateDoc } from "firebase/firestore";
+import { arrayRemove, arrayUnion, doc, getDoc, getFirestore, setDoc, updateDoc } from "firebase/firestore";
 
 const auth = getAuth(app);
 
@@ -175,22 +175,19 @@ async function addToLocations(user, data, reload) {
 //   }
 // }
 
-async function changeLocationAtIndex(ChangeIndex, item, user) {
+async function changeLocationAtIndex(ChangedItem, fullState, user) {
+  console.log(user);
   const db = getFirestore(app);
-  let currentLocationList = [];
   const docRef = doc(db, "users", user.uid);
   const docSnap = await getDoc(docRef);
   if (docSnap.exists()) {
-    currentLocationList = docSnap.data().LocationsList;
+    await updateDoc(docRef, {
+      LocationsList: arrayRemove(ChangedItem),
+    });
+    await updateDoc(docRef, {
+      LocationsList: arrayUnion(fullState),
+    });
   }
-  console.log("currentLocationList", currentLocationList);
-  //! need to get the data before updating so i am only updating what i need
-  currentLocationList[ChangeIndex] = structuredClone(item);
-  await setDoc(doc(db, "users", user.uid), {
-    LocationsList: currentLocationList,
-  }).catch((error) => {
-    console.error("Error adding document: ", error);
-  });
 }
 
 function UserSignOut(auth) {

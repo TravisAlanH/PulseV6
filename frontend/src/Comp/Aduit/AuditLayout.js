@@ -1,9 +1,9 @@
 import React from "react";
 import AuditNav from "./AuditNav";
-import AuditHome from "./AuditHome";
+import LocationLayout from "../Location/LocationLayout";
 
 export default function AuditLayout({ AllData }) {
-  const [currentAudit, setCurrentAudit] = React.useState(<AuditHome />);
+  const [currentAudit, setCurrentAudit] = React.useState(<LocationLayout />);
   return (
     <div>
       <div>
