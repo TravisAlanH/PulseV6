@@ -293,13 +293,17 @@ const Slice = createSlice({
       state = TemplateState.state;
     },
     setAllStateDataToActionPayloadValue: (state, action) => {
-      console.log("changed");
       return action.payload.value;
+    },
+    setDate: (state, action) => {
+      state.Current.DataBaseDate = action.payload.value;
+      if (state.Settings.localStorage) localStorage.setItem("PulseStateData", JSON.stringify(state));
     },
   },
 });
 
 export const {
+  setDate,
   setAllStateDataToActionPayloadValue,
   fillPortData,
   fillPortContent,

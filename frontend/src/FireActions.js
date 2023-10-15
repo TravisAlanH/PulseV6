@@ -190,6 +190,17 @@ async function changeLocationAtIndex(ChangedItem, fullState, user) {
   }
 }
 
+export async function removeFromLocationList(ItemToRemove, user) {
+  const db = getFirestore(app);
+  const docRef = doc(db, "users", user.uid);
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    await updateDoc(docRef, {
+      LocationsList: arrayRemove(ItemToRemove),
+    });
+  }
+}
+
 function UserSignOut(auth) {
   if (!auth.currentUser) {
     console.log("no user");

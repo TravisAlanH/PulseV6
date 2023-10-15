@@ -1275,6 +1275,7 @@ const state = {
   OpenRU: [],
   Current: {
     DataBaseUUID: "",
+    DataBaseTime: "",
     Location: 0,
     Rooms: 0,
     Racks: 0,

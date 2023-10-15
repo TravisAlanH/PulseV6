@@ -8,6 +8,9 @@ import { TbDownload } from "react-icons/tb";
 import { v4 as uuidv4 } from "uuid";
 import { useDispatch, useSelector } from "react-redux";
 import * as Actions from "../../Store/Slices/Slice";
+import * as Functions from "../../Format/Functions";
+import { RiCheckboxFill, RiSaveFill } from "react-icons/ri";
+import "./HomeStyles.css";
 
 export default function HomeLayout() {
   const [locationCode, setLocationCode] = React.useState("");
@@ -17,13 +20,11 @@ export default function HomeLayout() {
   const [loading, setLoading] = React.useState(false);
   const UUID = useSelector((state) => state.data.Current.DataBaseUUID);
   const fullState = useSelector((state) => state.data);
-
-  console.log(UUID);
+  const [saveConfirm, setSaveConfirm] = React.useState(false);
 
   const dispatch = useDispatch();
 
   const user = FireActions.auth.currentUser;
-  console.log(user);
 
   React.useEffect(() => {
     setLoading(true);
@@ -44,6 +45,14 @@ export default function HomeLayout() {
       console.error("Error adding document: ", error);
     });
   }, [reload, user.uid]);
+
+  let Duplicate = Functions.findOldestDuplicate(locationData);
+
+  if (Duplicate) {
+    FireActions.removeFromLocationList(Duplicate, user).then(() => {
+      setReload(!reload);
+    });
+  }
 
   function createLocation(e) {
     let LocationTest = [];
@@ -74,6 +83,7 @@ export default function HomeLayout() {
     let stateTemplate = structuredClone(state);
     stateTemplate.Location[0]["dcTrack Location Code *"].value = locationCode;
     stateTemplate.Current.DataBaseUUID = uuidv4();
+    stateTemplate.Current.DataBaseTime = Functions.getCurrentTimeInFormat();
     console.log(stateTemplate);
     //! Add to Database
     FireActions.addToLocations(user, stateTemplate, reload).then(() => {
@@ -87,30 +97,41 @@ export default function HomeLayout() {
     // setLocationCode("");
   }
 
-  function setStateData(item) {
-    setLoading(true);
-    let changeIndex = -1;
-    let ChangedItem = null;
-    for (let i = 0; i < locationData.length; i++) {
-      if (locationData[i].Current.DataBaseUUID === UUID) {
-        changeIndex = i;
-        ChangedItem = locationData[i];
+  async function setStateData(item) {
+    try {
+      setLoading(true);
+
+      const payload = {
+        value: Functions.getCurrentTimeInFormat(), // Assuming getCurrentTimeInFormat is a function call
+      };
+      dispatch(Actions.setDate(payload));
+    } finally {
+      let changeIndex = -1;
+      let ChangedItem = null;
+      for (let i = 0; i < locationData.length; i++) {
+        if (locationData[i].Current.DataBaseUUID === UUID) {
+          changeIndex = i;
+          ChangedItem = locationData[i];
+          break; // Exit the loop once the item is found
+        }
       }
-    }
-    // const changeIndex = locationData.findIndex((location) => UUID === location.Current.DataBaseUUID);
-    if (changeIndex !== -1) {
-      FireActions.changeLocationAtIndex(ChangedItem, fullState, user)
-        .then(() => {
+
+      setTimeout(() => {
+        if (changeIndex !== -1) {
+          FireActions.changeLocationAtIndex(ChangedItem, fullState, user)
+            .then(() => {
+              const payload = { value: item };
+              dispatch(Actions.setAllStateDataToActionPayloadValue(payload));
+            })
+            .finally(() => {
+              setLoading(false);
+            });
+        } else {
           const payload = { value: item };
           dispatch(Actions.setAllStateDataToActionPayloadValue(payload));
-        })
-        .then(() => {
           setLoading(false);
-        });
-    } else {
-      const payload = { value: item };
-      dispatch(Actions.setAllStateDataToActionPayloadValue(payload));
-      setLoading(false);
+        }
+      }, 300);
     }
   }
 
@@ -148,12 +169,15 @@ export default function HomeLayout() {
               let showButton = true;
               if (item.Current.DataBaseUUID === UUID) {
                 item = fullState;
-                bg = "bg-[#f59439]";
+                bg = "bg-white";
                 showButton = false;
               }
               return (
-                <div key={index} className={"border-b-2 w-full py-3 " + bg}>
-                  <div className="lg:flex lg:flex-row justify-between md:grid md:grid-cols-2">
+                <div key={index} className={"flex flex-row border-b-2 w-full h-full py-3 " + bg}>
+                  <div className="w-[2rem] flex flex-row justify-center items-center">
+                    {!showButton ? <RiCheckboxFill className="text-[#f59439] text-2xl" /> : null}
+                  </div>
+                  <div className="lg:flex lg:flex-row justify-between md:grid md:grid-cols-2 w-full">
                     <div className="flex flex-row">
                       <div>
                         <label className="text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center w-[7rem] h-full pl-2">
@@ -199,11 +223,27 @@ export default function HomeLayout() {
                       </div>
                     </div>
                     {showButton ? (
-                      <button className="orangeButton w-[2.5rem]" onClick={() => setStateData(item)}>
+                      <button
+                        className="orangeButton w-[2.5rem]"
+                        onClick={() => {
+                          if (saveConfirm) {
+                            setStateData(item);
+                            setSaveConfirm(false);
+                          } else {
+                            document.getElementById("confirmationDialog").style.display = "flex";
+                          }
+                        }}>
                         <TbDownload />
                       </button>
                     ) : (
-                      <div className="w-[2.5rem]"></div>
+                      <button
+                        className="w-[2.5rem] orangeButton"
+                        onClick={() => {
+                          setSaveConfirm(true);
+                          setStateData(item);
+                        }}>
+                        <RiSaveFill />
+                      </button>
                     )}
                   </div>
                 </div>
@@ -216,6 +256,31 @@ export default function HomeLayout() {
       </div>
       {loading ? <LoadingSpinner /> : null}
       {/* <LoadingSpinner /> */}
+      <div id="confirmationDialog" className="dialog">
+        <div className="bg-white p-3 rounded-md">
+          <p>Replace Current Data without Saving?</p>
+          <div className="flex flex-row justify-between">
+            <button
+              id="yesButton"
+              className="orangeButton"
+              onClick={() => {
+                document.getElementById("confirmationDialog").style.display = "none";
+                setSaveConfirm(true);
+              }}>
+              Yes
+            </button>
+            <button
+              id="noButton"
+              className="redButton"
+              onClick={() => {
+                document.getElementById("confirmationDialog").style.display = "none";
+                setSaveConfirm(false);
+              }}>
+              No
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
