@@ -53,11 +53,17 @@ const Slice = createSlice({
         action.payload.value;
     },
     addToOpenRU: (state, action) => {
-      state.OpenRU = [...state.OpenRU, action.payload.value];
+      let OpenRUObject = {
+        value: action.payload.value,
+      };
+      state.OpenRU = [...state.OpenRU, OpenRUObject];
       if (state.Settings.localStorage) localStorage.setItem("PulseStateData", JSON.stringify(state));
     },
     updateOpenRu: (state, action) => {
-      state.OpenRU[action.payload.Current] = action.payload.value;
+      let OpenRUObject = {
+        value: action.payload.value,
+      };
+      state.OpenRU[action.payload.Current] = OpenRUObject;
       if (state.Settings.localStorage) localStorage.setItem("PulseStateData", JSON.stringify(state));
     },
     addToNewItem: (state, action) => {

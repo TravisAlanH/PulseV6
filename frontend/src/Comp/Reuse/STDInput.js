@@ -15,7 +15,7 @@ export default function STDInput({ keyName, Step }) {
   const dispatch = useDispatch();
 
   let OpenRUHold = [];
-  if (OpenRU.length > 0) OpenRUHold = [...OpenRU[currentRack]];
+  if (OpenRU.length > 0) OpenRUHold = [...OpenRU[currentRack].value];
 
   let payload = {
     Step: Step,

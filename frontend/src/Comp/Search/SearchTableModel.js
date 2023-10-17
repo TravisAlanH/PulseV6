@@ -10,7 +10,7 @@ export default function SearchTableModel({ SearchData, searchInput, Step, setSea
   const newData = useSelector((state) => state.data["New" + Step]);
   let newDataCopy = [...newData];
   const currentRack = useSelector((state) => state.data.Current["Racks"]);
-  const OpenRU = useSelector((state) => state.data["OpenRU"][currentRack]);
+  const OpenRU = useSelector((state) => state.data["OpenRU"][currentRack].value);
   const racks = useSelector((state) => state.data["Racks"]);
 
   const currentData = useSelector((state) => state.data[Step][current]);
