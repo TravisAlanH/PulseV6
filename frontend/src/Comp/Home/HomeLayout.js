@@ -46,12 +46,15 @@ export default function HomeLayout() {
     });
   }, [reload, user.uid]);
 
-  let Duplicate = Functions.findOldestDuplicate(locationData);
+  let Duplicate = null;
 
-  if (Duplicate) {
-    FireActions.removeFromLocationList(Duplicate, user).then(() => {
-      setReload(!reload);
-    });
+  if (locationData == undefined || locationData.length !== 0) {
+    Duplicate = Functions.findOldestDuplicate(locationData);
+    if (Duplicate) {
+      FireActions.removeFromLocationList(Duplicate, user).then(() => {
+        setReload(!reload);
+      });
+    }
   }
 
   function createLocation(e) {
@@ -84,55 +87,37 @@ export default function HomeLayout() {
     stateTemplate.Location[0]["dcTrack Location Code *"].value = locationCode;
     stateTemplate.Current.DataBaseUUID = uuidv4();
     stateTemplate.Current.DataBaseTime = Functions.getCurrentTimeInFormat();
-    console.log(stateTemplate);
     //! Add to Database
     FireActions.addToLocations(user, stateTemplate, reload).then(() => {
       setLoading(false);
       setReload(!reload);
     });
-
-    // setLocationData(FireActions.addToLocations(user, stateTemplate, reload));
-
-    //! Reset Template
-    // setLocationCode("");
   }
 
   async function setStateData(item) {
-    try {
-      setLoading(true);
+    let stateCopy = structuredClone(fullState);
+    stateCopy.Current.DataBaseTime = Functions.getCurrentTimeInFormat();
+    let changeIndex = -1;
+    let ChangedItem = null;
 
-      const payload = {
-        value: Functions.getCurrentTimeInFormat(), // Assuming getCurrentTimeInFormat is a function call
-      };
-      dispatch(Actions.setDate(payload));
-    } finally {
-      let changeIndex = -1;
-      let ChangedItem = null;
-      for (let i = 0; i < locationData.length; i++) {
-        if (locationData[i].Current.DataBaseUUID === UUID) {
-          changeIndex = i;
-          ChangedItem = locationData[i];
-          break; // Exit the loop once the item is found
-        }
+    for (let i = 0; i < locationData.length; i++) {
+      if (locationData[i].Current.DataBaseUUID === UUID) {
+        changeIndex = i;
+        ChangedItem = locationData[i];
+        break;
       }
-
-      setTimeout(() => {
-        if (changeIndex !== -1) {
-          FireActions.changeLocationAtIndex(ChangedItem, fullState, user)
-            .then(() => {
-              const payload = { value: item };
-              dispatch(Actions.setAllStateDataToActionPayloadValue(payload));
-            })
-            .finally(() => {
-              setLoading(false);
-            });
-        } else {
-          const payload = { value: item };
-          dispatch(Actions.setAllStateDataToActionPayloadValue(payload));
-          setLoading(false);
-        }
-      }, 300);
     }
+
+    const payload = { value: item };
+
+    if (changeIndex !== -1) {
+      await FireActions.changeLocationAtIndex(ChangedItem, stateCopy, user);
+      dispatch(Actions.setAllStateDataToActionPayloadValue(payload));
+    } else {
+      dispatch(Actions.setAllStateDataToActionPayloadValue(payload));
+    }
+
+    setLoading(false);
   }
 
   return (

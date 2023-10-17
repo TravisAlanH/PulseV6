@@ -102,78 +102,35 @@ function signup(user) {
     });
 }
 
-// useEffect(() => {
-//   setLoading(true);
-//   const data = async () => {
-//     const db = getFirestore(app);
-//     const docRef = doc(db, "users", user.uid);
-//     const docSnap = await getDoc(docRef);
-//     if (docSnap.exists()) {
-//       setLocationData(docSnap.data().LocationsList);
-//     }
-//     setTimeout(() => {
-//       setLoading(false);
-//     }, 500);
-//     console.log(locationData);
-//   };
-
-//   data().catch((error) => {
-//     setLoading(false);
-//     console.error("Error adding document: ", error);
-//   });
-// }, [count, user.uid, reset]);
-
-// console.log(count);
-
-async function addToLocations(user, data, reload) {
-  try {
-    const db = getFirestore(app);
-    const docRef = doc(db, "users", user.uid);
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-      const currentLocationList = [...docSnap.data().LocationsList, data];
-      await updateDoc(docRef, {
-        LocationsList: arrayUnion(...currentLocationList),
-      });
-      return currentLocationList;
-    } else {
-      console.error("User document not found!");
-    }
-  } catch (error) {
-    console.error("Error updating document: ", error);
+async function addToLocations(user, data) {
+  const db = getFirestore(app);
+  const docRef = doc(db, "users", user.uid);
+  const docSnap = await getDoc(docRef);
+  console.log(data);
+  if (docSnap.exists()) {
+    await updateDoc(docRef, {
+      LocationsList: arrayUnion(data),
+    });
   }
+
+  // try {
+  //   const db = getFirestore(app);
+  //   const docRef = doc(db, "users", user.uid);
+  //   const docSnap = await getDoc(docRef);
+
+  //   if (docSnap.exists()) {
+  //     const currentLocationList = [...docSnap.data().LocationsList, data];
+  //     await updateDoc(docRef, {
+  //       LocationsList: arrayUnion(JSON.stringify(...currentLocationList)),
+  //     });
+  //     return currentLocationList;
+  //   } else {
+  //     console.error("User document not found!");
+  //   }
+  // } catch (error) {
+  //   console.error("Error updating document: ", error);
+  // }
 }
-
-// async function changeLocationAtIndex(ChangeIndex, item, user) {
-//   try {
-//     const db = getFirestore(app);
-//     const docRef = doc(db, "users", user.uid);
-//     const docSnap = await getDoc(docRef);
-
-//     if (docSnap.exists()) {
-//       const currentLocationList = docSnap.data().LocationsList.slice(); // Create a shallow copy of the array
-
-//       // Update the specific index with new data
-//       currentLocationList[ChangeIndex] = item;
-
-//       // Update the document in Firestore
-//       await setDoc(docRef, {
-//         LocationsList: currentLocationList,
-//       });
-
-//       setTimeout(() => {
-//         return false;
-//       }, 500);
-//       console.log("Location updated successfully!"); // Log the success message
-//     } else {
-//       console.error("User document not found!");
-//     }
-//   } catch (error) {
-//     console.error("Error updating document: ", error);
-//     throw error; // Re-throw the error to handle it in the calling function if necessary
-//   }
-// }
 
 async function changeLocationAtIndex(ChangedItem, fullState, user) {
   console.log(user);
@@ -188,6 +145,15 @@ async function changeLocationAtIndex(ChangedItem, fullState, user) {
       LocationsList: arrayUnion(fullState),
     });
   }
+  // if (docSnap.exists()) {
+  //   await updateDoc(docRef, {
+  //     LocationsList: arrayRemove(ChangedItem),
+  //   }).then(() => {
+  //     updateDoc(docRef, {
+  //       LocationsList: arrayUnion(fullState),
+  //     });
+  //   });
+  // }
 }
 
 export async function removeFromLocationList(ItemToRemove, user) {

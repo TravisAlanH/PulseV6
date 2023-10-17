@@ -12,8 +12,6 @@ export default function NavLinks() {
   const [LoggedIn, setLoggedIn] = React.useState(false);
   const UUID = useSelector((state) => state.data.Current.DataBaseUUID);
 
-  console.log(UUID);
-
   React.useEffect(() => {
     FireActions.auth.onAuthStateChanged((user) => {
       if (user) {

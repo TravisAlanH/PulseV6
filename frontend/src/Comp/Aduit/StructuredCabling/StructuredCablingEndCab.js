@@ -108,9 +108,9 @@ export default function StructuredCablingEndCab({ setEndItem, RackIndex, endItem
                           ? "green"
                           : object.Step === "PDUs"
                           ? "blue"
-                          : Object.Step === "UPSs"
+                          : object.Step === "UPSs"
                           ? "red"
-                          : Object.Step === "ATSs"
+                          : object.Step === "ATSs"
                           ? "yellow"
                           : "gray"
                       }-500 w-[.5rem] h-[.5rem] mt-[.1rem] mr-1`}></div>

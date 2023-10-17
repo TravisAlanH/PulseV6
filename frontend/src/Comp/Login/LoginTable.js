@@ -177,7 +177,8 @@ export default function LoginTable({ setAllData }) {
                 setLoading(true);
                 try {
                   await FireActions.signIn(user);
-                  const data = await FireActions.getData();
+                  // const data = await FireActions.getData();
+                  const data = [];
                   setAllData(data);
                   console.log(FireActions.auth);
                   if (!FireActions.auth.currentUser.emailVerified) {
