@@ -48,12 +48,22 @@ export default function HomeLayout() {
 
   let Duplicate = null;
 
-  if (locationData == undefined || locationData.length !== 0) {
-    Duplicate = Functions.findOldestDuplicate(locationData);
+  // if (locationData === undefined || locationData.length !== 0) {
+  //   Duplicate = Functions.findOldestDuplicate(locationData);
+  //   console.log("Duplicate", Duplicate);
+  //   if (Duplicate) {
+  //     FireActions.removeFromLocationList(Duplicate, user).then(() => {
+  //       setReload(!reload);
+  //     });
+  //   }
+  // }
+  if (locationData === undefined || locationData.length !== 0) {
+    Duplicate = Functions.findOldestNonUniqueEntries(locationData);
     if (Duplicate) {
-      FireActions.removeFromLocationList(Duplicate, user).then(() => {
-        setReload(!reload);
+      Duplicate.forEach((item) => {
+        FireActions.removeFromLocationList(item, user).then(() => {});
       });
+      setReload(!reload);
     }
   }
 
@@ -152,8 +162,13 @@ export default function HomeLayout() {
             {locationData.map((item, index) => {
               let bg = "bg-white";
               let showButton = true;
+              let Name = item.Location[0]["dcTrack Location Name *"].value;
+              let Code = item.Location[0]["dcTrack Location Code *"].value;
+              let Hierarchy = item.Location[0]["dcTrack Location Hierarchy *"].value;
               if (item.Current.DataBaseUUID === UUID) {
-                item = fullState;
+                Name = fullState.Location[0]["dcTrack Location Name *"].value;
+                Code = fullState.Location[0]["dcTrack Location Code *"].value;
+                Hierarchy = fullState.Location[0]["dcTrack Location Hierarchy *"].value;
                 bg = "bg-white";
                 showButton = false;
               }
@@ -173,7 +188,7 @@ export default function HomeLayout() {
                         <input
                           type="text"
                           className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-[10rem]"}
-                          value={item.Location[0]["dcTrack Location Code *"].value}
+                          defaultValue={Code}
                         />
                       </div>
                     </div>
@@ -187,7 +202,7 @@ export default function HomeLayout() {
                         <input
                           type="text"
                           className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-[10rem]"}
-                          defaultValue={item.Location[0]["dcTrack Location Name *"].value}
+                          defaultValue={Name}
                           placeholder="Location Tab"
                         />
                       </div>
@@ -202,7 +217,7 @@ export default function HomeLayout() {
                         <input
                           type="text"
                           className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-[10rem]"}
-                          defaultValue={item.Location[0]["dcTrack Location Hierarchy *"].value}
+                          defaultValue={Hierarchy}
                           placeholder="Location Tab"
                         />
                       </div>

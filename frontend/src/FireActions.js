@@ -45,16 +45,6 @@ async function getData() {
     );
   });
 }
-// function isValidEmail(email) {
-//   const testAgainst = process.env.REACT_APP_AUTHORIZED_EMAIL_DOMAIN;
-//   const emailDomain = email.split("@")[1];
-//   if (emailDomain === testAgainst) {
-//     return true;
-//   }
-//   console.log("invalid email");
-//   return false;
-//   if (!isValidEmail(user.email)) return;
-// }
 
 function VerificationEmail() {
   sendEmailVerification(auth.currentUser)
@@ -103,6 +93,7 @@ function signup(user) {
 }
 
 async function addToLocations(user, data) {
+  console.log("addToLocations", data);
   const db = getFirestore(app);
   const docRef = doc(db, "users", user.uid);
   const docSnap = await getDoc(docRef);
@@ -133,6 +124,7 @@ async function addToLocations(user, data) {
 }
 
 async function changeLocationAtIndex(ChangedItem, fullState, user) {
+  console.log("ChangeLocationAtIndex", fullState);
   console.log(user);
   const db = getFirestore(app);
   const docRef = doc(db, "users", user.uid);
@@ -145,15 +137,6 @@ async function changeLocationAtIndex(ChangedItem, fullState, user) {
       LocationsList: arrayUnion(fullState),
     });
   }
-  // if (docSnap.exists()) {
-  //   await updateDoc(docRef, {
-  //     LocationsList: arrayRemove(ChangedItem),
-  //   }).then(() => {
-  //     updateDoc(docRef, {
-  //       LocationsList: arrayUnion(fullState),
-  //     });
-  //   });
-  // }
 }
 
 export async function removeFromLocationList(ItemToRemove, user) {
