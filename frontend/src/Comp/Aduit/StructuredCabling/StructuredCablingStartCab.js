@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import "../../../Styles/PDU.css";
 import { BiArrowFromLeft } from "react-icons/bi";
@@ -7,6 +7,7 @@ import "./StructuredCabling.css";
 // import AddToRacks from "./AddToRacks";
 import Template from "../../../Store/Slices/Template";
 import StructuredCablingDropInput from "./StructuredCablingDropInput";
+import * as Actions from "../../../Store/Slices/Slice";
 
 export default function StructuredCablingStartCab({
   setStartItem,
@@ -22,6 +23,8 @@ export default function StructuredCablingStartCab({
   const UPSs = useSelector((state) => state.data["UPSs"]);
   const ATSs = useSelector((state) => state.data["ATSs"]);
   const RackState = useSelector((state) => state.data["Racks"][RackIndex]);
+  const dispatch = useDispatch();
+  let payload = {};
 
   // const dispatch = useDispatch();
   let StartingArray = [];
@@ -88,7 +91,11 @@ export default function StructuredCablingStartCab({
               className="StartDevices border-2 transition-all h-[2.5rem] overflow-hidden"
               onClick={() => {
                 setStartItem(object);
-                setBuild({ ...build, asset: object["Name *"].value });
+                payload.Key = "asset";
+                payload.value = object["Name *"].value;
+                dispatch(Actions.BuildStructuredCableSet(payload));
+
+                // setBuild({ ...build, asset: object["Name *"].value });
                 removeSelected();
                 // removeArrow();
                 // document.getElementById("arrowButtonHidden" + index).classList.replace("flex", "hidden");

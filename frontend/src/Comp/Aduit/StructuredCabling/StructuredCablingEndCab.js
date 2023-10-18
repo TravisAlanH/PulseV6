@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import "../../../Styles/PDU.css";
 import { BiArrowToRight } from "react-icons/bi";
@@ -7,6 +7,7 @@ import "./StructuredCabling.css";
 // import AddToRacks from "./AddToRacks";
 import Template from "../../../Store/Slices/Template";
 import StructuredCablingDropInputEnd from "./StructuredCablingDropInputEnd";
+import * as Actions from "../../../Store/Slices/Slice";
 
 export default function StructuredCablingEndCab({
   setEndItem,
@@ -22,6 +23,8 @@ export default function StructuredCablingEndCab({
   const UPSs = useSelector((state) => state.data["UPSs"]);
   const ATSs = useSelector((state) => state.data["ATSs"]);
   const RackState = useSelector((state) => state.data["Racks"][RackIndex]);
+  const dispatch = useDispatch();
+  let payload = {};
 
   // const dispatch = useDispatch();
   let StartingArray = [];
@@ -88,7 +91,10 @@ export default function StructuredCablingEndCab({
               className="EndArrowsHidden border-2 transition-all h-[2.5rem] overflow-hidden"
               onClick={() => {
                 setEndItem(object);
-                setBuild({ ...build, asset2: object["Name *"].value });
+                payload.Key = "asset2";
+                payload.value = object["Name *"].value;
+                dispatch(Actions.BuildStructuredCableSet(payload));
+                // setBuild({ ...build, asset2: object["Name *"].value });
                 removeSelected();
                 // removeArrow();
                 // document.getElementById("EndArrowButtonHidden" + index).classList.replace("flex", "hidden");

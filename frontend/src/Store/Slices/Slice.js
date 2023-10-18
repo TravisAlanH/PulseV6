@@ -305,10 +305,15 @@ const Slice = createSlice({
       state.Current.DataBaseDate = action.payload.value;
       if (state.Settings.localStorage) localStorage.setItem("PulseStateData", JSON.stringify(state));
     },
+    BuildStructuredCableSet: (state, action) => {
+      state.Current.StructuredCablingSet[action.payload.Key] = action.payload.value;
+      if (state.Settings.localStorage) localStorage.setItem("PulseStateData", JSON.stringify(state));
+    },
   },
 });
 
 export const {
+  BuildStructuredCableSet,
   setDate,
   setAllStateDataToActionPayloadValue,
   fillPortData,

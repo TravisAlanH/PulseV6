@@ -14,17 +14,15 @@ export default function StructuredCablingDropInput({
   build,
 }) {
   const RackState = useSelector((state) => state.data["Racks"][RackIndex]);
-  // const [portIndex, setPortIndex] = React.useState();
+  const [portIndex, setPortIndex] = React.useState();
   const portsArray = useSelector((state) => state.data[startItem.Step][startItem.Index]["Ports"]);
   const dispatch = useDispatch();
 
-  let changes = structuredClone(portsArray[build.port]);
+  let changes = structuredClone(portsArray[portIndex]);
 
-  // useEffect(() => {
-  //   setBuild({ ...build, port: portIndex });
-  // }, [portIndex]);
-
-  // console.log(build.port);
+  useEffect(() => {
+    setBuild({ ...build, port: portIndex });
+  }, [portIndex]);
 
   if (portsArray.length === 0) {
     return (
@@ -84,12 +82,7 @@ export default function StructuredCablingDropInput({
                 <div
                   className="portButton w-[2.5rem] h-[2.5rem] border-2 rounded-md flex flex-row items-center justify-center flex-shrink-0"
                   onClick={(e) => {
-                    // setPortIndex(index);
-                    console.log(index);
-                    payload.Key = "port";
-                    payload.value = index;
-                    dispatch(Actions.BuildStructuredCableSet(payload));
-                    // setBuild({ ...build, port: index });
+                    setPortIndex(index);
                     setStartSCData(
                       Object.keys(portsArray[index])
                         .filter((key) => !key.includes("Ending"))
@@ -115,12 +108,8 @@ export default function StructuredCablingDropInput({
                 <div
                   className="portButton w-[2.5rem] h-[2.5rem] border-2 rounded-md flex flex-row items-center justify-center flex-shrink-0"
                   onClick={(e) => {
-                    console.log(index);
-                    payload.Key = "port";
-                    payload.value = index;
-                    dispatch(Actions.BuildStructuredCableSet(payload));
-                    // setBuild({ ...build, port: index });
-                    // setPortIndex(index);
+                    setBuild({ ...build, port: index });
+                    setPortIndex(index);
                     setStartSCData(
                       Object.keys(portsArray[index])
                         .filter((key) => !key.includes("Ending"))
@@ -145,7 +134,7 @@ export default function StructuredCablingDropInput({
           </div>
         </div>
       </div>
-      {!isNaN(build.port) ? (
+      {portIndex !== undefined ? (
         <div id="inputs" className="flex flex-col gap-1 pt-2">
           {/* standard text input that i have used in the project with lable*/}
           {StartingArray.map((item, index) => {
@@ -157,12 +146,12 @@ export default function StructuredCablingDropInput({
                 <label className={"text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center w-[7rem]"}>
                   {item.replace("*", "").replace("Starting", "")}
                 </label>
-                {portsArray[build.port][item].type === "select" ? (
+                {portsArray[portIndex][item].type === "select" ? (
                   <select
                     className={"Select h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-[9.5rem]"}
                     onChange={(e) => {
                       changes[item].value = e.target.value;
-                      payload.build.port = build.port;
+                      payload.PortIndex = portIndex;
                       payload.value = changes;
                       setStartSCData(
                         Object.keys(changes)
@@ -175,8 +164,8 @@ export default function StructuredCablingDropInput({
                       // setStartSCData(changes);
                       dispatch(Actions.fillPortContent(payload));
                     }}>
-                    {portsArray[build.port][item].options.map((option) => {
-                      if (option === portsArray[build.port][item].value)
+                    {portsArray[portIndex][item].options.map((option) => {
+                      if (option === portsArray[portIndex][item].value)
                         return (
                           <option value={option} selected={true}>
                             {option}
@@ -187,11 +176,11 @@ export default function StructuredCablingDropInput({
                   </select>
                 ) : (
                   <input
-                    value={portsArray[build.port][item].value}
+                    value={portsArray[portIndex][item].value}
                     className="h-[2rem] w-[9.5rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit "
                     onChange={(e) => {
                       changes[item].value = e.target.value;
-                      payload.PortIndex = build.port;
+                      payload.PortIndex = portIndex;
                       payload.value = changes;
                       setStartSCData(
                         Object.keys(changes)
@@ -214,7 +203,7 @@ export default function StructuredCablingDropInput({
               className="orangeButton w-[5rem]"
               onClick={() => {
                 changes["Starting Item Location *"].value = RackState["Location *"].value;
-                changes["Starting Port Index *"].value = build.port + 1;
+                changes["Starting Port Index *"].value = portIndex + 1;
                 changes["Starting Item Name *"].value = startItem["Name *"].value;
                 changes["Starting Item Location *"].value = RackState["Location *"].value;
                 changes["Starting Port Name *"].value =
@@ -224,8 +213,8 @@ export default function StructuredCablingDropInput({
                   "-U" +
                   startItem["U Position *"].value +
                   "-P" +
-                  (build.port + 1);
-                payload.PortIndex = build.port;
+                  (portIndex + 1);
+                payload.PortIndex = portIndex;
                 payload.value = changes;
                 setStartSCData(
                   Object.keys(changes)

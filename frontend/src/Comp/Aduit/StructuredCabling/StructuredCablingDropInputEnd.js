@@ -91,6 +91,9 @@ export default function StructuredCablingDropInputEnd({
                   className="EndPortButton w-[2.5rem] h-[2.5rem] border-2 rounded-md flex flex-row items-center justify-center flex-shrink-0"
                   onClick={(e) => {
                     setPortIndex(index);
+                    payload.Key = "port2";
+                    payload.value = index;
+                    dispatch(Actions.BuildStructuredCableSet(payload));
                     setEndSCData(
                       Object.keys(portsArray[index])
                         .filter((key) => key.includes("Ending"))
@@ -118,6 +121,9 @@ export default function StructuredCablingDropInputEnd({
                   className="EndPortButton w-[2.5rem] h-[2.5rem] border-2 rounded-md flex flex-row items-center justify-center flex-shrink-0"
                   onClick={(e) => {
                     setPortIndex(index);
+                    payload.Key = "port";
+                    payload.value = index;
+                    dispatch(Actions.BuildStructuredCableSet(payload));
                     setEndSCData(
                       Object.keys(portsArray[index])
                         .filter((key) => key.includes("Ending"))

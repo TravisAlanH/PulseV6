@@ -1276,6 +1276,14 @@ const state = {
   Current: {
     DataBaseUUID: "",
     DataBaseTime: "",
+    StructuredCablingSet: {
+      rack: null,
+      asset: null,
+      port: null,
+      rack2: null,
+      asset2: null,
+      port2: null,
+    },
     Location: 0,
     Rooms: 0,
     Racks: 0,

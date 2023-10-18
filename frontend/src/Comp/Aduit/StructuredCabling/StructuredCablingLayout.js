@@ -1,8 +1,9 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import StructuredCablingStartCab from "./StructuredCablingStartCab";
 import StructuredCablingEndCab from "./StructuredCablingEndCab";
 import StructuredCablingInput from "./StructuredCablingInput";
+import * as Actions from "../../../Store/Slices/Slice";
 
 export default function StructuredCablingLayout() {
   const Racks = useSelector((state) => state.data.Racks);
@@ -20,6 +21,8 @@ export default function StructuredCablingLayout() {
     asset2: NaN,
     port2: NaN,
   });
+  const dispatch = useDispatch();
+  let payload = {};
 
   return (
     <div className="w-screen h-screen p-3">
@@ -41,10 +44,14 @@ export default function StructuredCablingLayout() {
                   var selectElement = document.getElementById("rackStart");
                   var selectedOption = selectElement.options[selectElement.selectedIndex];
                   var optionText = selectedOption.innerHTML;
-                  setBuild({ ...build, rack: optionText });
+                  payload.Key = "rack";
+                  payload.value = optionText;
+                  dispatch(Actions.BuildStructuredCableSet(payload));
+
+                  // setBuild({ ...build, rack: optionText });
                   //!
                 }}>
-                {/* <option value="">Select</option> */}
+                <option value="">Select</option>
                 {Racks.length > 0
                   ? Racks.map((item, index) => {
                       return (
@@ -89,9 +96,12 @@ export default function StructuredCablingLayout() {
                   var selectElement = document.getElementById("rackEnd");
                   var selectedOption = selectElement.options[selectElement.selectedIndex];
                   var optionText = selectedOption.innerHTML;
-                  setBuild({ ...build, rack: optionText });
+                  payload.Key = "rack2";
+                  payload.value = optionText;
+                  dispatch(Actions.BuildStructuredCableSet(payload));
+                  // setBuild({ ...build, rack: optionText });
                 }}>
-                {/* <option value="0">Select</option> */}
+                <option value="0">Select</option>
                 {Racks.length > 0
                   ? Racks.map((item, index) => {
                       return (
