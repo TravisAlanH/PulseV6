@@ -12,6 +12,14 @@ export default function StructuredCablingLayout() {
   const [EndRackIndex, setEndRackIndex] = React.useState(0);
   const [StartSCData, setStartSCData] = React.useState({});
   const [EndSCData, setEndSCData] = React.useState({});
+  const [build, setBuild] = React.useState({
+    rack: Racks[0]["Name *"].value,
+    asset: NaN,
+    port: NaN,
+    rack2: Racks[0]["Name *"].value,
+    asset2: NaN,
+    port2: NaN,
+  });
 
   return (
     <div className="w-screen h-screen p-3">
@@ -25,10 +33,18 @@ export default function StructuredCablingLayout() {
             <div className="w-full h-[2rem] bg-[#F3EEE7] flex flex-row items-center justify-center">
               <h1 className="text-black">Starting Cabinet</h1>
               <select
+                //!
+                id="rackStart"
                 onChange={(e) => {
                   setRackIndex(e.target.value);
+                  //!
+                  var selectElement = document.getElementById("rackStart");
+                  var selectedOption = selectElement.options[selectElement.selectedIndex];
+                  var optionText = selectedOption.innerHTML;
+                  setBuild({ ...build, rack: optionText });
+                  //!
                 }}>
-                {/* <option value="0">Select</option> */}
+                {/* <option value="">Select</option> */}
                 {Racks.length > 0
                   ? Racks.map((item, index) => {
                       return (
@@ -47,6 +63,8 @@ export default function StructuredCablingLayout() {
                 startItem={startItem}
                 setStartSCData={setStartSCData}
                 EndSCData={EndSCData}
+                setBuild={setBuild}
+                build={build}
               />
             </div>
           </div>
@@ -57,6 +75,7 @@ export default function StructuredCablingLayout() {
               endItem={endItem}
               StartSCData={StartSCData}
               EndSCData={EndSCData}
+              build={build}
             />
           </div>
           {/*  */}
@@ -64,8 +83,13 @@ export default function StructuredCablingLayout() {
             <div className="w-full h-[2rem] bg-[#F3EEE7] flex flex-row items-center justify-center">
               <h1 className="text-black">Ending Cabinet</h1>
               <select
+                id="rackEnd"
                 onChange={(e) => {
                   setEndRackIndex(e.target.value);
+                  var selectElement = document.getElementById("rackEnd");
+                  var selectedOption = selectElement.options[selectElement.selectedIndex];
+                  var optionText = selectedOption.innerHTML;
+                  setBuild({ ...build, rack: optionText });
                 }}>
                 {/* <option value="0">Select</option> */}
                 {Racks.length > 0
@@ -86,6 +110,8 @@ export default function StructuredCablingLayout() {
                 endItem={endItem}
                 setEndSCData={setEndSCData}
                 StartSCData={StartSCData}
+                setBuild={setBuild}
+                build={build}
               />
             </div>
           </div>
@@ -98,6 +124,7 @@ export default function StructuredCablingLayout() {
           endItem={endItem}
           StartSCData={StartSCData}
           EndSCData={EndSCData}
+          build={build}
         />
       </div>
       {/*  */}

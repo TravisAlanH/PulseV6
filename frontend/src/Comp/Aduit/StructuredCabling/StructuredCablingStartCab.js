@@ -8,7 +8,15 @@ import "./StructuredCabling.css";
 import Template from "../../../Store/Slices/Template";
 import StructuredCablingDropInput from "./StructuredCablingDropInput";
 
-export default function StructuredCablingStartCab({ setStartItem, RackIndex, startItem, setStartSCData, EndSCData }) {
+export default function StructuredCablingStartCab({
+  setStartItem,
+  RackIndex,
+  startItem,
+  setStartSCData,
+  EndSCData,
+  setBuild,
+  build,
+}) {
   const Assets = useSelector((state) => state.data["Assets"]);
   const PDUs = useSelector((state) => state.data["PDUs"]);
   const UPSs = useSelector((state) => state.data["UPSs"]);
@@ -80,6 +88,7 @@ export default function StructuredCablingStartCab({ setStartItem, RackIndex, sta
               className="StartDevices border-2 transition-all h-[2.5rem] overflow-hidden"
               onClick={() => {
                 setStartItem(object);
+                setBuild({ ...build, asset: object["Name *"].value });
                 removeSelected();
                 // removeArrow();
                 // document.getElementById("arrowButtonHidden" + index).classList.replace("flex", "hidden");
@@ -138,6 +147,8 @@ export default function StructuredCablingStartCab({ setStartItem, RackIndex, sta
                     startItem={object}
                     setStartSCData={setStartSCData}
                     EndSCData={EndSCData}
+                    setBuild={setBuild}
+                    build={build}
                   />
                 }
                 {/* need to send Step and object Index */}

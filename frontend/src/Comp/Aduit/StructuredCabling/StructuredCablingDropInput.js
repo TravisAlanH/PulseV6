@@ -1,17 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Template from "../../../Store/Slices/Template";
 import { BiPlus } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import * as Actions from "../../../Store/Slices/Slice";
 import { BsEthernet } from "react-icons/bs";
 
-export default function StructuredCablingDropInput({ RackIndex, startItem, setStartSCData, EndSCData }) {
+export default function StructuredCablingDropInput({
+  RackIndex,
+  startItem,
+  setStartSCData,
+  EndSCData,
+  setBuild,
+  build,
+}) {
   const RackState = useSelector((state) => state.data["Racks"][RackIndex]);
   const [portIndex, setPortIndex] = React.useState();
   const portsArray = useSelector((state) => state.data[startItem.Step][startItem.Index]["Ports"]);
   const dispatch = useDispatch();
 
   let changes = structuredClone(portsArray[portIndex]);
+
+  useEffect(() => {
+    setBuild({ ...build, port: portIndex });
+  }, [portIndex]);
 
   if (portsArray.length === 0) {
     return (
@@ -97,6 +108,7 @@ export default function StructuredCablingDropInput({ RackIndex, startItem, setSt
                 <div
                   className="portButton w-[2.5rem] h-[2.5rem] border-2 rounded-md flex flex-row items-center justify-center flex-shrink-0"
                   onClick={(e) => {
+                    setBuild({ ...build, port: index });
                     setPortIndex(index);
                     setStartSCData(
                       Object.keys(portsArray[index])

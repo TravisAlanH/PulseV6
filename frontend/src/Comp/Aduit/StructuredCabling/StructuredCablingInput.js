@@ -4,11 +4,13 @@ import { useDispatch } from "react-redux";
 import * as Actions from "../../../Store/Slices/Slice";
 // import STDInput from "../../Reuse/STDInput";
 
-export default function StructuredCablingInput({ startItem, endItem, StartSCData, EndSCData }) {
+export default function StructuredCablingInput({ startItem, endItem, StartSCData, EndSCData, build }) {
   // const FullState = useSelector((state) => state.data);
   const [SendData, setSendData] = React.useState({ ...StartSCData, ...EndSCData });
   const dispatch = useDispatch();
   let otherData = [];
+
+  console.log(build);
 
   useEffect(() => {
     let fullCopyStart = structuredClone(StartSCData);

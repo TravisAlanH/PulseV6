@@ -4,7 +4,7 @@ import Logo from "../../Img/sunbird-logo-white.png";
 // import * as actions from "../../Store/Slices/Slice";
 import "../../Styles/Login.css";
 import { useNavigate } from "react-router-dom";
-// import axios from "axios";
+import axios from "axios";
 import * as FireActions from "../../FireActions";
 import LoadingSpinner from "../Reuse/LoadingSpinner/Spinner";
 // import MessageBox from "../Reuse/MessageBox";
@@ -29,10 +29,10 @@ export default function LoginTable({ setAllData }) {
 
   // const baseLogin = process.env.REACT_APP_LOGIN;
   // const basePass = process.env.REACT_APP_PASS;
-  // const baseURL = process.env.REACT_APP_BASE_URL;
+  const baseURL = process.env.REACT_APP_BASE_URL;
   // const rackURL = process.env.REACT_APP_RACK_URL;
 
-  // const FullData = "data.json";
+  const FullData = "data.json";
 
   // let payload = {
   //   set: 1,
@@ -176,10 +176,18 @@ export default function LoginTable({ setAllData }) {
                 }
                 setLoading(true);
                 try {
-                  await FireActions.signIn(user);
+                  FireActions.signIn(user);
+                  let data = [];
+
+                  //! GET DATA FIREBASE
                   // const data = await FireActions.getData();
-                  const data = [];
-                  setAllData(data);
+                  // setAllData(data);
+
+                  //! GET DATA JSON
+                  axios.get(baseURL + FullData).then((res) => {
+                    setAllData(res.data["rows"]);
+                  });
+
                   console.log(FireActions.auth);
                   if (!FireActions.auth.currentUser.emailVerified) {
                     alert("Please verify your email");

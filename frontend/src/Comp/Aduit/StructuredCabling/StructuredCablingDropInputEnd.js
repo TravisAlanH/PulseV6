@@ -1,15 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Template from "../../../Store/Slices/Template";
 import { BiPlus } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import * as Actions from "../../../Store/Slices/Slice";
 import { BsEthernet } from "react-icons/bs";
 
-export default function StructuredCablingDropInputEnd({ RackIndex, endItem, setEndSCData, EndSCData }) {
+export default function StructuredCablingDropInputEnd({
+  RackIndex,
+  endItem,
+  setEndSCData,
+  EndSCData,
+  setBuild,
+  build,
+}) {
   const RackState = useSelector((state) => state.data["Racks"][RackIndex]);
   const [portIndex, setPortIndex] = React.useState();
   const portsArray = useSelector((state) => state.data[endItem.Step][endItem.Index]["Ports"]);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    setBuild({ ...build, port2: portIndex });
+  }, [portIndex]);
 
   if (portsArray.length === 0) {
     return (
