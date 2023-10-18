@@ -1,26 +1,15 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Template from "../../../Store/Slices/Template";
 import { BiPlus } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import * as Actions from "../../../Store/Slices/Slice";
 import { BsEthernet } from "react-icons/bs";
 
-export default function StructuredCablingDropInputEnd({
-  RackIndex,
-  endItem,
-  setEndSCData,
-  EndSCData,
-  setBuild,
-  build,
-}) {
+export default function StructuredCablingDropInputEnd({ RackIndex, endItem, setEndSCData, EndSCData }) {
   const RackState = useSelector((state) => state.data["Racks"][RackIndex]);
-  const [portIndex, setPortIndex] = React.useState();
   const portsArray = useSelector((state) => state.data[endItem.Step][endItem.Index]["Ports"]);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    setBuild({ ...build, port2: portIndex });
-  }, [portIndex]);
+  const build = useSelector((state) => state.data.Current.StructuredCablingSet);
 
   if (portsArray.length === 0) {
     return (
@@ -40,7 +29,7 @@ export default function StructuredCablingDropInputEnd({
     );
   }
 
-  let changes = structuredClone(portsArray[portIndex]);
+  let changes = structuredClone(portsArray[build.port2]);
 
   let EndingArray = [];
   let startMap = [];
@@ -90,7 +79,6 @@ export default function StructuredCablingDropInputEnd({
                 <div
                   className="EndPortButton w-[2.5rem] h-[2.5rem] border-2 rounded-md flex flex-row items-center justify-center flex-shrink-0"
                   onClick={(e) => {
-                    setPortIndex(index);
                     payload.Key = "port2";
                     payload.value = index;
                     dispatch(Actions.BuildStructuredCableSet(payload));
@@ -102,8 +90,6 @@ export default function StructuredCablingDropInputEnd({
                           return obj;
                         }, {})
                     );
-
-                    // setEndSCData(portsArray[index]);
                     removeSelected();
                     e.target.classList.add("selectedPort");
                   }}>
@@ -120,7 +106,6 @@ export default function StructuredCablingDropInputEnd({
                 <div
                   className="EndPortButton w-[2.5rem] h-[2.5rem] border-2 rounded-md flex flex-row items-center justify-center flex-shrink-0"
                   onClick={(e) => {
-                    setPortIndex(index);
                     payload.Key = "port";
                     payload.value = index;
                     dispatch(Actions.BuildStructuredCableSet(payload));
@@ -148,7 +133,7 @@ export default function StructuredCablingDropInputEnd({
           </div>
         </div>
       </div>
-      {portIndex !== undefined ? (
+      {build.port2 !== undefined ? (
         <div id="inputs" className="flex flex-col gap-1 pt-2">
           {/* standard text input that i have used in the project with lable*/}
           {EndingArray.map((item, index) => {
@@ -160,12 +145,12 @@ export default function StructuredCablingDropInputEnd({
                 <label className={"text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center w-[7rem]"}>
                   {item.replace("*", "").replace("Ending", "")}
                 </label>
-                {portsArray[portIndex][item].type === "select" ? (
+                {portsArray[build.port2][item].type === "select" ? (
                   <select
                     className={"Select h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-[9.5rem]"}
                     onChange={(e) => {
                       changes[item].value = e.target.value;
-                      payload.PortIndex = portIndex;
+                      payload.PortIndex = build.port2;
                       payload.value = changes;
                       setEndSCData(
                         Object.keys(changes)
@@ -178,8 +163,8 @@ export default function StructuredCablingDropInputEnd({
                       // setEndSCData(changes);
                       dispatch(Actions.fillPortContent(payload));
                     }}>
-                    {portsArray[portIndex][item].options.map((option) => {
-                      if (option === portsArray[portIndex][item].value)
+                    {portsArray[build.port2][item].options.map((option) => {
+                      if (option === portsArray[build.port2][item].value)
                         return (
                           <option value={option} selected={true}>
                             {option}
@@ -190,11 +175,11 @@ export default function StructuredCablingDropInputEnd({
                   </select>
                 ) : (
                   <input
-                    value={portsArray[portIndex][item].value}
+                    value={portsArray[build.port2][item].value}
                     className="h-[2rem] w-[9.5rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit "
                     onChange={(e) => {
                       changes[item].value = e.target.value;
-                      payload.PortIndex = portIndex;
+                      payload.PortIndex = build.port2;
                       payload.value = changes;
                       setEndSCData(
                         Object.keys(changes)
@@ -217,7 +202,7 @@ export default function StructuredCablingDropInputEnd({
               className="orangeButton w-[5rem]"
               onClick={() => {
                 changes["Ending Item Location *"].value = RackState["Location *"].value;
-                changes["Ending Port Index *"].value = portIndex + 1;
+                changes["Ending Port Index *"].value = build.port2 + 1;
                 changes["Ending Item Name *"].value = endItem["Name *"].value;
                 changes["Ending Item Location *"].value = RackState["Location *"].value;
                 changes["Ending Port Name *"].value =
@@ -227,8 +212,8 @@ export default function StructuredCablingDropInputEnd({
                   "-U" +
                   endItem["U Position *"].value +
                   "-P" +
-                  (portIndex + 1);
-                payload.PortIndex = portIndex;
+                  (build.port2 + 1);
+                payload.PortIndex = build.port2;
                 payload.value = changes;
                 setEndSCData(
                   Object.keys(changes)

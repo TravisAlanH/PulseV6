@@ -9,15 +9,7 @@ import Template from "../../../Store/Slices/Template";
 import StructuredCablingDropInput from "./StructuredCablingDropInput";
 import * as Actions from "../../../Store/Slices/Slice";
 
-export default function StructuredCablingStartCab({
-  setStartItem,
-  RackIndex,
-  startItem,
-  setStartSCData,
-  EndSCData,
-  setBuild,
-  build,
-}) {
+export default function StructuredCablingStartCab({ setStartItem, RackIndex, startItem, setStartSCData, EndSCData }) {
   const Assets = useSelector((state) => state.data["Assets"]);
   const PDUs = useSelector((state) => state.data["PDUs"]);
   const UPSs = useSelector((state) => state.data["UPSs"]);
@@ -26,12 +18,9 @@ export default function StructuredCablingStartCab({
   const dispatch = useDispatch();
   let payload = {};
 
-  // const dispatch = useDispatch();
   let StartingArray = [];
   let EndingArray = [];
   let startMap = [];
-
-  // let newObject = Template.StructuredCabling;
 
   let keys = Object.keys(Template.StructuredCabling);
   keys.map((item) => {
@@ -43,21 +32,15 @@ export default function StructuredCablingStartCab({
     for (let i = 0; i < startItem["Ports"].value; i++) {
       startMap.push(i + 1);
     }
-    // startPortSpacing = startItem["Ports"].value / 2;
   }
 
   const buttons = document.getElementsByClassName("StartDevices");
-  // const arrowsHidden = document.getElementsByClassName("ArrowHidden");
-  // const arrowsDisplay = document.getElementsByClassName("ArrowDisplay");
-  // console.log("start", arrowsDisplay);
 
   function removeSelected() {
     for (var i = 0; i < buttons.length; i++) {
       buttons[i].addEventListener("click", function () {
         for (var j = 0; j < buttons.length; j++) {
           buttons[j].classList.remove("selectedStructuredCable");
-          // arrowsDisplay[j].classList.add("hidden");
-          // arrowsHidden[j].classList.replace("hidden", "flex");
         }
       });
     }
@@ -94,12 +77,7 @@ export default function StructuredCablingStartCab({
                 payload.Key = "asset";
                 payload.value = object["Name *"].value;
                 dispatch(Actions.BuildStructuredCableSet(payload));
-
-                // setBuild({ ...build, asset: object["Name *"].value });
                 removeSelected();
-                // removeArrow();
-                // document.getElementById("arrowButtonHidden" + index).classList.replace("flex", "hidden");
-                // document.getElementById("arrowButtonDisplay" + index).classList.remove("hidden");
                 document.getElementById("StartItem" + i).classList.add("selectedStructuredCable");
               }}>
               <div className="h-[2.5rem]  flex flex-row w-[19rem] justify-between items-center border-2">
@@ -136,11 +114,6 @@ export default function StructuredCablingStartCab({
                     </div>
                   </div>
                 </div>
-                {/* <button
-                  id={`arrowButtonHidden${index}`}
-                  className="orangeButtonClear outline-2 flex flex-row justify-center items-center text-[1.7rem] mr-2 ArrowHidden">
-                  <BiArrowFromLeft />
-                </button> */}
                 <button
                   id={`arrowButtonDisplay${index}`}
                   className="orangeButton flex-row justify-center items-center text-[1.7rem] mr-2 ArrowDisplay ">
@@ -154,8 +127,6 @@ export default function StructuredCablingStartCab({
                     startItem={object}
                     setStartSCData={setStartSCData}
                     EndSCData={EndSCData}
-                    setBuild={setBuild}
-                    build={build}
                   />
                 }
                 {/* need to send Step and object Index */}
