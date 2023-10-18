@@ -177,7 +177,6 @@ export default function LoginTable({ setAllData }) {
                 setLoading(true);
                 try {
                   FireActions.signIn(user);
-                  let data = [];
 
                   //! GET DATA FIREBASE
                   // const data = await FireActions.getData();
