@@ -64,6 +64,7 @@ export default function StructuredCablingDropInput({ RackIndex, Asset }) {
             if (index % 2 === 0) {
               return (
                 <div
+                  key={index}
                   className={
                     "portButton w-[2.5rem] h-[2.5rem] border-2 rounded-md flex flex-row items-center justify-center flex-shrink-0 " +
                     (index === build.port ? "selectedPort" : null)
@@ -75,7 +76,8 @@ export default function StructuredCablingDropInput({ RackIndex, Asset }) {
                     removeSelected();
                     e.target.classList.add("selectedPort");
                   }}>
-                  {index + 1}
+                  {/* ! I am using the build instead of using the data that has been filled in the SC Array*/}
+                  <div className={build.port === index ? "font-black" : null}>{index + 1}</div>
                 </div>
               );
             } else return null;
@@ -86,6 +88,7 @@ export default function StructuredCablingDropInput({ RackIndex, Asset }) {
             if (index % 2 !== 0) {
               return (
                 <div
+                  key={index}
                   className={
                     "portButton w-[2.5rem] h-[2.5rem] border-2 rounded-md flex flex-row items-center justify-center flex-shrink-0 " +
                     (index === build.port ? "selectedPort" : null)
@@ -97,7 +100,7 @@ export default function StructuredCablingDropInput({ RackIndex, Asset }) {
                     removeSelected();
                     e.target.classList.add("selectedPort");
                   }}>
-                  {index + 1}
+                  <div className={build.port === index ? "font-black" : null}>{index + 1}</div>
                 </div>
               );
             } else return null;

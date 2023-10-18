@@ -42,10 +42,7 @@ const Slice = createSlice({
     },
     fillPortData: (state, action) => {
       console.log(action);
-      state[action.payload.StartStep][action.payload.StartIndex]["Ports"][action.payload.StartPortIndex] =
-        action.payload.value;
-      state[action.payload.EndStep][action.payload.EndIndex]["Ports"][action.payload.EndPortIndex] =
-        action.payload.value;
+      state.StructuredCabling = [...state.StructuredCabling, action.payload.value];
     },
     addToOpenRU: (state, action) => {
       let OpenRUObject = {

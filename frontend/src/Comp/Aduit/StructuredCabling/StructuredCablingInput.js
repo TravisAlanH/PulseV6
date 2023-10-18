@@ -37,7 +37,7 @@ export default function StructuredCablingInput() {
     };
     console.log(payload);
     //!
-    // dispatch(Actions.addToSC(payload))
+    dispatch(Actions.fillPortData(payload));
     //!
   }
 
