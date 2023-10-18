@@ -5,34 +5,18 @@ import "../../../Styles/PDU.css";
 import { BiArrowFromLeft } from "react-icons/bi";
 import "./StructuredCabling.css";
 // import AddToRacks from "./AddToRacks";
-import Template from "../../../Store/Slices/Template";
 import StructuredCablingDropInput from "./StructuredCablingDropInput";
 import * as Actions from "../../../Store/Slices/Slice";
 
-export default function StructuredCablingStartCab({ setStartItem, RackIndex, startItem, setStartSCData, EndSCData }) {
+export default function StructuredCablingStartCab({ RackIndex }) {
   const Assets = useSelector((state) => state.data["Assets"]);
   const PDUs = useSelector((state) => state.data["PDUs"]);
   const UPSs = useSelector((state) => state.data["UPSs"]);
   const ATSs = useSelector((state) => state.data["ATSs"]);
   const RackState = useSelector((state) => state.data["Racks"][RackIndex]);
+  const build = useSelector((state) => state.data.Current.StructuredCablingSet);
   const dispatch = useDispatch();
   let payload = {};
-
-  let StartingArray = [];
-  let EndingArray = [];
-  let startMap = [];
-
-  let keys = Object.keys(Template.StructuredCabling);
-  keys.map((item) => {
-    if (item.includes("Starting")) StartingArray.push(item);
-    if (item.includes("Ending")) EndingArray.push(item);
-    return null;
-  });
-  if (Object.keys(startItem).length > 0) {
-    for (let i = 0; i < startItem["Ports"].value; i++) {
-      startMap.push(i + 1);
-    }
-  }
 
   const buttons = document.getElementsByClassName("StartDevices");
 
@@ -46,8 +30,6 @@ export default function StructuredCablingStartCab({ setStartItem, RackIndex, sta
     }
   }
 
-  let holdOpenRU = [];
-
   let Layout = [];
 
   let AssetsCopy = Assets.map((obj, index) => ({ ...obj, Step: "Assets", Index: index }));
@@ -60,20 +42,21 @@ export default function StructuredCablingStartCab({ setStartItem, RackIndex, sta
   if (RackState === undefined) return null;
   for (let i = 1; i < RackState["RU Height"].value + 1; i++) {
     Data.map((object, index) => {
-      if (object["U Position *"].value === i && object["Cabinet *"].value === RackState["Name *"].value) {
+      // if (object["U Position *"].value === i && object["Cabinet *"].value === RackState["Name *"].value) {
+      if (object["U Position *"].value === i && object["Cabinet *"].value === build.rack) {
         let currentRU = i;
-        for (let j = 0; j < object["RU Height"].value - 1; j++) {
-          holdOpenRU.push(1);
-        }
         i = object["RU Height"].value + i - 1;
-
         return Layout.push(
           <div key={i}>
             <div
               id={"StartItem" + i}
-              className="StartDevices border-2 transition-all h-[2.5rem] overflow-hidden"
+              className={
+                "StartDevices border-2 transition-all h-[2.5rem] overflow-hidden " + object["Name *"].value ===
+                build.Asset
+                  ? "selectedStructuredCable"
+                  : null
+              }
               onClick={() => {
-                setStartItem(object);
                 payload.Key = "asset";
                 payload.value = object["Name *"].value;
                 dispatch(Actions.BuildStructuredCableSet(payload));
@@ -121,15 +104,7 @@ export default function StructuredCablingStartCab({ setStartItem, RackIndex, sta
                 </button>
               </div>
               <div className="flex flex-col items-center">
-                {
-                  <StructuredCablingDropInput
-                    RackIndex={RackIndex}
-                    startItem={object}
-                    setStartSCData={setStartSCData}
-                    EndSCData={EndSCData}
-                  />
-                }
-                {/* need to send Step and object Index */}
+                {<StructuredCablingDropInput RackIndex={RackIndex} Asset={object} />}
               </div>
             </div>
           </div>
@@ -137,8 +112,6 @@ export default function StructuredCablingStartCab({ setStartItem, RackIndex, sta
       } else return null;
     });
   }
-
-  // dispatch(Action.changeData(payload));
 
   return (
     <div className="flex flex-row">

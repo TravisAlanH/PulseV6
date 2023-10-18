@@ -1,26 +1,18 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Template from "../../../Store/Slices/Template";
 import { useDispatch, useSelector } from "react-redux";
 import * as Actions from "../../../Store/Slices/Slice";
 // import STDInput from "../../Reuse/STDInput";
 
-export default function StructuredCablingInput({ startItem, endItem, StartSCData, EndSCData, build }) {
-  // const FullState = useSelector((state) => state.data);
-  const [SendData, setSendData] = React.useState({ ...StartSCData, ...EndSCData });
-  const set = useSelector((state) => state.data.Current.StructuredCablingSet);
+export default function StructuredCablingInput() {
+  const build = useSelector((state) => state.data.Current.StructuredCablingSet);
+  const scCurrent = useSelector((state) => state.data.Current.StructuredCabling);
 
   const dispatch = useDispatch();
+  let payload = {};
   let otherData = [];
 
-  console.log(set);
-
   // console.log(build);
-
-  useEffect(() => {
-    let fullCopyStart = structuredClone(StartSCData);
-    let fullCopyEnd = structuredClone(EndSCData);
-    setSendData({ ...fullCopyStart, ...fullCopyEnd });
-  }, [StartSCData, EndSCData]);
 
   let keys = Object.keys(Template.StructuredCabling);
   keys.map((item) => {
@@ -28,7 +20,8 @@ export default function StructuredCablingInput({ startItem, endItem, StartSCData
       !item.includes("Starting") &&
       !item.includes("Ending") &&
       !item.includes("Operation") &&
-      !item.includes("Object")
+      !item.includes("Object") &&
+      !item.includes("Data")
     )
       otherData.push(item);
     return null;
@@ -38,21 +31,30 @@ export default function StructuredCablingInput({ startItem, endItem, StartSCData
     // state[action.payload.Step][action.payload.StartItemIndex]["Ports"][action.payload.PortIndex] = action.payload.startValue;
     e.preventDefault();
 
-    let payload = {
-      StartStep: startItem.Step,
-      StartIndex: startItem.Index,
-      EndStep: endItem.Step,
-      EndIndex: endItem.Index,
-      StartPortIndex: SendData["Starting Port Index *"].value - 1,
-      EndPortIndex: SendData["Ending Port Index *"].value - 1,
-      value: SendData,
+    payload = {
+      Current: scCurrent,
+      value: build,
     };
-    dispatch(Actions.fillPortData(payload));
+    console.log(payload);
+    //!
+    // dispatch(Actions.addToSC(payload))
+    //!
+  }
+
+  function checkNonNullValues(obj) {
+    for (let key in obj) {
+      if (obj.hasOwnProperty(key) && (key.includes("Starting") || key.includes("Ending"))) {
+        if (obj[key] === null || obj[key] === "") {
+          return false;
+        }
+      }
+    }
+    return true;
   }
 
   return (
     <div className="w-[20rem] flex flex-row justify-center">
-      {Object.keys(StartSCData).length > 0 && Object.keys(EndSCData).length > 0 ? (
+      {checkNonNullValues(build) ? (
         <form onSubmit={UpdateBothPortData} className="flex flex-col gap-1">
           {otherData.map((item, index) => {
             return (
@@ -67,11 +69,12 @@ export default function StructuredCablingInput({ startItem, endItem, StartSCData
                   <select
                     className={"Select h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-[9.5rem]"}
                     onChange={(e) => {
-                      setSendData({ ...SendData, [item]: { ...SendData[item], value: e.target.value } });
-                      // state[action.payload.Step][action.payload.StartItemIndex]["Ports"][action.payload.PortIndex] = action.payload.startValue;
+                      payload.Key = item;
+                      payload.value = e.target.value;
+                      dispatch(Actions.BuildStructuredCableSet(payload));
                     }}>
                     {Template.StructuredCabling[item].options.map((option, index) => {
-                      if (option === SendData[item].value)
+                      if (option === build[item])
                         return (
                           <option value={option} selected={true} key={index}>
                             {option}
@@ -83,15 +86,12 @@ export default function StructuredCablingInput({ startItem, endItem, StartSCData
                 ) : (
                   <input
                     // value={portsArray[portIndex][item].value}
-                    value={SendData[item].value}
+                    value={build[item]}
                     className="h-[2rem] w-[9.5rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit "
                     onChange={(e) => {
-                      setSendData({ ...SendData, [item]: { ...SendData[item], value: e.target.value } });
-                      // changes[item].value = e.target.value;
-                      // payload.PortIndex = portIndex;
-                      // payload.value = changes;
-                      // setEndSCData(changes);
-                      // dispatch(Actions.fillPortContent(payload));
+                      payload.Key = item;
+                      payload.value = e.target.value;
+                      dispatch(Actions.BuildStructuredCableSet(payload));
                     }}
                   />
                 )}

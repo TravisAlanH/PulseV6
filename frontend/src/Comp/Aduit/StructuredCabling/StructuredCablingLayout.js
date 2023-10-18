@@ -7,12 +7,8 @@ import * as Actions from "../../../Store/Slices/Slice";
 
 export default function StructuredCablingLayout() {
   const Racks = useSelector((state) => state.data.Racks);
-  const [startItem, setStartItem] = React.useState({});
-  const [endItem, setEndItem] = React.useState({});
   const [RackIndex, setRackIndex] = React.useState(0);
   const [EndRackIndex, setEndRackIndex] = React.useState(0);
-  const [StartSCData, setStartSCData] = React.useState({});
-  const [EndSCData, setEndSCData] = React.useState({});
 
   const dispatch = useDispatch();
   let payload = {};
@@ -55,23 +51,12 @@ export default function StructuredCablingLayout() {
               </select>
             </div>
             <div>
-              <StructuredCablingStartCab
-                setStartItem={setStartItem}
-                RackIndex={RackIndex}
-                startItem={startItem}
-                setStartSCData={setStartSCData}
-                EndSCData={EndSCData}
-              />
+              <StructuredCablingStartCab RackIndex={RackIndex} />
             </div>
           </div>
           {/*  */}
           <div className="hidden lg:block">
-            <StructuredCablingInput
-              startItem={startItem}
-              endItem={endItem}
-              StartSCData={StartSCData}
-              EndSCData={EndSCData}
-            />
+            <StructuredCablingInput />
           </div>
           {/*  */}
           <div className="w-[20rem] mb-3 flex flex-col border-[#F3EEE7] border-2">
@@ -101,25 +86,14 @@ export default function StructuredCablingLayout() {
               </select>
             </div>
             <div>
-              <StructuredCablingEndCab
-                setEndItem={setEndItem}
-                RackIndex={EndRackIndex}
-                endItem={endItem}
-                setEndSCData={setEndSCData}
-                StartSCData={StartSCData}
-              />
+              <StructuredCablingEndCab RackIndex={EndRackIndex} />
             </div>
           </div>
         </div>
       </div>
       {/*  */}
-      <div className="lg:hidden block">
-        <StructuredCablingInput
-          startItem={startItem}
-          endItem={endItem}
-          StartSCData={StartSCData}
-          EndSCData={EndSCData}
-        />
+      <div className="lg:hidden w-full flex flex-row justify-center">
+        <StructuredCablingInput />
       </div>
       {/*  */}
     </div>

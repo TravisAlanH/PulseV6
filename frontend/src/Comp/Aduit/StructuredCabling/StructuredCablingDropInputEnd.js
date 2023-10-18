@@ -5,51 +5,38 @@ import { useDispatch, useSelector } from "react-redux";
 import * as Actions from "../../../Store/Slices/Slice";
 import { BsEthernet } from "react-icons/bs";
 
-export default function StructuredCablingDropInputEnd({ RackIndex, endItem, setEndSCData, EndSCData }) {
+export default function StructuredCablingDropInputEnd({ RackIndex, Asset }) {
   const RackState = useSelector((state) => state.data["Racks"][RackIndex]);
-  const portsArray = useSelector((state) => state.data[endItem.Step][endItem.Index]["Ports"]);
   const dispatch = useDispatch();
   const build = useSelector((state) => state.data.Current.StructuredCablingSet);
 
-  if (portsArray.length === 0) {
+  if (Asset.Ports.value === 0) {
     return (
       <div
         className="rounded-md flex flex-row items-center justify-center flex-shrink-0 OrangeAddPort"
-        onClick={() => {
-          //! ADD PORT TO CURRENT DEVICE
-          // let payload = {
-          //   Step: endItem.Step,
-          //   Current: endItem.Index,
-          //   PortIndex: portsArray.length,
-          // };
-          // dispatch(Actions.addPort(payload));
-        }}>
+        onClick={() => {}}>
         <BiPlus />
       </div>
     );
   }
 
-  let changes = structuredClone(portsArray[build.port2]);
-
   let EndingArray = [];
-  let startMap = [];
+
+  const InputElements = structuredClone(Template.StructuredCabling);
 
   let keys = Object.keys(Template.StructuredCabling);
   keys.map((item) => {
     if (item.includes("Ending")) EndingArray.push(item);
     return null;
   });
-  if (Object.keys(endItem).length > 0) {
-    for (let i = 0; i < endItem["Ports"].value; i++) {
-      startMap.push(i + 1);
-    }
-  }
 
   let payload = {
-    Step: endItem.Step,
-    Current: endItem.Index,
+    Step: Asset.Step,
+    Current: Asset.Index,
     PortIndex: 0,
   };
+
+  let PortsMap = new Array(Asset.Ports.value).fill(0);
 
   let PortButtons = document.querySelectorAll(".EndPortButton");
 
@@ -67,29 +54,24 @@ export default function StructuredCablingDropInputEnd({ RackIndex, endItem, setE
     <div id="start">
       <div className="flex flex-row items-end justify-between px-2">
         <p className="font-semibold">Ending Port: </p>
-        <p className="text-sm">{(endItem["Name *"].value + " @U" + endItem["U Position *"].value).slice(0, 20)}</p>
+        <p className="text-sm">{(Asset["Name *"].value + " @U" + Asset["U Position *"].value).slice(0, 20)}</p>
       </div>
       <div
         id="portsList"
         className={"w-[18rem] h-[7rem] overflow-x-scroll border-2 flex flex-col gap-1 justify-center p-1"}>
         <div className="flex gap-1 flex-row">
-          {endItem["Ports"].map((item, index) => {
+          {PortsMap.map((item, index) => {
             if (index % 2 === 0) {
               return (
                 <div
-                  className="EndPortButton w-[2.5rem] h-[2.5rem] border-2 rounded-md flex flex-row items-center justify-center flex-shrink-0"
+                  className={
+                    "EndPortButton w-[2.5rem] h-[2.5rem] border-2 rounded-md flex flex-row items-center justify-center flex-shrink-0 " +
+                    (index === build.port2 ? "selectedPort" : null)
+                  }
                   onClick={(e) => {
                     payload.Key = "port2";
                     payload.value = index;
                     dispatch(Actions.BuildStructuredCableSet(payload));
-                    setEndSCData(
-                      Object.keys(portsArray[index])
-                        .filter((key) => key.includes("Ending"))
-                        .reduce((obj, key) => {
-                          obj[key] = portsArray[index][key];
-                          return obj;
-                        }, {})
-                    );
                     removeSelected();
                     e.target.classList.add("selectedPort");
                   }}>
@@ -100,24 +82,18 @@ export default function StructuredCablingDropInputEnd({ RackIndex, endItem, setE
           })}
         </div>
         <div className="flex gap-1 flex-row">
-          {endItem["Ports"].map((item, index) => {
+          {PortsMap.map((item, index) => {
             if (index % 2 !== 0) {
               return (
                 <div
-                  className="EndPortButton w-[2.5rem] h-[2.5rem] border-2 rounded-md flex flex-row items-center justify-center flex-shrink-0"
+                  className={
+                    "EndPortButton w-[2.5rem] h-[2.5rem] border-2 rounded-md flex flex-row items-center justify-center flex-shrink-0 " +
+                    (index === build.port2 ? "selectedPort" : null)
+                  }
                   onClick={(e) => {
-                    payload.Key = "port";
+                    payload.Key = "port2";
                     payload.value = index;
                     dispatch(Actions.BuildStructuredCableSet(payload));
-                    setEndSCData(
-                      Object.keys(portsArray[index])
-                        .filter((key) => key.includes("Ending"))
-                        .reduce((obj, key) => {
-                          obj[key] = portsArray[index][key];
-                          return obj;
-                        }, {})
-                    );
-                    // setEndSCData(portsArray[index]);
                     removeSelected();
                     e.target.classList.add("selectedPort");
                   }}>
@@ -133,7 +109,7 @@ export default function StructuredCablingDropInputEnd({ RackIndex, endItem, setE
           </div>
         </div>
       </div>
-      {build.port2 !== undefined ? (
+      {build.port2 !== null ? (
         <div id="inputs" className="flex flex-col gap-1 pt-2">
           {/* standard text input that i have used in the project with lable*/}
           {EndingArray.map((item, index) => {
@@ -145,26 +121,18 @@ export default function StructuredCablingDropInputEnd({ RackIndex, endItem, setE
                 <label className={"text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center w-[7rem]"}>
                   {item.replace("*", "").replace("Ending", "")}
                 </label>
-                {portsArray[build.port2][item].type === "select" ? (
+                {InputElements[item].type === "select" ? (
                   <select
                     className={"Select h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-[9.5rem]"}
                     onChange={(e) => {
-                      changes[item].value = e.target.value;
-                      payload.PortIndex = build.port2;
-                      payload.value = changes;
-                      setEndSCData(
-                        Object.keys(changes)
-                          .filter((key) => key.includes("Ending"))
-                          .reduce((obj, key) => {
-                            obj[key] = changes[key];
-                            return obj;
-                          }, {})
-                      );
-                      // setEndSCData(changes);
-                      dispatch(Actions.fillPortContent(payload));
+                      let payload = {
+                        Key: item,
+                        value: e.target.value,
+                      };
+                      dispatch(Actions.BuildStructuredCableSet(payload));
                     }}>
-                    {portsArray[build.port2][item].options.map((option) => {
-                      if (option === portsArray[build.port2][item].value)
+                    {InputElements[item].options.map((option) => {
+                      if (option === build[item])
                         return (
                           <option value={option} selected={true}>
                             {option}
@@ -175,22 +143,14 @@ export default function StructuredCablingDropInputEnd({ RackIndex, endItem, setE
                   </select>
                 ) : (
                   <input
-                    value={portsArray[build.port2][item].value}
+                    value={build[item]}
                     className="h-[2rem] w-[9.5rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit "
                     onChange={(e) => {
-                      changes[item].value = e.target.value;
-                      payload.PortIndex = build.port2;
-                      payload.value = changes;
-                      setEndSCData(
-                        Object.keys(changes)
-                          .filter((key) => key.includes("Ending"))
-                          .reduce((obj, key) => {
-                            obj[key] = changes[key];
-                            return obj;
-                          }, {})
-                      );
-                      // setEndSCData(changes);
-                      dispatch(Actions.fillPortContent(payload));
+                      let payload = {
+                        Key: item,
+                        value: e.target.value,
+                      };
+                      dispatch(Actions.BuildStructuredCableSet(payload));
                     }}
                   />
                 )}
@@ -201,30 +161,24 @@ export default function StructuredCablingDropInputEnd({ RackIndex, endItem, setE
             <button
               className="orangeButton w-[5rem]"
               onClick={() => {
-                changes["Ending Item Location *"].value = RackState["Location *"].value;
-                changes["Ending Port Index *"].value = build.port2 + 1;
-                changes["Ending Item Name *"].value = endItem["Name *"].value;
-                changes["Ending Item Location *"].value = RackState["Location *"].value;
-                changes["Ending Port Name *"].value =
+                let PortName =
                   (RackState["Name *"].value.split("-").length > 1
                     ? RackState["Name *"].value.split("-")[1]
                     : RackState["Name *"].value.slice(0, 3)) +
                   "-U" +
-                  endItem["U Position *"].value +
+                  Asset["U Position *"].value +
                   "-P" +
-                  (build.port2 + 1);
-                payload.PortIndex = build.port2;
-                payload.value = changes;
-                setEndSCData(
-                  Object.keys(changes)
-                    .filter((key) => key.includes("Ending"))
-                    .reduce((obj, key) => {
-                      obj[key] = changes[key];
-                      return obj;
-                    }, {})
-                );
-                // setEndSCData(changes);
-                dispatch(Actions.fillPortContent(payload));
+                  (build.port + 1);
+
+                let payload = {};
+                payload.Key = [
+                  "Ending Item Location *",
+                  "Ending Port Index *",
+                  "Ending Item Name *",
+                  "Ending Port Name *",
+                ];
+                payload.value = [RackState["Location *"].value, build.port + 1, build.asset, PortName];
+                dispatch(Actions.BuildMultiStructuredCableSet(payload));
               }}>
               Fill
             </button>
