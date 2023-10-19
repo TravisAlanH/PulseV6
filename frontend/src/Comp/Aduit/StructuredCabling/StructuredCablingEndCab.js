@@ -66,7 +66,10 @@ export default function StructuredCablingEndCab({ RackIndex }) {
                 </div>
                 <button
                   id={`EndArrowButtonDisplay${index}`}
-                  className="orangeButton flex-row justify-center items-center text-[1.7rem] mr-2 EndArrowDisplay">
+                  className={
+                    "orangeButton flex-row justify-center items-center text-[1.7rem] mr-2 " +
+                    (object["Name *"].value === build.asset2 ? "flex" : "hidden")
+                  }>
                   <BiArrowToRight />
                 </button>
                 <div key={index} className="flex flex-row pl-2 py-1 justify-between" onClick={() => {}}>

@@ -4,7 +4,6 @@ import { BiPlus } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import * as Actions from "../../../Store/Slices/Slice";
 import { BsEthernet } from "react-icons/bs";
-import * as Functions from "../../../Format/Functions";
 
 export default function StructuredCablingDropInputEnd({ RackIndex, Asset }) {
   const RackState = useSelector((state) => state.data["Racks"][RackIndex]);
@@ -93,14 +92,17 @@ export default function StructuredCablingDropInputEnd({ RackIndex, Asset }) {
                       payload.value = foundObject;
                       dispatch(Actions.replaceSetStructuredCabling(payload));
                     } else {
-                      payload.value = Functions.resetObjectKeysNOTInArray(build, [
-                        "rack",
-                        "asset",
-                        "port2",
-                        "rack2",
-                        "asset2",
-                      ]);
-                      dispatch(Actions.replaceSetStructuredCabling(payload));
+                      // if (StructuredCabling.length !== 0 && build.port === null) {
+                      //   payload.value = Functions.resetObjectKeysNOTInArray(build, [
+                      //     "rack",
+                      //     "asset",
+                      //     "port2",
+                      //     "port",
+                      //     "rack2",
+                      //     "asset2",
+                      //   ]);
+                      //   dispatch(Actions.replaceSetStructuredCabling(payload));
+                      // }
                       payload.Key = "port2";
                       payload.value = index;
                       dispatch(Actions.BuildStructuredCableSet(payload));
@@ -146,14 +148,16 @@ export default function StructuredCablingDropInputEnd({ RackIndex, Asset }) {
                       payload.value = foundObject;
                       dispatch(Actions.replaceSetStructuredCabling(payload));
                     } else {
-                      payload.value = Functions.resetObjectKeysNOTInArray(build, [
-                        "rack",
-                        "asset",
-                        "port2",
-                        "rack2",
-                        "asset2",
-                      ]);
-                      dispatch(Actions.replaceSetStructuredCabling(payload));
+                      // if (StructuredCabling.length !== 0 && build.port === null) {
+                      //   payload.value = Functions.resetObjectKeysNOTInArray(build, [
+                      //     "rack",
+                      //     "asset",
+                      //     "port2",
+                      //     "rack2",
+                      //     "asset2",
+                      //   ]);
+                      //   dispatch(Actions.replaceSetStructuredCabling(payload));
+                      // }
                       payload.Key = "port2";
                       payload.value = index;
                       dispatch(Actions.BuildStructuredCableSet(payload));

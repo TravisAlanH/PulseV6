@@ -4,6 +4,7 @@ import StructuredCablingStartCab from "./StructuredCablingStartCab";
 import StructuredCablingEndCab from "./StructuredCablingEndCab";
 import StructuredCablingInput from "./StructuredCablingInput";
 import * as Actions from "../../../Store/Slices/Slice";
+import SCKey from "./SCKey";
 
 export default function StructuredCablingLayout() {
   const Racks = useSelector((state) => state.data.Racks);
@@ -65,6 +66,9 @@ export default function StructuredCablingLayout() {
           </div>
           {/*  */}
           <div className="hidden lg:block">
+            {/* <div className="flex flex-row w-full justify-center">
+              <SCKey />
+            </div> */}
             <StructuredCablingInput />
           </div>
           {/*  */}
@@ -109,7 +113,13 @@ export default function StructuredCablingLayout() {
         </div>
       </div>
       {/*  */}
+      <div className="flex flex-row w-full justify-center">
+        <SCKey />
+      </div>
       <div className="lg:hidden w-full flex flex-row justify-center">
+        {/* <div className="flex flex-row w-full justify-center">
+          <SCKey />
+        </div> */}
         <StructuredCablingInput />
       </div>
       {/*  */}

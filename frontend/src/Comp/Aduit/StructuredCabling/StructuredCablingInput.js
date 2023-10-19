@@ -2,11 +2,17 @@ import React from "react";
 import Template from "../../../Store/Slices/Template";
 import { useDispatch, useSelector } from "react-redux";
 import * as Actions from "../../../Store/Slices/Slice";
+import { state } from "../../../Store/Slices/Template";
 // import STDInput from "../../Reuse/STDInput";
+import * as Functions from "../../../Format/Functions";
 
 export default function StructuredCablingInput() {
   const build = useSelector((state) => state.data.Current.StructuredCablingSet);
   const scCurrent = useSelector((state) => state.data.Current.StructuredCabling);
+
+  let baseSCset = state.Current.StructuredCablingSet;
+
+  console.log(baseSCset);
 
   const dispatch = useDispatch();
   let payload = {};
@@ -39,6 +45,20 @@ export default function StructuredCablingInput() {
     //!
     dispatch(Actions.fillPortData(payload));
     //!
+    payload.value = Functions.resetObjectKeysNOTInArray(payload.value, [
+      "rack",
+      "rack2",
+      "asset",
+      "asset2",
+      "Cable Grade *",
+      "# Operation *",
+      "Color *",
+      "Length (ft/m) *",
+      "Length Units *",
+      "Media **",
+      "Object *",
+    ]);
+    dispatch(Actions.replaceSetStructuredCabling(payload));
   }
 
   function checkNonNullValues(obj) {

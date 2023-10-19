@@ -111,7 +111,18 @@ export function resetObjectKeysNOTInArray(obj, keysArray) {
       if (keysArray.includes(key)) {
         updatedObject[key] = obj[key];
       } else {
-        updatedObject[key] = "";
+        if (
+          key === "asset" ||
+          key === "port" ||
+          key === "asset2" ||
+          key === "port2" ||
+          key === "rack" ||
+          key === "rack2"
+        ) {
+          updatedObject[key] = null;
+        } else {
+          updatedObject[key] = "";
+        }
       }
     }
   }

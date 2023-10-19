@@ -98,7 +98,11 @@ export default function StructuredCablingStartCab({ RackIndex }) {
                 </div>
                 <button
                   id={`arrowButtonDisplay${index}`}
-                  className="orangeButton flex-row justify-center items-center text-[1.7rem] mr-2 ArrowDisplay ">
+                  className={
+                    "orangeButton flex-row justify-center items-center text-[1.7rem] mr-2 " +
+                    (object["Name *"].value === build.asset ? "flex" : "hidden")
+                  }>
+                  {" "}
                   <BiArrowFromLeft />
                 </button>
               </div>
