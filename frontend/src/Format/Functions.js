@@ -85,3 +85,35 @@ export function getCurrentTimeInFormat() {
   const formattedTime = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}:${milliseconds} Z`;
   return formattedTime;
 }
+
+export function resetObjectKeysInArray(obj, keysArray) {
+  if (typeof obj !== "object" || !Array.isArray(keysArray)) {
+    throw new Error("Invalid input: obj should be an object and keysArray should be an array.");
+  }
+
+  keysArray.forEach((key) => {
+    if (obj.hasOwnProperty(key)) {
+      obj[key] = "";
+    }
+  });
+
+  return obj;
+}
+
+export function resetObjectKeysNOTInArray(obj, keysArray) {
+  if (typeof obj !== "object" || !Array.isArray(keysArray)) {
+    throw new Error("Invalid input: obj should be an object and keysArray should be an array.");
+  }
+  const updatedObject = {};
+
+  for (const key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      if (keysArray.includes(key)) {
+        updatedObject[key] = obj[key];
+      } else {
+        updatedObject[key] = "";
+      }
+    }
+  }
+  return updatedObject;
+}

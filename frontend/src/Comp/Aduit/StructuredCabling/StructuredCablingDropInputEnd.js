@@ -4,6 +4,7 @@ import { BiPlus } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import * as Actions from "../../../Store/Slices/Slice";
 import { BsEthernet } from "react-icons/bs";
+import * as Functions from "../../../Format/Functions";
 
 export default function StructuredCablingDropInputEnd({ RackIndex, Asset }) {
   const RackState = useSelector((state) => state.data["Racks"][RackIndex]);
@@ -72,17 +73,17 @@ export default function StructuredCablingDropInputEnd({ RackIndex, Asset }) {
                   StructuredCabling[i]["Ending Item Name *"] === Asset["Name *"].value &&
                   StructuredCabling[i].port2 === index
                 ) {
+                  console.log("full");
                   foundObject = StructuredCabling[i];
                   found = true;
                   rounded = "rounded-full";
                   break;
                 }
               }
-              console.log(rounded);
               return (
                 <div
                   className={
-                    "EndPortButton w-[2.5rem] h-[2.5rem] border-2 rounded-md flex flex-row items-center justify-center flex-shrink-0 " +
+                    "EndPortButton w-[2.5rem] h-[2.5rem] border-2 flex flex-row items-center justify-center flex-shrink-0 " +
                     (index === build.port2 ? "selectedPort" : "") +
                     " " +
                     rounded
@@ -92,6 +93,14 @@ export default function StructuredCablingDropInputEnd({ RackIndex, Asset }) {
                       payload.value = foundObject;
                       dispatch(Actions.replaceSetStructuredCabling(payload));
                     } else {
+                      payload.value = Functions.resetObjectKeysNOTInArray(build, [
+                        "rack",
+                        "asset",
+                        "port2",
+                        "rack2",
+                        "asset2",
+                      ]);
+                      dispatch(Actions.replaceSetStructuredCabling(payload));
                       payload.Key = "port2";
                       payload.value = index;
                       dispatch(Actions.BuildStructuredCableSet(payload));
@@ -116,19 +125,18 @@ export default function StructuredCablingDropInputEnd({ RackIndex, Asset }) {
                 StructuredCabling[i]["Ending Item Name *"] === Asset["Name *"].value &&
                 StructuredCabling[i].port2 === index
               ) {
+                console.log("full");
                 foundObject = StructuredCabling[i];
                 found = true;
                 rounded = "rounded-full";
                 break;
               }
             }
-            console.log(rounded);
-
             if (index % 2 !== 0) {
               return (
                 <div
                   className={
-                    "EndPortButton w-[2.5rem] h-[2.5rem] border-2 rounded-md flex flex-row items-center justify-center flex-shrink-0 " +
+                    "EndPortButton w-[2.5rem] h-[2.5rem] border-2 flex flex-row items-center justify-center flex-shrink-0 " +
                     (index === build.port2 ? "selectedPort" : "") +
                     " " +
                     rounded
@@ -138,6 +146,14 @@ export default function StructuredCablingDropInputEnd({ RackIndex, Asset }) {
                       payload.value = foundObject;
                       dispatch(Actions.replaceSetStructuredCabling(payload));
                     } else {
+                      payload.value = Functions.resetObjectKeysNOTInArray(build, [
+                        "rack",
+                        "asset",
+                        "port2",
+                        "rack2",
+                        "asset2",
+                      ]);
+                      dispatch(Actions.replaceSetStructuredCabling(payload));
                       payload.Key = "port2";
                       payload.value = index;
                       dispatch(Actions.BuildStructuredCableSet(payload));

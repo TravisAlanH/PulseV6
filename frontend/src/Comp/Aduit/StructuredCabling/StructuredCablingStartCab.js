@@ -52,12 +52,13 @@ export default function StructuredCablingStartCab({ RackIndex }) {
               id={"StartItem" + i}
               className={
                 "StartDevices border-2 transition-all h-[2.5rem] overflow-hidden " +
-                (object["Name *"].value === build.Asset ? "selectedStructuredCable" : null)
+                (object["Name *"].value === build.asset ? "selectedStructuredCable" : null)
               }
               onClick={() => {
                 payload.Key = "asset";
                 payload.value = object["Name *"].value;
                 dispatch(Actions.BuildStructuredCableSet(payload));
+
                 removeSelected();
                 document.getElementById("StartItem" + i).classList.add("selectedStructuredCable");
               }}>

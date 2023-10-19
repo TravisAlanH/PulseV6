@@ -51,7 +51,7 @@ export default function StructuredCablingEndCab({ RackIndex }) {
               id={"endItem" + i}
               className={
                 "EndArrowsHidden border-2 transition-all h-[2.5rem] overflow-hidden " +
-                (object["Name *"].value === build.Asset2 ? "selectedStructuredCable" : null)
+                (object["Name *"].value === build.asset2 ? "selectedStructuredCable" : null)
               }
               onClick={() => {
                 payload.Key = "asset2";

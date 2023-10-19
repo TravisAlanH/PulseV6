@@ -4,6 +4,7 @@ import { BiPlus } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import * as Actions from "../../../Store/Slices/Slice";
 import { BsEthernet } from "react-icons/bs";
+import * as Functions from "../../../Format/Functions";
 
 export default function StructuredCablingDropInput({ RackIndex, Asset }) {
   const RackState = useSelector((state) => state.data["Racks"][RackIndex]);
@@ -97,6 +98,14 @@ export default function StructuredCablingDropInput({ RackIndex, Asset }) {
                       payload.Key = "port";
                       payload.value = index;
                       dispatch(Actions.BuildStructuredCableSet(payload));
+                      payload.value = Functions.resetObjectKeysNOTInArray(build, [
+                        "rack",
+                        "asset",
+                        "port",
+                        "rack2",
+                        "asset2",
+                      ]);
+                      dispatch(Actions.replaceSetStructuredCabling(payload));
                     }
                     removeSelected();
                     e.target.classList.add("selectedPort");
@@ -143,6 +152,14 @@ export default function StructuredCablingDropInput({ RackIndex, Asset }) {
                       payload.Key = "port";
                       payload.value = index;
                       dispatch(Actions.BuildStructuredCableSet(payload));
+                      payload.value = Functions.resetObjectKeysNOTInArray(build, [
+                        "rack",
+                        "asset",
+                        "port",
+                        "rack2",
+                        "asset2",
+                      ]);
+                      dispatch(Actions.replaceSetStructuredCabling(payload));
                     }
                     removeSelected();
                     e.target.classList.add("selectedPort");

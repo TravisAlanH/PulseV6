@@ -9,6 +9,7 @@ export default function StructuredCablingLayout() {
   const Racks = useSelector((state) => state.data.Racks);
   const [RackIndex, setRackIndex] = React.useState(0);
   const [EndRackIndex, setEndRackIndex] = React.useState(0);
+  const build = useSelector((state) => state.data.Current.StructuredCablingSet);
 
   const dispatch = useDispatch();
   let payload = {};
@@ -41,11 +42,19 @@ export default function StructuredCablingLayout() {
                 <option value="">Select</option>
                 {Racks.length > 0
                   ? Racks.map((item, index) => {
-                      return (
-                        <option key={index} value={index}>
-                          {item["Name *"].value}
-                        </option>
-                      );
+                      if (item["Name *"].value === build.rack) {
+                        return (
+                          <option key={index} value={index} selected={true}>
+                            {item["Name *"].value}
+                          </option>
+                        );
+                      } else {
+                        return (
+                          <option key={index} value={index}>
+                            {item["Name *"].value}
+                          </option>
+                        );
+                      }
                     })
                   : null}
               </select>
@@ -76,11 +85,19 @@ export default function StructuredCablingLayout() {
                 <option value="0">Select</option>
                 {Racks.length > 0
                   ? Racks.map((item, index) => {
-                      return (
-                        <option key={index} value={index}>
-                          {item["Name *"].value}
-                        </option>
-                      );
+                      if (item["Name *"].value === build.rack2) {
+                        return (
+                          <option key={index} value={index} selected={true}>
+                            {item["Name *"].value}
+                          </option>
+                        );
+                      } else {
+                        return (
+                          <option key={index} value={index}>
+                            {item["Name *"].value}
+                          </option>
+                        );
+                      }
                     })
                   : null}
               </select>
