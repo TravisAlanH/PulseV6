@@ -51,10 +51,8 @@ export default function StructuredCablingStartCab({ RackIndex }) {
             <div
               id={"StartItem" + i}
               className={
-                "StartDevices border-2 transition-all h-[2.5rem] overflow-hidden " + object["Name *"].value ===
-                build.Asset
-                  ? "selectedStructuredCable"
-                  : null
+                "StartDevices border-2 transition-all h-[2.5rem] overflow-hidden " +
+                (object["Name *"].value === build.Asset ? "selectedStructuredCable" : null)
               }
               onClick={() => {
                 payload.Key = "asset";

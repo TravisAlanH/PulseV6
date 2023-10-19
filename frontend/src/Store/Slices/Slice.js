@@ -37,8 +37,12 @@ const Slice = createSlice({
       }
     },
     fillPortContent: (state, action) => {
-      console.log(action);
       state[action.payload.Step][action.payload.Current]["Ports"][action.payload.PortIndex] = action.payload.value;
+      if (state.Settings.localStorage) localStorage.setItem("PulseStateData", JSON.stringify(state));
+    },
+    replaceSetStructuredCabling: (state, action) => {
+      state.Current.StructuredCablingSet = action.payload.value;
+      if (state.Settings.localStorage) localStorage.setItem("PulseStateData", JSON.stringify(state));
     },
     fillPortData: (state, action) => {
       console.log(action);
@@ -311,6 +315,7 @@ const Slice = createSlice({
 });
 
 export const {
+  replaceSetStructuredCabling,
   BuildStructuredCableSet,
   BuildMultiStructuredCableSet,
   setDate,

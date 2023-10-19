@@ -9,6 +9,7 @@ export default function StructuredCablingDropInput({ RackIndex, Asset }) {
   const RackState = useSelector((state) => state.data["Racks"][RackIndex]);
   const dispatch = useDispatch();
   const build = useSelector((state) => state.data.Current.StructuredCablingSet);
+  const StructuredCabling = useSelector((state) => state.data.StructuredCabling);
 
   if (Asset.Ports.value === 0) {
     return (
@@ -61,23 +62,46 @@ export default function StructuredCablingDropInput({ RackIndex, Asset }) {
         className={"w-[18rem] h-[7rem] overflow-x-scroll border-2 flex flex-col gap-1 justify-center p-1"}>
         <div className="flex gap-1 flex-row">
           {PortsMap.map((item, index) => {
+            let found = false;
+            let foundObject = {};
+            let rounded = "rounded-md";
+            if (index === build.port) rounded = "rounded-xl";
+            for (let i = 0; i < StructuredCabling.length; i++) {
+              if (
+                StructuredCabling[i]["Starting Item Name *"] === Asset["Name *"].value &&
+                StructuredCabling[i].port === index
+              ) {
+                foundObject = StructuredCabling[i];
+                found = true;
+                rounded = "rounded-full";
+                break;
+              }
+            }
+
             if (index % 2 === 0) {
               return (
                 <div
                   key={index}
                   className={
-                    "portButton w-[2.5rem] h-[2.5rem] border-2 rounded-md flex flex-row items-center justify-center flex-shrink-0 " +
-                    (index === build.port ? "selectedPort" : null)
+                    "portButton w-[2.5rem] h-[2.5rem] border-2 flex flex-row items-center justify-center flex-shrink-0  " +
+                    (index === build.port ? "selectedPort" : null) +
+                    " " +
+                    rounded
                   }
                   onClick={(e) => {
-                    payload.Key = "port";
-                    payload.value = index;
-                    dispatch(Actions.BuildStructuredCableSet(payload));
+                    console.log(found);
+                    if (found) {
+                      payload.value = foundObject;
+                      dispatch(Actions.replaceSetStructuredCabling(payload));
+                    } else {
+                      payload.Key = "port";
+                      payload.value = index;
+                      dispatch(Actions.BuildStructuredCableSet(payload));
+                    }
                     removeSelected();
                     e.target.classList.add("selectedPort");
                   }}>
-                  {/* ! I am using the build instead of using the data that has been filled in the SC Array*/}
-                  <div className={build.port === index ? "font-black" : null}>{index + 1}</div>
+                  {index + 1}
                 </div>
               );
             } else return null;
@@ -85,22 +109,45 @@ export default function StructuredCablingDropInput({ RackIndex, Asset }) {
         </div>
         <div className="flex gap-1 flex-row">
           {PortsMap.map((item, index) => {
+            let found = false;
+            let foundObject = {};
+            let rounded = "rounded-md";
+            if (index === build.port) rounded = "rounded-xl";
+            for (let i = 0; i < StructuredCabling.length; i++) {
+              if (
+                StructuredCabling[i]["Starting Item Name *"] === Asset["Name *"].value &&
+                StructuredCabling[i].port === index
+              ) {
+                foundObject = StructuredCabling[i];
+                found = true;
+                rounded = "rounded-full";
+                break;
+              }
+            }
             if (index % 2 !== 0) {
               return (
                 <div
                   key={index}
                   className={
-                    "portButton w-[2.5rem] h-[2.5rem] border-2 rounded-md flex flex-row items-center justify-center flex-shrink-0 " +
-                    (index === build.port ? "selectedPort" : null)
+                    "portButton w-[2.5rem] h-[2.5rem] border-2 flex flex-row items-center justify-center flex-shrink-0 transition-all " +
+                    (index === build.port ? "selectedPort" : null) +
+                    " " +
+                    rounded
                   }
                   onClick={(e) => {
-                    payload.Key = "port";
-                    payload.value = index;
-                    dispatch(Actions.BuildStructuredCableSet(payload));
+                    console.log(found);
+                    if (found) {
+                      payload.value = foundObject;
+                      dispatch(Actions.replaceSetStructuredCabling(payload));
+                    } else {
+                      payload.Key = "port";
+                      payload.value = index;
+                      dispatch(Actions.BuildStructuredCableSet(payload));
+                    }
                     removeSelected();
                     e.target.classList.add("selectedPort");
                   }}>
-                  <div className={build.port === index ? "font-black" : null}>{index + 1}</div>
+                  {index + 1}
                 </div>
               );
             } else return null;

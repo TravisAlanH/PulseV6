@@ -9,6 +9,7 @@ export default function StructuredCablingDropInputEnd({ RackIndex, Asset }) {
   const RackState = useSelector((state) => state.data["Racks"][RackIndex]);
   const dispatch = useDispatch();
   const build = useSelector((state) => state.data.Current.StructuredCablingSet);
+  const StructuredCabling = useSelector((state) => state.data.StructuredCabling);
 
   if (Asset.Ports.value === 0) {
     return (
@@ -62,16 +63,39 @@ export default function StructuredCablingDropInputEnd({ RackIndex, Asset }) {
         <div className="flex gap-1 flex-row">
           {PortsMap.map((item, index) => {
             if (index % 2 === 0) {
+              let found = false;
+              let foundObject = {};
+              let rounded = "rounded-md";
+              if (index === build.port2) rounded = "rounded-xl";
+              for (let i = 0; i < StructuredCabling.length; i++) {
+                if (
+                  StructuredCabling[i]["Ending Item Name *"] === Asset["Name *"].value &&
+                  StructuredCabling[i].port2 === index
+                ) {
+                  foundObject = StructuredCabling[i];
+                  found = true;
+                  rounded = "rounded-full";
+                  break;
+                }
+              }
+              console.log(rounded);
               return (
                 <div
                   className={
                     "EndPortButton w-[2.5rem] h-[2.5rem] border-2 rounded-md flex flex-row items-center justify-center flex-shrink-0 " +
-                    (index === build.port2 ? "selectedPort" : null)
+                    (index === build.port2 ? "selectedPort" : "") +
+                    " " +
+                    rounded
                   }
                   onClick={(e) => {
-                    payload.Key = "port2";
-                    payload.value = index;
-                    dispatch(Actions.BuildStructuredCableSet(payload));
+                    if (found) {
+                      payload.value = foundObject;
+                      dispatch(Actions.replaceSetStructuredCabling(payload));
+                    } else {
+                      payload.Key = "port2";
+                      payload.value = index;
+                      dispatch(Actions.BuildStructuredCableSet(payload));
+                    }
                     removeSelected();
                     e.target.classList.add("selectedPort");
                   }}>
@@ -83,17 +107,41 @@ export default function StructuredCablingDropInputEnd({ RackIndex, Asset }) {
         </div>
         <div className="flex gap-1 flex-row">
           {PortsMap.map((item, index) => {
+            let found = false;
+            let foundObject = {};
+            let rounded = "rounded-md";
+            if (index === build.port2) rounded = "rounded-xl";
+            for (let i = 0; i < StructuredCabling.length; i++) {
+              if (
+                StructuredCabling[i]["Ending Item Name *"] === Asset["Name *"].value &&
+                StructuredCabling[i].port2 === index
+              ) {
+                foundObject = StructuredCabling[i];
+                found = true;
+                rounded = "rounded-full";
+                break;
+              }
+            }
+            console.log(rounded);
+
             if (index % 2 !== 0) {
               return (
                 <div
                   className={
                     "EndPortButton w-[2.5rem] h-[2.5rem] border-2 rounded-md flex flex-row items-center justify-center flex-shrink-0 " +
-                    (index === build.port2 ? "selectedPort" : null)
+                    (index === build.port2 ? "selectedPort" : "") +
+                    " " +
+                    rounded
                   }
                   onClick={(e) => {
-                    payload.Key = "port2";
-                    payload.value = index;
-                    dispatch(Actions.BuildStructuredCableSet(payload));
+                    if (found) {
+                      payload.value = foundObject;
+                      dispatch(Actions.replaceSetStructuredCabling(payload));
+                    } else {
+                      payload.Key = "port2";
+                      payload.value = index;
+                      dispatch(Actions.BuildStructuredCableSet(payload));
+                    }
                     removeSelected();
                     e.target.classList.add("selectedPort");
                   }}>
@@ -168,7 +216,7 @@ export default function StructuredCablingDropInputEnd({ RackIndex, Asset }) {
                   "-U" +
                   Asset["U Position *"].value +
                   "-P" +
-                  (build.port + 1);
+                  (build.port2 + 1);
 
                 let payload = {};
                 payload.Key = [
@@ -177,7 +225,7 @@ export default function StructuredCablingDropInputEnd({ RackIndex, Asset }) {
                   "Ending Item Name *",
                   "Ending Port Name *",
                 ];
-                payload.value = [RackState["Location *"].value, build.port + 1, build.asset, PortName];
+                payload.value = [RackState["Location *"].value, build.port2 + 1, build.asset2, PortName];
                 dispatch(Actions.BuildMultiStructuredCableSet(payload));
               }}>
               Fill
