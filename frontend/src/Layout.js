@@ -11,6 +11,7 @@ import ElectricalLayout from "./Comp/Electrical/ElectricalLayout";
 import Settings from "./Comp/Settings/Settings";
 import Drawing from "./Comp/Drawing/Drawing";
 import HomeLayout from "./Comp/Home/HomeLayout";
+import Footer from "./Comp/Footer/Footer";
 
 export default function Layout() {
   const auth = FireActions.auth.currentUser;
@@ -21,7 +22,7 @@ export default function Layout() {
 
   return (
     <Router>
-      <NavBase />
+      {auth && auth.emailVerified ? <NavBase /> : null}
       <Routes>
         <Route path="/" element={<Login setAllData={setAllData} />} />
         <Route
@@ -48,6 +49,7 @@ export default function Layout() {
           element={auth && auth.emailVerified ? <AuditLayout AllData={AllData} /> : <Login setAllData={setAllData} />}
         />
       </Routes>
+      {auth && auth.emailVerified ? <Footer /> : null}
     </Router>
   );
 }

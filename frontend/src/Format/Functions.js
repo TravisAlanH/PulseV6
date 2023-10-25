@@ -120,6 +120,8 @@ export function resetObjectKeysNOTInArray(obj, keysArray) {
           key === "rack2"
         ) {
           updatedObject[key] = null;
+        } else if (key === "Connected") {
+          updatedObject[key] = false;
         } else {
           updatedObject[key] = "";
         }

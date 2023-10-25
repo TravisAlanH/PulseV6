@@ -104,9 +104,9 @@ export default function StructuredCablingDropInput({ RackIndex, Asset }) {
                       //   ]);
                       //   dispatch(Actions.replaceSetStructuredCabling(payload));
                       // }
-                      payload.Key = "port";
-                      payload.value = index;
-                      dispatch(Actions.BuildStructuredCableSet(payload));
+                      payload.Key = ["port", "Connected"];
+                      payload.value = [index, false];
+                      dispatch(Actions.BuildMultiStructuredCableSet(payload));
                     }
                     removeSelected();
                     e.target.classList.add("selectedPort");
@@ -161,9 +161,9 @@ export default function StructuredCablingDropInput({ RackIndex, Asset }) {
                       //   ]);
                       //   dispatch(Actions.replaceSetStructuredCabling(payload));
                       // }
-                      payload.Key = "port";
-                      payload.value = index;
-                      dispatch(Actions.BuildStructuredCableSet(payload));
+                      payload.Key = ["port", "Connected"];
+                      payload.value = [index, false];
+                      dispatch(Actions.BuildMultiStructuredCableSet(payload));
                     }
                     removeSelected();
                     e.target.classList.add("selectedPort");

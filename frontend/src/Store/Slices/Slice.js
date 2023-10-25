@@ -302,6 +302,7 @@ const Slice = createSlice({
       if (state.Settings.localStorage) localStorage.setItem("PulseStateData", JSON.stringify(state));
     },
     BuildStructuredCableSet: (state, action) => {
+      console.log(action);
       state.Current.StructuredCablingSet[action.payload.Key] = action.payload.value;
       if (state.Settings.localStorage) localStorage.setItem("PulseStateData", JSON.stringify(state));
     },
@@ -311,10 +312,17 @@ const Slice = createSlice({
       }
       if (state.Settings.localStorage) localStorage.setItem("PulseStateData", JSON.stringify(state));
     },
+    UpdateSurveyData: (state, action) => {
+      for (let i = 0; i < action.payload.Key.length; i++) {
+        state[action.payload.Step][0][action.payload.Key][action.payload.Update[i]] = action.payload.value[i];
+      }
+      if (state.Settings.localStorage) localStorage.setItem("PulseStateData", JSON.stringify(state));
+    },
   },
 });
 
 export const {
+  UpdateSurveyData,
   replaceSetStructuredCabling,
   BuildStructuredCableSet,
   BuildMultiStructuredCableSet,

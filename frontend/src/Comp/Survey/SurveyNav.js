@@ -3,6 +3,7 @@ import "../../Styles/BodyNav.css";
 import LocationLayout from "../Location/LocationLayout";
 import SurveyRoomLayout from "./SurveyRoom/SurveyRoomLayout";
 import ExportPageSurvey from "../Export/ExportPageSurvey";
+import SurveySpreadLayout from "./SurveySpread/SurveySpreadLayout";
 
 export default function SurveyNav({ setCurrentSurvey }) {
   const buttons = document.getElementsByClassName("SurveyLinks");
@@ -30,17 +31,7 @@ export default function SurveyNav({ setCurrentSurvey }) {
           setCurrentSurvey(<LocationLayout />);
         }}>
         Location
-      </button>
-      <button
-        id="SurveyLinks"
-        className={buttonStyle}
-        onClick={(e) => {
-          removeSelected();
-          e.target.classList.add("selected");
-          setCurrentSurvey(<SurveyRoomLayout Step={"SurveySecurity"} />);
-        }}>
-        Security
-      </button>
+      </button>{" "}
       <button
         id="SurveyLinks"
         className={buttonStyle}
@@ -57,9 +48,29 @@ export default function SurveyNav({ setCurrentSurvey }) {
         onClick={(e) => {
           removeSelected();
           e.target.classList.add("selected");
-          setCurrentSurvey(<SurveyRoomLayout Step={"SurveyFire"} />);
+          setCurrentSurvey(<SurveySpreadLayout Step={"SurveyGlobal"} />);
         }}>
-        Fire
+        Global
+      </button>
+      <button
+        id="SurveyLinks"
+        className={buttonStyle}
+        onClick={(e) => {
+          removeSelected();
+          e.target.classList.add("selected");
+          setCurrentSurvey(<SurveySpreadLayout Step={"SurveySecurity"} />);
+        }}>
+        Security
+      </button>
+      <button
+        id="SurveyLinks"
+        className={buttonStyle}
+        onClick={(e) => {
+          removeSelected();
+          e.target.classList.add("selected");
+          setCurrentSurvey(<SurveySpreadLayout Step={"SurveySafety"} />);
+        }}>
+        Safety
       </button>
       <button
         id="AuditLinks"

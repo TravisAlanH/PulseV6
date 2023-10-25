@@ -1,54 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import createTable from "../../Format/CreateTable";
 import download_to_excel from "../../Format/ExportExcel";
-import "./Export.css";
-import * as format from "./FormatPDU";
 // import * as transitionData from "../../Components/CustomField/CustomFieldExportTemplates";
 
-export default function ExportPageAudit() {
+export default function ExportPageSurvey() {
   const Data = useSelector((state) => state.data);
-
-  let adjustedData = structuredClone(Data);
-  adjustedData = format.formatDataForPDU(adjustedData);
-
-  const keys = Object.keys(adjustedData);
-
-  console.log(adjustedData);
-
-  // const [modalBlock, setModalBlock] = React.useState();
-
-  useEffect(() => {
-    let OutputAll = [];
-    Object.keys(adjustedData).forEach((key) => {
-      OutputAll = [];
-      if (adjustedData[key].length === 0) return;
-      if (
-        key === "Current" ||
-        key === "LoggedIn" ||
-        key.includes("Survey") ||
-        key === "Settings" ||
-        key.includes("New") ||
-        key === "OpenRU"
-      )
-        return;
-      let Input = adjustedData[key];
-
-      for (let i = 0; i < Input.length; i++) {
-        let temp = {};
-        for (let key in Input[i]) {
-          if (key === "Status *") continue;
-          if (key === "RUHeight") continue;
-          if (Input[i][key]["Export"] === "") continue;
-          // temp[key] = Input[i][key].value;
-          temp[Input[i][key]["Export"]] = Input[i][key].value;
-        }
-
-        OutputAll.push(temp);
-      }
-      createTable(OutputAll, "ExportTable");
-    });
-  }, [adjustedData]);
+  const keys = Object.keys(Data);
 
   return (
     <div className="w-screen h-screen p-3">
@@ -72,18 +30,15 @@ export default function ExportPageAudit() {
                   }
 
                   // setModalBlock(e.target.value);
-                  let Input = adjustedData[e.target.value];
+                  let Input = Data[e.target.value];
                   let Output = [];
 
                   for (let i = 0; i < Input.length; i++) {
                     let temp = {};
                     for (let key in Input[i]) {
-                      console.log(Input[i][key]);
                       if (key === "Status *") continue;
                       if (key === "RUHeight") continue;
-                      if (Input[i][key]["Export"] === "") continue;
-                      // temp[key] = Input[i][key].value;
-                      temp[Input[i][key]["Export"]] = Input[i][key].value;
+                      temp[key] = Input[i][key].value;
                     }
 
                     Output.push(temp);
@@ -95,7 +50,7 @@ export default function ExportPageAudit() {
                 }}>
                 <option value="default">Select</option>
                 {keys.map((key, index) => {
-                  if (key === "Current" || key === "LoggedIn" || key.includes("Survey")) return null;
+                  if (key === "Current" || key === "LoggedIn" || !key.includes("Survey")) return null;
                   return (
                     <option key={index} value={key}>
                       {key}
@@ -108,7 +63,6 @@ export default function ExportPageAudit() {
         </div>
         <div className="text-black w-full">
           <div className="overflow-scroll">
-            {/* <table id="ExportTable" className="text-xs"></table> */}
             <table id="ExportTable" className="text-xs"></table>
           </div>
           <div className="w-full flex flex-row justify-end">

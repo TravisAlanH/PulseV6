@@ -11,6 +11,7 @@ import * as Actions from "../../Store/Slices/Slice";
 import * as Functions from "../../Format/Functions";
 import { RiCheckboxFill, RiSaveFill } from "react-icons/ri";
 import "./HomeStyles.css";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
 export default function HomeLayout() {
   const [locationCode, setLocationCode] = React.useState("");
@@ -159,6 +160,63 @@ export default function HomeLayout() {
       <div className="flex flex-col justify-center gap-6 px-6">
         {locationData.length > 0 ? (
           <div>
+            <div className="w-full border-b-2 flex flex-row gap-3 justify-center py-2 text-sm">
+              <div className="flex flex-row gap-1 bg-[#F7F5F1] items-center">
+                <label>Location Code:</label>
+                <button
+                  className="button orangeButton"
+                  onClick={() => {
+                    let locationDataCopy = structuredClone(locationData);
+                    locationDataCopy = locationDataCopy.sort((a, b) => {
+                      return (
+                        a.Location[0]["dcTrack Location Code *"].value - b.Location[0]["dcTrack Location Code *"].value
+                      );
+                    });
+                    setLocationData(locationDataCopy);
+                  }}>
+                  <FaChevronUp />
+                </button>
+                <button
+                  className="button orangeButton"
+                  onClick={() => {
+                    let locationDataCopy = structuredClone(locationData);
+                    locationDataCopy = locationDataCopy.sort((a, b) => {
+                      return b.Location[0]["dcTrack Location Code *"].value.localeCompare(
+                        a.Location[0]["dcTrack Location Code *"].value
+                      );
+                    });
+                    setLocationData(locationDataCopy);
+                  }}>
+                  <FaChevronDown />
+                </button>
+              </div>
+              <div className="flex flex-row gap-1 bg-[#F7F5F1] items-center">
+                <label>Location Name:</label>
+                <button className="button orangeButton" onClick={(e) => {}}>
+                  <FaChevronUp />
+                </button>
+                <button className="button orangeButton" onClick={(e) => {}}>
+                  <FaChevronDown />
+                </button>
+              </div>
+              <div className="flex flex-row gap-1 bg-[#F7F5F1] items-center">
+                <label>Date Modified:</label>
+                <button
+                  className="button orangeButton"
+                  onClick={() => {
+                    let locationDataCopy = structuredClone(locationData);
+                    locationDataCopy = locationDataCopy.sort((a, b) => {
+                      return new Date(a.Current.DataBaseTime) - new Date(b.Current.DataBaseTime);
+                    });
+                    setLocationData(locationDataCopy);
+                  }}>
+                  <FaChevronUp />
+                </button>
+                <button className="button orangeButton" onClick={(e) => {}}>
+                  <FaChevronDown />
+                </button>
+              </div>
+            </div>
             {locationData.map((item, index) => {
               let bg = "bg-white";
               let showButton = true;
@@ -222,29 +280,31 @@ export default function HomeLayout() {
                         />
                       </div>
                     </div>
-                    {showButton ? (
-                      <button
-                        className="orangeButton w-[2.5rem]"
-                        onClick={() => {
-                          if (saveConfirm) {
+                    <div className="flex flex-row justify-end">
+                      {showButton ? (
+                        <button
+                          className="orangeButton w-[2.5rem]"
+                          onClick={() => {
+                            if (saveConfirm) {
+                              setStateData(item);
+                              setSaveConfirm(false);
+                            } else {
+                              document.getElementById("confirmationDialog").style.display = "flex";
+                            }
+                          }}>
+                          <TbDownload />
+                        </button>
+                      ) : (
+                        <button
+                          className="w-[2.5rem] orangeButton"
+                          onClick={() => {
+                            setSaveConfirm(true);
                             setStateData(item);
-                            setSaveConfirm(false);
-                          } else {
-                            document.getElementById("confirmationDialog").style.display = "flex";
-                          }
-                        }}>
-                        <TbDownload />
-                      </button>
-                    ) : (
-                      <button
-                        className="w-[2.5rem] orangeButton"
-                        onClick={() => {
-                          setSaveConfirm(true);
-                          setStateData(item);
-                        }}>
-                        <RiSaveFill />
-                      </button>
-                    )}
+                          }}>
+                          <RiSaveFill />
+                        </button>
+                      )}
+                    </div>
                   </div>
                 </div>
               );
