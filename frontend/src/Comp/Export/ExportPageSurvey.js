@@ -1,12 +1,12 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import createTable from "../../Format/CreateTable";
+// import createTable from "../../Format/CreateTable";
 import download_to_excel from "../../Format/ExportExcel";
 // import * as transitionData from "../../Components/CustomField/CustomFieldExportTemplates";
 
 export default function ExportPageSurvey() {
-  const Data = useSelector((state) => state.data);
-  const keys = Object.keys(Data);
+  // const Data = useSelector((state) => state.data);
+  // const keys = Object.keys(Data);
   const Global = useSelector((state) => state.data.SurveyGlobal[0]);
   const GlobalKeys = Object.keys(Global);
 

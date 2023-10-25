@@ -8,7 +8,7 @@ import * as Functions from "../../../Format/Functions";
 
 export default function StructuredCablingInput() {
   const build = useSelector((state) => state.data.Current.StructuredCablingSet);
-  const scCurrent = useSelector((state) => state.data.Current.StructuredCabling);
+  // const scCurrent = useSelector((state) => state.data.Current.StructuredCabling);
 
   let baseSCset = state.Current.StructuredCablingSet;
 

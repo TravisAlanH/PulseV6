@@ -1,5 +1,5 @@
 import React from "react";
-import STDInput from "../../Reuse/STDInput";
+// import STDInput from "../../Reuse/STDInput";
 import { useSelector, useDispatch } from "react-redux";
 import "./SurveySpreadStyles.css";
 import { RiInformationLine } from "react-icons/ri";
