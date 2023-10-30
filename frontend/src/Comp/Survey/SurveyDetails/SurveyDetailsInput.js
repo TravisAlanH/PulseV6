@@ -5,9 +5,10 @@ import "./SurveySpreadStyles.css";
 import { RiInformationLine } from "react-icons/ri";
 import * as actions from "../../../Store/Slices/Slice";
 
-export default function SurveySpreadInput({ Step }) {
+export default function SurveyDetailsInput({ Step }) {
   const Current = useSelector((state) => state.data.Current[Step]);
   const State = useSelector((state) => state.data[Step][Current]);
+  console.log(State);
   let Keys = Object.keys(State);
 
   const dispatch = useDispatch();
@@ -46,19 +47,19 @@ export default function SurveySpreadInput({ Step }) {
   return (
     <div className="flex flex-col gap-3">
       {Keys.map((Key, index) => (
-        <div key={index} className="flex flex-row gap-2 items-start border-b-2 pb-2">
+        <div key={index} className="flex flex-row items-start border-b-2 pb-2">
           <div className="flex flex-row justify-center items-start">
-            <span tooltip={State[Key]["check"] + " " + State[Key]["information"]}>
+            <span tooltip={State[Key]["check"]}>
               <RiInformationLine className="w-[2rem] h-[2rem]" />
             </span>
             <div className="w-[1rem] flex flex-row justify-center items-center text-red-500">
               {Key.includes("*") ? "*" : ""}
             </div>
-            <label className={"text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center w-[10rem] mr-2"}>
+            <label
+              className={"text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center w-[10rem] h-[2rem] mr-2"}>
               {Key.replace("*", "")}
             </label>
             <div className="flex lg:flex-row gap-2 flex-col">
-              {/* <div className="flex gap-1 flex-row items-center"> */}
               {State[Key]["options"].map((option, index) => (
                 <div key={index} className="flex flex-row gap-1 items-center">
                   <input
@@ -94,17 +95,34 @@ export default function SurveySpreadInput({ Step }) {
             </div>
           </div>
           <div className="flex flex-col">
-            <textarea
-              value={State[Key]["notes"]}
-              placeholder={State[Key]["placeholder"]}
-              className="w-[15rem] h-[6rem] lg:h-[4rem] border-2 border-[#F3EEE7] rounded-md"
-              onChange={(e) => {
-                payload.Update = ["notes"];
-                payload.Key = Key;
-                payload.value = [e.target.value];
-                dispatch(actions.UpdateSurveyData(payload));
-              }}
-            />
+            {State[Key].type === "select" || State[Key].type === "date" ? null : (
+              <input
+                type="text"
+                className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-[15rem]"}
+                value={State[Key]["value"]}
+                placeholder={State[Key]["placeholder"]}
+                onChange={(e) => {
+                  payload.Update = ["value"];
+                  payload.Key = Key;
+                  payload.value = [e.target.value];
+                  dispatch(actions.UpdateSurveyData(payload));
+                }}
+              />
+            )}
+            {State[Key].type === "date" ? (
+              <input
+                type="date"
+                className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-[15rem]"}
+                value={State[Key]["value"]}
+                placeholder={State[Key]["placeholder"]}
+                onChange={(e) => {
+                  payload.Update = ["value"];
+                  payload.Key = Key;
+                  payload.value = [e.target.value];
+                  dispatch(actions.UpdateSurveyData(payload));
+                }}
+              />
+            ) : null}
           </div>
           {State[Key].hasOwnProperty("score") ? (
             <div className="flex flex-col text-sm">

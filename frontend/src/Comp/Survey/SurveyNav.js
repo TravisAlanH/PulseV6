@@ -4,6 +4,7 @@ import LocationLayout from "../Location/LocationLayout";
 import SurveyRoomLayout from "./SurveyRoom/SurveyRoomLayout";
 import ExportPageSurvey from "../Export/ExportPageSurvey";
 import SurveySpreadLayout from "./SurveySpread/SurveySpreadLayout";
+import SurveyDetailsLayout from "./SurveyDetails/SurveyDetailsLayout";
 
 export default function SurveyNav({ setCurrentSurvey }) {
   const buttons = document.getElementsByClassName("SurveyLinks");
@@ -41,6 +42,16 @@ export default function SurveyNav({ setCurrentSurvey }) {
           setCurrentSurvey(<SurveyRoomLayout Step={"SurveyRoom"} />);
         }}>
         Room
+      </button>
+      <button
+        id="SurveyLinks"
+        className={buttonStyle}
+        onClick={(e) => {
+          removeSelected();
+          e.target.classList.add("selected");
+          setCurrentSurvey(<SurveyDetailsLayout Step={"SurveySite"} />);
+        }}>
+        Site
       </button>
       <button
         id="SurveyLinks"
