@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import "./SurveySpreadStyles.css";
 import { RiInformationLine } from "react-icons/ri";
 import * as actions from "../../../Store/Slices/Slice";
+import sort from "../../../Format/DataOrder";
 
 export default function SurveyDetailsInput({ Step }) {
   const Current = useSelector((state) => state.data.Current[Step]);
@@ -20,29 +21,7 @@ export default function SurveyDetailsInput({ Step }) {
     value: "",
   };
 
-  function sortArrayToMatchReference(arrayToSort, referenceArray) {
-    const referenceIndices = new Map();
-
-    referenceArray.forEach((element, index) => {
-      referenceIndices.set(element, index);
-    });
-
-    arrayToSort.sort((a, b) => {
-      const indexA = referenceIndices.get(a);
-      const indexB = referenceIndices.get(b);
-      return indexA - indexB;
-    });
-  }
-  let sortedArray = [
-    "Key Holder Record",
-    "Access Records",
-    "Visitor Access Records",
-    "Visitor Log Contains",
-    "Visitor Log Retention",
-    "Auto Expiring Badges",
-    "Visitor Escort Required",
-  ];
-  sortArrayToMatchReference(Keys, sortedArray);
+  sort(Keys, Step);
 
   return (
     <div className="flex flex-col gap-3">

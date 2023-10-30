@@ -97,11 +97,82 @@ const OrderData = {
     "Type of Connections",
     "Ports",
   ],
+  SurveyGlobal: [
+    "Key Holder Record",
+    "Access Records",
+    "Visitor Access Records",
+    "Visitor Log Contains",
+    "Visitor Log Retention",
+    "Auto Expiring Badges",
+    "Visitor Escort Required",
+  ],
+  SurveyRoom: [
+    "Room Number *",
+    "GPS Coordinates *",
+    "Area *",
+    "Ceiling Type *",
+    "Ceiling Condition *",
+    "Floor Type *",
+    "Floor Condition *",
+    "Wall Type *",
+    "Wall Condition *",
+    "Cleanliness *",
+    "Room Notes",
+  ],
+  SurveySecurity: [
+    "Access Door Control",
+    "Is the Room Secure?",
+    "Available Key Access",
+    "Door Manual Unlocking",
+    "Avigilon camera Present?",
+  ],
+
+  SurveySite: [
+    "Survey Date",
+    "Company Surveying",
+    "Survey Tech Name",
+    "Survey Tech Phone",
+    "Survey Tech Email",
+    "Site",
+    "Building",
+    "Floor",
+    "ATG Room Number",
+    "ATG Room Name",
+    "Alias Room Name",
+    "Barcode",
+    "Survey Tech Role",
+    "Site Type",
+    "Site Name",
+    "Site Address",
+    "Site Country",
+    "Local Site Contact",
+    "Site Contact Role",
+    "Site Contact Email",
+    "Site Contact Phone",
+    "Access Times",
+  ],
+  SurveySafety: [
+    "Fire Extinguishers?",
+    "Phone for EMS?",
+    "Fire Suppression System?",
+    "Smoke Detectors Present?",
+    "Fire Indicators Present?",
+    "Emergency Power / Lighting?",
+    "Emergency Frog Lights?",
+    "Validate Conduit Penetrations",
+    "Validate Maintenance Penetrations",
+    '36" Clearance Fire / Power Panels',
+    "Room State",
+    "Tripping / Clothesline Hazards",
+    "Room Used for Storage?",
+    "Trash Disposeal Loction?",
+    "Empty Trash Car?",
+  ],
+
+  Panels: ["# Operation *", "Object *", "Name *", "Location *", "Upstream Connection"],
+
+  Receptacles: ["# Operation *", "Object *", "Location *", "Placement", "Cabinet Placement", "Wall Placement"],
 };
-
-const Panels = ["# Operation *", "Object *", "Name *", "Location *", "Upstream Connection"];
-
-const Receptacles = ["# Operation *", "Object *", "Location *", "Placement", "Cabinet Placement", "Wall Placement"];
 
 export default function sortArrayToMatchReference(arrayToSort, Step) {
   let referenceArray = OrderData[Step];
