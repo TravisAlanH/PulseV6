@@ -58,14 +58,14 @@ export default function NavLinks() {
           {UUID !== "" ? (
             <div>
               <Link
-                to="/audit"
-                className="h-[3rem] w-[12rem] bg-[#e0e0e0] flex flex-row justify-start pl-3 font-bold items-center hover:bg-[#f59439]">
-                Audit
-              </Link>
-              <Link
                 to="/survey"
                 className="h-[3rem] w-[12rem] bg-[#e0e0e0] flex flex-row justify-start pl-3 font-bold items-center hover:bg-[#f59439]">
                 Survey
+              </Link>
+              <Link
+                to="/audit"
+                className="h-[3rem] w-[12rem] bg-[#e0e0e0] flex flex-row justify-start pl-3 font-bold items-center hover:bg-[#f59439]">
+                Audit
               </Link>
               <Link
                 to="/electrical"
