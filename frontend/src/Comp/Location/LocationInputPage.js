@@ -2,12 +2,13 @@ import React from "react";
 import STDInput from "../Reuse/STDInput";
 import { useSelector } from "react-redux";
 import AddFieldButton from "../Aduit/AddField/AddFieldButton";
+import sortArrayToMatchReference from "../../Format/DataOrder";
 
 export default function LocationInputPage() {
   const LocationData = useSelector((state) => state.data.Location);
   const LocationCurrent = useSelector((state) => state.data.Current["Location"]);
   const LocationState = useSelector((state) => state.data.Location[LocationCurrent]);
-  const LocationKeys = Object.keys(LocationState);
+  let LocationKeys = sortArrayToMatchReference(Object.keys(LocationState), "Location");
 
   return (
     <div className="flex flex-col gap-2">

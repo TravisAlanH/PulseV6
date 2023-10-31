@@ -30,7 +30,8 @@ export default function ExportPageAudit() {
         key.includes("Survey") ||
         key === "Settings" ||
         key.includes("New") ||
-        key === "OpenRU"
+        key === "OpenRU" ||
+        key.includes("Cabling")
       )
         return;
       let Input = adjustedData[key];

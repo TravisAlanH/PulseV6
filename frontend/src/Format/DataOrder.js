@@ -40,7 +40,21 @@ const OrderData = {
     "Ports",
     "Status *",
   ],
-
+  "Rack PDUs": [
+    "# Operation *",
+    "Object *",
+    "Name *",
+    "Make *",
+    "Model *",
+    "Location *",
+    "Cabinet *",
+    "Cabinet Side *",
+    "Depth Position *",
+    "U Position *",
+    "RU Height",
+    "Ports",
+    "Status *",
+  ],
   Assets: [
     "# Operation *",
     "Object *",
@@ -77,7 +91,25 @@ const OrderData = {
     "Type of Connections",
     "Ports",
   ],
-
+  "Zero U PDUs": [
+    "# Operation *",
+    "Object *",
+    "Name *",
+    "Make *",
+    "Model *",
+    "Location *",
+    "Cabinet *",
+    "Location Type",
+    "U Position *",
+    "RU Height",
+    "kw Rating *",
+    "Utilized kw",
+    "Network connected",
+    "Asset Tag",
+    "Total connections",
+    "Type of Connections",
+    "Ports",
+  ],
   ATSs: [
     "# Operation *",
     "Object *",
@@ -191,7 +223,8 @@ export default function sortArrayToMatchReference(arrayToSort, Step) {
 
 export function sortObjectByTemplate(object, Step) {
   var reorderedObject = {};
-
+  console.log(Step);
+  console.log(OrderData[Step]);
   OrderData[Step].forEach(function (key) {
     reorderedObject[key] = object[key];
   });
