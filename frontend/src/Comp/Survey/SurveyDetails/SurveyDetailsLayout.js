@@ -10,7 +10,7 @@ export default function SurveyDetailsLayout({ Step }) {
   return (
     <div className="flex flex-col border-2 m-2">
       <div className="bg-[#F7F5F1] flex flex-row justify-start h-[3rem] items-center pl-6 text-lg font-bold">
-        {Step === "Racks" ? "Cabinet" : Step}
+        {Step.split(/(?=[A-Z])/).join(" ")}
       </div>
       <div className="flex flex-row gap-3 w-full justify-center p-2 border-b-2 mb-2">
         {/* <SetCurrentSelection Step="Location" />

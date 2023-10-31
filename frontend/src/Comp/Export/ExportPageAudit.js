@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import createTable from "../../Format/CreateTable";
 import download_to_excel from "../../Format/ExportExcel";
+import { sortObjectByTemplate } from "../../Format/DataOrder";
 import "./Export.css";
 import * as format from "./FormatPDU";
 // import * as transitionData from "../../Components/CustomField/CustomFieldExportTemplates";
@@ -43,7 +44,7 @@ export default function ExportPageAudit() {
           // temp[key] = Input[i][key].value;
           temp[Input[i][key]["Export"]] = Input[i][key].value;
         }
-
+        temp = sortObjectByTemplate(temp, key);
         OutputAll.push(temp);
       }
       createTable(OutputAll, "ExportTable");

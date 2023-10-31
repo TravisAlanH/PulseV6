@@ -2,30 +2,13 @@ import React from "react";
 import { useSelector } from "react-redux";
 // import createTable from "../../Format/CreateTable";
 import download_to_excel from "../../Format/ExportExcel";
-import "../../Styles/BodyNav.css";
-
 // import * as transitionData from "../../Components/CustomField/CustomFieldExportTemplates";
 
 export default function ExportPageSurvey() {
-  const Data = useSelector((state) => state.data);
+  // const Data = useSelector((state) => state.data);
   // const keys = Object.keys(Data);
   const Global = useSelector((state) => state.data.SurveyGlobal[0]);
   const GlobalKeys = Object.keys(Global);
-  const StateKeys = Object.keys(Data);
-  const SurveyKeys = StateKeys.filter((item) => item.includes("Survey"));
-
-  const buttonStyle = "bg-[#F7F5F1] text-[black] font-bold py-2 px-6 AuditLinks flex-grow ";
-
-  function removeSelected() {
-    const buttons = document.getElementsByClassName("AuditLinks");
-    for (var i = 0; i < buttons.length; i++) {
-      buttons[i].addEventListener("click", function () {
-        for (var j = 0; j < buttons.length; j++) {
-          buttons[j].classList.remove("selected");
-        }
-      });
-    }
-  }
 
   return (
     <div className="w-screen h-screen p-3">
@@ -37,25 +20,18 @@ export default function ExportPageSurvey() {
         <div className="p-2">
           <div className="w-full text-white mb-3 flex flex-col border-[#F3EEE7] border-2">
             <div className="w-full h-[2rem] bg-[#F3EEE7] flex flex-row items-center justify-center">
-              <div className="flex flex-row w-full">
-                {SurveyKeys.map((key, index) => (
-                  <button
-                    key={index}
-                    id="AuditLinks"
-                    className={buttonStyle}
-                    onClick={(e) => {
-                      removeSelected();
-                      e.target.classList.add("selected");
-                    }}>
-                    {key.replace("Survey", "")}
-                  </button>
-                ))}
-              </div>
+              <h1 className="text-black">Data:</h1>
             </div>
           </div>
         </div>
         <div className="text-black w-full">
           <div className="overflow-scroll">
+            {/* <table id="ExportTable" className="text-xs">
+
+
+
+            </table> */}
+
             <table id="ExportTable">
               <tbody>
                 <tr>
@@ -88,7 +64,6 @@ export default function ExportPageSurvey() {
               }}>
               Export
             </button>
-            {/* <button>Save XLSX file</button> */}
           </div>
         </div>
       </div>

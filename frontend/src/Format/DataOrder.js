@@ -188,3 +188,12 @@ export default function sortArrayToMatchReference(arrayToSort, Step) {
     return indexA - indexB;
   });
 }
+
+export function sortObjectByTemplate(object, Step) {
+  var reorderedObject = {};
+
+  OrderData[Step].forEach(function (key) {
+    reorderedObject[key] = object[key];
+  });
+  return reorderedObject;
+}
