@@ -3,16 +3,24 @@ import { useSelector } from "react-redux";
 // import createTable from "../../Format/CreateTable";
 import download_to_excel from "../../Format/ExportExcel";
 import "../../Styles/BodyNav.css";
+import sortArrayToMatchReference from "../../Format/DataOrder";
 
 // import * as transitionData from "../../Components/CustomField/CustomFieldExportTemplates";
 
 export default function ExportPageSurvey() {
+  const [tableView, setTableView] = React.useState(0);
   const Data = useSelector((state) => state.data);
   // const keys = Object.keys(Data);
   const Global = useSelector((state) => state.data.SurveyGlobal[0]);
-  const GlobalKeys = Object.keys(Global);
+  const GlobalKeys = sortArrayToMatchReference(Object.keys(Global), "SurveyGlobal");
+  const Site = useSelector((state) => state.data.SurveySite[0]);
+  let SiteKeys = sortArrayToMatchReference(Object.keys(Site), "SurveySite");
+  const Safety = useSelector((state) => state.data.SurveySafety[0]);
+  let SafetyKeys = sortArrayToMatchReference(Object.keys(Safety), "SurveySafety");
+  console.log(SafetyKeys);
   const StateKeys = Object.keys(Data);
-  const SurveyKeys = StateKeys.filter((item) => item.includes("Survey"));
+
+  const SurveyKeys = StateKeys.filter((item) => item.includes("Survey")).filter((item) => !item.includes("Room"));
 
   const buttonStyle = "bg-[#F7F5F1] text-[black] font-bold py-2 px-6 AuditLinks flex-grow ";
 
@@ -26,6 +34,74 @@ export default function ExportPageSurvey() {
       });
     }
   }
+
+  const tableSet = [
+    <tbody>
+      <tr>
+        <td colSpan={"5"}>Global Checks</td>
+      </tr>
+      <tr>
+        <td>Item to Check</td>
+        <td>Information</td>
+        <td>Regulatory</td>
+        <td>Complete</td>
+        <td>Notes</td>
+      </tr>
+      {GlobalKeys.map((key, index) => (
+        <tr key={index}>
+          <td>{Global[key]["check"]}</td>
+          <td>{Global[key]["information"]}</td>
+          <td>{Global[key]["regulatory"]}</td>
+          <td>{Global[key]["value"]}</td>
+          <td>{Global[key]["notes"]}</td>
+        </tr>
+      ))}
+    </tbody>,
+    <tbody>
+      <tr>
+        <td colSpan={"5"}>Site Details</td>
+      </tr>
+      <tr>
+        <td>Planning Activity</td>
+        <td>Information</td>
+        <td>Supporting Notes</td>
+      </tr>
+      {SiteKeys.map((key, index) => (
+        <tr key={index}>
+          <td>{key}</td>
+          <td className="w-[40%]">{Site[key].value}</td>
+          <td>{Site[key]["check"]}</td>
+        </tr>
+      ))}
+    </tbody>,
+    <tbody>
+      <tr>
+        <td colSpan={"8"}>Physical Security/ Life Safety</td>
+      </tr>
+      <tr>
+        <td>Scoring Items</td>
+        <td>Information</td>
+        <td>Regulatory</td>
+        <td>{"Value (drop down)"}</td>
+        <td>Notes</td>
+        <td>Scoring Weight</td>
+        <td>Score</td>
+        <td>Value xlate</td>
+      </tr>
+      {SafetyKeys.map((key, index) => (
+        <tr key={index}>
+          <td>{key}</td>
+          <td>{Safety[key].check}</td>
+          <td>{Safety[key].regulatory}</td>
+          <td>{Safety[key].value}</td>
+          <td>{Safety[key].notes}</td>
+          <td>{Safety[key].scoreWeight}</td>
+          <td>{Safety[key].score}</td>
+          <td>{Safety[key].valueXLate}</td>
+        </tr>
+      ))}
+    </tbody>,
+  ];
 
   return (
     <div className="w-screen h-screen p-3">
@@ -46,6 +122,7 @@ export default function ExportPageSurvey() {
                     onClick={(e) => {
                       removeSelected();
                       e.target.classList.add("selected");
+                      setTableView(index);
                     }}>
                     {key.replace("Survey", "")}
                   </button>
@@ -56,29 +133,7 @@ export default function ExportPageSurvey() {
         </div>
         <div className="text-black w-full">
           <div className="overflow-scroll">
-            <table id="ExportTable">
-              <tbody>
-                <tr>
-                  <td colSpan={"5"}>Global Checks</td>
-                </tr>
-                <tr>
-                  <td>Item to Check</td>
-                  <td>Information</td>
-                  <td>Regulatory</td>
-                  <td>Complete</td>
-                  <td>Notes</td>
-                </tr>
-                {GlobalKeys.map((key, index) => (
-                  <tr key={index}>
-                    <td>{Global[key]["check"]}</td>
-                    <td>{Global[key]["information"]}</td>
-                    <td>{Global[key]["regulatory"]}</td>
-                    <td>{Global[key]["value"]}</td>
-                    <td>{Global[key]["notes"]}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <table id="ExportTable">{tableSet[tableView]}</table>
           </div>
           <div className="w-full flex flex-row justify-end">
             <button

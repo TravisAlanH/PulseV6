@@ -182,7 +182,7 @@ export default function sortArrayToMatchReference(arrayToSort, Step) {
     referenceIndices.set(element, index);
   });
 
-  arrayToSort.sort((a, b) => {
+  return arrayToSort.sort((a, b) => {
     const indexA = referenceIndices.get(a);
     const indexB = referenceIndices.get(b);
     return indexA - indexB;
