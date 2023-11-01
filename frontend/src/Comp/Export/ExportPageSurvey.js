@@ -17,7 +17,6 @@ export default function ExportPageSurvey() {
   let SiteKeys = sortArrayToMatchReference(Object.keys(Site), "SurveySite");
   const Safety = useSelector((state) => state.data.SurveySafety[0]);
   let SafetyKeys = sortArrayToMatchReference(Object.keys(Safety), "SurveySafety");
-  console.log(SafetyKeys);
   const StateKeys = Object.keys(Data);
 
   const SurveyKeys = StateKeys.filter((item) => item.includes("Survey")).filter((item) => !item.includes("Room"));
