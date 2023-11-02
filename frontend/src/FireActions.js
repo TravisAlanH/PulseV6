@@ -48,15 +48,11 @@ async function getData() {
 
 function VerificationEmail() {
   sendEmailVerification(auth.currentUser)
-    .then(() => {
-      // Email verification sent!
-      // ...
-    })
+    .then(() => {})
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
       console.log(errorCode, errorMessage);
-      // ...
     });
 }
 
@@ -103,24 +99,17 @@ async function addToLocations(user, data) {
       LocationsList: arrayUnion(data),
     });
   }
+}
 
-  // try {
-  //   const db = getFirestore(app);
-  //   const docRef = doc(db, "users", user.uid);
-  //   const docSnap = await getDoc(docRef);
-
-  //   if (docSnap.exists()) {
-  //     const currentLocationList = [...docSnap.data().LocationsList, data];
-  //     await updateDoc(docRef, {
-  //       LocationsList: arrayUnion(JSON.stringify(...currentLocationList)),
-  //     });
-  //     return currentLocationList;
-  //   } else {
-  //     console.error("User document not found!");
-  //   }
-  // } catch (error) {
-  //   console.error("Error updating document: ", error);
-  // }
+async function updateLocationsList(newLocationsData) {
+  const db = getFirestore(app);
+  const docRef = doc(db, "users", auth.currentUser.uid);
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    await updateDoc(docRef, {
+      LocationsList: newLocationsData,
+    });
+  }
 }
 
 async function changeLocationAtIndex(ChangedItem, fullState, user) {
@@ -180,4 +169,14 @@ function signIn(user) {
     });
 }
 
-export { signup, signIn, UserSignOut, addToLocations, changeLocationAtIndex, getData, auth, VerificationEmail };
+export {
+  signup,
+  signIn,
+  UserSignOut,
+  addToLocations,
+  changeLocationAtIndex,
+  updateLocationsList,
+  getData,
+  auth,
+  VerificationEmail,
+};

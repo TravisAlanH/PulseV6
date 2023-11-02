@@ -49,15 +49,6 @@ export default function HomeLayout() {
 
   let Duplicate = null;
 
-  // if (locationData === undefined || locationData.length !== 0) {
-  //   Duplicate = Functions.findOldestDuplicate(locationData);
-  //   console.log("Duplicate", Duplicate);
-  //   if (Duplicate) {
-  //     FireActions.removeFromLocationList(Duplicate, user).then(() => {
-  //       setReload(!reload);
-  //     });
-  //   }
-  // }
   if (locationData === undefined || locationData.length !== 0) {
     Duplicate = Functions.findOldestNonUniqueEntries(locationData);
     if (Duplicate) {
@@ -69,66 +60,59 @@ export default function HomeLayout() {
   }
 
   function createLocation(e) {
-    let LocationTest = [];
+    let codeExists = false;
     e.preventDefault();
-    //! get Location data
     setLoading(true);
-    const data = async () => {
-      const db = getFirestore(app);
-      const docRef = doc(db, "users", user.uid);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        setLocationData(docSnap.data().LocationsList);
-        LocationTest = docSnap.data().LocationsList;
-        for (let i = 0; i < LocationTest.length; i++) {
-          if (LocationTest[i].Location[0]["dcTrack Location Code *"].value === locationCode) {
-            setExistMessageShow(true);
-            setLoading(false);
-            return;
-          }
-        }
+    for (let i = 0; i < locationData.length; i++) {
+      if (locationData[i].Location[0]["dcTrack Location Code *"].value === locationCode) {
+        console.log("code exists");
+        codeExists = true;
+        setExistMessageShow(true);
+        setLoading(false);
+        return;
       }
-    };
-    data().catch((error) => {
-      setLoading(false);
-      console.error("Error adding document: ", error);
-    });
-    //! Create Location Template
-    let stateTemplate = structuredClone(state);
-    stateTemplate.Location[0]["dcTrack Location Code *"].value = locationCode;
-    stateTemplate.Current.DataBaseUUID = uuidv4();
-    stateTemplate.Current.DataBaseTime = Functions.getCurrentTimeInFormat();
-    //! Add to Database
-    FireActions.addToLocations(user, stateTemplate, reload).then(() => {
+    }
+    if (!codeExists) {
+      let stateTemplate = structuredClone(state);
+      stateTemplate.Location[0]["dcTrack Location Code *"].value = locationCode;
+      stateTemplate.Current.DataBaseUUID = uuidv4();
+      stateTemplate.Current.DataBaseTime = Functions.getCurrentTimeInFormat();
+      FireActions.addToLocations(user, stateTemplate, reload).then(() => {
+        setLoading(false);
+        setReload(!reload);
+      });
+    }
+  }
+
+  function saveData(item) {
+    setLoading(true);
+    setSaveConfirm(false);
+    let itemUUID = item.Current.DataBaseUUID;
+    let FireLocationData = structuredClone(locationData);
+    let stateCopy = structuredClone(fullState);
+    stateCopy.Current.DataBaseTime = Functions.getCurrentTimeInFormat();
+
+    let newFireLocationData = FireLocationData.filter((item) => item.Current.DataBaseUUID !== itemUUID);
+    newFireLocationData.push(stateCopy);
+    FireActions.updateLocationsList(newFireLocationData, user).then(() => {
+      setLocationData(newFireLocationData);
       setLoading(false);
       setReload(!reload);
     });
   }
 
-  async function setStateData(item) {
-    let stateCopy = structuredClone(fullState);
-    stateCopy.Current.DataBaseTime = Functions.getCurrentTimeInFormat();
-    let changeIndex = -1;
-    let ChangedItem = null;
-
-    for (let i = 0; i < locationData.length; i++) {
-      if (locationData[i].Current.DataBaseUUID === UUID) {
-        changeIndex = i;
-        ChangedItem = locationData[i];
-        break;
-      }
-    }
-
-    const payload = { value: item };
-
-    if (changeIndex !== -1) {
-      await FireActions.changeLocationAtIndex(ChangedItem, stateCopy, user);
+  function downloadData(item) {
+    setSaveConfirm(false);
+    setLoading(true);
+    if (saveConfirm) {
+      const payload = { value: item };
       dispatch(Actions.setAllStateDataToActionPayloadValue(payload));
+      setLoading(false);
+      setReload(!reload);
     } else {
-      dispatch(Actions.setAllStateDataToActionPayloadValue(payload));
+      setLoading(false);
+      document.getElementById("confirmationDialog").style.display = "flex";
     }
-
-    setLoading(false);
   }
 
   return (
@@ -286,7 +270,7 @@ export default function HomeLayout() {
                           className="orangeButton w-[2.5rem]"
                           onClick={() => {
                             if (saveConfirm) {
-                              setStateData(item);
+                              downloadData(item);
                               setSaveConfirm(false);
                             } else {
                               document.getElementById("confirmationDialog").style.display = "flex";
@@ -299,7 +283,7 @@ export default function HomeLayout() {
                           className="w-[2.5rem] orangeButton"
                           onClick={() => {
                             setSaveConfirm(true);
-                            setStateData(item);
+                            saveData(item);
                           }}>
                           <RiSaveFill />
                         </button>
