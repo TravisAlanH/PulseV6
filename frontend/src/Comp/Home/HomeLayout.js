@@ -23,6 +23,7 @@ export default function HomeLayout() {
   const UUID = useSelector((state) => state.data.Current.DataBaseUUID);
   const fullState = useSelector((state) => state.data);
   const [saveConfirm, setSaveConfirm] = React.useState(UUID === "" ? true : false);
+  const [downloadedItem, setDownloadedItem] = React.useState({});
 
   const dispatch = useDispatch();
 
@@ -86,7 +87,7 @@ export default function HomeLayout() {
 
   function saveData(item) {
     setLoading(true);
-    setSaveConfirm(false);
+    setSaveConfirm(true);
     let itemUUID = item.Current.DataBaseUUID;
     let stateCopy = structuredClone(fullState);
     stateCopy.Current.DataBaseTime = Functions.getCurrentTimeInFormat();
@@ -107,7 +108,6 @@ export default function HomeLayout() {
   }
 
   function downloadData(item) {
-    setSaveConfirm(false);
     setLoading(true);
     if (saveConfirm) {
       const payload = { value: item };
@@ -118,6 +118,7 @@ export default function HomeLayout() {
       setLoading(false);
       document.getElementById("confirmationDialog").style.display = "flex";
     }
+    setSaveConfirm(false);
   }
 
   return (
@@ -151,23 +152,15 @@ export default function HomeLayout() {
               let cards = document.querySelectorAll("#LocationCard");
               if (cards[0].classList.contains("extended")) {
                 for (let i = 0; i < cards.length; i++) {
-                  // cards[i].classList.remove("extended");
-                  // cards[i].classList.remove("h-[10rem]");
-                  // cards[i].classList.add("sm:h-[4rem]");
-                  // cards[i].classList.add("md:h-[4rem]");
                   cards[i].classList.remove("extended");
-                  cards[i].classList.remove("h-[10rem]");
+                  cards[i].classList.remove("h-[12rem]");
                   cards[i].classList.add("h-[0rem]");
                 }
               } else {
                 for (let i = 0; i < cards.length; i++) {
-                  // cards[i].classList.add("extended");
-                  // cards[i].classList.remove("sm:h-[4rem]");
-                  // cards[i].classList.remove("md:h-[4rem]");
-                  // cards[i].classList.add("h-[10rem]");
                   cards[i].classList.add("extended");
                   cards[i].classList.remove("h-[0rem]");
-                  cards[i].classList.add("h-[10rem]");
+                  cards[i].classList.add("h-[12rem]");
                 }
               }
             }}>
@@ -285,7 +278,6 @@ export default function HomeLayout() {
 
                   showButton = false;
                 }
-                console.log(item);
                 return (
                   <div className={"border-2 w-full  py-3 px-2 rounded-md transition-all flex flex-col justify-start"}>
                     <div key={fullState + index} className={"flex flex-row  w-full px-2 h-full"}>
@@ -336,9 +328,9 @@ export default function HomeLayout() {
                               onClick={() => {
                                 if (saveConfirm) {
                                   downloadData(item);
-                                  setSaveConfirm(false);
                                   setReload(!reload);
                                 } else {
+                                  setDownloadedItem(item);
                                   document.getElementById("confirmationDialog").style.display = "flex";
                                 }
                               }}>
@@ -348,7 +340,6 @@ export default function HomeLayout() {
                             <button
                               className="w-[2.5rem] orangeButton"
                               onClick={() => {
-                                setSaveConfirm(true);
                                 saveData(item);
                                 setReload(!reload);
                               }}>
@@ -364,16 +355,22 @@ export default function HomeLayout() {
                       <div className="flex flex-row justify-end w-full">
                         {showButton ? null : <p className="text-[red] text-sm">Save data to see most recent changes</p>}
                       </div>
-                      <div className="border-2 rounded-md p-2 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 ">
-                        <div>Building: {item.SurveySite[0]["Building"].value}</div>
-                        <div>Room Number: {item.SurveySite[0]["ATG Room Number"].value}</div>
-                        <div>Site Contact Email: {item.SurveySite[0]["Site Contact Email"].value}</div>
-                        <div>Site Contact Phone: {item.SurveySite[0]["Site Contact Phone"].value}</div>
-                        <div>Updated: {Functions.formatTimestamp(item.Current.DataBaseTime)}</div>
-                      </div>
-                      <div className="border-2 rounded-md p-2 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 ">
-                        <div>Cabinets: {item.Racks.length}</div>
-                        <div>Assets:{item.Assets.length}</div>
+                      <div className="flex flex-col gap-2">
+                        <div className="border-2 rounded-md p-2 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 ">
+                          <div>Building: {item.SurveySite[0]["Building"].value}</div>
+                          <div>Room Number: {item.SurveySite[0]["ATG Room Number"].value}</div>
+                          <div>Site Contact Name: {item.SurveySite[0]["Local Site Contact"].value}</div>
+                          <div>Site Contact Email: {item.SurveySite[0]["Site Contact Email"].value}</div>
+                          <div>Site Contact Phone: {item.SurveySite[0]["Site Contact Phone"].value}</div>
+                          <div>Updated: {Functions.formatTimestamp(item.Current.DataBaseTime)}</div>
+                        </div>
+                        <div className="border-2 rounded-md p-2 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 ">
+                          <div>Cabinets: {item.Racks.length}</div>
+                          <div>Assets:{item.Assets.length}</div>
+                          <div>PDU: {item.PDUs.length}</div>
+                          <div>Structured Cable Connections: {item.StructuredCabling.length}</div>
+                          <div></div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -387,15 +384,58 @@ export default function HomeLayout() {
       {loading ? <LoadingSpinner /> : null}
       {/* <LoadingSpinner /> */}
       <div id="confirmationDialog" className="dialog">
-        <div className="bg-white p-3 rounded-md">
-          <p>Replace Current Data without Saving?</p>
+        <div className="bg-white p-3 rounded-md w-[20rem]">
           <div className="flex flex-row justify-between">
+            <p className="font-bold">Warning:</p>
+            <p
+              onClick={() => {
+                document.getElementById("confirmationDialog").style.display = "none";
+                document.getElementById("confirmChange").checked = false;
+                setSaveConfirm(false);
+              }}>
+              X
+            </p>
+          </div>
+          <p>Replace Current Data without Saving?</p>
+          <p className="text-xs">
+            The current data that is saved locally is not synced with the database, continuing will remove your local
+            data and replace it with the location data you selected
+          </p>
+          <div className="flex flex-row items-center justify-center gap-2" id="confirmBox">
+            <label>{"confirm: "}</label>
+            <input
+              type="checkbox"
+              id="confirmChange"
+              className="w-[1.5rem] h-[1.5rem]"
+              onChange={(e) => {
+                setSaveConfirm(e.target.checked);
+                document.getElementById("confirmBox").classList.remove("p-2");
+                document.getElementById("confirmBox").classList.remove("border-2");
+                document.getElementById("confirmBox").classList.remove("border-red-500");
+              }}
+            />
+          </div>
+          <br></br>
+
+          <div className="flex flex-row justify-between">
+            <div></div>
             <button
               id="yesButton"
               className="orangeButton"
               onClick={() => {
-                document.getElementById("confirmationDialog").style.display = "none";
-                setSaveConfirm(true);
+                let confirm = document.getElementById("confirmChange").checked;
+                console.log(confirm);
+                if (confirm) {
+                  console.log(downloadedItem);
+                  downloadData(downloadedItem);
+                  setReload(!reload);
+                  document.getElementById("confirmationDialog").style.display = "none";
+                  document.getElementById("confirmChange").checked = false;
+                } else {
+                  document.getElementById("confirmBox").classList.add("p-2");
+                  document.getElementById("confirmBox").classList.add("border-2");
+                  document.getElementById("confirmBox").classList.add("border-red-500");
+                }
               }}>
               Yes
             </button>
@@ -405,9 +445,11 @@ export default function HomeLayout() {
               onClick={() => {
                 document.getElementById("confirmationDialog").style.display = "none";
                 setSaveConfirm(false);
+                document.getElementById("confirmChange").checked = false;
               }}>
               No
             </button>
+            <div></div>
           </div>
         </div>
       </div>
