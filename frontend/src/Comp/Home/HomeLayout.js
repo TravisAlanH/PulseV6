@@ -21,7 +21,7 @@ export default function HomeLayout() {
   const [loading, setLoading] = React.useState(false);
   const UUID = useSelector((state) => state.data.Current.DataBaseUUID);
   const fullState = useSelector((state) => state.data);
-  const [saveConfirm, setSaveConfirm] = React.useState(false);
+  const [saveConfirm, setSaveConfirm] = React.useState(UUID === "" ? true : false);
 
   const dispatch = useDispatch();
 
@@ -146,86 +146,96 @@ export default function HomeLayout() {
       </div>
       <div className="flex flex-col justify-center gap-6 px-6">
         {locationData.length > 0 ? (
-          <div>
-            <div className="w-full border-b-2 flex flex-row gap-3 justify-center py-2 text-sm">
-              <div className="flex flex-row gap-1 bg-[#F7F5F1] items-center">
-                <label>Location Code:</label>
-                <button
-                  className="button orangeButton"
-                  onClick={() => {
-                    let locationDataCopy = structuredClone(locationData);
-                    locationDataCopy = locationDataCopy.sort((a, b) => {
-                      return a.Location[0]["dcTrack Location Code *"].value.localeCompare(
-                        b.Location[0]["dcTrack Location Code *"].value
-                      );
-                    });
-                    setLocationData(locationDataCopy);
-                  }}>
-                  <FaChevronUp />
-                </button>
-                <button
-                  className="button orangeButton"
-                  onClick={() => {
-                    let locationDataCopy = structuredClone(locationData);
-                    locationDataCopy = locationDataCopy.sort((a, b) => {
-                      return b.Location[0]["dcTrack Location Code *"].value.localeCompare(
-                        a.Location[0]["dcTrack Location Code *"].value
-                      );
-                    });
-                    setLocationData(locationDataCopy);
-                  }}>
-                  <FaChevronDown />
-                </button>
+          <div className="flex flex-col gap-2">
+            <div className="w-full border-b-2 flex flex-row gap-4 justify-between py-2 text-sm">
+              <div className="flex flex-row gap-4 bg-[#F7F5F1] items-center">
+                <label className="pl-4">Location Code:</label>
+                <div className="flex flex-row gap-2">
+                  <button
+                    className="button orangeButton"
+                    onClick={() => {
+                      let locationDataCopy = structuredClone(locationData);
+                      locationDataCopy = locationDataCopy.sort((a, b) => {
+                        return a.Location[0]["dcTrack Location Code *"].value.localeCompare(
+                          b.Location[0]["dcTrack Location Code *"].value
+                        );
+                      });
+                      setLocationData(locationDataCopy);
+                    }}>
+                    <FaChevronUp />
+                  </button>
+                  <button
+                    className="button orangeButton"
+                    onClick={() => {
+                      let locationDataCopy = structuredClone(locationData);
+                      locationDataCopy = locationDataCopy.sort((a, b) => {
+                        return b.Location[0]["dcTrack Location Code *"].value.localeCompare(
+                          a.Location[0]["dcTrack Location Code *"].value
+                        );
+                      });
+                      setLocationData(locationDataCopy);
+                    }}>
+                    <FaChevronDown />
+                  </button>
+                </div>
               </div>
-              <div className="flex flex-row gap-1 bg-[#F7F5F1] items-center">
-                <label>Location Name:</label>
-                <button className="button orangeButton" onClick={() => {
-                    let locationDataCopy = structuredClone(locationData);
-                    locationDataCopy = locationDataCopy.sort((a, b) => {
-                      return a.Location[0]["dcTrack Location Name *"].value.localeCompare(
-                        b.Location[0]["dcTrack Location Name *"].value
-                      );
-                    });
-                    setLocationData(locationDataCopy);
-                  }}>
-                  <FaChevronUp />
-                </button>
-                <button className="button orangeButton"  onClick={() => {
-                    let locationDataCopy = structuredClone(locationData);
-                    locationDataCopy = locationDataCopy.sort((a, b) => {
-                      return b.Location[0]["dcTrack Location Name *"].value.localeCompare(
-                        a.Location[0]["dcTrack Location Name *"].value
-                      );
-                    });
-                    setLocationData(locationDataCopy);
-                  }}>
-                  <FaChevronDown />
-                </button>
+              <div className="flex flex-row gap-4 bg-[#F7F5F1] items-center">
+                <label className="pl-4">Location Name:</label>
+                <div className="flex flex-row gap-2">
+                  <button
+                    className="button orangeButton"
+                    onClick={() => {
+                      let locationDataCopy = structuredClone(locationData);
+                      locationDataCopy = locationDataCopy.sort((a, b) => {
+                        return a.Location[0]["dcTrack Location Name *"].value.localeCompare(
+                          b.Location[0]["dcTrack Location Name *"].value
+                        );
+                      });
+                      setLocationData(locationDataCopy);
+                    }}>
+                    <FaChevronUp />
+                  </button>
+                  <button
+                    className="button orangeButton"
+                    onClick={() => {
+                      let locationDataCopy = structuredClone(locationData);
+                      locationDataCopy = locationDataCopy.sort((a, b) => {
+                        return b.Location[0]["dcTrack Location Name *"].value.localeCompare(
+                          a.Location[0]["dcTrack Location Name *"].value
+                        );
+                      });
+                      setLocationData(locationDataCopy);
+                    }}>
+                    <FaChevronDown />
+                  </button>
+                </div>
               </div>
-              <div className="flex flex-row gap-1 bg-[#F7F5F1] items-center">
-                <label>Date Modified:</label>
-                <button
-                  className="button orangeButton"
-                  onClick={() => {
-                    let locationDataCopy = structuredClone(locationData);
-                    locationDataCopy = locationDataCopy.sort((a, b) => {
-                      return a.Current.DataBaseTime.localeCompare(b.Current.DataBaseTime);
-                    });
-                    setLocationData(locationDataCopy);
-                  }}>
-                  <FaChevronUp />
-                </button>
-                <button
-                  className="button orangeButton"
-                  onClick={() => {
-                    let locationDataCopy = structuredClone(locationData);
-                    locationDataCopy = locationDataCopy.sort((a, b) => {
-                      return b.Current.DataBaseTime.localeCompare(a.Current.DataBaseTime);
-                    });
-                    setLocationData(locationDataCopy);
-                  }}>
-                  <FaChevronDown />
-                </button>
+              <div className="flex flex-row gap-4 bg-[#F7F5F1] items-center">
+                <label className="pl-4">Date Modified:</label>
+                <div className="flex flex-row gap-2">
+                  <button
+                    className="button orangeButton"
+                    onClick={() => {
+                      let locationDataCopy = structuredClone(locationData);
+                      locationDataCopy = locationDataCopy.sort((a, b) => {
+                        return a.Current.DataBaseTime.localeCompare(b.Current.DataBaseTime);
+                      });
+                      setLocationData(locationDataCopy);
+                    }}>
+                    <FaChevronUp />
+                  </button>
+                  <button
+                    className="button orangeButton"
+                    onClick={() => {
+                      let locationDataCopy = structuredClone(locationData);
+                      locationDataCopy = locationDataCopy.sort((a, b) => {
+                        return b.Current.DataBaseTime.localeCompare(a.Current.DataBaseTime);
+                      });
+                      setLocationData(locationDataCopy);
+                    }}>
+                    <FaChevronDown />
+                  </button>
+                </div>
               </div>
             </div>
             {locationData
@@ -245,7 +255,9 @@ export default function HomeLayout() {
                   showButton = false;
                 }
                 return (
-                  <div key={fullState + index} className={"flex flex-row border-b-2 w-full h-full py-3 " + bg}>
+                  <div
+                    key={fullState + index}
+                    className={"flex flex-row border-2 w-full h-full py-3 px-2 rounded-md " + bg}>
                     <div className="w-[2rem] flex flex-row justify-center items-center">
                       {!showButton ? <RiCheckboxFill className="text-[#f59439] text-2xl" /> : null}
                     </div>
