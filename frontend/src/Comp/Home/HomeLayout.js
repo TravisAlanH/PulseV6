@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import * as Actions from "../../Store/Slices/Slice";
 import * as Functions from "../../Format/Functions";
 import { RiCheckboxFill, RiSaveFill } from "react-icons/ri";
+import { ImMenu3 } from "react-icons/im";
 import "./HomeStyles.css";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
@@ -63,7 +64,7 @@ export default function HomeLayout() {
     e.preventDefault();
     setLoading(true);
     for (let i = 0; i < locationData.length; i++) {
-      if (locationData[i].Location[0]["dcTrack Location Code *"].value === locationCode) {
+      if (locationData[i].Location[0]["dcTrack Location Code *"].value === locationCode || locationCode === "") {
         codeExists = true;
         setExistMessageShow(true);
         setLoading(false);
@@ -80,6 +81,7 @@ export default function HomeLayout() {
         setReload(!reload);
       });
     }
+    setLocationCode("");
   }
 
   function saveData(item) {
@@ -124,24 +126,54 @@ export default function HomeLayout() {
         Created Locations
       </div>
       <div className="flex flex-col gap-3 w-full items-center justify-center p-2 border-b-2 mb-2">
-        <form className="flex flex-row" onSubmit={createLocation}>
-          <div className="w-[1rem] flex flex-row justify-center items-center text-red-500">*</div>
-          <label className={"text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center w-[11rem] pl-2"}>
-            dcTrack Location Code
-          </label>
-          <input
-            type="text"
-            required={true}
-            className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-[10rem]"}
-            placeholder="Location Name"
-            defaultValue={locationCode}
-            onChange={(e) => {
-              setLocationCode(e.target.value);
-              setExistMessageShow(false);
-            }}
-          />
-          <input type="submit" className="orangeButton ml-3" value={"Create Location"} />
-        </form>
+        <div className="flex flex-row">
+          <form className="flex flex-row" onSubmit={createLocation}>
+            <div className="w-[1rem] flex flex-row justify-center items-center text-red-500">*</div>
+            <label className={"text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center w-[11rem] pl-2"}>
+              dcTrack Location Code
+            </label>
+            <input
+              type="text"
+              required={true}
+              className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-[10rem]"}
+              placeholder="Location Name"
+              defaultValue={locationCode}
+              onChange={(e) => {
+                setLocationCode(e.target.value);
+                setExistMessageShow(false);
+              }}
+            />
+            <input type="submit" className="orangeButton ml-3" value={"Create Location"} />
+          </form>
+          <button
+            className="orangeButton ml-3"
+            onClick={() => {
+              let cards = document.querySelectorAll("#LocationCard");
+              if (cards[0].classList.contains("extended")) {
+                for (let i = 0; i < cards.length; i++) {
+                  // cards[i].classList.remove("extended");
+                  // cards[i].classList.remove("h-[10rem]");
+                  // cards[i].classList.add("sm:h-[4rem]");
+                  // cards[i].classList.add("md:h-[4rem]");
+                  cards[i].classList.remove("extended");
+                  cards[i].classList.remove("h-[10rem]");
+                  cards[i].classList.add("h-[0rem]");
+                }
+              } else {
+                for (let i = 0; i < cards.length; i++) {
+                  // cards[i].classList.add("extended");
+                  // cards[i].classList.remove("sm:h-[4rem]");
+                  // cards[i].classList.remove("md:h-[4rem]");
+                  // cards[i].classList.add("h-[10rem]");
+                  cards[i].classList.add("extended");
+                  cards[i].classList.remove("h-[0rem]");
+                  cards[i].classList.add("h-[10rem]");
+                }
+              }
+            }}>
+            <ImMenu3 />
+          </button>
+        </div>
         {existMessageShow ? <div className="text-sm text-red-500">** Location Code in Use **</div> : null}
       </div>
       <div className="flex flex-col justify-center gap-6 px-6">
@@ -242,7 +274,6 @@ export default function HomeLayout() {
               .filter((obj) => obj.Current.DataBaseUUID === UUID)
               .concat(locationData.filter((obj) => obj.Current.DataBaseUUID !== UUID))
               .map((item, index) => {
-                let bg = "bg-white";
                 let showButton = true;
                 let Name = item.Location[0]["dcTrack Location Name *"].value;
                 let Code = item.Location[0]["dcTrack Location Code *"].value;
@@ -251,79 +282,96 @@ export default function HomeLayout() {
                   Name = fullState.Location[0]["dcTrack Location Name *"].value;
                   Code = fullState.Location[0]["dcTrack Location Code *"].value;
                   Hierarchy = fullState.Location[0]["dcTrack Location Hierarchy *"].value;
-                  bg = "bg-white";
+
                   showButton = false;
                 }
+                console.log(item);
                 return (
                   <div
-                    key={fullState + index}
-                    className={"flex flex-row border-2 w-full h-full py-3 px-2 rounded-md " + bg}>
-                    <div className="w-[2rem] flex flex-row justify-center items-center">
-                      {!showButton ? <RiCheckboxFill className="text-[#f59439] text-2xl" /> : null}
-                    </div>
-                    <div className="lg:flex lg:flex-row justify-between md:grid md:grid-cols-2 w-full">
-                      <div className="flex flex-row">
-                        <div>
-                          <label className="text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center w-[7rem] h-full pl-2">
-                            Location Code
-                          </label>
-                        </div>
-                        <div>
-                          <p className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-[10rem]"}>
-                            {Code}
-                          </p>
-                        </div>
+                    // id="LocationCard"
+                    className={"border-2 w-full  py-3 px-2 rounded-md transition-all flex flex-col justify-start"}>
+                    <div key={fullState + index} className={"flex flex-row  w-full px-2 h-full"}>
+                      <div className="w-[2rem] flex flex-row justify-center items-center">
+                        {!showButton ? <RiCheckboxFill className="text-[#f59439] text-2xl" /> : null}
                       </div>
-                      <div className="flex flex-row">
-                        <div>
-                          <label className="text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center w-[7rem] h-full pl-2">
-                            Location Name
-                          </label>
+                      <div className="lg:flex lg:flex-row justify-between md:grid md:grid-cols-2 w-full">
+                        <div className="flex flex-row">
+                          <div>
+                            <label className="text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center w-[7rem] h-[2rem] pl-2">
+                              Location Code
+                            </label>
+                          </div>
+                          <div>
+                            <p className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-[10rem]"}>
+                              {Code}
+                            </p>
+                          </div>
                         </div>
-                        <div>
-                          <p className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-[10rem]"}>
-                            {Name}
-                          </p>
+                        <div className="flex flex-row">
+                          <div>
+                            <label className="text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center w-[7rem] h-[2rem] pl-2">
+                              Location Name
+                            </label>
+                          </div>
+                          <div>
+                            <p className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-[10rem]"}>
+                              {Name}
+                            </p>
+                          </div>
                         </div>
-                      </div>
-                      <div className="flex flex-row">
-                        <div>
-                          <label className="text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center w-[7rem] h-full pl-2">
-                            Hierarchy
-                          </label>
+                        <div className="flex flex-row">
+                          <div>
+                            <label className="text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center w-[7rem] h-[2rem] pl-2">
+                              Hierarchy
+                            </label>
+                          </div>
+                          <div>
+                            <p className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-[10rem]"}>
+                              {Hierarchy}
+                            </p>
+                          </div>
                         </div>
-                        <div>
-                          <p className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-[10rem]"}>
-                            {Hierarchy}
-                          </p>
-                        </div>
-                      </div>
-                      <div className="flex flex-row justify-end">
-                        {showButton ? (
-                          <button
-                            className="orangeButton w-[2.5rem]"
-                            onClick={() => {
-                              if (saveConfirm) {
-                                downloadData(item);
-                                setSaveConfirm(false);
+                        <div className="flex flex-row justify-end">
+                          {showButton ? (
+                            <button
+                              className="orangeButton w-[2.5rem]"
+                              onClick={() => {
+                                if (saveConfirm) {
+                                  downloadData(item);
+                                  setSaveConfirm(false);
+                                  setReload(!reload);
+                                } else {
+                                  document.getElementById("confirmationDialog").style.display = "flex";
+                                }
+                              }}>
+                              <TbDownload />
+                            </button>
+                          ) : (
+                            <button
+                              className="w-[2.5rem] orangeButton"
+                              onClick={() => {
+                                setSaveConfirm(true);
+                                saveData(item);
                                 setReload(!reload);
-                              } else {
-                                document.getElementById("confirmationDialog").style.display = "flex";
-                              }
-                            }}>
-                            <TbDownload />
-                          </button>
-                        ) : (
-                          <button
-                            className="w-[2.5rem] orangeButton"
-                            onClick={() => {
-                              setSaveConfirm(true);
-                              saveData(item);
-                              setReload(!reload);
-                            }}>
-                            <RiSaveFill />
-                          </button>
-                        )}
+                              }}>
+                              <RiSaveFill />
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                    <div id="LocationCard" className="h-[0rem] overflow-clip transition-all flex flex-col">
+                      <div>Additional Data</div>
+                      <div className="border-2 rounded-md pt-2 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 ">
+                        <div>Building: {item.SurveySite[0]["Building"].value}</div>
+
+                        <div>Room Number: {item.SurveySite[0]["ATG Room Number"].value}</div>
+                        <div>Site Contact Email: {item.SurveySite[0]["Site Contact Email"].value}</div>
+                        <div>Site Contact Phone: {item.SurveySite[0]["Site Contact Phone"].value}</div>
+                        <div>Updated: {Functions.formatTimestamp(item.Current.DataBaseTime)}</div>
+
+                        <div>Cabinets: {item.Racks.length}</div>
+                        <div>Assets:{item.Assets.length}</div>
                       </div>
                     </div>
                   </div>

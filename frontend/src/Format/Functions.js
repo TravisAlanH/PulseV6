@@ -130,3 +130,29 @@ export function resetObjectKeysNOTInArray(obj, keysArray) {
   }
   return updatedObject;
 }
+
+export function formatTimestamp(timestamp) {
+  const year = timestamp.slice(0, 4);
+  const month = parseInt(timestamp.slice(5, 7), 10);
+  const day = parseInt(timestamp.slice(8, 10), 10);
+  const hours = parseInt(timestamp.slice(11, 13), 10);
+  const minutes = parseInt(timestamp.slice(14, 16), 10);
+
+  const monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  const formattedDate = `${monthNames[month - 1]} ${day}, ${year}, ${hours}:${minutes} AM UTC`;
+  return formattedDate;
+}
