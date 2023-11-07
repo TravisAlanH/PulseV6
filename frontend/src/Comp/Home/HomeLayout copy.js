@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import * as FireActions from "../../FireActions";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
 import app from "../../firebase";
@@ -12,6 +12,7 @@ import * as Functions from "../../Format/Functions";
 import { RiCheckboxFill, RiSaveFill } from "react-icons/ri";
 import "./HomeStyles.css";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import { set } from "firebase/database";
 
 export default function HomeLayout() {
   const [locationCode, setLocationCode] = React.useState("");
@@ -44,7 +45,9 @@ export default function HomeLayout() {
       setLoading(false);
       console.error("Error adding document: ", error);
     });
-  }, [reload, user.uid]);
+  }, [user.uid]);
+
+  React.useEffect(() => {}, [reload]);
 
   let Duplicate = null;
 
@@ -86,6 +89,7 @@ export default function HomeLayout() {
     setLoading(true);
     setSaveConfirm(false);
     let itemUUID = item.Current.DataBaseUUID;
+    let FireLocationData = structuredClone(locationData);
     let stateCopy = structuredClone(fullState);
     stateCopy.Current.DataBaseTime = Functions.getCurrentTimeInFormat();
     // let newFireLocationData = FireLocationData.filter((item) => item.Current.DataBaseUUID !== itemUUID);
@@ -204,26 +208,92 @@ export default function HomeLayout() {
                 </button>
               </div>
             </div>
+
+            <div className={"flex flex-row border-b-2 w-full h-full py-3 "}>
+              <div className="w-[2rem] flex flex-row justify-center items-center">
+                <RiCheckboxFill className="text-[#f59439] text-2xl" />
+              </div>
+              <div className="lg:flex lg:flex-row justify-between md:grid md:grid-cols-2 w-full">
+                <div className="flex flex-row">
+                  <div>
+                    <label className="text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center w-[7rem] h-full pl-2">
+                      Location Code
+                    </label>
+                  </div>
+                  <div>
+                    <input
+                      type="text"
+                      className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-[10rem]"}
+                      defaultValue={fullState.Location[0]["dcTrack Location Code *"].value}
+                    />
+                  </div>
+                </div>
+                <div className="flex flex-row">
+                  <div>
+                    <label className="text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center w-[7rem] h-full pl-2">
+                      Location Name
+                    </label>
+                  </div>
+                  <div>
+                    <input
+                      type="text"
+                      className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-[10rem]"}
+                      defaultValue={fullState.Location[0]["dcTrack Location Name *"].value}
+                      placeholder="Location Tab"
+                    />
+                  </div>
+                </div>
+                <div className="flex flex-row">
+                  <div>
+                    <label className="text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center w-[7rem] h-full pl-2">
+                      Hierarchy
+                    </label>
+                  </div>
+                  <div>
+                    <input
+                      type="text"
+                      className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-[10rem]"}
+                      defaultValue={fullState.Location[0]["dcTrack Location Hierarchy *"].value}
+                      placeholder="Location Tab"
+                    />
+                  </div>
+                </div>
+                <div className="flex flex-row justify-end">
+                  <button
+                    className="w-[2.5rem] orangeButton"
+                    onClick={() => {
+                      setSaveConfirm(true);
+                      saveData(fullState);
+                      setReload(!reload);
+                    }}>
+                    <RiSaveFill />
+                  </button>
+                </div>
+              </div>
+            </div>
+
             {locationData
-              .filter((obj) => obj.Current.DataBaseUUID === UUID)
-              .concat(locationData.filter((obj) => obj.Current.DataBaseUUID !== UUID))
+              .filter((item) => item.Current.DataBaseUUID !== UUID)
               .map((item, index) => {
-                let bg = "bg-white";
-                let showButton = true;
-                let Name = item.Location[0]["dcTrack Location Name *"].value;
-                let Code = item.Location[0]["dcTrack Location Code *"].value;
-                let Hierarchy = item.Location[0]["dcTrack Location Hierarchy *"].value;
-                if (item.Current.DataBaseUUID === UUID) {
-                  Name = fullState.Location[0]["dcTrack Location Name *"].value;
-                  Code = fullState.Location[0]["dcTrack Location Code *"].value;
-                  Hierarchy = fullState.Location[0]["dcTrack Location Hierarchy *"].value;
-                  bg = "bg-white";
-                  showButton = false;
-                }
+                // let bg = "bg-white";
+                // let showButton = true;
+                // let Name = item.Location[0]["dcTrack Location Name *"].value;
+                // let Code = item.Location[0]["dcTrack Location Code *"].value;
+                // let Hierarchy = item.Location[0]["dcTrack Location Hierarchy *"].value;
+                // if (item.Current.DataBaseUUID === UUID) {
+                //   // Name = fullState.Location[0]["dcTrack Location Name *"].value;
+                //   // Code = fullState.Location[0]["dcTrack Location Code *"].value;
+                //   // Hierarchy = fullState.Location[0]["dcTrack Location Hierarchy *"].value;
+                //   bg = "bg-white";
+                //   showButton = false;
+                // }
+
                 return (
-                  <div key={fullState + index} className={"flex flex-row border-b-2 w-full h-full py-3 " + bg}>
+                  <div key={index} className={"flex flex-row border-b-2 w-full h-full py-3 "}>
                     <div className="w-[2rem] flex flex-row justify-center items-center">
-                      {!showButton ? <RiCheckboxFill className="text-[#f59439] text-2xl" /> : null}
+                      {/* {item.Current.DataBaseUUID === UUID ? (
+                        <RiCheckboxFill className="text-[#f59439] text-2xl" />
+                      ) : null} */}
                     </div>
                     <div className="lg:flex lg:flex-row justify-between md:grid md:grid-cols-2 w-full">
                       <div className="flex flex-row">
@@ -233,9 +303,11 @@ export default function HomeLayout() {
                           </label>
                         </div>
                         <div>
-                          <p className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-[10rem]"}>
-                            {Code}
-                          </p>
+                          <input
+                            type="text"
+                            className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-[10rem]"}
+                            defaultValue={item.Location[0]["dcTrack Location Code *"].value}
+                          />
                         </div>
                       </div>
                       <div className="flex flex-row">
@@ -245,9 +317,12 @@ export default function HomeLayout() {
                           </label>
                         </div>
                         <div>
-                          <p className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-[10rem]"}>
-                            {Name}
-                          </p>
+                          <input
+                            type="text"
+                            className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-[10rem]"}
+                            defaultValue={item.Location[0]["dcTrack Location Name *"].value}
+                            placeholder="Location Tab"
+                          />
                         </div>
                       </div>
                       <div className="flex flex-row">
@@ -257,37 +332,39 @@ export default function HomeLayout() {
                           </label>
                         </div>
                         <div>
-                          <p className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-[10rem]"}>
-                            {Hierarchy}
-                          </p>
+                          <input
+                            type="text"
+                            className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-[10rem]"}
+                            defaultValue={item.Location[0]["dcTrack Location Hierarchy *"].value}
+                            placeholder="Location Tab"
+                          />
                         </div>
                       </div>
                       <div className="flex flex-row justify-end">
-                        {showButton ? (
-                          <button
-                            className="orangeButton w-[2.5rem]"
-                            onClick={() => {
-                              if (saveConfirm) {
-                                downloadData(item);
-                                setSaveConfirm(false);
-                                setReload(!reload);
-                              } else {
-                                document.getElementById("confirmationDialog").style.display = "flex";
-                              }
-                            }}>
-                            <TbDownload />
-                          </button>
-                        ) : (
-                          <button
-                            className="w-[2.5rem] orangeButton"
-                            onClick={() => {
-                              setSaveConfirm(true);
-                              saveData(item);
+                        {/* {item.Current.DataBaseUUID !== UUID ? ( */}
+                        <button
+                          className="orangeButton w-[2.5rem]"
+                          onClick={() => {
+                            if (saveConfirm) {
+                              downloadData(item);
+                              setSaveConfirm(false);
                               setReload(!reload);
-                            }}>
-                            <RiSaveFill />
-                          </button>
-                        )}
+                            } else {
+                              document.getElementById("confirmationDialog").style.display = "flex";
+                            }
+                          }}>
+                          <TbDownload />
+                        </button>
+                        {/* ) : ( */}
+                        {/* <button
+                          className="w-[2.5rem] orangeButton"
+                          onClick={() => {
+                            setSaveConfirm(true);
+                            saveData(item);
+                          }}>
+                          <RiSaveFill />
+                        </button> */}
+                        {/* )} */}
                       </div>
                     </div>
                   </div>
