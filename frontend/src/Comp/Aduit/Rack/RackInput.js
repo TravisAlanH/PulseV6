@@ -3,12 +3,14 @@ import STDInput from "../../Reuse/STDInput";
 import { useSelector } from "react-redux";
 import SearchLayout from "../../Search/SearchLayout";
 import CreateNewViewButton from "../AddNew/CreateNewViewButton";
+import UseLastData from "../../Reuse/UseLastData";
 
 export default function RackInput({ AllData }) {
   const Step = "Racks";
 
   const Current = useSelector((state) => state.data.Current[Step]);
   const State = useSelector((state) => state.data[Step][Current]);
+  const StepData = useSelector((state) => state.data[Step]);
   const Keys = Object.keys(State);
 
   const CheckArray = ["Name *", "Make *", "Model *"];
@@ -31,6 +33,9 @@ export default function RackInput({ AllData }) {
           input = <SearchLayout key={index} KeyName={key} Step={Step} AllData={AllData} />;
         return input;
       })}
+      {StepData.length > 0 && StepData.length !== 1 && State["Make *"].value === "" && State["Model *"].value === "" ? (
+        <UseLastData Step={Step} />
+      ) : null}
       <CreateNewViewButton Step={"Racks"} />
     </div>
   );
