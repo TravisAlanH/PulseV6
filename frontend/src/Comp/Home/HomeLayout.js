@@ -287,9 +287,7 @@ export default function HomeLayout() {
                 }
                 console.log(item);
                 return (
-                  <div
-                    // id="LocationCard"
-                    className={"border-2 w-full  py-3 px-2 rounded-md transition-all flex flex-col justify-start"}>
+                  <div className={"border-2 w-full  py-3 px-2 rounded-md transition-all flex flex-col justify-start"}>
                     <div key={fullState + index} className={"flex flex-row  w-full px-2 h-full"}>
                       <div className="w-[2rem] flex flex-row justify-center items-center">
                         {!showButton ? <RiCheckboxFill className="text-[#f59439] text-2xl" /> : null}
@@ -360,16 +358,20 @@ export default function HomeLayout() {
                         </div>
                       </div>
                     </div>
-                    <div id="LocationCard" className="h-[0rem] overflow-clip transition-all flex flex-col">
-                      <div>Additional Data</div>
-                      <div className="border-2 rounded-md pt-2 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 ">
+                    <div
+                      id="LocationCard"
+                      className="h-[0rem] overflow-clip transition-all flex flex-col justify-center">
+                      <div className="flex flex-row justify-end w-full">
+                        {showButton ? null : <p className="text-[red] text-sm">Save data to see most recent changes</p>}
+                      </div>
+                      <div className="border-2 rounded-md p-2 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 ">
                         <div>Building: {item.SurveySite[0]["Building"].value}</div>
-
                         <div>Room Number: {item.SurveySite[0]["ATG Room Number"].value}</div>
                         <div>Site Contact Email: {item.SurveySite[0]["Site Contact Email"].value}</div>
                         <div>Site Contact Phone: {item.SurveySite[0]["Site Contact Phone"].value}</div>
                         <div>Updated: {Functions.formatTimestamp(item.Current.DataBaseTime)}</div>
-
+                      </div>
+                      <div className="border-2 rounded-md p-2 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 ">
                         <div>Cabinets: {item.Racks.length}</div>
                         <div>Assets:{item.Assets.length}</div>
                       </div>
