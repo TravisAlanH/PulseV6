@@ -13,7 +13,6 @@ import { RiCheckboxFill, RiSaveFill } from "react-icons/ri";
 import { ImMenu3 } from "react-icons/im";
 import "./HomeStyles.css";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
-import { set } from "firebase/database";
 
 export default function HomeLayout() {
   const [locationCode, setLocationCode] = React.useState("");

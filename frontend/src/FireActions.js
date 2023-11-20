@@ -9,7 +9,7 @@ import {
   updateProfile,
   sendEmailVerification,
 } from "firebase/auth";
-import { getDatabase, onValue, ref, set } from "firebase/database";
+import { getDatabase, onValue, ref } from "firebase/database";
 import app from "./firebase";
 import { arrayRemove, arrayUnion, doc, getDoc, getFirestore, setDoc, updateDoc } from "firebase/firestore";
 
