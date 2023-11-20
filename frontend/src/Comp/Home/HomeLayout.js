@@ -13,6 +13,7 @@ import { RiCheckboxFill, RiSaveFill } from "react-icons/ri";
 import { ImMenu3 } from "react-icons/im";
 import "./HomeStyles.css";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import { set } from "firebase/database";
 
 export default function HomeLayout() {
   const [locationCode, setLocationCode] = React.useState("");
@@ -96,35 +97,14 @@ export default function HomeLayout() {
   }
 
   function newSaveData(item) {
+    let holdItem = structuredClone(item);
+    holdItem.Current.DataBaseTime = Functions.getCurrentTimeInFormat();
     setLoading(true);
     setSaveConfirm(true);
-    FireActions.replaceLocationWithUpdate(item).then(() => {
+    FireActions.replaceLocationWithUpdate(holdItem).then(() => {
       setLoading(false);
-      setReload(!reload);
     });
-  }
-
-  function saveData(item) {
-    setLoading(true);
-    setSaveConfirm(true);
-    FireActions.replaceLocationWithUpdate(item);
-    let itemUUID = item.Current.DataBaseUUID;
-    let stateCopy = structuredClone(fullState);
-    stateCopy.Current.DataBaseTime = Functions.getCurrentTimeInFormat();
-    // let newFireLocationData = FireLocationData.filter((item) => item.Current.DataBaseUUID !== itemUUID);
-    let newFireLocationData = [];
-    for (let i = 0; i < locationData.length; i++) {
-      if (locationData[i].Current.DataBaseUUID !== itemUUID) {
-        newFireLocationData.push(locationData[i]);
-      }
-    }
-
-    newFireLocationData.push(stateCopy);
-    FireActions.updateLocationsList(newFireLocationData, user).then(() => {
-      setLocationData(newFireLocationData);
-      setLoading(false);
-      setReload(!reload);
-    });
+    setReload(!reload);
   }
 
   function downloadData(item) {

@@ -180,6 +180,11 @@ const Slice = createSlice({
       state[action.payload.Step] = [...state[action.payload.Step], updatedRack];
       if (state.Settings.localStorage) localStorage.setItem("PulseStateData", JSON.stringify(state));
     },
+    bulkAddToRacks: (state, action) => {
+      console.log(action.payload);
+      state["Racks"].push(action.payload.value);
+      if (state.Settings.localStorage) localStorage.setItem("PulseStateData", JSON.stringify(state));
+    },
     addToPDU: (state, action) => {
       let updatedPUD = {
         ...Template["PDUs"],
@@ -322,6 +327,7 @@ const Slice = createSlice({
 });
 
 export const {
+  bulkAddToRacks,
   UpdateSurveyData,
   replaceSetStructuredCabling,
   BuildStructuredCableSet,

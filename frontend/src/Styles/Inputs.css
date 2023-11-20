@@ -8,6 +8,22 @@
   color: white;
   /* "w-[4rem] h-[1.5rem] bg-slate-200 rounded-md" */
 }
+
+.orange {
+  color: #f59439;
+}
+
+.grayButton {
+  /* width: 4rem; */
+  padding-left: 0.7rem;
+  padding-right: 0.7rem;
+  height: 1.8rem;
+  background-color: #f5943969;
+  border-radius: 0.25rem;
+  color: white;
+  /* "w-[4rem] h-[1.5rem] bg-slate-200 rounded-md" */
+}
+
 .orangeButtonClear {
   /* width: 4rem; */
   padding-left: 0.7rem;
