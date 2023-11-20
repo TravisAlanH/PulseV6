@@ -36,7 +36,17 @@ export default function HomeLayout() {
       const docRef = doc(db, "users", user.uid);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
-        setLocationData(docSnap.data().LocationsList);
+        let incomingData = docSnap.data().LocationsList;
+        let dataHold = [];
+        for (let i = 0; i < incomingData.length; i++) {
+          if (typeof incomingData[i] === "string") {
+            dataHold.push(JSON.parse(incomingData[i]));
+          } else {
+            dataHold.push(incomingData[i]);
+          }
+        }
+        setLocationData(dataHold);
+        // setLocationData((docSnap.data().LocationsList));
       }
       setTimeout(() => {
         setLoading(false);
@@ -85,9 +95,19 @@ export default function HomeLayout() {
     setLocationCode("");
   }
 
+  function newSaveData(item) {
+    setLoading(true);
+    setSaveConfirm(true);
+    FireActions.replaceLocationWithUpdate(item).then(() => {
+      setLoading(false);
+      setReload(!reload);
+    });
+  }
+
   function saveData(item) {
     setLoading(true);
     setSaveConfirm(true);
+    FireActions.replaceLocationWithUpdate(item);
     let itemUUID = item.Current.DataBaseUUID;
     let stateCopy = structuredClone(fullState);
     stateCopy.Current.DataBaseTime = Functions.getCurrentTimeInFormat();
@@ -340,7 +360,8 @@ export default function HomeLayout() {
                             <button
                               className="w-[2.5rem] orangeButton"
                               onClick={() => {
-                                saveData(item);
+                                newSaveData(fullState);
+                                // saveData(item);
                                 setReload(!reload);
                               }}>
                               <RiSaveFill />
@@ -402,7 +423,7 @@ export default function HomeLayout() {
             data and replace it with the location data you selected
           </p>
           <div className="flex flex-row items-center justify-center gap-2" id="confirmBox">
-            <label>{"confirm: "}</label>
+            <label>{"Replace: "}</label>
             <input
               type="checkbox"
               id="confirmChange"

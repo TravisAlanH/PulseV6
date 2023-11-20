@@ -9,7 +9,7 @@ import {
   updateProfile,
   sendEmailVerification,
 } from "firebase/auth";
-import { getDatabase, onValue, ref } from "firebase/database";
+import { getDatabase, onValue, ref, set } from "firebase/database";
 import app from "./firebase";
 import { arrayRemove, arrayUnion, doc, getDoc, getFirestore, setDoc, updateDoc } from "firebase/firestore";
 
@@ -93,10 +93,10 @@ async function addToLocations(user, data) {
   const db = getFirestore(app);
   const docRef = doc(db, "users", user.uid);
   const docSnap = await getDoc(docRef);
-  console.log(data);
+  console.log(JSON.stringify(data));
   if (docSnap.exists()) {
     await updateDoc(docRef, {
-      LocationsList: arrayUnion(data),
+      LocationsList: arrayUnion(JSON.stringify(data)),
     });
   }
 }
@@ -106,9 +106,40 @@ async function updateLocationsList(newLocationsData) {
   const docRef = doc(db, "users", auth.currentUser.uid);
   const docSnap = await getDoc(docRef);
   if (docSnap.exists()) {
-    await updateDoc(docRef, {
-      LocationsList: newLocationsData,
-    });
+    console.log("docRef", docRef);
+    console.log("updateLocationsList", newLocationsData);
+    // await setDoc(docRef, {
+    //   LocationsList: newLocationsData,
+    // });
+    // await updateDoc(docRef, {
+    //   LocationsList: newLocationsData,
+    // });
+  }
+}
+
+async function replaceLocationWithUpdate(newLocationData) {
+  let UUID = newLocationData.Current.DataBaseUUID;
+  // use array-contains to delete this data from the db
+  const db = getFirestore(app);
+  const docRef = doc(db, "users", auth.currentUser.uid);
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    let removed;
+    let LocationsList = docSnap.data().LocationsList;
+    for (let i = 0; i < LocationsList.length; i++) {
+      let LocationListIndexData = LocationsList[i];
+      if (typeof LocationListIndexData === "string") LocationListIndexData = JSON.parse(LocationListIndexData);
+      if (LocationListIndexData.Current.DataBaseUUID === UUID) {
+        removed = LocationsList[i];
+        await updateDoc(docRef, {
+          LocationsList: arrayRemove(removed),
+        }).then(() => {
+          updateDoc(docRef, {
+            LocationsList: arrayUnion(JSON.stringify(newLocationData)),
+          });
+        });
+      }
+    }
   }
 }
 
@@ -170,6 +201,7 @@ function signIn(user) {
 }
 
 export {
+  replaceLocationWithUpdate,
   signup,
   signIn,
   UserSignOut,

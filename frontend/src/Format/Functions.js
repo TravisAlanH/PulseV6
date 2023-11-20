@@ -136,7 +136,7 @@ export function formatTimestamp(timestamp) {
   const month = parseInt(timestamp.slice(5, 7), 10);
   const day = parseInt(timestamp.slice(8, 10), 10);
   const hours = parseInt(timestamp.slice(11, 13), 10);
-  const minutes = parseInt(timestamp.slice(14, 16), 10);
+  const minutes = (timestamp.slice(14, 16), 10);
 
   const monthNames = [
     "January",
