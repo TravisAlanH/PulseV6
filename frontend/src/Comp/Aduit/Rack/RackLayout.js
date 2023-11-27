@@ -49,7 +49,7 @@ export default function RackLayout({ AllData }) {
           </button>
         </div>
         {Data.length > 0 ? (
-          <div className="flex flex-row justify-center lg:justify-center gap-6 px-6">
+          <div className="flex md:flex-row lg:flex-row flex-col justify-center lg:justify-center gap-6 px-6">
             <div>
               <RackInput AllData={AllData} Step={Step} />
               <PDUViewVerticalComp Step={Step} />

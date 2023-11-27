@@ -152,7 +152,7 @@ export default function STDInput({ keyName, Step }) {
         <div>
           <input
             id={keyName + Step}
-            className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit " + inputSizeWithButton}
+            className={"h-[2rem] px-2 text-black border-2 border-[#F7F5F1] bg-inherit border-l-2" + inputSizeWithButton}
             value={state[current][keyName].value}
             type="text"
             disabled={state[current][keyName].disabled ? true : false}
@@ -174,7 +174,9 @@ export default function STDInput({ keyName, Step }) {
         <div>
           <input
             id={keyName + Step}
-            className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit " + inputSizeWithButton}
+            className={
+              "h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit border-l-2" + inputSizeWithButton
+            }
             value={state[current][keyName].value}
             type="text"
             disabled={state[current][keyName].disabled ? true : false}
@@ -297,14 +299,16 @@ export default function STDInput({ keyName, Step }) {
   }
 
   return (
-    <div className="flex flex-row">
-      <div className="w-[1rem] flex flex-row justify-center items-center text-red-500">
-        {keyName.includes("*") ? "*" : ""}
+    <div className="flex md:flex-row lg:flex-row flex-col">
+      <div className="flex flex-row">
+        <div className="w-[1rem] flex flex-row justify-center items-center text-red-500">
+          {keyName.includes("*") ? "*" : ""}
+        </div>
+        <label className={"text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center " + labelSize}>
+          {ShowAll ? keyName.replace("*", "") : keyName.slice(0, 12).replace("*", "")}
+        </label>
       </div>
-      <label className={"text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center " + labelSize}>
-        {ShowAll ? keyName.replace("*", "") : keyName.slice(0, 12).replace("*", "")}
-      </label>
-      {STDInput}
+      <div className="ml-[1rem] lg:ml-0 md:ml-0">{STDInput}</div>
     </div>
   );
 }
