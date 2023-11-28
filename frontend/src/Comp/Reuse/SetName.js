@@ -90,7 +90,6 @@ export default function SetName({ Step }) {
           Object.keys(fullState).forEach((key) => {
             if (Array.isArray(fullState[key]) && fullState[key].length > 0) {
               for (let i = 0; i < fullState[key].length; i++) {
-                console.log(racks[currentRack]);
                 if (
                   fullState[key][i].hasOwnProperty("Cabinet *") &&
                   fullState[key][i]["Cabinet *"].value === racks[currentRack]["Name *"].value
