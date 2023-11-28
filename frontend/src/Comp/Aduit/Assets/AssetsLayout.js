@@ -16,12 +16,12 @@ export default function AssetsLayout({ AllData }) {
       <div className="bg-[#F7F5F1] flex flex-row justify-start h-[3rem] items-center pl-6 text-lg font-bold">
         {Step === "Racks" ? "Cabinet" : Step}
       </div>
-      <div className="flex flex-row gap-3 w-full justify-center p-2 border-b-2 mb-2">
+      <div className="flex lg:flex-row md:flex-row flex-col gap-3 w-full justify-center p-2 border-b-2 mb-2 items-center">
         <SetCurrentSelection Step={"Racks"} />
         <SetCurrentSelection Step={"Assets"} />
       </div>
-      <div></div>
-      <div className="flex flex-row justify-center lg:justify-center gap-6 px-6">
+
+      <div className="flex lg:flex-row md:flex-row flex-col md:justify-center lg:justify-center gap-6 px-6 items-start">
         {Data.length > 0 ? (
           <div className="">
             <AssetInputs AllData={AllData} Step={Step} />

@@ -299,7 +299,7 @@ export default function STDInput({ keyName, Step }) {
   }
 
   return (
-    <div className="flex md:flex-row lg:flex-row flex-col">
+    <div className="flex md:flex-row lg:flex-row flex-row justify-start">
       <div className="flex flex-row">
         <div className="w-[1rem] flex flex-row justify-center items-center text-red-500">
           {keyName.includes("*") ? "*" : ""}
@@ -308,7 +308,7 @@ export default function STDInput({ keyName, Step }) {
           {ShowAll ? keyName.replace("*", "") : keyName.slice(0, 12).replace("*", "")}
         </label>
       </div>
-      <div className="ml-[1rem] lg:ml-0 md:ml-0">{STDInput}</div>
+      <div className="">{STDInput}</div>
     </div>
   );
 }

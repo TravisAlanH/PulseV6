@@ -15,6 +15,9 @@ export default function RackLayout({ AllData }) {
   const Location = useSelector((state) => state.data.Location);
   const [bulkData, setBulkData] = useState({});
   const [bulkAdd, setBulkAdd] = useState(0);
+  const newData = useSelector((state) => state.data["newData"]);
+
+  console.log("newData", newData);
 
   const dispatch = useDispatch();
 
@@ -36,17 +39,19 @@ export default function RackLayout({ AllData }) {
         <div className="bg-[#F7F5F1] flex flex-row justify-start h-[3rem] items-center pl-6 text-lg font-bold">
           {Step === "Racks" ? "Cabinet" : Step}
         </div>
-        <div className="flex flex-row gap-3 w-full justify-center p-2 border-b-2 mb-2">
+        <div className="flex lg:flex-row md:flex-row flex-col gap-3 w-full justify-center p-2 border-b-2 mb-2 items-center">
           <SetCurrentSelection Step={Step} />
-          <AddToStep Step={Step} />
-          <button
-            className={Data.length === 0 ? "grayButton" : "orangeButton"}
-            disabled={Data.length === 0 ? true : false}
-            onClick={() => {
-              document.getElementById("BulkAddRacks").classList.replace("hidden", "block");
-            }}>
-            Bulk Add
-          </button>
+          <div className="flex flex-row justify-between gap-5">
+            <AddToStep Step={Step} />
+            <button
+              className={Data.length === 0 ? "grayButton" : "orangeButton"}
+              disabled={Data.length === 0 ? true : false}
+              onClick={() => {
+                document.getElementById("BulkAddRacks").classList.replace("hidden", "block");
+              }}>
+              Bulk Add
+            </button>
+          </div>
         </div>
         {Data.length > 0 ? (
           <div className="flex md:flex-row lg:flex-row flex-col justify-center lg:justify-center gap-6 px-6">

@@ -223,8 +223,7 @@ export default function sortArrayToMatchReference(arrayToSort, Step) {
 
 export function sortObjectByTemplate(object, Step) {
   var reorderedObject = {};
-  console.log(Step);
-  console.log(OrderData[Step]);
+
   OrderData[Step].forEach(function (key) {
     reorderedObject[key] = object[key];
   });
