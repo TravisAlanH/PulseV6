@@ -269,20 +269,7 @@ export default function LoginTable({ setAllData }) {
           </li>
         )}
       </ul>
-      {/* <button
-        className="text-white text-xs"
-        onClick={() => {
-          if (FireActions.auth.currentUser.currentUser === null) {
-            alert("Please enter your email");
-            return;
-          } else {
-            FireActions.VerificationEmail();
-            FireActions.UserSignOut(FireActions.auth);
-            alert("Email Sent");
-          }
-        }}>
-        Reverify Email
-      </button> */}
+
       <h2 className="text-white tracking-[-.42px] border-t-[2px] pt-3 w-[80%] text-center">dcTrack Auditor Tool</h2>
       <p className="text-white opacity-60 text-xs text-center px-4 py-3">
         Access to this system is prohibited unless authorized. Accessing programs or data unrelated to your job is

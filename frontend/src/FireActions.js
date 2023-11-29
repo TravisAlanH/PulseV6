@@ -58,6 +58,11 @@ async function VerificationEmail() {
   UserSignOut(auth);
 }
 
+async function sendNewVerificationEmail(email) {
+  console.log("sendNewVerificationEmail");
+  auth.generateEmailVerificationLink(email);
+}
+
 function signup(user) {
   setPersistence(auth, browserSessionPersistence);
   const db = getFirestore(app);
@@ -203,6 +208,7 @@ function signIn(user) {
 }
 
 export {
+  sendNewVerificationEmail,
   replaceLocationWithUpdate,
   signup,
   signIn,

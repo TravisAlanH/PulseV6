@@ -138,7 +138,7 @@ export default function SearchTableModel({ SearchData, searchInput, Step, setSea
       <thead className="sticky top-0 bg-white">
         <tr>
           <th className="Model bg-white">
-            <div className="flex flex-row items-center justify-between w-[20rem] bg-white h-full">
+            <div className="flex flex-row items-center justify-between w-[16rem] bg-white h-full">
               {"Model (ADDED)"}
             </div>
           </th>
@@ -167,7 +167,7 @@ export default function SearchTableModel({ SearchData, searchInput, Step, setSea
         <thead className="sticky top-0 bg-white">
           <tr>
             <th className="Model bg-white">
-              <div className="flex flex-row items-center justify-between w-[20rem] bg-white h-full">
+              <div className="flex flex-row items-center justify-between w-[16rem] bg-white h-full">
                 Model
                 <div className="sort-table-arrows flex flex-row gap-2 items-center justify-end w-[5rem]">
                   <button

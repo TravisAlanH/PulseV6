@@ -9,6 +9,8 @@ export default function SearchInput({ searchInput, setSearchInput, KeyName, Step
   const dispatch = useDispatch();
   const Name = state["Name *"].value;
 
+  console.log(window.screen.height);
+
   return (
     <div>
       <input
@@ -16,6 +18,10 @@ export default function SearchInput({ searchInput, setSearchInput, KeyName, Step
         className="h-[2rem] w-[13rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit search-input"
         value={searchInput}
         onFocus={() => {
+          setTimeout(() => {
+            console.log(window.screen.height);
+          }, 1000);
+
           if (Name === "") {
             document.getElementById("NameRequired").style.opacity = "1";
             document.getElementById("Name *" + Step).focus();

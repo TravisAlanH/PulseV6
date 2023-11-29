@@ -183,6 +183,10 @@ const Slice = createSlice({
     bulkAddToRacks: (state, action) => {
       console.log(action.payload);
       state["Racks"].push(action.payload.value);
+      let OpenRUObject = {
+        value: new Array(action.payload.value["RU Height"].value).fill(0),
+      };
+      state["OpenRU"].push(OpenRUObject);
       if (state.Settings.localStorage) localStorage.setItem("PulseStateData", JSON.stringify(state));
     },
     addToPDU: (state, action) => {
