@@ -46,15 +46,16 @@ async function getData() {
   });
 }
 
-function VerificationEmail() {
+async function VerificationEmail() {
   console.log("VerificationEmail");
-  sendEmailVerification(auth.currentUser)
+  await sendEmailVerification(auth.currentUser)
     .then(() => {})
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
       console.log(errorCode, errorMessage);
     });
+  UserSignOut(auth);
 }
 
 function signup(user) {

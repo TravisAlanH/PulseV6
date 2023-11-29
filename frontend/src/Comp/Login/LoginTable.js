@@ -192,12 +192,8 @@ export default function LoginTable({ setAllData }) {
                   console.log(FireActions.auth);
                   if (!FireActions.auth.currentUser.emailVerified) {
                     alert("Please verify your email");
-                    setTimeout(() => {
-                      FireActions.VerificationEmail();
-                      setTimeout(() => {
-                        FireActions.UserSignOut(FireActions.auth);
-                      }, 3000);
-                    }, 1000);
+                    FireActions.VerificationEmail();
+                    // FireActions.UserSignOut(FireActions.auth);
                     return;
                   }
                   navigate("/home");
@@ -229,7 +225,7 @@ export default function LoginTable({ setAllData }) {
           <li className="">
             <button
               className="LoginButton mt-3"
-              onClick={() => {
+              onClick={async () => {
                 if (createUser.password !== createUser.confirmPassword) {
                   alert("Passwords do not match");
                   return;
@@ -245,12 +241,8 @@ export default function LoginTable({ setAllData }) {
                     FullName: "",
                   });
                   FireActions.signup(createUser);
-                  setTimeout(() => {
-                    FireActions.VerificationEmail();
-                    setTimeout(() => {
-                      FireActions.UserSignOut(FireActions.auth);
-                    }, 3000);
-                  }, 1000);
+                  FireActions.VerificationEmail();
+                  // await FireActions.UserSignOut(FireActions.auth);
 
                   alert("Account Created, Please verify your email to gain Access");
                 }
