@@ -47,6 +47,7 @@ async function getData() {
 }
 
 function VerificationEmail() {
+  console.log("VerificationEmail");
   sendEmailVerification(auth.currentUser)
     .then(() => {})
     .catch((error) => {

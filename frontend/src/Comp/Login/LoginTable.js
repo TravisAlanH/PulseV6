@@ -168,7 +168,7 @@ export default function LoginTable({ setAllData }) {
         {!createAccount && (
           <li>
             <button
-              className="LoginButton mt-3"
+              className="LoginButton"
               onClick={async () => {
                 if (!isValidEmail(user.email)) {
                   alert("Invalid email used");
@@ -210,7 +210,7 @@ export default function LoginTable({ setAllData }) {
         {!createAccount && (
           <li>
             <button
-              className="LoginButton mt-3 mb-8"
+              className="LoginButton mb-4"
               onClick={() => {
                 setCreateAccount(true);
               }}>
@@ -222,7 +222,7 @@ export default function LoginTable({ setAllData }) {
         {createAccount && (
           <li className="">
             <button
-              className="LoginButton mt-3 mb-8"
+              className="LoginButton mt-3"
               onClick={() => {
                 if (createUser.password !== createUser.confirmPassword) {
                   alert("Passwords do not match");
@@ -238,16 +238,50 @@ export default function LoginTable({ setAllData }) {
                     confirmPassword: "",
                     FullName: "",
                   });
-                  FireActions.signup(createUser);
-                  alert("Account Created, Please verify your email ");
+                  FireActions.signup(createUser).then(() => {
+                    FireActions.VerificationEmail();
+                    FireActions.UserSignOut(FireActions.auth);
+                  });
+                  alert("Account Created, Please verify your email to gain Access");
                 }
               }}>
               Create
             </button>
           </li>
         )}
+        {createAccount && (
+          <li>
+            <button
+              className="LoginButton"
+              onClick={() => {
+                setCreateAccount(false);
+                setCreateUser({
+                  email: "",
+                  password: "",
+                  confirmPassword: "",
+                  FullName: "",
+                });
+              }}>
+              Cancel
+            </button>
+          </li>
+        )}
       </ul>
-      <h2 className="text-white tracking-[-.42px] border-t-[2px] pt-3 w-[80%] text-center">dcTrack Pulse Audit</h2>
+      {/* <button
+        className="text-white text-xs"
+        onClick={() => {
+          if (FireActions.auth.currentUser.currentUser === null) {
+            alert("Please enter your email");
+            return;
+          } else {
+            FireActions.VerificationEmail();
+            FireActions.UserSignOut(FireActions.auth);
+            alert("Email Sent");
+          }
+        }}>
+        Reverify Email
+      </button> */}
+      <h2 className="text-white tracking-[-.42px] border-t-[2px] pt-3 w-[80%] text-center">dcTrack Auditor Tool</h2>
       <p className="text-white opacity-60 text-xs text-center px-4 py-3">
         Access to this system is prohibited unless authorized. Accessing programs or data unrelated to your job is
         prohibited.
