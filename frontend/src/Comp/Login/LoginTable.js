@@ -191,11 +191,13 @@ export default function LoginTable({ setAllData }) {
                   //! EMAIL VERIFICATION
                   console.log(FireActions.auth);
                   if (!FireActions.auth.currentUser.emailVerified) {
-                    FireActions.VerificationEmail().then(() => {
-                      FireActions.UserSignOut(FireActions.auth).then(() => {
-                        alert("Please verify your email");
-                      });
-                    });
+                    alert("Please verify your email");
+                    setTimeout(() => {
+                      FireActions.VerificationEmail();
+                      setTimeout(() => {
+                        FireActions.UserSignOut(FireActions.auth);
+                      }, 3000);
+                    }, 1000);
                     return;
                   }
                   navigate("/home");
@@ -242,13 +244,15 @@ export default function LoginTable({ setAllData }) {
                     confirmPassword: "",
                     FullName: "",
                   });
-                  FireActions.signup(createUser).then(() => {
-                    FireActions.VerificationEmail().then(() => {
-                      FireActions.UserSignOut(FireActions.auth).then(() => {
-                        alert("Account Created, Please verify your email to gain Access");
-                      });
-                    });
-                  });
+                  FireActions.signup(createUser);
+                  setTimeout(() => {
+                    FireActions.VerificationEmail();
+                    setTimeout(() => {
+                      FireActions.UserSignOut(FireActions.auth);
+                    }, 3000);
+                  }, 1000);
+
+                  alert("Account Created, Please verify your email to gain Access");
                 }
               }}>
               Create
