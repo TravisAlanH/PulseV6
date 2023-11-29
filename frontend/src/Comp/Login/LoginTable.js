@@ -186,14 +186,16 @@ export default function LoginTable({ setAllData }) {
                   axios.get(baseURL + FullData).then((res) => {
                     setAllData(res.data["rows"]);
                   });
-
-                  console.log(FireActions.auth);
-                  if (!FireActions.auth.currentUser.emailVerified) {
-                    alert("Please verify your email");
-                    FireActions.VerificationEmail();
-                    FireActions.UserSignOut(FireActions.auth);
-                    return;
-                  }
+                  //!
+                  //!
+                  //! EMAIL VERIFICATION
+                  // console.log(FireActions.auth);
+                  // if (!FireActions.auth.currentUser.emailVerified) {
+                  //   alert("Please verify your email");
+                  //   FireActions.VerificationEmail();
+                  //   FireActions.UserSignOut(FireActions.auth);
+                  //   return;
+                  // }
                   navigate("/home");
                 } catch (error) {
                   console.error("Error occurred during login:", error);
