@@ -292,7 +292,7 @@ export default function HomeLayout() {
                           </div>
                           <div>
                             <p className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-[10rem]"}>
-                              {Code}
+                              {Code.length > 12 ? Code.substring(0, 12) + "..." : Code}
                             </p>
                           </div>
                         </div>
@@ -304,7 +304,7 @@ export default function HomeLayout() {
                           </div>
                           <div>
                             <p className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-[10rem]"}>
-                              {Name}
+                              {Name.length > 12 ? Name.substring(0, 12) + "..." : Name}
                             </p>
                           </div>
                         </div>
@@ -316,7 +316,7 @@ export default function HomeLayout() {
                           </div>
                           <div>
                             <p className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-[10rem]"}>
-                              {Hierarchy}
+                              {Hierarchy.length > 12 ? Hierarchy.substring(0, 12) + "..." : Hierarchy}
                             </p>
                           </div>
                         </div>

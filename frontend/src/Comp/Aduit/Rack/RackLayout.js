@@ -157,6 +157,7 @@ export default function RackLayout({ AllData }) {
                       let payload = { value: holdData };
                       dispatch(Actions.bulkAddToRacks(payload));
                     }
+                    document.getElementById("BulkAddRacks").classList.replace("block", "hidden");
                   }}>
                   Bulk Add
                 </button>

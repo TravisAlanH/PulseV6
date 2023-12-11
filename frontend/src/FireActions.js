@@ -85,6 +85,8 @@ function signup(user) {
     .then(() => {
       VerificationEmail();
       console.log("Document successfully written!");
+    })
+    .then(() => {
       UserSignOut(auth);
     })
     .catch((error) => {
