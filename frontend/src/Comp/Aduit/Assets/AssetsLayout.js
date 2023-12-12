@@ -4,6 +4,7 @@ import SetCurrentSelection from "../../Reuse/SetCurrentSelection";
 import AssetInputs from "./AssetInputs";
 // import RackRack from "../Rack/RackRack";
 import RackFull from "../Rack/RackFull";
+import CreateNewViewButton from "../AddNew/CreateNewViewButton";
 
 export default function AssetsLayout({ AllData }) {
   let Step = "Assets";
@@ -19,6 +20,7 @@ export default function AssetsLayout({ AllData }) {
       <div className="flex lg:flex-row md:flex-row flex-col gap-3 w-full justify-center p-2 border-b-2 mb-2 items-center">
         <SetCurrentSelection Step={"Racks"} />
         <SetCurrentSelection Step={"Assets"} />
+        <CreateNewViewButton Step={"Assets"} />
       </div>
 
       <div className="flex lg:flex-row md:flex-row flex-col md:justify-center lg:justify-center gap-6 px-6 items-start">

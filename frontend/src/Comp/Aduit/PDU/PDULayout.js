@@ -6,6 +6,7 @@ import PDUInputs from "./PDUInputs";
 // import PDURack from "./PDURack";
 import RackFull from "../Rack/RackFull";
 import PDUViewVerticalComp from "./PDUViewVerticalComp";
+import CreateNewViewButton from "../AddNew/CreateNewViewButton";
 
 export default function PDULayout({ AllData }) {
   let Step = "PDUs";
@@ -24,6 +25,7 @@ export default function PDULayout({ AllData }) {
       <div className="flex flex-row gap-3 w-full justify-center p-2 border-b-2 mb-2">
         <SetCurrentSelection Step={"Racks"} />
         <SetCurrentSelection Step={"PDUs"} />
+        <CreateNewViewButton Step={"PDUs"} />
 
         {/* {RackLength > 0 ? <AddToStep Step={Step} /> : null} */}
       </div>

@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import SearchLayout from "../../Search/SearchLayout";
 import AddFieldButton from "../AddField/AddFieldButton";
 import UseLastData from "../../Reuse/UseLastData";
-import CreateNewViewButton from "../AddNew/CreateNewViewButton";
+// import CreateNewViewButton from "../AddNew/CreateNewViewButton";
 import DeleteButton from "../../Reuse/DeleteButton";
 
 export default function PDUInputs({ AllData, DepthSide }) {
@@ -50,7 +50,7 @@ export default function PDUInputs({ AllData, DepthSide }) {
             <DeleteButton Step={"PDUs"} />
           </div>
         ) : null}
-        <CreateNewViewButton Step={"PDUs"} />
+        {/* <CreateNewViewButton Step={"PDUs"} /> */}
       </div>
     </div>
   );

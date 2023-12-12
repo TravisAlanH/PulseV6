@@ -8,6 +8,7 @@ import RackFull from "./RackFull";
 import PDUViewVerticalComp from "../PDU/PDUViewVerticalComp";
 import { RiCloseCircleLine } from "react-icons/ri";
 import * as Actions from "../../../Store/Slices/Slice";
+import CreateNewViewButton from "../AddNew/CreateNewViewButton";
 
 export default function RackLayout({ AllData }) {
   let Step = "Racks";
@@ -51,6 +52,7 @@ export default function RackLayout({ AllData }) {
               }}>
               Bulk Add
             </button>
+            <CreateNewViewButton Step={"Racks"} />
           </div>
         </div>
         {Data.length > 0 ? (

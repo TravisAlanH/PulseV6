@@ -4,10 +4,12 @@ import { useSelector } from "react-redux";
 import SearchLayout from "../../Search/SearchLayout";
 import AddFieldButton from "../AddField/AddFieldButton";
 import UseLastData from "../../Reuse/UseLastData";
-import CreateNewViewButton from "../AddNew/CreateNewViewButton";
+// import CreateNewViewButton from "../AddNew/CreateNewViewButton";
 import DeleteButton from "../../Reuse/DeleteButton";
+import LoadingSpinner from "../../Reuse/LoadingSpinner/Spinner";
 
 export default function AssetInputs({ AllData }) {
+  const [loading, setLoading] = React.useState(false);
   const Step = "Assets";
 
   const Current = useSelector((state) => state.data.Current[Step]);
@@ -48,7 +50,21 @@ export default function AssetInputs({ AllData }) {
             <DeleteButton Step={"Assets"} />
           </div>
         ) : null}
-        <CreateNewViewButton Step={"Assets"} />
+        {State["Make *"].value !== "" || State["Model *"].value !== "" || State["Name *"].value !== "" ? (
+          <div className="flex flex-row justify-start">
+            <button
+              className="orangeButton mt-3"
+              onClick={() => {
+                setLoading(true);
+                setTimeout(() => {
+                  setLoading(false);
+                }, Math.floor(Math.random() * 5000));
+              }}>
+              Save
+            </button>
+          </div>
+        ) : null}
+        {loading ? <LoadingSpinner /> : null}
       </div>
     </div>
   );

@@ -16,7 +16,7 @@ export default function CreateNewButton({ Step }) {
       onClick={() => {
         dispatch(actions.addToNewItem(payload));
       }}>
-      {"Create Missing " + (Step === "Racks" ? "Cabinet" : Step) + "not in MLT"}
+      {"Create " + (Step === "Racks" ? "Cabinet" : Step)}
     </button>
   );
 }

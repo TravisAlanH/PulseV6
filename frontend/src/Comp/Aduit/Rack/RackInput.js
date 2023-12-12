@@ -2,10 +2,12 @@ import React from "react";
 import STDInput from "../../Reuse/STDInput";
 import { useSelector } from "react-redux";
 import SearchLayout from "../../Search/SearchLayout";
-import CreateNewViewButton from "../AddNew/CreateNewViewButton";
+// import CreateNewViewButton from "../AddNew/CreateNewViewButton";
 import UseLastData from "../../Reuse/UseLastData";
+import LoadingSpinner from "../../Reuse/LoadingSpinner/Spinner";
 
 export default function RackInput({ AllData }) {
+  const [loading, setLoading] = React.useState(false);
   const Step = "Racks";
 
   const Current = useSelector((state) => state.data.Current[Step]);
@@ -36,7 +38,20 @@ export default function RackInput({ AllData }) {
       {StepData.length > 0 && StepData.length !== 1 && State["Make *"].value === "" && State["Model *"].value === "" ? (
         <UseLastData Step={Step} />
       ) : null}
-      <CreateNewViewButton Step={"Racks"} />
+      {/* <CreateNewViewButton Step={"Racks"} /> */}
+      <div className="flex flex-row justify-start">
+        <button
+          className="orangeButton mt-3"
+          onClick={() => {
+            setLoading(true);
+            setTimeout(() => {
+              setLoading(false);
+            }, Math.floor(Math.random() * 5000));
+          }}>
+          Save
+        </button>
+      </div>
+      {loading ? <LoadingSpinner /> : null}
     </div>
   );
 }

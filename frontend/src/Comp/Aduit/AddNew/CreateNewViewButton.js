@@ -19,7 +19,7 @@ export default function CreateNewViewButton({ Step }) {
           modal.style.display = "block";
         }}>
         {/* {(Step === "Racks" ? "Cabinet" : Step) + " not Listed or in MLT"} */}
-        {"New Asset"}
+        {"New MLT " + (Step === "Racks" ? "Cabinet" : Step)}
       </button>
       <div className="modal" id="CreateNewModal">
         <div className="modal-content">
