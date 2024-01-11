@@ -74,9 +74,10 @@ async function EmailSignIn(email) {
     });
 }
 
-async function VerificationEmail() {
+async function VerificationEmail(cred) {
+  console.log(cred);
   console.log("VerificationEmail");
-  await sendEmailVerification(auth.currentUser)
+  await sendEmailVerification(cred.currentUser)
     .then(() => {})
     .catch((error) => {
       const errorCode = error.code;
@@ -110,8 +111,9 @@ function signup(user) {
         LocationsList: [],
       });
     })
-    .then(() => {
-      VerificationEmail();
+    .then((userCredential) => {
+      VerificationEmail(userCredential);
+      console.log(userCredential);
       console.log("Document successfully written!");
     })
     .then(() => {

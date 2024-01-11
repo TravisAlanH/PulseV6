@@ -192,7 +192,7 @@ export default function LoginTable({ setAllData }) {
                   console.log(FireActions.auth);
                   if (!FireActions.auth.currentUser.emailVerified) {
                     alert("Please verify your email");
-                    FireActions.VerificationEmail();
+                    FireActions.VerificationEmail(FireActions.auth);
                     // FireActions.UserSignOut(FireActions.auth);
                     return;
                   }
@@ -271,17 +271,6 @@ export default function LoginTable({ setAllData }) {
       </ul>
 
       <h2 className="text-white tracking-[-.42px] border-t-[2px] pt-3 w-[80%] text-center">dcTrack Auditor Tool</h2>
-      <button
-        className="orangeButton"
-        onClick={() => {
-          if (user.email === "") {
-            alert("Please enter an email");
-            return null;
-          }
-          FireActions.EmailSignIn(user.email);
-        }}>
-        Validate
-      </button>
       <p className="text-white opacity-60 text-xs text-center px-4 py-3">
         Access to this system is prohibited unless authorized. Accessing programs or data unrelated to your job is
         prohibited.
