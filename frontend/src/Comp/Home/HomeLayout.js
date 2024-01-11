@@ -13,6 +13,7 @@ import { RiCheckboxFill, RiSaveFill } from "react-icons/ri";
 import { ImMenu3 } from "react-icons/im";
 import "./HomeStyles.css";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import ImportButton from "./Import/ImportButton";
 
 export default function HomeLayout() {
   const [locationCode, setLocationCode] = React.useState("");
@@ -165,6 +166,7 @@ export default function HomeLayout() {
             }}>
             <ImMenu3 />
           </button>
+          <ImportButton />
         </div>
         {existMessageShow ? <div className="text-sm text-red-500">** Location Code in Use **</div> : null}
       </div>
