@@ -8,7 +8,6 @@ import {
   browserSessionPersistence,
   updateProfile,
   sendEmailVerification,
-  sendSignInLinkToEmail,
 } from "firebase/auth";
 import { getDatabase, onValue, ref } from "firebase/database";
 import app from "./firebase";
@@ -47,33 +46,6 @@ async function getData() {
   });
 }
 
-async function EmailSignIn(email) {
-  const actionCodeSettings = {
-    // URL you want to redirect back to. The domain (www.example.com) for this
-    // URL must be in the authorized domains list in the Firebase Console.
-    // This must be true.
-    handleCodeInApp: true,
-    url: "startling-arithmetic-d3b021.netlify.app",
-    // dynamicLinkDomain: "startling-arithmetic-d3b021.netlify.app",
-  };
-
-  const auth = getAuth();
-  await sendSignInLinkToEmail(auth, email, actionCodeSettings)
-    .then(() => {
-      // The link was successfully sent. Inform the user.
-      // Save the email locally so you don't need to ask the user for it again
-      // if they open the link on the same device.
-      // window.localStorage.setItem('emailForSignIn', email);
-      // ...
-      console.log("EmailSignIn");
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // ...
-    });
-}
-
 async function VerificationEmail(cred) {
   console.log(cred);
   console.log("VerificationEmail");
@@ -85,11 +57,6 @@ async function VerificationEmail(cred) {
       console.log(errorCode, errorMessage);
     });
   UserSignOut(auth);
-}
-
-async function sendNewVerificationEmail(email) {
-  console.log("sendNewVerificationEmail");
-  auth.generateEmailVerificationLink(email);
 }
 
 function signup(user) {
@@ -240,8 +207,6 @@ function signIn(user) {
 }
 
 export {
-  EmailSignIn,
-  sendNewVerificationEmail,
   replaceLocationWithUpdate,
   signup,
   signIn,
