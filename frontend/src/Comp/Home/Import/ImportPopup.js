@@ -1,6 +1,41 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import * as XLSX from "xlsx";
 
 export default function ImportPopup() {
+  const [excelData, setExcelData] = useState(null);
+
+  const handleFileUpload = (event) => {
+    const input = event.target;
+
+    if ("files" in input && input.files.length > 0) {
+      const file = input.files[0];
+
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        const data = new Uint8Array(e.target.result);
+        const workbook = XLSX.read(data, { type: "array" });
+
+        // Assuming you want to read data from the first sheet
+        const sheetName = workbook.SheetNames[0];
+        const sheet = workbook.Sheets[sheetName];
+
+        // Parse sheet data
+        const sheetData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+
+        setExcelData(sheetData);
+      };
+
+      reader.readAsArrayBuffer(file);
+    }
+  };
+
+  useEffect(() => {
+    if (excelData) {
+      console.log("Excel Data:", excelData);
+    }
+  }, [excelData]);
+
   return (
     <div
       className="w-screen h-screen fixed top-0 left-0 flex flex-row justify-center items-center z-[50] bg-[#95959576]"
@@ -15,7 +50,7 @@ export default function ImportPopup() {
           </select>
         </div>
         <div>
-          <input type="file" className="" />
+          <input type="file" className="" onChange={handleFileUpload} />
         </div>
         <div className="flex flex-row justify-end">
           <button
