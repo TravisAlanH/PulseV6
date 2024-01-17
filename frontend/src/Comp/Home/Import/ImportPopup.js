@@ -38,7 +38,7 @@ export default function ImportPopup() {
 
   return (
     <div
-      className="w-screen h-screen fixed top-0 left-0 flex flex-row justify-center items-center z-[50] bg-[#95959576]"
+      className="w-screen h-screen fixed top-0 left-0 hidden flex-row justify-center items-center z-[50] bg-[#95959576]"
       id="ImportPopup">
       <div className="bg-[white] rounded-md p-[1.5rem]">
         <div className="flex flex-row">

@@ -150,6 +150,7 @@ export default function HomeLayout() {
             className="orangeButton ml-3"
             onClick={() => {
               let cards = document.querySelectorAll("#LocationCard");
+              if (cards.length === 0) return;
               if (cards[0].classList.contains("extended")) {
                 for (let i = 0; i < cards.length; i++) {
                   cards[i].classList.remove("extended");
