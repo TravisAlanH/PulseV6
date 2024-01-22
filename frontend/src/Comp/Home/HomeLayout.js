@@ -171,7 +171,7 @@ export default function HomeLayout() {
         </div>
         {existMessageShow ? <div className="text-sm text-red-500">** Location Code in Use **</div> : null}
       </div>
-      <div className="flex flex-col justify-center gap-6 px-6">
+      <div className="flex flex-col justify-center gap-6 px-6 pb-4">
         {locationData.length > 0 ? (
           <div className="flex flex-col gap-2">
             <div className="w-full border-b-2 flex flex-row gap-4 justify-between py-2 text-sm">
@@ -373,6 +373,9 @@ export default function HomeLayout() {
                           <div>PDU: {item.PDUs.length}</div>
                           <div>Structured Cable Connections: {item.StructuredCabling.length}</div>
                           <div></div>
+                          <div className="flex flex-row justify-end">
+                            <button className="redButton">Delete</button>
+                          </div>
                         </div>
                       </div>
                     </div>
