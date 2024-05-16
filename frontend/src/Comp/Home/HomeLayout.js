@@ -121,6 +121,10 @@ export default function HomeLayout() {
     setSaveConfirm(false);
   }
 
+// ! ||--------------------------------------------------------------------------------||
+// ! ||                                  BREAK RETURN                                  ||
+// ! ||--------------------------------------------------------------------------------||
+
   return (
     <div className="flex flex-col border-2 m-2">
       <div className="bg-[#F7F5F1] flex flex-row justify-start h-[3rem] items-center pl-6 text-lg font-bold">
@@ -128,24 +132,7 @@ export default function HomeLayout() {
       </div>
       <div className="flex flex-col gap-3 w-full items-center justify-center p-2 border-b-2 mb-2">
         <div className="flex flex-row">
-          <form className="flex flex-row" onSubmit={createLocation}>
-            <div className="w-[1rem] flex flex-row justify-center items-center text-red-500">*</div>
-            <label className={"text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center w-[11rem] pl-2"}>
-              dcTrack Location Code
-            </label>
-            <input
-              type="text"
-              required={true}
-              className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-[10rem]"}
-              placeholder="Location Name"
-              defaultValue={locationCode}
-              onChange={(e) => {
-                setLocationCode(e.target.value);
-                setExistMessageShow(false);
-              }}
-            />
-            <input type="submit" className="orangeButton ml-3" value={"Create Location"} />
-          </form>
+          {CreateLocationForm()}
           <button
             className="orangeButton ml-3"
             onClick={() => {
@@ -174,97 +161,7 @@ export default function HomeLayout() {
       <div className="flex flex-col justify-center gap-6 px-6 pb-4">
         {locationData.length > 0 ? (
           <div className="flex flex-col gap-2">
-            <div className="w-full border-b-2 flex flex-row gap-4 justify-between py-2 text-sm">
-              <div className="flex flex-row gap-4 bg-[#F7F5F1] items-center">
-                <label className="pl-4">Location Code:</label>
-                <div className="flex flex-row gap-2">
-                  <button
-                    className="button orangeButton"
-                    onClick={() => {
-                      let locationDataCopy = structuredClone(locationData);
-                      locationDataCopy = locationDataCopy.sort((a, b) => {
-                        return a.Location[0]["dcTrack Location Code *"].value.localeCompare(
-                          b.Location[0]["dcTrack Location Code *"].value
-                        );
-                      });
-                      setLocationData(locationDataCopy);
-                    }}>
-                    <FaChevronUp />
-                  </button>
-                  <button
-                    className="button orangeButton"
-                    onClick={() => {
-                      let locationDataCopy = structuredClone(locationData);
-                      locationDataCopy = locationDataCopy.sort((a, b) => {
-                        return b.Location[0]["dcTrack Location Code *"].value.localeCompare(
-                          a.Location[0]["dcTrack Location Code *"].value
-                        );
-                      });
-                      setLocationData(locationDataCopy);
-                    }}>
-                    <FaChevronDown />
-                  </button>
-                </div>
-              </div>
-              <div className="flex flex-row gap-4 bg-[#F7F5F1] items-center">
-                <label className="pl-4">Location Name:</label>
-                <div className="flex flex-row gap-2">
-                  <button
-                    className="button orangeButton"
-                    onClick={() => {
-                      let locationDataCopy = structuredClone(locationData);
-                      locationDataCopy = locationDataCopy.sort((a, b) => {
-                        return a.Location[0]["dcTrack Location Name *"].value.localeCompare(
-                          b.Location[0]["dcTrack Location Name *"].value
-                        );
-                      });
-                      setLocationData(locationDataCopy);
-                    }}>
-                    <FaChevronUp />
-                  </button>
-                  <button
-                    className="button orangeButton"
-                    onClick={() => {
-                      let locationDataCopy = structuredClone(locationData);
-                      locationDataCopy = locationDataCopy.sort((a, b) => {
-                        return b.Location[0]["dcTrack Location Name *"].value.localeCompare(
-                          a.Location[0]["dcTrack Location Name *"].value
-                        );
-                      });
-                      setLocationData(locationDataCopy);
-                    }}>
-                    <FaChevronDown />
-                  </button>
-                </div>
-              </div>
-              <div className="flex flex-row gap-4 bg-[#F7F5F1] items-center">
-                <label className="pl-4">Date Modified:</label>
-                <div className="flex flex-row gap-2">
-                  <button
-                    className="button orangeButton"
-                    onClick={() => {
-                      let locationDataCopy = structuredClone(locationData);
-                      locationDataCopy = locationDataCopy.sort((a, b) => {
-                        return a.Current.DataBaseTime.localeCompare(b.Current.DataBaseTime);
-                      });
-                      setLocationData(locationDataCopy);
-                    }}>
-                    <FaChevronUp />
-                  </button>
-                  <button
-                    className="button orangeButton"
-                    onClick={() => {
-                      let locationDataCopy = structuredClone(locationData);
-                      locationDataCopy = locationDataCopy.sort((a, b) => {
-                        return b.Current.DataBaseTime.localeCompare(a.Current.DataBaseTime);
-                      });
-                      setLocationData(locationDataCopy);
-                    }}>
-                    <FaChevronDown />
-                  </button>
-                </div>
-              </div>
-            </div>
+            {LocationSorting()}
             {locationData
               .filter((obj) => obj.Current.DataBaseUUID === UUID)
               .concat(locationData.filter((obj) => obj.Current.DataBaseUUID !== UUID))
@@ -275,110 +172,14 @@ export default function HomeLayout() {
                 let Hierarchy = item.Location[0]["dcTrack Location Hierarchy *"].value;
                 if (item.Current.DataBaseUUID === UUID) {
                   Name = fullState.Location[0]["dcTrack Location Name *"].value;
-                  Code = fullState.Location[0]["dcTrack Location Code *"].value;
+                  Code = fullState.Location[0]["dcTrack Loca`tion Code *"].value;
                   Hierarchy = fullState.Location[0]["dcTrack Location Hierarchy *"].value;
-
                   showButton = false;
                 }
                 return (
                   <div className={"border-2 w-full  py-3 px-2 rounded-md transition-all flex flex-col justify-start"}>
-                    <div key={fullState + index} className={"flex flex-row  w-full px-2 h-full"}>
-                      <div className="w-[2rem] flex flex-row justify-center items-center">
-                        {!showButton ? <RiCheckboxFill className="text-[#f59439] text-2xl" /> : null}
-                      </div>
-                      <div className="lg:flex lg:flex-row justify-between md:grid md:grid-cols-2 w-full">
-                        <div className="flex flex-row">
-                          <div>
-                            <label className="text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center w-[7rem] h-[2rem] pl-2">
-                              Location Code
-                            </label>
-                          </div>
-                          <div>
-                            <p className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-[10rem]"}>
-                              {Code.length > 12 ? Code.substring(0, 12) + "..." : Code}
-                            </p>
-                          </div>
-                        </div>
-                        <div className="flex flex-row">
-                          <div>
-                            <label className="text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center w-[7rem] h-[2rem] pl-2">
-                              Location Name
-                            </label>
-                          </div>
-                          <div>
-                            <p className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-[10rem]"}>
-                              {Name.length > 12 ? Name.substring(0, 12) + "..." : Name}
-                            </p>
-                          </div>
-                        </div>
-                        <div className="flex flex-row">
-                          <div>
-                            <label className="text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center w-[7rem] h-[2rem] pl-2">
-                              Hierarchy
-                            </label>
-                          </div>
-                          <div>
-                            <p className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-[10rem]"}>
-                              {Hierarchy.length > 12 ? Hierarchy.substring(0, 12) + "..." : Hierarchy}
-                            </p>
-                          </div>
-                        </div>
-                        <div className="flex flex-row justify-end">
-                          {showButton ? (
-                            <button
-                              className="orangeButton w-[2.5rem]"
-                              onClick={() => {
-                                if (saveConfirm) {
-                                  downloadData(item);
-                                  setReload(!reload);
-                                } else {
-                                  setDownloadedItem(item);
-                                  document.getElementById("confirmationDialog").style.display = "flex";
-                                }
-                              }}>
-                              <TbDownload />
-                            </button>
-                          ) : (
-                            <button
-                              className="w-[2.5rem] orangeButton"
-                              onClick={() => {
-                                newSaveData(fullState);
-                                // saveData(item);
-                                setReload(!reload);
-                              }}>
-                              <RiSaveFill />
-                            </button>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      id="LocationCard"
-                      className="h-[0rem] overflow-clip transition-all flex flex-col justify-center">
-                      <div className="flex flex-row justify-end w-full">
-                        {showButton ? null : <p className="text-[red] text-sm">Save data to see most recent changes</p>}
-                      </div>
-                      <div className="flex flex-col gap-2">
-                        <div className="border-2 rounded-md p-2 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 ">
-                          <div>Building: {item.SurveySite[0]["Building"].value}</div>
-                          <div>Room Number: {item.SurveySite[0]["ATG Room Number"].value}</div>
-                          <div>Site Contact Name: {item.SurveySite[0]["Local Site Contact"].value}</div>
-                          <div>Site Contact Email: {item.SurveySite[0]["Site Contact Email"].value}</div>
-                          <div>Site Contact Phone: {item.SurveySite[0]["Site Contact Phone"].value}</div>
-                          <div>Updated: {Functions.formatTimestamp(item.Current.DataBaseTime)}</div>
-                        </div>
-                        <div className="border-2 rounded-md p-2 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 ">
-                          <div>Cabinets: {item.Racks.length}</div>
-                          <div>Assets:{item.Assets.length}</div>
-                          <div>PDU: {item.PDUs.length}</div>
-                          <div>Structured Cable Connections: {item.StructuredCabling.length}</div>
-                          <div></div>
-                          <div className="flex flex-row justify-end">
-                            <button className="redButton">Delete</button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    {LocationBaseDataCard(index, showButton, Code, Name, Hierarchy, item)}
+                    {LocationAdditionalDataCard(showButton, item)}
                   </div>
                 );
               })}
@@ -389,76 +190,303 @@ export default function HomeLayout() {
       </div>
       {loading ? <LoadingSpinner /> : null}
       {/* <LoadingSpinner /> */}
-      <div id="confirmationDialog" className="dialog">
-        <div className="bg-white p-3 rounded-md w-[20rem]">
-          <div className="flex flex-row justify-between">
-            <p className="font-bold">Warning:</p>
-            <p
-              onClick={() => {
-                document.getElementById("confirmationDialog").style.display = "none";
-                document.getElementById("confirmChange").checked = false;
-                setSaveConfirm(false);
-              }}>
-              X
+      {ReplacePopUp()}
+    </div>
+  );
+
+// ! ||--------------------------------------------------------------------------------||
+// ! ||                                  BREAK RETURN                                  ||
+// ! ||--------------------------------------------------------------------------------||
+
+
+  function LocationSorting() {
+    return <div className="w-full border-b-2 flex flex-row gap-4 justify-between py-2 text-sm">
+      <div className="flex flex-row gap-4 bg-[#F7F5F1] items-center">
+        <label className="pl-4">Location Code:</label>
+        <div className="flex flex-row gap-2">
+          <button
+            className="button orangeButton"
+            onClick={() => {
+              let locationDataCopy = structuredClone(locationData);
+              locationDataCopy = locationDataCopy.sort((a, b) => {
+                return a.Location[0]["dcTrack Location Code *"].value.localeCompare(
+                  b.Location[0]["dcTrack Location Code *"].value
+                );
+              });
+              setLocationData(locationDataCopy);
+            } }>
+            <FaChevronUp />
+          </button>
+          <button
+            className="button orangeButton"
+            onClick={() => {
+              let locationDataCopy = structuredClone(locationData);
+              locationDataCopy = locationDataCopy.sort((a, b) => {
+                return b.Location[0]["dcTrack Location Code *"].value.localeCompare(
+                  a.Location[0]["dcTrack Location Code *"].value
+                );
+              });
+              setLocationData(locationDataCopy);
+            } }>
+            <FaChevronDown />
+          </button>
+        </div>
+      </div>
+      <div className="flex flex-row gap-4 bg-[#F7F5F1] items-center">
+        <label className="pl-4">Location Name:</label>
+        <div className="flex flex-row gap-2">
+          <button
+            className="button orangeButton"
+            onClick={() => {
+              let locationDataCopy = structuredClone(locationData);
+              locationDataCopy = locationDataCopy.sort((a, b) => {
+                return a.Location[0]["dcTrack Location Name *"].value.localeCompare(
+                  b.Location[0]["dcTrack Location Name *"].value
+                );
+              });
+              setLocationData(locationDataCopy);
+            } }>
+            <FaChevronUp />
+          </button>
+          <button
+            className="button orangeButton"
+            onClick={() => {
+              let locationDataCopy = structuredClone(locationData);
+              locationDataCopy = locationDataCopy.sort((a, b) => {
+                return b.Location[0]["dcTrack Location Name *"].value.localeCompare(
+                  a.Location[0]["dcTrack Location Name *"].value
+                );
+              });
+              setLocationData(locationDataCopy);
+            } }>
+            <FaChevronDown />
+          </button>
+        </div>
+      </div>
+      <div className="flex flex-row gap-4 bg-[#F7F5F1] items-center">
+        <label className="pl-4">Date Modified:</label>
+        <div className="flex flex-row gap-2">
+          <button
+            className="button orangeButton"
+            onClick={() => {
+              let locationDataCopy = structuredClone(locationData);
+              locationDataCopy = locationDataCopy.sort((a, b) => {
+                return a.Current.DataBaseTime.localeCompare(b.Current.DataBaseTime);
+              });
+              setLocationData(locationDataCopy);
+            } }>
+            <FaChevronUp />
+          </button>
+          <button
+            className="button orangeButton"
+            onClick={() => {
+              let locationDataCopy = structuredClone(locationData);
+              locationDataCopy = locationDataCopy.sort((a, b) => {
+                return b.Current.DataBaseTime.localeCompare(a.Current.DataBaseTime);
+              });
+              setLocationData(locationDataCopy);
+            } }>
+            <FaChevronDown />
+          </button>
+        </div>
+      </div>
+    </div>;
+  }
+
+
+
+  function LocationBaseDataCard(index, showButton, Code, Name, Hierarchy, item) {
+    return <div key={fullState + index} className={"flex flex-row  w-full px-2 h-full"}>
+      <div className="w-[2rem] flex flex-row justify-center items-center">
+        {!showButton ? <RiCheckboxFill className="text-[#f59439] text-2xl" /> : null}
+      </div>
+      <div className="lg:flex lg:flex-row justify-between md:grid md:grid-cols-2 w-full">
+        <div className="flex flex-row">
+          <div>
+            <label className="text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center w-[7rem] h-[2rem] pl-2">
+              Location Code
+            </label>
+          </div>
+          <div>
+            <p className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-[10rem]"}>
+              {Code.length > 12 ? Code.substring(0, 12) + "..." : Code}
             </p>
           </div>
-          <p>Replace Current Data without Saving?</p>
-          <p className="text-xs">
-            The current data that is saved locally is not synced with the database, continuing will remove your local
-            data and replace it with the location data you selected
-          </p>
-          <div className="flex flex-row items-center justify-center gap-2" id="confirmBox">
-            <label>{"Replace: "}</label>
-            <input
-              type="checkbox"
-              id="confirmChange"
-              className="w-[1.5rem] h-[1.5rem]"
-              onChange={(e) => {
-                setSaveConfirm(e.target.checked);
-                document.getElementById("confirmBox").classList.remove("p-2");
-                document.getElementById("confirmBox").classList.remove("border-2");
-                document.getElementById("confirmBox").classList.remove("border-red-500");
-              }}
-            />
+        </div>
+        <div className="flex flex-row">
+          <div>
+            <label className="text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center w-[7rem] h-[2rem] pl-2">
+              Location Name
+            </label>
           </div>
-          <br></br>
-
-          <div className="flex flex-row justify-between">
-            <div></div>
+          <div>
+            <p className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-[10rem]"}>
+              {Name.length > 12 ? Name.substring(0, 12) + "..." : Name}
+            </p>
+          </div>
+        </div>
+        <div className="flex flex-row">
+          <div>
+            <label className="text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center w-[7rem] h-[2rem] pl-2">
+              Hierarchy
+            </label>
+          </div>
+          <div>
+            <p className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-[10rem]"}>
+              {Hierarchy.length > 12 ? Hierarchy.substring(0, 12) + "..." : Hierarchy}
+            </p>
+          </div>
+        </div>
+        <div className="flex flex-row justify-end">
+          {showButton ? (
             <button
-              id="yesButton"
-              className="orangeButton"
+              className="orangeButton w-[2.5rem]"
               onClick={() => {
-                let confirm = document.getElementById("confirmChange").checked;
-                console.log(confirm);
-                if (confirm) {
-                  console.log(downloadedItem);
-                  downloadData(downloadedItem);
+                if (saveConfirm) {
+                  downloadData(item);
                   setReload(!reload);
-                  document.getElementById("confirmationDialog").style.display = "none";
-                  document.getElementById("confirmChange").checked = false;
                 } else {
-                  document.getElementById("confirmBox").classList.add("p-2");
-                  document.getElementById("confirmBox").classList.add("border-2");
-                  document.getElementById("confirmBox").classList.add("border-red-500");
+                  setDownloadedItem(item);
+                  document.getElementById("confirmationDialog").style.display = "flex";
                 }
-              }}>
-              Yes
+              } }>
+              <TbDownload />
             </button>
+          ) : (
             <button
-              id="noButton"
-              className="redButton"
+              className="w-[2.5rem] orangeButton"
               onClick={() => {
-                document.getElementById("confirmationDialog").style.display = "none";
-                setSaveConfirm(false);
-                document.getElementById("confirmChange").checked = false;
-              }}>
-              No
+                newSaveData(fullState);
+                // saveData(item);
+                setReload(!reload);
+              } }>
+              <RiSaveFill />
             </button>
-            <div></div>
+          )}
+        </div>
+      </div>
+    </div>;
+  }
+
+  function LocationAdditionalDataCard(showButton, item) {
+    return <div
+      id="LocationCard"
+      className="h-[0rem] overflow-clip transition-all flex flex-col justify-center">
+      <div className="flex flex-row justify-end w-full">
+        {showButton ? null : <p className="text-[red] text-sm">Save data to see most recent changes</p>}
+      </div>
+      <div className="flex flex-col gap-2">
+        <div className="border-2 rounded-md p-2 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 ">
+          <div>Building: {item.SurveySite[0]["Building"].value}</div>
+          <div>Room Number: {item.SurveySite[0]["ATG Room Number"].value}</div>
+          <div>Site Contact Name: {item.SurveySite[0]["Local Site Contact"].value}</div>
+          <div>Site Contact Email: {item.SurveySite[0]["Site Contact Email"].value}</div>
+          <div>Site Contact Phone: {item.SurveySite[0]["Site Contact Phone"].value}</div>
+          <div>Updated: {Functions.formatTimestamp(item.Current.DataBaseTime)}</div>
+        </div>
+        <div className="border-2 rounded-md p-2 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 ">
+          <div>Cabinets: {item.Racks.length}</div>
+          <div>Assets:{item.Assets.length}</div>
+          <div>PDU: {item.PDUs.length}</div>
+          <div>Structured Cable Connections: {item.StructuredCabling.length}</div>
+          <div></div>
+          <div className="flex flex-row justify-end">
+            <button className="redButton">Delete</button>
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>;
+  }
+
+  function ReplacePopUp() {
+    return <div id="confirmationDialog" className="dialog">
+      <div className="bg-white p-3 rounded-md w-[20rem]">
+        <div className="flex flex-row justify-between">
+          <p className="font-bold">Warning:</p>
+          <p
+            onClick={() => {
+              document.getElementById("confirmationDialog").style.display = "none";
+              document.getElementById("confirmChange").checked = false;
+              setSaveConfirm(false);
+            } }>
+            X
+          </p>
+        </div>
+        <p>Replace Current Data without Saving?</p>
+        <p className="text-xs">
+          The current data that is saved locally is not synced with the database, continuing will remove your local
+          data and replace it with the location data you selected
+        </p>
+        <div className="flex flex-row items-center justify-center gap-2" id="confirmBox">
+          <label>{"Replace: "}</label>
+          <input
+            type="checkbox"
+            id="confirmChange"
+            className="w-[1.5rem] h-[1.5rem]"
+            onChange={(e) => {
+              setSaveConfirm(e.target.checked);
+              document.getElementById("confirmBox").classList.remove("p-2");
+              document.getElementById("confirmBox").classList.remove("border-2");
+              document.getElementById("confirmBox").classList.remove("border-red-500");
+            } } />
+        </div>
+        <br></br>
+
+        <div className="flex flex-row justify-between">
+          <div></div>
+          <button
+            id="yesButton"
+            className="orangeButton"
+            onClick={() => {
+              let confirm = document.getElementById("confirmChange").checked;
+              console.log(confirm);
+              if (confirm) {
+                console.log(downloadedItem);
+                downloadData(downloadedItem);
+                setReload(!reload);
+                document.getElementById("confirmationDialog").style.display = "none";
+                document.getElementById("confirmChange").checked = false;
+              } else {
+                document.getElementById("confirmBox").classList.add("p-2");
+                document.getElementById("confirmBox").classList.add("border-2");
+                document.getElementById("confirmBox").classList.add("border-red-500");
+              }
+            } }>
+            Yes
+          </button>
+          <button
+            id="noButton"
+            className="redButton"
+            onClick={() => {
+              document.getElementById("confirmationDialog").style.display = "none";
+              setSaveConfirm(false);
+              document.getElementById("confirmChange").checked = false;
+            } }>
+            No
+          </button>
+          <div></div>
+        </div>
+      </div>
+    </div>;
+  }
+
+  function CreateLocationForm() {
+    return <form className="flex flex-row" onSubmit={createLocation}>
+      <div className="w-[1rem] flex flex-row justify-center items-center text-red-500">*</div>
+      <label className={"text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center w-[11rem] pl-2"}>
+        dcTrack Location Code
+      </label>
+      <input
+        type="text"
+        required={true}
+        className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-[10rem]"}
+        placeholder="Location Name"
+        defaultValue={locationCode}
+        onChange={(e) => {
+          setLocationCode(e.target.value);
+          setExistMessageShow(false);
+        } } />
+      <input type="submit" className="orangeButton ml-3" value={"Create Location"} />
+    </form>;
+  }
 }
