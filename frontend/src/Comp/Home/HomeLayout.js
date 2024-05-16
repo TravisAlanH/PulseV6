@@ -172,7 +172,7 @@ export default function HomeLayout() {
                 let Hierarchy = item.Location[0]["dcTrack Location Hierarchy *"].value;
                 if (item.Current.DataBaseUUID === UUID) {
                   Name = fullState.Location[0]["dcTrack Location Name *"].value;
-                  Code = fullState.Location[0]["dcTrack Loca`tion Code *"].value;
+                  Code = fullState.Location[0]["dcTrack Location Code *"].value;
                   Hierarchy = fullState.Location[0]["dcTrack Location Hierarchy *"].value;
                   showButton = false;
                 }
