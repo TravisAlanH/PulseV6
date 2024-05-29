@@ -12,7 +12,7 @@ const config = {
 };
 
 let newQ =
-  'SELECT a."Make", a."ModelName" AS "Model", a."RUHeight" ,a."Height", a."Width",a."Depth",a."Class",a."Subclass", a."Mounting", a."DataPortsCount", a."PowerPortsCount" FROM odbc."dcModels" a join "dcModelObjectTypes" b on b."ModelName" = a."ModelName"';
+  'SELECT a."Make", a."ModelName" AS "Model", a."RUHeight" ,a."Height", a."Width",a."Depth",a."Class",a."Subclass", a."Mounting", a."DataPortsCount", a."PowerPortsCount", a."FrontSlotsCount", a."BackSlotsCount" FROM odbc."dcModels" a join "dcModelObjectTypes" b on b."ModelName" = a."ModelName"';
 
 let query = newQ;
 const client = new Client(config);
