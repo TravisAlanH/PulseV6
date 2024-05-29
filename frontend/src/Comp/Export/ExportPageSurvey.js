@@ -18,6 +18,8 @@ export default function ExportPageSurvey() {
   const Safety = useSelector((state) => state.data.SurveySafety[0]);
   let SafetyKeys = sortArrayToMatchReference(Object.keys(Safety), "SurveySafety");
   const StateKeys = Object.keys(Data);
+  const Security = useSelector((state) => state.data.SurveySecurity[0]);
+  const SecurityKeys = sortArrayToMatchReference(Object.keys(Security), "SurveySecurity");
 
   const SurveyKeys = StateKeys.filter((item) => item.includes("Survey")).filter((item) => !item.includes("Room"));
 
@@ -35,71 +37,10 @@ export default function ExportPageSurvey() {
   }
 
   const tableSet = [
-    <tbody>
-      <tr>
-        <td colSpan={"5"}>Global Checks</td>
-      </tr>
-      <tr>
-        <td>Item to Check</td>
-        <td>Information</td>
-        <td>Regulatory</td>
-        <td>Complete</td>
-        <td>Notes</td>
-      </tr>
-      {GlobalKeys.map((key, index) => (
-        <tr key={index}>
-          <td>{Global[key]["check"]}</td>
-          <td>{Global[key]["information"]}</td>
-          <td>{Global[key]["regulatory"]}</td>
-          <td>{Global[key]["value"]}</td>
-          <td>{Global[key]["notes"]}</td>
-        </tr>
-      ))}
-    </tbody>,
-    <tbody>
-      <tr>
-        <td colSpan={"5"}>Site Details</td>
-      </tr>
-      <tr>
-        <td>Planning Activity</td>
-        <td>Information</td>
-        <td>Supporting Notes</td>
-      </tr>
-      {SiteKeys.map((key, index) => (
-        <tr key={index}>
-          <td>{key}</td>
-          <td className="w-[40%]">{Site[key].value}</td>
-          <td>{Site[key]["check"]}</td>
-        </tr>
-      ))}
-    </tbody>,
-    <tbody>
-      <tr>
-        <td colSpan={"8"}>Physical Security/ Life Safety</td>
-      </tr>
-      <tr>
-        <td>Scoring Items</td>
-        <td>Information</td>
-        <td>Regulatory</td>
-        <td>{"Value (drop down)"}</td>
-        <td>Notes</td>
-        <td>Scoring Weight</td>
-        <td>Score</td>
-        <td>Value xlate</td>
-      </tr>
-      {SafetyKeys.map((key, index) => (
-        <tr key={index}>
-          <td>{key}</td>
-          <td>{Safety[key].check}</td>
-          <td>{Safety[key].regulatory}</td>
-          <td>{Safety[key].value}</td>
-          <td>{Safety[key].notes}</td>
-          <td>{Safety[key].scoreWeight}</td>
-          <td>{Safety[key].score}</td>
-          <td>{Safety[key].valueXLate}</td>
-        </tr>
-      ))}
-    </tbody>,
+    GlobalExport(),
+    SiteExport(),
+    SecurityExport(),
+    SafetyExport(),
   ];
 
   return (
@@ -148,4 +89,108 @@ export default function ExportPageSurvey() {
       </div>
     </div>
   );
+
+  function SecurityExport() {
+    return <tbody>
+      <tr>
+        <td colSpan={"8"}>Physical Security/ Life Safety</td>
+      </tr>
+      <tr>
+        <td>Scoring Items</td>
+        <td>Information</td>
+        <td>Regulatory</td>
+        <td>{"Value (drop down)"}</td>
+        <td>Notes</td>
+        <td>Scoring Weight</td>
+        <td>Score</td>
+        <td>Value xlate</td>
+      </tr>
+      {SecurityKeys.map((key, index) => (
+        <tr key={index}>
+          <td>{key}</td>
+          <td>{Security[key].check}</td>
+          <td>{Security[key].regulatory}</td>
+          <td>{Security[key].value}</td>
+          <td>{Security[key].notes}</td>
+          <td>{Security[key].scoreWeight}</td>
+          <td>{Security[key].score}</td>
+          <td>{Security[key].valueXLate}</td>
+        </tr>
+      ))}
+    </tbody>;
+  }
+
+  function SafetyExport() {
+    return <tbody>
+      <tr>
+        <td colSpan={"8"}>Physical Security/ Life Safety</td>
+      </tr>
+      <tr>
+        <td>Scoring Items</td>
+        <td>Information</td>
+        <td>Regulatory</td>
+        <td>{"Value (drop down)"}</td>
+        <td>Notes</td>
+        <td>Scoring Weight</td>
+        <td>Score</td>
+        <td>Value xlate</td>
+      </tr>
+      {SafetyKeys.map((key, index) => (
+        <tr key={index}>
+          <td>{key}</td>
+          <td>{Safety[key].check}</td>
+          <td>{Safety[key].regulatory}</td>
+          <td>{Safety[key].value}</td>
+          <td>{Safety[key].notes}</td>
+          <td>{Safety[key].scoreWeight}</td>
+          <td>{Safety[key].score}</td>
+          <td>{Safety[key].valueXLate}</td>
+        </tr>
+      ))}
+    </tbody>;
+  }
+
+  function SiteExport() {
+    return <tbody>
+      <tr>
+        <td colSpan={"5"}>Site Details</td>
+      </tr>
+      <tr>
+        <td>Planning Activity</td>
+        <td>Information</td>
+        <td>Supporting Notes</td>
+      </tr>
+      {SiteKeys.map((key, index) => (
+        <tr key={index}>
+          <td>{key}</td>
+          <td className="w-[40%]">{Site[key].value}</td>
+          <td>{Site[key]["check"]}</td>
+        </tr>
+      ))}
+    </tbody>;
+  }
+
+  function GlobalExport() {
+    return <tbody>
+      <tr>
+        <td colSpan={"5"}>Global Checks</td>
+      </tr>
+      <tr>
+        <td>Item to Check</td>
+        <td>Information</td>
+        <td>Regulatory</td>
+        <td>Complete</td>
+        <td>Notes</td>
+      </tr>
+      {GlobalKeys.map((key, index) => (
+        <tr key={index}>
+          <td>{Global[key]["check"]}</td>
+          <td>{Global[key]["information"]}</td>
+          <td>{Global[key]["regulatory"]}</td>
+          <td>{Global[key]["value"]}</td>
+          <td>{Global[key]["notes"]}</td>
+        </tr>
+      ))}
+    </tbody>;
+  }
 }
