@@ -5,7 +5,8 @@ const fs = require("fs");
 const config = {
   user: "admin",
   password: "WAT499er!",
-  host: "10.34.3.86",
+  // host: "10.34.3.86",
+  host: "10.34.3.93",
   database: "raritan",
   port: 5432,
 };
