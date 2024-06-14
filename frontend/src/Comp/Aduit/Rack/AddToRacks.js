@@ -26,23 +26,8 @@ export default function AddToRacks({ Step, index }) {
         };
         dispatch(actions.addToRacks(payload));
         dispatch(actions.updateCurrent(payload));
-        // setTimeout(() => {
-        //   payload = {
-        //     Step: Step,
-        //     Current: currentAsset,
-        //     Key: "U Position*",
-        //     value: index,
-        //   };
-        //   dispatch(actions.changeData(payload));
-        //   payload = {
-        //     Step: Step,
-        //     Current: currentAsset,
-        //     Key: "Cabinet*",
-        //     value: RackState["Name *"].value,
-        //   };
-        //   dispatch(actions.changeData(payload));
-        // }, 200);
-      }}>
+      }}
+    >
       Add {Step}
     </button>
   );

@@ -11,7 +11,15 @@ import {
 } from "firebase/auth";
 import { getDatabase, onValue, ref } from "firebase/database";
 import app from "./firebase";
-import { arrayRemove, arrayUnion, doc, getDoc, getFirestore, setDoc, updateDoc } from "firebase/firestore";
+import {
+  arrayRemove,
+  arrayUnion,
+  doc,
+  getDoc,
+  getFirestore,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 
 const auth = getAuth(app);
 
@@ -63,7 +71,12 @@ function signup(user) {
   setPersistence(auth, browserSessionPersistence);
   const db = getFirestore(app);
 
-  createUserWithEmailAndPassword(auth, user.email, user.password, user.phoneNumber)
+  createUserWithEmailAndPassword(
+    auth,
+    user.email,
+    user.password,
+    user.phoneNumber
+  )
     .then((userCredential) => {
       // Set the display name for the user
       return updateProfile(userCredential.user, {
@@ -114,18 +127,11 @@ async function updateLocationsList(newLocationsData) {
   if (docSnap.exists()) {
     console.log("docRef", docRef);
     console.log("updateLocationsList", newLocationsData);
-    // await setDoc(docRef, {
-    //   LocationsList: newLocationsData,
-    // });
-    // await updateDoc(docRef, {
-    //   LocationsList: newLocationsData,
-    // });
   }
 }
 
 async function replaceLocationWithUpdate(newLocationData) {
   let UUID = newLocationData.Current.DataBaseUUID;
-  // use array-contains to delete this data from the db
   const db = getFirestore(app);
   const docRef = doc(db, "users", auth.currentUser.uid);
   const docSnap = await getDoc(docRef);
@@ -134,7 +140,8 @@ async function replaceLocationWithUpdate(newLocationData) {
     let LocationsList = docSnap.data().LocationsList;
     for (let i = 0; i < LocationsList.length; i++) {
       let LocationListIndexData = LocationsList[i];
-      if (typeof LocationListIndexData === "string") LocationListIndexData = JSON.parse(LocationListIndexData);
+      if (typeof LocationListIndexData === "string")
+        LocationListIndexData = JSON.parse(LocationListIndexData);
       if (LocationListIndexData.Current.DataBaseUUID === UUID) {
         removed = LocationsList[i];
         await updateDoc(docRef, {
@@ -173,6 +180,25 @@ export async function removeFromLocationList(ItemToRemove, user) {
     await updateDoc(docRef, {
       LocationsList: arrayRemove(ItemToRemove),
     });
+  }
+}
+
+export async function addToMLTList(ItemToAdd, user) {
+  const db = getFirestore(app);
+  const docRef = doc(db, "users", user.uid);
+
+  try {
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      await updateDoc(docRef, {
+        MLTList: arrayUnion(ItemToAdd),
+      });
+      return "success";
+    } else {
+      return "fail";
+    }
+  } catch (error) {
+    return error;
   }
 }
 

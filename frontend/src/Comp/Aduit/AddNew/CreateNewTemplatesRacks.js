@@ -25,6 +25,15 @@ const CreateTemplatesRacks = {
     APIMatch: "",
     NEXT: "HOLD FOR ADDITIONAL INFO",
   },
+  URL: {
+    type: "text",
+    value: "",
+    placeholder: "Researched URL",
+    options: [],
+    required: false,
+    APIMatch: "",
+    NEXT: "HOLD FOR ADDITIONAL INFO",
+  },
   "New Model Name": {
     type: "text",
     value: "",

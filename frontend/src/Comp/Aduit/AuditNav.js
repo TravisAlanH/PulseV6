@@ -7,6 +7,7 @@ import LocationLayout from "../Location/LocationLayout";
 
 import ExportPageAudit from "../Export/ExportPageAudit";
 import StructuredCablingLayout from "./StructuredCabling/StructuredCablingLayout";
+import BuildLayout from "./BuildCabinet/BuildLayout";
 
 export default function AuditNav({ setCurrentAudit, AllData }) {
   const buttons = document.getElementsByClassName("AuditLinks");
@@ -21,7 +22,8 @@ export default function AuditNav({ setCurrentAudit, AllData }) {
     }
   }
 
-  const buttonStyle = "bg-[#F7F5F1] text-[black] font-bold py-2 px-6 AuditLinks flex-grow ";
+  const buttonStyle =
+    "bg-[#F7F5F1] text-[black] font-bold py-2 px-6 AuditLinks flex-grow ";
 
   return (
     <div className="flex flex-row flex-wrap">
@@ -32,17 +34,10 @@ export default function AuditNav({ setCurrentAudit, AllData }) {
           removeSelected();
           e.target.classList.add("selected");
           setCurrentAudit(<LocationLayout />);
-        }}>
+        }}
+      >
         Location
       </button>
-      {/* <button
-        id="AuditLinks"
-        className={buttonStyle}
-        onClick={() => {
-          setCurrentAudit(<RoomLayout />);
-        }}>
-        Room
-      </button> */}
       <button
         id="AuditLinks"
         className={buttonStyle}
@@ -50,7 +45,8 @@ export default function AuditNav({ setCurrentAudit, AllData }) {
           removeSelected();
           e.target.classList.add("selected");
           setCurrentAudit(<RackLayout AllData={AllData} />);
-        }}>
+        }}
+      >
         Cabinet
       </button>
       <button
@@ -59,8 +55,20 @@ export default function AuditNav({ setCurrentAudit, AllData }) {
         onClick={(e) => {
           removeSelected();
           e.target.classList.add("selected");
+          setCurrentAudit(<BuildLayout AllData={AllData} />);
+        }}
+      >
+        Build Cabinet
+      </button>
+      <button
+        id="AuditLinks"
+        className={buttonStyle}
+        onClick={(e) => {
+          removeSelected();
+          e.target.classList.add("selected");
           setCurrentAudit(<PDULayout AllData={AllData} />);
-        }}>
+        }}
+      >
         Rack PDU
       </button>
       <button
@@ -70,7 +78,8 @@ export default function AuditNav({ setCurrentAudit, AllData }) {
           removeSelected();
           e.target.classList.add("selected");
           setCurrentAudit(<AssetsLayout AllData={AllData} />);
-        }}>
+        }}
+      >
         Assets
       </button>
       <button
@@ -80,7 +89,8 @@ export default function AuditNav({ setCurrentAudit, AllData }) {
           removeSelected();
           e.target.classList.add("selected");
           setCurrentAudit(<StructuredCablingLayout />);
-        }}>
+        }}
+      >
         Structured Cabling
       </button>
       <button
@@ -90,7 +100,8 @@ export default function AuditNav({ setCurrentAudit, AllData }) {
           removeSelected();
           e.target.classList.add("selected");
           setCurrentAudit(<ExportPageAudit />);
-        }}>
+        }}
+      >
         Export
       </button>
     </div>

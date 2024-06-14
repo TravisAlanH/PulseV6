@@ -35,6 +35,15 @@ const CreateTemplatePDU = {
   "Make *": text,
   "Model Name *": text,
   "New Model Name": text,
+  URL: {
+    type: "text",
+    value: "",
+    placeholder: "Researched URL",
+    options: [],
+    required: false,
+    APIMatch: "",
+    NEXT: "HOLD FOR ADDITIONAL INFO",
+  },
   Ports: {
     type: "number",
     value: 0,
@@ -101,7 +110,14 @@ const CreateTemplatePDU = {
   "Form Factor *": {
     type: "select",
     value: "",
-    options: ["Busway", "VStack", "Blade", "Rackable", "Non-Rackable", "Suspended"],
+    options: [
+      "Busway",
+      "VStack",
+      "Blade",
+      "Rackable",
+      "Non-Rackable",
+      "Suspended",
+    ],
     required: false,
     aPIMatch: "",
     NEXT: "HOLD FOR ADDITIONAL INFO",
