@@ -14,9 +14,7 @@ export default function BuildLayout({ AllData }) {
   const ATSs = useSelector((state) => state.data.ATSs);
 
   // const [openAT, setOpenAT] = React.useState(-1);
-  const [AvalableSlots, setAvalableSlots] = React.useState(
-    CurrentCabinet["RU Height"].value
-  );
+  const [AvalableSlots, setAvalableSlots] = React.useState(100);
 
   const InAllCabinets = [...Assets, ...PDUs, ...UPSs, ...ATSs];
 
