@@ -8,6 +8,7 @@ export default function BuildLayout({ AllData }) {
   const CurrentFilledCabinet = useSelector(
     (state) => state.data.OpenRU[CurrentRack]
   );
+
   const Assets = useSelector((state) => state.data.Assets);
   const PDUs = useSelector((state) => state.data.PDUs);
   const UPSs = useSelector((state) => state.data.UPSs);
@@ -15,6 +16,16 @@ export default function BuildLayout({ AllData }) {
 
   // const [openAT, setOpenAT] = React.useState(-1);
   const [AvalableSlots, setAvalableSlots] = React.useState(100);
+
+  if (!CurrentCabinet) {
+    return <div>Build Layout</div>;
+  }
+  if (!CurrentFilledCabinet) {
+    return <div>Build Layout</div>;
+  }
+  if (!CurrentFilledCabinet.value) {
+    return <div>Build Layout</div>;
+  }
 
   const InAllCabinets = [...Assets, ...PDUs, ...UPSs, ...ATSs];
 
