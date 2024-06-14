@@ -1,6 +1,6 @@
 import React from "react";
 import "./input.css";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 // import * as Actions from "../../Store/Slices/Slice";
 import Scanner from "./Scanner";
 // import SetName from "./SetName";

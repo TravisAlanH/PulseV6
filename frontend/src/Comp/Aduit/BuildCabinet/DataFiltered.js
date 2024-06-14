@@ -64,7 +64,7 @@ export default function DataFiltered({
     };
 
     setMltFilteredData(sortData());
-  }, [CombinedData, AllData, CombinedSort]);
+  }, [CombinedData, AllData, CombinedSort, setMltFilteredData]);
 
   return (
     <div>
@@ -73,7 +73,7 @@ export default function DataFiltered({
           <div key={index} className="flex flex-row">
             {Object.keys(item).map((key, index) => {
               if (key === "Height" || key === "Width" || key === "Depth")
-                return;
+                return null;
               return (
                 <div
                   key={index}
