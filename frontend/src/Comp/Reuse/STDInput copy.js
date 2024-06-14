@@ -1,28 +1,28 @@
 import React from "react";
 import "./input.css";
 import { useSelector, useDispatch } from "react-redux";
-import * as Actions from "../../Store/Slices/Slice";
+// import * as Actions from "../../Store/Slices/Slice";
 import Scanner from "./Scanner";
-import SetName from "./SetName";
-import { set } from "firebase/database";
+// import SetName from "./SetName";
+// import { set } from "firebase/database";
 
 export default function STDInput({ keyName, Step, newMLT, setNewMLT }) {
   const state = useSelector((state) => state.data[Step]);
   const current = useSelector((state) => state.data.Current[Step]);
-  const fullState = useSelector((state) => state.data);
+  // const fullState = useSelector((state) => state.data);
   const currentRack = useSelector((state) => state.data.Current["Racks"]);
   const OpenRU = useSelector((state) => state.data.OpenRU);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   let OpenRUHold = [];
   if (OpenRU.length > 0) OpenRUHold = [...OpenRU[currentRack].value];
 
-  let payload = {
-    Step: Step,
-    Current: current,
-    Key: keyName,
-    value: undefined,
-  };
+  // let payload = {
+  //   Step: Step,
+  //   Current: current,
+  //   Key: keyName,
+  //   value: undefined,
+  // };
 
   if (
     keyName === "Status *" ||
