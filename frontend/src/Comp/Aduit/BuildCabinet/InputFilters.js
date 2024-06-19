@@ -47,7 +47,7 @@ export default function InputFilters({
 
   React.useEffect(() => {
     setAvalableSlots(parseInt(ruHeight));
-  }, [ruHeight]);
+  }, [ruHeight, setAvalableSlots]);
 
   let CombinedData = [
     [make, setMake],
@@ -80,6 +80,8 @@ export default function InputFilters({
     [subclassFilter, setSubclassFilter],
     [mountingFilter, setMountingFilter],
   ];
+
+  console.log(CombinedFilter);
 
   const Headers = [
     "Make",

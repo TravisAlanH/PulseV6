@@ -138,8 +138,8 @@ export default function BuildLayout({ AllData }) {
                 <button
                   id="MLTSearchingData Drop Button"
                   onClick={() => {
-                    const DataDrops =
-                      document.getElementsByClassName("DataDrop");
+                    // const DataDrops =
+                    //   document.getElementsByClassName("DataDrop");
                   }}
                 >
                   Down
