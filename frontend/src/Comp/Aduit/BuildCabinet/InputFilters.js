@@ -1,10 +1,23 @@
 import React, { useState } from "react";
 import DataFiltered from "./DataFiltered";
+import {
+  ImSortAmountAsc,
+  ImSortAmountDesc,
+  ImCircleDown,
+} from "react-icons/im";
+import { IoClose } from "react-icons/io5";
+import { TbClearAll } from "react-icons/tb";
+import FilterList from "./Filters";
+import { filterAndSortData } from "./Filters";
 
-export default function InputFilters({ AllData, AvalableSlots, AllUnique }) {
+export default function InputFilters({
+  AllData,
+  AvalableSlots,
+  setAvalableSlots,
+  visable,
+  setSelectedMLTItem,
+}) {
   const [mltFilteredData, setMltFilteredData] = React.useState([...AllData]);
-
-  console.log("test");
 
   const [make, setMake] = useState("");
   const [model, setModel] = useState("");
@@ -28,20 +41,13 @@ export default function InputFilters({ AllData, AvalableSlots, AllUnique }) {
   const [frontSlotsCountSort, setFrontSlotsCountSort] = useState(0);
   const [backSlotsCountSort, setBackSlotsCountSort] = useState(0);
 
-  const [makeFilter, setMakeFilter] = useState([]);
-  const [modelFilter, setModelFilter] = useState([]);
-  const [ruHeightFilter, setRuHeightFilter] = useState([]);
   const [deviceClassFilter, setDeviceClassFilter] = useState([]);
   const [subclassFilter, setSubclassFilter] = useState([]);
   const [mountingFilter, setMountingFilter] = useState([]);
-  const [dataPortsCountFilter, setDataPortsCountFilter] = useState([]);
-  const [powerPortsCountFilter, setPowerPortsCountFilter] = useState([]);
-  const [frontSlotsCountFilter, setFrontSlotsCountFilter] = useState([]);
-  const [backSlotsCountFilter, setBackSlotsCountFilter] = useState([]);
 
   React.useEffect(() => {
-    setRuHeight(AvalableSlots);
-  }, [AvalableSlots]);
+    setAvalableSlots(parseInt(ruHeight));
+  }, [ruHeight]);
 
   let CombinedData = [
     [make, setMake],
@@ -70,16 +76,9 @@ export default function InputFilters({ AllData, AvalableSlots, AllUnique }) {
   ];
 
   let CombinedFilter = [
-    [makeFilter, setMakeFilter],
-    [modelFilter, setModelFilter],
-    [ruHeightFilter, setRuHeightFilter],
     [deviceClassFilter, setDeviceClassFilter],
     [subclassFilter, setSubclassFilter],
     [mountingFilter, setMountingFilter],
-    [dataPortsCountFilter, setDataPortsCountFilter],
-    [powerPortsCountFilter, setPowerPortsCountFilter],
-    [frontSlotsCountFilter, setFrontSlotsCountFilter],
-    [backSlotsCountFilter, setBackSlotsCountFilter],
   ];
 
   const Headers = [
@@ -89,10 +88,10 @@ export default function InputFilters({ AllData, AvalableSlots, AllUnique }) {
     "Class",
     "Subclass",
     "Mounting",
-    "DataPortsCount",
-    "PowerPortsCount",
-    "FrontSlotsCount",
-    "BackSlotsCount",
+    "DataPorts",
+    "PowerPorts",
+    "FrontSlots",
+    "BackSlots",
   ];
 
   function showHideFilterBar(shownIndex) {
@@ -112,16 +111,25 @@ export default function InputFilters({ AllData, AvalableSlots, AllUnique }) {
     filterBar.classList.add("flex");
   }
 
+  function closeAllFilterBars() {
+    let filterBarHide = document.getElementsByClassName("filterBar");
+    for (let i = 0; i < filterBarHide.length; i++) {
+      filterBarHide[i].classList.add("hidden");
+      filterBarHide[i].classList.remove("flex");
+    }
+  }
+
   return (
     <div className="flex flex-col">
-      <div className="flex flex-row h-[2.5rem]">
+      <div className="flex flex-row h-[2rem] sticky top-0 bg-white">
+        <div className="min-w-[2.8rem]"></div>
         {Headers.map((item, index) => {
           return (
-            <div className="flex flex-row justify-between w-[12rem] border-2 border-gray-300 overflow-visable">
+            <div className="flex flex-row justify-between min-w-[8rem] max-w-[8rem] border-2 border-gray-300 overflow-visable  bg-white">
               <div key={index} className=" text-nowrap">
                 {item}
               </div>
-              <div className="flex flex-col">
+              <div className="flex flex-col relative">
                 {FilterButton(index)}
                 {FilterData(index)}
               </div>
@@ -129,28 +137,47 @@ export default function InputFilters({ AllData, AvalableSlots, AllUnique }) {
           );
         })}
       </div>
-      <div className="flex flex-row">
+      <div className="flex flex-row sticky top-[2rem] bg-white">
+        <div className="min-w-[2.8rem]"></div>
         {CombinedData.map((item, index) => {
           return (
-            <div key={index} className="w-[12rem]">
+            <div
+              key={index}
+              className="min-w-[8rem] max-w-[8rem] flex flex-row"
+            >
               <input
+                id={"FilterInput" + index}
                 type="text"
                 className="border-2 border-gray-300 w-full"
                 value={item[0]}
-                onChange={(e) => item[1](e.target.value)}
+                onChange={(e) => {
+                  item[1](e.target.value);
+                  setMltFilteredData(
+                    filterAndSortData(AllData, CombinedData, CombinedSort)
+                  );
+                }}
               />
+              <button
+                className="w-[2rem] border-2 rounded-md"
+                onClick={() => {
+                  item[1]("");
+                  closeAllFilterBars();
+                  setMltFilteredData(
+                    filterAndSortData(AllData, CombinedData, CombinedSort)
+                  );
+                }}
+              >
+                X
+              </button>
             </div>
           );
         })}
       </div>
       <div>
         <DataFiltered
-          CombinedData={CombinedData}
-          AllData={AllData}
-          CombinedSort={CombinedSort}
-          CombinedFilter={CombinedFilter}
+          setSelectedMLTItem={setSelectedMLTItem}
           mltFilteredData={mltFilteredData}
-          setMltFilteredData={setMltFilteredData}
+          visable={visable}
         />
       </div>
     </div>
@@ -165,7 +192,7 @@ export default function InputFilters({ AllData, AvalableSlots, AllUnique }) {
           }
           onClick={() => showHideFilterBar(index)}
         >
-          {"F"}
+          <ImCircleDown />
         </button>
       </div>
     );
@@ -175,58 +202,170 @@ export default function InputFilters({ AllData, AvalableSlots, AllUnique }) {
     return (
       <div
         id={"FilterBar" + index}
-        className="filterBar hidden relative -translate-x-[300%]"
+        className="filterBar hidden absolute -translate-x-[9.8rem] translate-y-[3.8rem] min-w-[30rem]"
       >
-        <div className="bg-white p-2 border-2 absolute">
-          <div className="flex flex-row ">
+        <div className="bg-white p-2 border-2 sticky z-10">
+          <div className="flex flex-col ">
+            <div>
+              <button
+                className="flex flex-row gap-3 items-center"
+                onClick={() => {
+                  CombinedSort[index][1](-1);
+                  setMltFilteredData(
+                    filterAndSortData(AllData, CombinedData, CombinedSort)
+                  );
+                }}
+              >
+                <ImSortAmountAsc />
+                <label className="cursor-pointer">Sort Ascending</label>
+              </button>
+            </div>
+            <div>
+              <button
+                className="flex flex-row gap-3 items-center"
+                onClick={() => {
+                  CombinedSort[index][1](1);
+                  setMltFilteredData(
+                    filterAndSortData(AllData, CombinedData, CombinedSort)
+                  );
+                }}
+              >
+                <ImSortAmountDesc />
+                <label className="cursor-pointer">Sort Descending</label>
+              </button>
+            </div>
+            <div>
+              <button
+                className="flex flex-row gap-3 items-center"
+                onClick={() => {
+                  CombinedSort[index][1](0);
+                  setMltFilteredData(
+                    filterAndSortData(AllData, CombinedData, CombinedSort)
+                  );
+                }}
+              >
+                <IoClose /> <label className="cursor-pointer">Clear Sort</label>
+              </button>
+            </div>
+            <div className="flex flex-row">
+              <input
+                type="text"
+                className="border-2 w-[9rem]"
+                defaultValue={CombinedData[index][0]}
+                onFocus={() => {
+                  document.getElementById("FilterInput" + index).focus();
+                  closeAllFilterBars();
+                }}
+              />
+              <button
+                className="w-[2rem] border-2 rounded-md"
+                onClick={() => {
+                  CombinedData[index][1]("");
+                  closeAllFilterBars();
+                }}
+              >
+                X
+              </button>
+            </div>
+          </div>
+          {FilterScrollBoxes(index)}
+          <div>
             <button
-              className="orangeButton"
-              onClick={() => CombinedSort[index][1](-1)}
+              className="flex flex-row gap-3 items-center"
+              onClick={() => {
+                CombinedData[index][1]("");
+                CombinedSort[index][1](0);
+                setMltFilteredData(
+                  filterAndSortData(AllData, CombinedData, CombinedSort)
+                );
+              }}
             >
-              {"▲"}
-            </button>
-            <button
-              className="orangeButton"
-              onClick={() => CombinedSort[index][1](0)}
-            >
-              {"X"}
-            </button>
-            <button
-              className="orangeButton"
-              onClick={() => CombinedSort[index][1](1)}
-            >
-              {"▼"}
+              <TbClearAll />
+              <label className="cursor-pointer">Clear All</label>
             </button>
           </div>
+        </div>
+      </div>
+    );
+  }
+
+  function FilterScrollBoxes(index) {
+    return (
+      <div>
+        {Headers[index] === "Class" ? (
           <div className="overflow-scroll h-[10rem]" id="Filter">
-            {/* {AllUnique.map((item, index) => {
+            {FilterList[Headers[index]].map((item, index) => {
               return (
-                <div>
+                <div key={index} className="flex flex-row gap-2">
                   <input
                     type="checkbox"
-                    value={item}
-                    onChange={(e) => {
-                      if (e.target.checked) {
-                        CombinedFilter[index][1]([
-                          ...CombinedFilter[index][0],
-                          e.target.value,
-                        ]);
-                      } else {
-                        CombinedFilter[index][1](
-                          CombinedFilter[index][0].filter(
-                            (item) => item !== e.target.value
-                          )
+                    checked={deviceClassFilter.includes(item)}
+                    onChange={() => {
+                      if (deviceClassFilter.includes(item)) {
+                        setDeviceClassFilter(
+                          deviceClassFilter.filter((i) => i !== item)
                         );
+                      } else {
+                        setDeviceClassFilter([...deviceClassFilter, item]);
                       }
                     }}
                   />
-                  {item}
+                  <label>{item}</label>
                 </div>
               );
-            })} */}
+            })}
           </div>
-          {/* test */}
-        </div>
+        ) : null}
+
+        {Headers[index] === "Subclass" ? (
+          <div className="overflow-scroll h-[10rem]" id="Filter">
+            {FilterList[Headers[index]].map((item, index) => {
+              return (
+                <div key={index} className="flex flex-row gap-2">
+                  <input
+                    type="checkbox"
+                    checked={deviceClassFilter.includes(item)}
+                    onChange={() => {
+                      if (deviceClassFilter.includes(item)) {
+                        setDeviceClassFilter(
+                          deviceClassFilter.filter((i) => i !== item)
+                        );
+                      } else {
+                        setDeviceClassFilter([...deviceClassFilter, item]);
+                      }
+                    }}
+                  />
+                  <label>{item}</label>
+                </div>
+              );
+            })}
+          </div>
+        ) : null}
+
+        {Headers[index] === "Mounting" ? (
+          <div className="overflow-scroll h-[10rem]" id="Filter">
+            {FilterList[Headers[index]].map((item, index) => {
+              return (
+                <div key={index} className="flex flex-row gap-2">
+                  <input
+                    type="checkbox"
+                    checked={deviceClassFilter.includes(item)}
+                    onChange={() => {
+                      if (deviceClassFilter.includes(item)) {
+                        setDeviceClassFilter(
+                          deviceClassFilter.filter((i) => i !== item)
+                        );
+                      } else {
+                        setDeviceClassFilter([...deviceClassFilter, item]);
+                      }
+                    }}
+                  />
+                  <label>{item}</label>
+                </div>
+              );
+            })}
+          </div>
+        ) : null}
       </div>
     );
   }

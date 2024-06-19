@@ -444,7 +444,11 @@ let Template = {
     "Orientation *": {
       type: "select",
       value: "",
-      options: ["Select", "Item Rear Faces Cabinet Front", "Item Front Faces Cabinet Front"],
+      options: [
+        "Select",
+        "Item Rear Faces Cabinet Front",
+        "Item Front Faces Cabinet Front",
+      ],
       required: false,
       aPIMatch: "",
       NEXT: "HOLD FOR ADDITIONAL INFO",
@@ -727,7 +731,16 @@ let Template = {
       type: "select",
       value: "Blue",
       placeholder: "Input Here",
-      options: ["Select", "Blue", "Green", "Yellow", "Orange", "Purple", "White", "Black"],
+      options: [
+        "Select",
+        "Blue",
+        "Green",
+        "Yellow",
+        "Orange",
+        "Purple",
+        "White",
+        "Black",
+      ],
       required: false,
       disabled: true,
       APIMatch: "",
@@ -1136,7 +1149,11 @@ let Template = {
       type: "select",
       value: "",
       placeholder: "",
-      options: ["Client Staff - Non Technical", "Client Staff Technical", "Client Venders"],
+      options: [
+        "Client Staff - Non Technical",
+        "Client Staff Technical",
+        "Client Venders",
+      ],
       required: true,
       check: "MDF/IDF Survey Tech Role",
       NEXT: "HOLD FOR ADDITIONAL INFO",
@@ -1156,7 +1173,8 @@ let Template = {
       placeholder: "Name of Site being surveyed",
       options: [],
       required: true,
-      check: "If blank manually enter site name or update Master Site List worksheet",
+      check:
+        "If blank manually enter site name or update Master Site List worksheet",
       NEXT: "HOLD FOR ADDITIONAL INFO",
     },
     "Site Address": {
@@ -1165,7 +1183,8 @@ let Template = {
       placeholder: "Address of Site being surveyed",
       options: [],
       required: true,
-      check: "If blank manually enter address or update Master Site List worksheet",
+      check:
+        "If blank manually enter address or update Master Site List worksheet",
       NEXT: "HOLD FOR ADDITIONAL INFO",
     },
     "Site Country": {
@@ -1174,7 +1193,8 @@ let Template = {
       placeholder: "Country of Site being surveyed",
       options: [],
       required: true,
-      check: "If blank manually enter country or update Master Site List worksheet",
+      check:
+        "If blank manually enter country or update Master Site List worksheet",
       NEXT: "HOLD FOR ADDITIONAL INFO",
     },
     "Local Site Contact": {
@@ -1183,7 +1203,8 @@ let Template = {
       placeholder: "Name of local site contact",
       options: [],
       required: true,
-      check: "If blank manually enter site contact or update Master Site List worksheet",
+      check:
+        "If blank manually enter site contact or update Master Site List worksheet",
       NEXT: "HOLD FOR ADDITIONAL INFO",
     },
     "Site Contact Role": {
@@ -1201,7 +1222,8 @@ let Template = {
       placeholder: "Email of local site contact",
       options: [],
       required: true,
-      check: "If blank manually enter site contacts role or update Master Site List worksheet",
+      check:
+        "If blank manually enter site contacts role or update Master Site List worksheet",
       NEXT: "HOLD FOR ADDITIONAL INFO",
     },
     "Site Contact Phone": {
@@ -1210,7 +1232,8 @@ let Template = {
       placeholder: "Phone of local site contact",
       options: [],
       required: true,
-      check: "If blank manually enter site contacts phone or update Master Site List worksheet",
+      check:
+        "If blank manually enter site contacts phone or update Master Site List worksheet",
       NEXT: "HOLD FOR ADDITIONAL INFO",
     },
     "Access Times": {
@@ -1342,12 +1365,12 @@ let Template = {
         "OM2",
         "OM3",
         "OM4",
-        "OS2"
+        "OS2",
       ],
       required: false,
       APIMatch: "",
     },
-    "Busbar" : {
+    Busbar: {
       type: "select",
       value: "",
       placeholder: "Input Here",
@@ -1443,7 +1466,8 @@ let Template = {
       placeholder: "Input Here",
       options: ["Complies", "Does Not Comply", "N/A"],
       required: true,
-      check: "Complies = any access (all doors, gaps) to room controlled by card reader",
+      check:
+        "Complies = any access (all doors, gaps) to room controlled by card reader",
       Appendix: "",
       information: "",
       regulatory: "Y",
@@ -1506,7 +1530,8 @@ let Template = {
       placeholder: "Type of Extinguishers",
       options: ["Complies", "Does Not Comply", "N/A"],
       required: true,
-      check: "Complies = an ABC dry chemical extinguisher in the room, note type in Notes column",
+      check:
+        "Complies = an ABC dry chemical extinguisher in the room, note type in Notes column",
       Appendix: "",
       information: "",
       regulatory: "Y",
@@ -1521,7 +1546,8 @@ let Template = {
       placeholder: "Notes",
       options: ["Complies", "Does Not Comply", "N/A"],
       required: true,
-      check: "Complies = a phone to permit calling EMS in event of emergency, in case no cell service",
+      check:
+        "Complies = a phone to permit calling EMS in event of emergency, in case no cell service",
       Appendix: "",
       information: "",
       regulatory: "Y",
@@ -1536,7 +1562,8 @@ let Template = {
       placeholder: "Type of Suppression",
       options: ["Complies", "Does Not Comply", "N/A"],
       required: true,
-      check: "Complies = Sprinkler, Halon, Other in room Note type in Notes column",
+      check:
+        "Complies = Sprinkler, Halon, Other in room Note type in Notes column",
       Appendix: "",
       information: "",
       regulatory: "Y",
@@ -1566,7 +1593,8 @@ let Template = {
       placeholder: "Notes",
       options: ["Complies", "Does Not Comply", "N/A"],
       required: true,
-      check: "Complies = Fire indicator Device in room for occupant notification",
+      check:
+        "Complies = Fire indicator Device in room for occupant notification",
       Appendix: "",
       information: "",
       regulatory: "Y",
@@ -1611,7 +1639,8 @@ let Template = {
       placeholder: "Notes",
       options: ["Complies", "Does Not Comply", "N/A"],
       required: true,
-      check: "Complies = ALL conduit penetrations have voids filled with firestop",
+      check:
+        "Complies = ALL conduit penetrations have voids filled with firestop",
       Appendix: "",
       information: "",
       regulatory: "Y",
@@ -1641,7 +1670,8 @@ let Template = {
       placeholder: "Notes",
       options: ["Complies", "Does Not Comply", "N/A"],
       required: true,
-      check: "N/A= no Panel; Complies= Panel with clearance; Does not comply=Panel not enough clearance",
+      check:
+        "N/A= no Panel; Complies= Panel with clearance; Does not comply=Panel not enough clearance",
       Appendix: "",
       information: "",
       regulatory: "Y",
@@ -1716,7 +1746,8 @@ let Template = {
       placeholder: "Notes",
       options: ["Complies", "Does Not Comply", "N/A"],
       required: true,
-      check: "Complies= In room trash can is emptied of its contents on a schedule",
+      check:
+        "Complies= In room trash can is emptied of its contents on a schedule",
       Appendix: "",
       information: "",
       regulatory: "Y",
