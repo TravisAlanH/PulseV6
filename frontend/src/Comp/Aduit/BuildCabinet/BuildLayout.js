@@ -14,16 +14,17 @@ export default function BuildLayout({ AllData }) {
   );
   const [visable, setVisable] = useState(15);
 
+  const [MLTData, setMLTData] = React.useState(AllData);
+  console.log("B ", MLTData);
   const Assets = useSelector((state) => state.data.Assets);
   const PDUs = useSelector((state) => state.data.PDUs);
   const UPSs = useSelector((state) => state.data.UPSs);
   const ATSs = useSelector((state) => state.data.ATSs);
   const [SelectedMLTItem, setSelectedMLTItem] = useState({});
   const [UPosition, setUPosition] = useState(0);
-  console.log(SelectedMLTItem);
   // const [openAT, setOpenAT] = React.useState(-1);
   const [AvalableSlots, setAvalableSlots] = React.useState(100);
-  console.log(AvalableSlots);
+  console.log("Av Slots ", AvalableSlots);
 
   if (!CurrentCabinet) {
     return <div>Build Layout</div>;
@@ -60,10 +61,20 @@ export default function BuildLayout({ AllData }) {
       }
       if (CurrentFilledCabinet.value[i + index] === 1) {
         setAvalableSlots(open);
+        setMLTData(
+          MLTData.filter((obj) => {
+            return obj.RUHeight <= open;
+          })
+        );
         return open;
       }
     }
     setAvalableSlots(open);
+    setMLTData(
+      MLTData.filter((obj) => {
+        return obj.RUHeight <= open;
+      })
+    );
     return open;
   };
 
@@ -103,71 +114,89 @@ export default function BuildLayout({ AllData }) {
           );
         })}
       </div>
-      <div id="ModalRackable" className="modal">
+      <div id="ModalRackable" className="modal w-full">
         <div className="modal-content">
-          <div
-            id="Entries and Close"
-            className="flex flex-row justify-end gap-4"
-          >
-            <div id="Entries">
-              <label>Show</label>
-              <select onChange={(e) => setVisable(e.target.value)}>
-                <option value={15}>15</option>
-                <option value={30}>30</option>
-                <option value={45}>45</option>
-                <option value={60}>60</option>
-              </select>
-              <label>Entries</label>
-            </div>
-            <div id="closeButton">
-              <button
-                className="redButton flex flex-row justify-center items-center"
-                onClick={() => {
-                  setSelectedMLTItem({});
-                  document.getElementById("ModalRackable").style.display =
-                    "none";
-                }}
-              >
-                x
-              </button>
-            </div>
-          </div>
-          <div className="flex flex-row justify-center w-full">
+          <div className="flex flex-col justify-center w-full">
             {Object.keys(SelectedMLTItem).length === 0 ? (
-              <div id="MLTSearchingData Box">
-                <button
-                  id="MLTSearchingData Drop Button"
-                  onClick={() => {
-                    // const DataDrops =
-                    //   document.getElementsByClassName("DataDrop");
-                  }}
-                >
-                  Down
-                </button>
+              <div>
                 <div
-                  id="MLTDataDrop"
-                  className="DataDrop overflow-scroll w-[38rem] h-[35rem] px-6 border-y-2 transition-all ease-in-out duration-300"
+                  id="Entries and Close"
+                  className="flex flex-row justify-end gap-4"
                 >
-                  <InputFilters
-                    AllData={AllData}
-                    AvalableSlots={AvalableSlots}
-                    setAvalableSlots={setAvalableSlots}
-                    visable={visable}
-                    setSelectedMLTItem={setSelectedMLTItem}
-                  />
+                  {EntriesNumber()}
+                  {CloseButton()}
+                </div>
+                <div id="MLTSearchingData Box">
+                  <button
+                    id="MLTSearchingData Drop Button"
+                    onClick={() => {
+                      // const DataDrops =
+                      //   document.getElementsByClassName("DataDrop");
+                    }}
+                  >
+                    Down
+                  </button>
+                  <div
+                    id="MLTDataDrop"
+                    className="DataDrop overflow-scroll w-[38rem] h-[35rem] px-6 border-y-2 transition-all ease-in-out duration-300"
+                  >
+                    <InputFilters
+                      AllData={MLTData}
+                      AvalableSlots={AvalableSlots}
+                      setAvalableSlots={setAvalableSlots}
+                      visable={visable}
+                      setSelectedMLTItem={setSelectedMLTItem}
+                    />
+                  </div>
                 </div>
               </div>
             ) : (
-              <BuildInputs
-                SelectedMLTItem={SelectedMLTItem}
-                UPosition={UPosition}
-              />
+              <div className="w-full">
+                <div className="w-full flex flex-row justify-end">
+                  {CloseButton()}
+                </div>
+                <BuildInputs
+                  SelectedMLTItem={SelectedMLTItem}
+                  UPosition={UPosition}
+                />
+              </div>
             )}
           </div>
         </div>
       </div>
     </div>
   );
+
+  function CloseButton() {
+    return (
+      <div id="closeButton">
+        <button
+          className="redButton flex flex-row justify-center items-center"
+          onClick={() => {
+            setSelectedMLTItem({});
+            document.getElementById("ModalRackable").style.display = "none";
+          }}
+        >
+          x
+        </button>
+      </div>
+    );
+  }
+
+  function EntriesNumber() {
+    return (
+      <div id="Entries">
+        <label>Show</label>
+        <select onChange={(e) => setVisable(e.target.value)}>
+          <option value={15}>15</option>
+          <option value={30}>30</option>
+          <option value={45}>45</option>
+          <option value={60}>60</option>
+        </select>
+        <label>Entries</label>
+      </div>
+    );
+  }
 
   function emptyInRack(index) {
     return (

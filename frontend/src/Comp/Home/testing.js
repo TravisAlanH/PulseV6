@@ -1,0 +1,1555 @@
+{
+    "Location": [
+        {
+            "# Operation *": {
+                "value": "ADD",
+                "Export": "# Operation *"
+            },
+            "Object *": {
+                "value": "LOCATION",
+                "Export": "Object *"
+            },
+            "dcTrack Location Code *": {
+                "type": "text",
+                "value": "testing",
+                "placeholder": "Input Here",
+                "options": [],
+                "required": false,
+                "APIMatch": "",
+                "NEXT": "HOLD FOR ADDITIONAL INFO",
+                "Export": "dcTrack Location Code *"
+            },
+            "dcTrack Location Name *": {
+                "type": "text",
+                "value": "",
+                "placeholder": "Input Here",
+                "options": [],
+                "required": false,
+                "APIMatch": "",
+                "NEXT": "HOLD FOR ADDITIONAL INFO",
+                "Export": "dcTrack Location Name *"
+            },
+            "dcTrack Location Hierarchy *": {
+                "type": "select",
+                "value": "",
+                "placeholder": "Input Here",
+                "options": [
+                    "Data Center",
+                    "Floor",
+                    "Room"
+                ],
+                "required": false,
+                "APIMatch": "",
+                "NEXT": "HOLD FOR ADDITIONAL INFO",
+                "Export": "dcTrack Location Hierarchy *"
+            },
+            "dcTrack Location Parent": {
+                "type": "text",
+                "value": "",
+                "placeholder": "Input Here",
+                "options": [],
+                "required": false,
+                "APIMatch": "",
+                "NEXT": "HOLD FOR ADDITIONAL INFO",
+                "Export": "dcTrack Location Parent"
+            },
+            "Data Center Area *": {
+                "type": "number",
+                "value": 0,
+                "options": [],
+                "required": false,
+                "aPIMatch": "",
+                "NEXT": "HOLD FOR ADDITIONAL INFO",
+                "Export": "Data Center Area *"
+            },
+            "Country *": {
+                "type": "select",
+                "value": "",
+                "options": [
+                    "Select a Country",
+                    "United States",
+                    "Afghanistan",
+                    "Albania",
+                    "Algeria",
+                    "Andorra",
+                    "Angola",
+                    "Antigua and Barbuda",
+                    "Argentina",
+                    "Armenia",
+                    "Australia",
+                    "Austria",
+                    "Azerbaijan",
+                    "Bahamas",
+                    "Bahrain",
+                    "Bangladesh",
+                    "Barbados",
+                    "Belarus",
+                    "Belgium",
+                    "Belize",
+                    "Benin",
+                    "Bhutan",
+                    "Bolivia",
+                    "Bosnia and Herzegovina",
+                    "Botswana",
+                    "Brazil",
+                    "Brunei",
+                    "Bulgaria",
+                    "Burkina Faso",
+                    "Burundi",
+                    "Cambodia",
+                    "Cameroon",
+                    "Canada",
+                    "Cape Verde",
+                    "Central African Republic",
+                    "Chad",
+                    "Chile",
+                    "China",
+                    "Colombia",
+                    "Comoros",
+                    "Congo (Brazzaville)",
+                    "Congo (Kinshasa)",
+                    "Costa Rica",
+                    "Croatia",
+                    "Cuba",
+                    "Cyprus",
+                    "Czech Republic",
+                    "Denmark",
+                    "Djibouti",
+                    "Dominica",
+                    "Dominican Republic",
+                    "East Timor",
+                    "Ecuador",
+                    "Egypt",
+                    "El Salvador",
+                    "Equatorial Guinea",
+                    "Eritrea",
+                    "Estonia",
+                    "Eswatini",
+                    "Ethiopia",
+                    "Fiji",
+                    "Finland",
+                    "France",
+                    "Gabon",
+                    "Gambia",
+                    "Georgia",
+                    "Germany",
+                    "Ghana",
+                    "Greece",
+                    "Grenada",
+                    "Guatemala",
+                    "Guinea",
+                    "Guinea-Bissau",
+                    "Guyana",
+                    "Haiti",
+                    "Honduras",
+                    "Hungary",
+                    "Iceland",
+                    "India",
+                    "Indonesia",
+                    "Iran",
+                    "Iraq",
+                    "Ireland",
+                    "Israel",
+                    "Italy",
+                    "Ivory Coast",
+                    "Jamaica",
+                    "Japan",
+                    "Jordan",
+                    "Kazakhstan",
+                    "Kenya",
+                    "Kiribati",
+                    "Kosovo",
+                    "Kuwait",
+                    "Kyrgyzstan",
+                    "Laos",
+                    "Latvia",
+                    "Lebanon",
+                    "Lesotho",
+                    "Liberia",
+                    "Libya",
+                    "Liechtenstein",
+                    "Lithuania",
+                    "Luxembourg",
+                    "Macedonia (North Macedonia)",
+                    "Madagascar",
+                    "Malawi",
+                    "Malaysia",
+                    "Maldives",
+                    "Mali",
+                    "Malta",
+                    "Marshall Islands",
+                    "Mauritania",
+                    "Mauritius",
+                    "Mexico",
+                    "Micronesia",
+                    "Moldova",
+                    "Monaco",
+                    "Mongolia",
+                    "Montenegro",
+                    "Morocco",
+                    "Mozambique",
+                    "Myanmar (Burma)",
+                    "Namibia",
+                    "Nauru",
+                    "Nepal",
+                    "Netherlands",
+                    "New Zealand",
+                    "Nicaragua",
+                    "Niger",
+                    "Nigeria",
+                    "North Korea",
+                    "Norway",
+                    "Oman",
+                    "Pakistan",
+                    "Palau",
+                    "Palestine",
+                    "Panama",
+                    "Papua New Guinea",
+                    "Paraguay",
+                    "Peru",
+                    "Philippines",
+                    "Poland",
+                    "Portugal",
+                    "Qatar",
+                    "Romania",
+                    "Russia",
+                    "Rwanda",
+                    "Saint Kitts and Nevis",
+                    "Saint Lucia",
+                    "Saint Vincent and the Grenadines",
+                    "Samoa",
+                    "San Marino",
+                    "Sao Tome and Principe",
+                    "Saudi Arabia",
+                    "Senegal",
+                    "Serbia",
+                    "Seychelles",
+                    "Sierra Leone",
+                    "Singapore",
+                    "Slovakia",
+                    "Slovenia",
+                    "Solomon Islands",
+                    "Somalia",
+                    "South Africa",
+                    "South Korea",
+                    "South Sudan",
+                    "Spain",
+                    "Sri Lanka",
+                    "Sudan",
+                    "Suriname",
+                    "Sweden",
+                    "Switzerland",
+                    "Syria",
+                    "Taiwan",
+                    "Tajikistan",
+                    "Tanzania",
+                    "Thailand",
+                    "Togo",
+                    "Tonga",
+                    "Trinidad and Tobago",
+                    "Tunisia",
+                    "Turkey",
+                    "Turkmenistan",
+                    "Tuvalu",
+                    "Uganda",
+                    "Ukraine",
+                    "United Arab Emirates",
+                    "United Kingdom",
+                    "United States of America",
+                    "Uruguay",
+                    "Uzbekistan",
+                    "Vanuatu",
+                    "Vatican City",
+                    "Venezuela",
+                    "Vietnam",
+                    "Yemen",
+                    "Zambia",
+                    "Zimbabwe"
+                ],
+                "required": false,
+                "aPIMatch": "",
+                "NEXT": "HOLD FOR ADDITIONAL INFO",
+                "Export": "Country *"
+            },
+            "Custom Field Testing 1 *": {
+                "type": "number",
+                "value": 555,
+                "options": [],
+                "required": false,
+                "aPIMatch": "",
+                "NEXT": "HOLD FOR ADDITIONAL INFO",
+                "Export": ""
+            },
+            "Status *": {
+                "value": "PLANNED",
+                "Export": "Status *"
+            }
+        }
+    ],
+    "Racks": [
+        {
+            "# Operation *": {
+                "value": "ADD",
+                "Export": "# Operation *"
+            },
+            "Object *": {
+                "value": "CABINET",
+                "Export": "Object *"
+            },
+            "Name *": {
+                "type": "text",
+                "value": "CAB-A1-TE",
+                "placeholder": "Input Here",
+                "options": [],
+                "required": false,
+                "APIMatch": "",
+                "NEXT": "HOLD FOR ADDITIONAL INFO",
+                "Export": "Name *"
+            },
+            "Make *": {
+                "type": "text",
+                "value": "EMC",
+                "placeholder": "Input Here",
+                "options": [],
+                "required": false,
+                "APIMatch": "Make",
+                "NEXT": "HOLD FOR ADDITIONAL INFO",
+                "Export": "Make *"
+            },
+            "Model *": {
+                "type": "text",
+                "value": "44RU-Cabinet Symmetrix DMX",
+                "placeholder": "Input Here",
+                "options": [],
+                "required": false,
+                "APIMatch": "Model",
+                "NEXT": "HOLD FOR ADDITIONAL INFO",
+                "Export": "Model *"
+            },
+            "RU Height": {
+                "type": "number",
+                "value": 44,
+                "placeholder": "Input Here",
+                "options": [],
+                "required": false,
+                "disabled": true,
+                "APIMatch": "",
+                "NEXT": "HOLD FOR ADDITIONAL INFO",
+                "Export": ""
+            },
+            "Location *": {
+                "type": "text",
+                "value": "testing",
+                "placeholder": "Input Here",
+                "options": [],
+                "disabled": true,
+                "required": false,
+                "APIMatch": "",
+                "NEXT": "HOLD FOR ADDITIONAL INFO",
+                "Export": "Location *"
+            },
+            "Front Faces": {
+                "type": "select",
+                "value": "",
+                "placeholder": "Input Here",
+                "options": [
+                    "Select",
+                    "North",
+                    "South",
+                    "East",
+                    "West"
+                ],
+                "required": false,
+                "APIMatch": "",
+                "NEXT": "HOLD FOR ADDITIONAL INFO",
+                "Export": "Front Faces"
+            },
+            "Asset Tag": {
+                "type": "Scan",
+                "value": "",
+                "options": [],
+                "required": false,
+                "aPIMatch": "",
+                "NEXT": "HOLD FOR ADDITIONAL INFO",
+                "Export": "Asset Tag"
+            },
+            "Status *": {
+                "value": "PLANNED",
+                "Export": "Status *"
+            }
+        }
+    ],
+    "PDUs": [],
+    "Assets": [
+        {
+            "# Operation *": {
+                "value": "ADD",
+                "Export": "# Operation *"
+            },
+            "Object *": {
+                "value": "DEVICE-RACKABLE",
+                "Export": "Object *"
+            },
+            "Name *": {
+                "type": "text",
+                "value": "DEV-A1-U43",
+                "placeholder": "Input Here",
+                "options": [],
+                "required": false,
+                "APIMatch": "",
+                "NEXT": "HOLD FOR ADDITIONAL INFO",
+                "Export": "Name *"
+            },
+            "Make *": {
+                "type": "text",
+                "value": "HP",
+                "placeholder": "Input Here",
+                "options": [],
+                "required": false,
+                "APIMatch": "Make",
+                "NEXT": "HOLD FOR ADDITIONAL INFO",
+                "Export": "Make *"
+            },
+            "Model *": {
+                "type": "text",
+                "value": "",
+                "placeholder": "Input Here",
+                "options": [],
+                "required": false,
+                "APIMatch": "Model",
+                "NEXT": "HOLD FOR ADDITIONAL INFO",
+                "Export": "Model *"
+            },
+            "Location *": {
+                "type": "text",
+                "value": "testing",
+                "placeholder": "Input Here",
+                "options": [],
+                "disabled": true,
+                "required": false,
+                "APIMatch": "",
+                "NEXT": "HOLD FOR ADDITIONAL INFO",
+                "Export": "Location *"
+            },
+            "Cabinet *": {
+                "type": "text",
+                "value": "CAB-A1-TE",
+                "placeholder": "Input Here",
+                "options": [],
+                "required": false,
+                "disabled": true,
+                "APIMatch": "",
+                "NEXT": "HOLD FOR ADDITIONAL INFO",
+                "Export": "Cabinet **"
+            },
+            "U Position *": {
+                "type": "number",
+                "value": 43,
+                "options": [],
+                "required": false,
+                "aPIMatch": "",
+                "NEXT": "HOLD FOR ADDITIONAL INFO",
+                "Export": "U Position **"
+            },
+            "RU Height": {
+                "type": "number",
+                "value": 1,
+                "placeholder": "Input Here",
+                "options": [],
+                "required": false,
+                "disabled": true,
+                "APIMatch": "",
+                "NEXT": "HOLD FOR ADDITIONAL INFO",
+                "Export": ""
+            },
+            "Asset Tag": {
+                "type": "Scan",
+                "value": "",
+                "options": [],
+                "required": false,
+                "aPIMatch": "",
+                "NEXT": "HOLD FOR ADDITIONAL INFO",
+                "Export": "Asset Tag"
+            },
+            "Rails Used *": {
+                "type": "select",
+                "value": "",
+                "options": [
+                    "Select",
+                    "Both",
+                    "Front",
+                    "Back"
+                ],
+                "required": false,
+                "aPIMatch": "",
+                "NEXT": "HOLD FOR ADDITIONAL INFO",
+                "Export": "Rails Used **"
+            },
+            "Orientation *": {
+                "type": "select",
+                "value": "",
+                "options": [
+                    "Select",
+                    "Item Rear Faces Cabinet Front",
+                    "Item Front Faces Cabinet Front"
+                ],
+                "required": false,
+                "aPIMatch": "",
+                "NEXT": "HOLD FOR ADDITIONAL INFO",
+                "Export": "Orientation **"
+            },
+            "Ports": {
+                "type": "number",
+                "value": 0,
+                "placeholder": "Input Here",
+                "options": [],
+                "required": false,
+                "disabled": false,
+                "APIMatch": "DataPortsCount",
+                "NEXT": "HOLD FOR ADDITIONAL INFO",
+                "Export": ""
+            },
+            "Status *": {
+                "value": "PLANNED",
+                "Export": "Status"
+            }
+        }
+    ],
+    "StructuredCabling": [],
+    "UPSs": [],
+    "ATSs": [],
+    "Panels": [],
+    "Receptacles": [],
+    "LoggedIn": false,
+    "Settings": {
+        "localStorage": true
+    },
+    "OpenRU": [
+        {
+            "value": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0
+            ]
+        }
+    ],
+    "Current": {
+        "DataBaseUUID": "5888f104-4df1-461d-af53-a7c75c559378",
+        "DataBaseTime": "2024-05-30T10:29:20:529 Z",
+        "StructuredCablingSet": {
+            "rack": null,
+            "asset": null,
+            "port": null,
+            "rack2": null,
+            "asset2": null,
+            "port2": null,
+            "# Operation *": "ADD",
+            "Object *": "STRUCTURED-CABLING",
+            "Starting Item Location *": "",
+            "Starting Port Index *": "",
+            "Starting Item Name *": "",
+            "Starting Port Name *": "",
+            "Starting Port Connector *": "RJ45",
+            "Ending Item Location *": "",
+            "Ending Port Index *": "",
+            "Ending Item Name *": "",
+            "Ending Port Name *": "",
+            "Ending Port Connector *": "RJ45",
+            "Cable Grade *": "Cat6",
+            "Media **": "Twisted Pair",
+            "Length (ft/m) *": "3",
+            "Length Units *": "US",
+            "Color *": "Blue",
+            "Connected": false
+        },
+        "Location": 0,
+        "Rooms": 0,
+        "Racks": 0,
+        "PDUs": 0,
+        "Assets": 0,
+        "StructuredCabling": 0,
+        "UPSs": 0,
+        "ATSs": 0,
+        "Panels": 0,
+        "Receptacles": 0,
+        "NewRacks": 0,
+        "NewPDUs": 0,
+        "NewAssets": 0,
+        "SurveyGlobal": 0,
+        "SurveyRoom": 0,
+        "SurveySecurity": 0,
+        "SurveySafety": 0,
+        "SurveySite": 0
+    },
+    "NewRacks": [],
+    "NewPDUs": [],
+    "NewAssets": [],
+    "NewUPSs": [],
+    "NewATSs": [],
+    "SurveyGlobal": [
+        {
+            "Key Holder Record": {
+                "type": "select",
+                "value": "Not Started",
+                "placeholder": "Input Here",
+                "options": [
+                    "Not Started",
+                    "Complete",
+                    "In Process"
+                ],
+                "required": true,
+                "check": "Record of who has keys to MDF/IDF doors",
+                "information": "Is there a record of key holders?",
+                "regulatory": "Y",
+                "notes": ""
+            },
+            "Access Records": {
+                "type": "select",
+                "value": "Not Started",
+                "placeholder": "Input Here",
+                "options": [
+                    "Not Started",
+                    "Complete",
+                    "In Process"
+                ],
+                "required": true,
+                "check": "Are the door records available via Lenel?",
+                "information": "Is there a procedure for review?",
+                "regulatory": "Y",
+                "notes": ""
+            },
+            "Visitor Access Records": {
+                "type": "select",
+                "value": "Not Started",
+                "placeholder": "Input Here",
+                "options": [
+                    "Not Started",
+                    "Complete",
+                    "In Process"
+                ],
+                "required": true,
+                "check": "Are visitor access records kept",
+                "information": "Did you have to sign in?",
+                "regulatory": "Y",
+                "notes": ""
+            },
+            "Visitor Log Contains": {
+                "type": "select",
+                "value": "Not Started",
+                "placeholder": "Input Here",
+                "options": [
+                    "Not Started",
+                    "Complete",
+                    "In Process"
+                ],
+                "required": true,
+                "check": "Is there a visitor log?",
+                "information": "Name, Company, Authorizer- minimum",
+                "regulatory": "Y",
+                "notes": ""
+            },
+            "Visitor Log Retention": {
+                "type": "select",
+                "value": "Not Started",
+                "placeholder": "Input Here",
+                "options": [
+                    "Not Started",
+                    "Complete",
+                    "In Process"
+                ],
+                "required": true,
+                "check": "Are there 3 months of Visitor Logs retained??",
+                "information": "3 months retention required",
+                "regulatory": "Y",
+                "notes": ""
+            },
+            "Auto Expiring Badges": {
+                "type": "select",
+                "value": "Not Started",
+                "placeholder": "Input Here",
+                "options": [
+                    "Not Started",
+                    "Complete",
+                    "In Process"
+                ],
+                "required": true,
+                "check": "Is an auto expiring badge used for site access?",
+                "information": "Can they identify an old/reused badge",
+                "regulatory": "Y",
+                "notes": ""
+            },
+            "Visitor Escort Required": {
+                "type": "select",
+                "value": "Not Started",
+                "placeholder": "Input Here",
+                "options": [
+                    "Not Started",
+                    "Complete",
+                    "In Process"
+                ],
+                "required": true,
+                "check": "Is a visitor escort required?",
+                "information": "Is there a procedure for escorting visitors?",
+                "regulatory": "Y",
+                "notes": ""
+            }
+        }
+    ],
+    "SurveySite": [
+        {
+            "Survey Date": {
+                "type": "date",
+                "value": "",
+                "placeholder": "dd/mm/yyyy",
+                "options": [],
+                "required": true,
+                "check": "Date of survey in dd/mm/yyyy format",
+                "NEXT": "HOLD FOR ADDITIONAL INFO"
+            },
+            "Company Surveying": {
+                "type": "text",
+                "value": "",
+                "placeholder": "Company Name",
+                "options": [],
+                "required": true,
+                "check": "Name of company performing survey",
+                "NEXT": "HOLD FOR ADDITIONAL INFO"
+            },
+            "Survey Tech Name": {
+                "type": "text",
+                "value": "",
+                "placeholder": "Tech Name",
+                "options": [],
+                "required": true,
+                "check": "MDF/IDF Survey Tech name",
+                "NEXT": "HOLD FOR ADDITIONAL INFO"
+            },
+            "Survey Tech Phone": {
+                "type": "text",
+                "value": "",
+                "placeholder": "Tech Phone",
+                "options": [],
+                "required": true,
+                "check": "MDF/IDF Survey Tech contact number",
+                "NEXT": "HOLD FOR ADDITIONAL INFO"
+            },
+            "Survey Tech Email": {
+                "type": "text",
+                "value": "",
+                "placeholder": "Tech Email",
+                "options": [],
+                "required": true,
+                "check": "MDF/IDF Survey Tech email address",
+                "NEXT": "HOLD FOR ADDITIONAL INFO"
+            },
+            "Site": {
+                "type": "text",
+                "value": "",
+                "placeholder": "Site Name",
+                "options": [],
+                "required": true,
+                "check": "Site Name",
+                "NEXT": "HOLD FOR ADDITIONAL INFO"
+            },
+            "Building": {
+                "type": "text",
+                "value": "",
+                "placeholder": "Building Name",
+                "options": [],
+                "required": true,
+                "check": "Building Name",
+                "NEXT": "HOLD FOR ADDITIONAL INFO"
+            },
+            "Floor": {
+                "type": "text",
+                "value": "",
+                "placeholder": "Floor Number",
+                "options": [],
+                "required": true,
+                "check": "Floor Number",
+                "NEXT": "HOLD FOR ADDITIONAL INFO"
+            },
+            "ATG Room Number": {
+                "type": "text",
+                "value": "",
+                "placeholder": "Room Number",
+                "options": [],
+                "required": true,
+                "check": "Room Number",
+                "NEXT": "HOLD FOR ADDITIONAL INFO"
+            },
+            "ATG Room Name": {
+                "type": "text",
+                "value": "",
+                "placeholder": "Room Name",
+                "options": [],
+                "required": true,
+                "check": "Room Name",
+                "NEXT": "HOLD FOR ADDITIONAL INFO"
+            },
+            "Alias Room Name": {
+                "type": "text",
+                "value": "",
+                "placeholder": "Room Name",
+                "options": [],
+                "required": true,
+                "check": "Alias or Prior Historic Name",
+                "NEXT": "HOLD FOR ADDITIONAL INFO"
+            },
+            "Barcode": {
+                "type": "text",
+                "value": "",
+                "placeholder": "If Different From ATG Room Number",
+                "options": [],
+                "required": true,
+                "check": "Barcode: If Different From ATG Room Number",
+                "NEXT": "HOLD FOR ADDITIONAL INFO"
+            },
+            "Survey Tech Role": {
+                "type": "select",
+                "value": "",
+                "placeholder": "",
+                "options": [
+                    "Client Staff - Non Technical",
+                    "Client Staff Technical",
+                    "Client Venders"
+                ],
+                "required": true,
+                "check": "MDF/IDF Survey Tech Role",
+                "NEXT": "HOLD FOR ADDITIONAL INFO"
+            },
+            "Site Type": {
+                "type": "select",
+                "value": "",
+                "placeholder": "",
+                "options": [
+                    "Acute",
+                    "Health Center",
+                    "Clinic",
+                    "Corp Office"
+                ],
+                "required": true,
+                "check": "Type of Site being surveyed",
+                "NEXT": "HOLD FOR ADDITIONAL INFO"
+            },
+            "Site Name": {
+                "type": "text",
+                "value": "",
+                "placeholder": "Name of Site being surveyed",
+                "options": [],
+                "required": true,
+                "check": "If blank manually enter site name or update Master Site List worksheet",
+                "NEXT": "HOLD FOR ADDITIONAL INFO"
+            },
+            "Site Address": {
+                "type": "text",
+                "value": "",
+                "placeholder": "Address of Site being surveyed",
+                "options": [],
+                "required": true,
+                "check": "If blank manually enter address or update Master Site List worksheet",
+                "NEXT": "HOLD FOR ADDITIONAL INFO"
+            },
+            "Site Country": {
+                "type": "text",
+                "value": "",
+                "placeholder": "Country of Site being surveyed",
+                "options": [],
+                "required": true,
+                "check": "If blank manually enter country or update Master Site List worksheet",
+                "NEXT": "HOLD FOR ADDITIONAL INFO"
+            },
+            "Local Site Contact": {
+                "type": "text",
+                "value": "",
+                "placeholder": "Name of local site contact",
+                "options": [],
+                "required": true,
+                "check": "If blank manually enter site contact or update Master Site List worksheet",
+                "NEXT": "HOLD FOR ADDITIONAL INFO"
+            },
+            "Site Contact Role": {
+                "type": "select",
+                "value": "",
+                "placeholder": "",
+                "options": [
+                    "Client Staff - Non Technical",
+                    "Client Staff Technical"
+                ],
+                "required": true,
+                "check": "Role of local site contact",
+                "NEXT": "HOLD FOR ADDITIONAL INFO"
+            },
+            "Site Contact Email": {
+                "type": "text",
+                "value": "",
+                "placeholder": "Email of local site contact",
+                "options": [],
+                "required": true,
+                "check": "If blank manually enter site contacts role or update Master Site List worksheet",
+                "NEXT": "HOLD FOR ADDITIONAL INFO"
+            },
+            "Site Contact Phone": {
+                "type": "text",
+                "value": "",
+                "placeholder": "Phone of local site contact",
+                "options": [],
+                "required": true,
+                "check": "If blank manually enter site contacts phone or update Master Site List worksheet",
+                "NEXT": "HOLD FOR ADDITIONAL INFO"
+            },
+            "Access Times": {
+                "type": "text",
+                "value": "",
+                "placeholder": "Access times for site",
+                "options": [],
+                "required": true,
+                "check": "Details of access times",
+                "NEXT": "HOLD FOR ADDITIONAL INFO"
+            }
+        }
+    ],
+    "SurveyRoom": [
+        {
+            "Room Number *": {
+                "type": "text",
+                "value": "",
+                "placeholder": "Input Here",
+                "options": [],
+                "required": false,
+                "APIMatch": ""
+            },
+            "GPS Coordinates *": {
+                "type": "GPS",
+                "value": "GPS Coordinates",
+                "placeholder": "GPS Coordinates",
+                "options": [],
+                "required": false,
+                "APIMatch": ""
+            },
+            "Area *": {
+                "type": "number",
+                "value": "",
+                "placeholder": "Input Here",
+                "options": [],
+                "required": false,
+                "APIMatch": ""
+            },
+            "Ceiling Type *": {
+                "type": "select",
+                "value": "",
+                "placeholder": "Input Here",
+                "options": [
+                    "Select",
+                    "Suspended Ceiling Tiles (Acoustic Ceiling Tiles)",
+                    "Exposed Grid Ceiling",
+                    "Drop Ceiling",
+                    "Open Ceiling (Industrial Look)",
+                    "Gypsum Board Ceiling",
+                    "Metal Ceiling Panels",
+                    "T-Bar Ceiling",
+                    "Plaster Ceiling",
+                    "Wooden Ceiling Panels",
+                    "Exposed Ductwork Ceiling",
+                    "Fiberglass Ceiling Tiles",
+                    "Aluminum Ceiling Panels",
+                    "Mineral Fiber Ceiling Tiles",
+                    "Glass Ceiling",
+                    "Coffered Ceiling",
+                    "Vaulted Ceiling",
+                    "Wooden Beams Ceiling",
+                    "Decorative Ceiling Tiles",
+                    "Perforated Ceiling Panels",
+                    "Cloud Ceiling (Floating Panels)",
+                    "Stretch Ceiling",
+                    "Fabric Ceiling Panels",
+                    "Metal Mesh Ceiling",
+                    "Styrofoam Ceiling Tiles",
+                    "Painted Concrete Ceiling",
+                    "Polystyrene Ceiling Tiles",
+                    "Bamboo Ceiling",
+                    "Copper Ceiling Panels",
+                    "Mirror Ceiling",
+                    "Custom Ceiling Design"
+                ],
+                "required": false,
+                "APIMatch": ""
+            },
+            "Ceiling Condition *": {
+                "type": "select",
+                "value": "",
+                "placeholder": "Input Here",
+                "options": [
+                    "Select",
+                    "Good",
+                    "Fair",
+                    "Poor",
+                    "Water Damage",
+                    "Gaps"
+                ],
+                "required": false,
+                "APIMatch": ""
+            },
+            "Floor Type *": {
+                "type": "select",
+                "value": "",
+                "placeholder": "Input Here",
+                "options": [
+                    "Select",
+                    "Raised Access Floor (RAF)",
+                    "Concrete Slab Floor",
+                    "Grated Tiles",
+                    "Cementitious Infill Panels",
+                    "Vinyl Composite Tile (VCT)",
+                    "Carpet",
+                    "Sealed Concrete",
+                    "Anti-Static Flooring",
+                    "Rubberized Flooring",
+                    "Hardwood Flooring",
+                    "Porcelain Tiles",
+                    "Ceramic Tiles",
+                    "Linoleum Flooring",
+                    "Epoxy Flooring",
+                    "Rubber Flooring Tiles",
+                    "Laminate Flooring",
+                    "Terrazzo Flooring",
+                    "Bamboo Flooring",
+                    "Polished Concrete",
+                    "Natural Stone Flooring",
+                    "Vinyl Plank Flooring",
+                    "Quartz Flooring",
+                    "Marble Flooring",
+                    "Granite Flooring",
+                    "Slate Flooring",
+                    "Travertine Flooring",
+                    "Cork Flooring",
+                    "Glass Flooring",
+                    "Metal Flooring",
+                    "Leather Flooring"
+                ],
+                "required": false,
+                "APIMatch": ""
+            },
+            "Floor Condition *": {
+                "type": "select",
+                "value": "",
+                "placeholder": "Input Here",
+                "options": [
+                    "Select",
+                    "Good",
+                    "Fair",
+                    "Poor",
+                    "Water Damage",
+                    "Gaps"
+                ],
+                "required": false,
+                "APIMatch": ""
+            },
+            "Wall Type *": {
+                "type": "select",
+                "value": "",
+                "placeholder": "Input Here",
+                "options": [
+                    "Select",
+                    "Drywall (Gypsum Board)",
+                    "Concrete Block Walls",
+                    "Cinder Block Walls",
+                    "Painted Concrete Walls",
+                    "Metal Stud Walls",
+                    "Glass Walls (for Data Center Viewing)",
+                    "Glass Block Walls",
+                    "Brick Walls",
+                    "Vinyl Wall Coverings",
+                    "Wood Paneling",
+                    "Acoustic Wall Panels",
+                    "Steel Cladding Panels",
+                    "Fiberglass Reinforced Panels (FRP)",
+                    "Fabric Wall Panels",
+                    "Cement Board Walls",
+                    "Plaster Walls",
+                    "Tile Walls",
+                    "Stone Veneer Walls",
+                    "Solid Glass Walls (for Aesthetics)",
+                    "Polycarbonate Walls",
+                    "Perforated Metal Walls (for Ventilation)",
+                    "Metallic Finish Walls",
+                    "Vinyl Wall Graphics",
+                    "Mirror Walls",
+                    "Chalkboard or Whiteboard Walls",
+                    "Custom Wall Art or Murals",
+                    "Bamboo Wall Coverings",
+                    "Digital Print Walls",
+                    "Magnetic Walls (for Note-Taking)",
+                    "Green Wall (Living Plant Wall)"
+                ],
+                "required": false,
+                "APIMatch": ""
+            },
+            "Wall Condition *": {
+                "type": "select",
+                "value": "",
+                "placeholder": "Input Here",
+                "options": [
+                    "Select",
+                    "Good",
+                    "Fair",
+                    "Poor",
+                    "Water Damage",
+                    "Gaps"
+                ],
+                "required": false,
+                "APIMatch": ""
+            },
+            "Cleanliness *": {
+                "type": "select",
+                "value": "",
+                "placeholder": "Input Here",
+                "options": [
+                    "Select",
+                    "Clean",
+                    "Dirty"
+                ],
+                "required": false,
+                "APIMatch": ""
+            },
+            "Room Notes": {
+                "type": "textarea",
+                "value": "",
+                "placeholder": "Input Here",
+                "options": [],
+                "required": false,
+                "APIMatch": ""
+            }
+        }
+    ],
+    "SurveySecurity": [
+        {
+            "Access Door Control": {
+                "type": "select",
+                "value": "",
+                "placeholder": "Input Here",
+                "options": [
+                    "Complies",
+                    "Does Not Comply",
+                    "N/A"
+                ],
+                "required": true,
+                "check": "Complies = Standard Badge Reader on access door that functions",
+                "Appendix": "C",
+                "information": "",
+                "regulatory": "Y",
+                "notes": "",
+                "scoreWeigh": 0,
+                "score": 0,
+                "valueXLate": 5
+            },
+            "Is the Room Secure?": {
+                "type": "select",
+                "value": "",
+                "placeholder": "Input Here",
+                "options": [
+                    "Complies",
+                    "Does Not Comply",
+                    "N/A"
+                ],
+                "required": true,
+                "check": "Complies = any access (all doors, gaps) to room controlled by card reader",
+                "Appendix": "",
+                "information": "",
+                "regulatory": "Y",
+                "notes": "",
+                "scoreWeigh": 0,
+                "score": 0,
+                "valueXLate": 5
+            },
+            "Available Key Access": {
+                "type": "select",
+                "value": "",
+                "placeholder": "Input Here",
+                "options": [
+                    "Complies",
+                    "Does Not Comply",
+                    "N/A"
+                ],
+                "required": true,
+                "check": "Complies = key slot in the door handle",
+                "Appendix": "",
+                "information": "",
+                "regulatory": "Y",
+                "notes": "",
+                "scoreWeigh": 0,
+                "score": 0,
+                "valueXLate": 5
+            },
+            "Door Manual Unlocking": {
+                "type": "select",
+                "value": "",
+                "placeholder": "Input Here",
+                "options": [
+                    "Complies",
+                    "Does Not Comply",
+                    "N/A"
+                ],
+                "required": true,
+                "check": "Complies = door is permanently locked",
+                "Appendix": "",
+                "information": "",
+                "regulatory": "Y",
+                "notes": "",
+                "scoreWeigh": 0,
+                "score": 0,
+                "valueXLate": 5
+            },
+            "Avigilon camera Present?": {
+                "type": "select",
+                "value": "",
+                "placeholder": "Input Here",
+                "options": [
+                    "Complies",
+                    "Does Not Comply",
+                    "N/A"
+                ],
+                "required": true,
+                "check": "Complies = the room has an Aviligilon camera (Appendix C)",
+                "Appendix": "C",
+                "information": "",
+                "regulatory": "Y",
+                "notes": "",
+                "scoreWeigh": 0,
+                "score": 0,
+                "valueXLate": 5
+            }
+        }
+    ],
+    "SurveySafety": [
+        {
+            "Fire Extinguishers?": {
+                "type": "select",
+                "value": "N/A",
+                "placeholder": "Type of Extinguishers",
+                "options": [
+                    "Complies",
+                    "Does Not Comply",
+                    "N/A"
+                ],
+                "required": true,
+                "check": "Complies = an ABC dry chemical extinguisher in the room, note type in Notes column",
+                "Appendix": "",
+                "information": "",
+                "regulatory": "Y",
+                "notes": "",
+                "scoreWeigh": 0,
+                "score": 2,
+                "valueXLate": 2,
+                "scoreWeight": 1
+            },
+            "Phone for EMS?": {
+                "type": "select",
+                "value": "",
+                "placeholder": "Notes",
+                "options": [
+                    "Complies",
+                    "Does Not Comply",
+                    "N/A"
+                ],
+                "required": true,
+                "check": "Complies = a phone to permit calling EMS in event of emergency, in case no cell service",
+                "Appendix": "",
+                "information": "",
+                "regulatory": "Y",
+                "notes": "",
+                "scoreWeigh": 0,
+                "score": 0,
+                "valueXLate": 1
+            },
+            "Fire Suppression System?": {
+                "type": "select",
+                "value": "",
+                "placeholder": "Type of Suppression",
+                "options": [
+                    "Complies",
+                    "Does Not Comply",
+                    "N/A"
+                ],
+                "required": true,
+                "check": "Complies = Sprinkler, Halon, Other in room Note type in Notes column",
+                "Appendix": "",
+                "information": "",
+                "regulatory": "Y",
+                "notes": "",
+                "scoreWeigh": 0,
+                "score": 0,
+                "valueXLate": 5
+            },
+            "Smoke Detectors Present?": {
+                "type": "select",
+                "value": "",
+                "placeholder": "Type of Suppression",
+                "options": [
+                    "Complies",
+                    "Does Not Comply",
+                    "N/A"
+                ],
+                "required": true,
+                "check": "Complies = Smoke Detectors visible in the ceiling space",
+                "Appendix": "",
+                "information": "",
+                "regulatory": "Y",
+                "notes": "",
+                "scoreWeigh": 0,
+                "score": 0,
+                "valueXLate": 5
+            },
+            "Fire Indicators Present?": {
+                "type": "select",
+                "value": "",
+                "placeholder": "Notes",
+                "options": [
+                    "Complies",
+                    "Does Not Comply",
+                    "N/A"
+                ],
+                "required": true,
+                "check": "Complies = Fire indicator Device in room for occupant notification",
+                "Appendix": "",
+                "information": "",
+                "regulatory": "Y",
+                "notes": "",
+                "scoreWeigh": 0,
+                "score": 0,
+                "valueXLate": 5
+            },
+            "Emergency Power / Lighting?": {
+                "type": "select",
+                "value": "",
+                "placeholder": "Notes",
+                "options": [
+                    "Complies",
+                    "Does Not Comply",
+                    "N/A"
+                ],
+                "required": true,
+                "check": "Complies = Red outlets, Emergency lighting in the room",
+                "Appendix": "",
+                "information": "",
+                "regulatory": "Y",
+                "notes": "",
+                "scoreWeigh": 0,
+                "score": 0,
+                "valueXLate": 5
+            },
+            "Emergency Frog Lights?": {
+                "type": "select",
+                "value": "",
+                "placeholder": "Notes",
+                "options": [
+                    "Complies",
+                    "Does Not Comply",
+                    "N/A"
+                ],
+                "required": true,
+                "check": "Complies = Emergency lighting \"frog lights\" in room",
+                "Appendix": "",
+                "information": "",
+                "regulatory": "Y",
+                "notes": "",
+                "scoreWeigh": 0,
+                "score": 0,
+                "valueXLate": 3
+            },
+            "Validate Conduit Penetrations": {
+                "type": "select",
+                "value": "",
+                "placeholder": "Notes",
+                "options": [
+                    "Complies",
+                    "Does Not Comply",
+                    "N/A"
+                ],
+                "required": true,
+                "check": "Complies = ALL conduit penetrations have voids filled with firestop",
+                "Appendix": "",
+                "information": "",
+                "regulatory": "Y",
+                "notes": "",
+                "scoreWeigh": 0,
+                "score": 0,
+                "valueXLate": 5
+            },
+            "Validate Maintenance Penetrations": {
+                "type": "select",
+                "value": "",
+                "placeholder": "Notes",
+                "options": [
+                    "Complies",
+                    "Does Not Comply",
+                    "N/A"
+                ],
+                "required": true,
+                "check": "Complies = Appropriate fire rating label attached to wall",
+                "Appendix": "",
+                "information": "",
+                "regulatory": "Y",
+                "notes": "",
+                "scoreWeigh": 0,
+                "score": 0,
+                "valueXLate": 5
+            },
+            "36\" Clearance Fire / Power Panels": {
+                "type": "select",
+                "value": "",
+                "placeholder": "Notes",
+                "options": [
+                    "Complies",
+                    "Does Not Comply",
+                    "N/A"
+                ],
+                "required": true,
+                "check": "N/A= no Panel; Complies= Panel with clearance; Does not comply=Panel not enough clearance",
+                "Appendix": "",
+                "information": "",
+                "regulatory": "Y",
+                "notes": "",
+                "scoreWeigh": 0,
+                "score": 0,
+                "valueXLate": 5
+            },
+            "Room State": {
+                "type": "select",
+                "value": "",
+                "placeholder": "Notes",
+                "options": [
+                    "Complies",
+                    "Does Not Comply",
+                    "N/A"
+                ],
+                "required": true,
+                "check": "Complies = no litter or clutter in room",
+                "Appendix": "",
+                "information": "",
+                "regulatory": "Y",
+                "notes": "",
+                "scoreWeigh": 0,
+                "score": 0,
+                "valueXLate": 3
+            },
+            "Tripping / Clothesline Hazards": {
+                "type": "select",
+                "value": "",
+                "placeholder": "Notes",
+                "options": [
+                    "Complies",
+                    "Does Not Comply",
+                    "N/A"
+                ],
+                "required": true,
+                "check": "Complies = No cables, wires or objects running in an unsafe way",
+                "Appendix": "",
+                "information": "",
+                "regulatory": "Y",
+                "notes": "",
+                "scoreWeigh": 0,
+                "score": 0,
+                "valueXLate": 5
+            },
+            "Room Used for Storage?": {
+                "type": "select",
+                "value": "",
+                "placeholder": "Notes",
+                "options": [
+                    "Complies",
+                    "Does Not Comply",
+                    "N/A"
+                ],
+                "required": true,
+                "check": "Complies = no boxes spares or other items stored in room",
+                "Appendix": "",
+                "information": "",
+                "regulatory": "Y",
+                "notes": "",
+                "scoreWeigh": 0,
+                "score": 0,
+                "valueXLate": 3
+            },
+            "Trash Disposeal Loction?": {
+                "type": "select",
+                "value": "",
+                "placeholder": "Notes",
+                "options": [
+                    "Complies",
+                    "Does Not Comply",
+                    "N/A"
+                ],
+                "required": true,
+                "check": "Complies = trash can in room",
+                "Appendix": "",
+                "information": "",
+                "regulatory": "Y",
+                "notes": "",
+                "scoreWeigh": 0,
+                "score": 0,
+                "valueXLate": 3
+            },
+            "Empty Trash Car?": {
+                "type": "select",
+                "value": "",
+                "placeholder": "Notes",
+                "options": [
+                    "Complies",
+                    "Does Not Comply",
+                    "N/A"
+                ],
+                "required": true,
+                "check": "Complies= In room trash can is emptied of its contents on a schedule",
+                "Appendix": "",
+                "information": "",
+                "regulatory": "Y",
+                "notes": "",
+                "scoreWeigh": 0,
+                "score": 0,
+                "valueXLate": 1
+            }
+        }
+    ]
+}

@@ -470,7 +470,8 @@ let Template = {
   //////////////////
   UPSs: {
     "# Operation *": { value: "ADD" },
-    "Object *": "DEVICE-RACKABLE",
+    // "Object *": "DEVICE-RACKABLE",
+    "Object *": { value: "DEVICE-RACKABLE" },
     "Name *": {
       type: "text",
       value: "",
@@ -815,7 +816,8 @@ let Template = {
   //////////////////
   ATSs: {
     "# Operation *": { value: "ADD" },
-    "Object *": "DEVICE-RACKABLE",
+    // "Object *": "DEVICE-RACKABLE",
+    "Object *": { value: "DEVICE-RACKABLE" },
     "Name *": {
       type: "text",
       value: "",
@@ -973,7 +975,8 @@ let Template = {
   //////////////////
   Panels: {
     "# Operation *": { value: "ADD" },
-    "Object *": "DEVICE-RACKABLE",
+    // "Object *": "DEVICE-RACKABLE",
+    "Object *": { value: "DEVICE-RACKABLE" },
     "Name *": {
       type: "text",
       value: "",
@@ -1003,7 +1006,8 @@ let Template = {
   //////////////////
   Receptacles: {
     "# Operation *": { value: "ADD" },
-    "Object *": "DEVICE-RACKABLE",
+    // "Object *": "DEVICE-RACKABLE",
+    "Object *": { value: "DEVICE-RACKABLE" },
     "Location *": {
       type: "text",
       value: "",

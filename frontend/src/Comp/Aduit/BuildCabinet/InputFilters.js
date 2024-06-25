@@ -17,7 +17,8 @@ export default function InputFilters({
   visable,
   setSelectedMLTItem,
 }) {
-  const [mltFilteredData, setMltFilteredData] = React.useState([...AllData]);
+  console.log(AllData);
+  // const [mltFilteredData, setMltFilteredData] = React.useState([...AllData]);
 
   const [make, setMake] = useState("");
   const [model, setModel] = useState("");
@@ -44,10 +45,6 @@ export default function InputFilters({
   const [deviceClassFilter, setDeviceClassFilter] = useState([]);
   const [subclassFilter, setSubclassFilter] = useState([]);
   const [mountingFilter, setMountingFilter] = useState([]);
-
-  React.useEffect(() => {
-    setAvalableSlots(parseInt(ruHeight));
-  }, [ruHeight, setAvalableSlots]);
 
   let CombinedData = [
     [make, setMake],
@@ -81,7 +78,13 @@ export default function InputFilters({
     [mountingFilter, setMountingFilter],
   ];
 
-  console.log(CombinedFilter);
+  const [mltFilteredData, setMltFilteredData] = React.useState(
+    filterAndSortData(AllData, CombinedData, CombinedSort)
+  );
+
+  React.useEffect(() => {
+    setRuHeight(AvalableSlots);
+  }, [AvalableSlots, setRuHeight]);
 
   const Headers = [
     "Make",

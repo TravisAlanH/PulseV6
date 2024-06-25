@@ -8,9 +8,12 @@ import LocationLayout from "../Location/LocationLayout";
 import ExportPageAudit from "../Export/ExportPageAudit";
 import StructuredCablingLayout from "./StructuredCabling/StructuredCablingLayout";
 import BuildLayout from "./BuildCabinet/BuildLayout";
+import * as FireActions from "../../FireActions";
 
 export default function AuditNav({ setCurrentAudit, AllData }) {
   const buttons = document.getElementsByClassName("AuditLinks");
+
+  const user = FireActions.auth.currentUser.displayName;
 
   function removeSelected() {
     for (var i = 0; i < buttons.length; i++) {
@@ -49,17 +52,19 @@ export default function AuditNav({ setCurrentAudit, AllData }) {
       >
         Cabinet
       </button>
-      <button
-        id="AuditLinks"
-        className={buttonStyle}
-        onClick={(e) => {
-          removeSelected();
-          e.target.classList.add("selected");
-          setCurrentAudit(<BuildLayout AllData={AllData} />);
-        }}
-      >
-        Build Cabinet
-      </button>
+      {user === "Travis Heidelberger" ? (
+        <button
+          id="AuditLinks"
+          className={buttonStyle}
+          onClick={(e) => {
+            removeSelected();
+            e.target.classList.add("selected");
+            setCurrentAudit(<BuildLayout AllData={AllData} />);
+          }}
+        >
+          Build Cabinet
+        </button>
+      ) : null}
       <button
         id="AuditLinks"
         className={buttonStyle}
