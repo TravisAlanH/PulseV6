@@ -61,11 +61,12 @@ export default function BuildLayout({ AllData }) {
       }
       if (CurrentFilledCabinet.value[i + index] === 1) {
         setAvalableSlots(open);
-        setMLTData(
-          MLTData.filter((obj) => {
-            return obj.RUHeight <= open;
-          })
-        );
+        // setMLTData(
+        //   MLTData.filter((obj) => {
+        //     console.log(obj.RUHeight <= open);
+        //     return obj.RUHeight <= open;
+        //   })
+        // );
         return open;
       }
     }
