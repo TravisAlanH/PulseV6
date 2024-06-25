@@ -72,11 +72,13 @@ export default function InputFilters({
     [backSlotsCountSort, setBackSlotsCountSort],
   ];
 
-  // let CombinedFilter = [
-  //   [deviceClassFilter, setDeviceClassFilter],
-  //   [subclassFilter, setSubclassFilter],
-  //   [mountingFilter, setMountingFilter],
-  // ];
+  let CombinedFilter = [
+    [deviceClassFilter, setDeviceClassFilter],
+    [subclassFilter, setSubclassFilter],
+    [mountingFilter, setMountingFilter],
+  ];
+
+  console.log(CombinedFilter);
 
   const [mltFilteredData, setMltFilteredData] = React.useState(
     filterAndSortData(AllData, CombinedData, CombinedSort)
