@@ -55,27 +55,35 @@ export default function BuildLayout({ AllData }) {
 
   const openAbover = (index) => {
     let open = 0;
+
+    // Ensure index is within bounds of the array
+    if (index < 0 || index >= CurrentFilledCabinet.value.length) {
+      console.error("Index out of bounds");
+      return 0;
+    }
+
+    // Loop through the array starting from the given index
     for (let i = 0; i < CurrentFilledCabinet.value.length - index; i++) {
+      // Check if the slot is open (denoted by 0)
       if (CurrentFilledCabinet.value[i + index] === 0) {
-        open = open + 1;
+        open += 1;
       }
+      // Stop counting if a filled slot (denoted by 1) is encountered
       if (CurrentFilledCabinet.value[i + index] === 1) {
-        setAvalableSlots(open);
-        // setMLTData(
-        //   MLTData.filter((obj) => {
-        //     console.log(obj.RUHeight <= open);
-        //     return obj.RUHeight <= open;
-        //   })
-        // );
-        return open;
+        break;
       }
     }
+
+    // Update the available slots state
     setAvalableSlots(open);
+
+    // Filter the MLTData based on the available slots
     setMLTData(
       MLTData.filter((obj) => {
         return obj.RUHeight <= open;
       })
     );
+
     return open;
   };
 

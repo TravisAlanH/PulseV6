@@ -62,13 +62,13 @@ export function SMALLtoLARGE(simplifiedObj) {
           if ((keyName, simplifiedObj[key][i][keyName] === undefined)) {
             continue;
           }
-          console.log(key, simplifiedObj[key][i]);
-          console.log("0", keyName, simplifiedObj[key][i][keyName]);
-          console.log(simplifiedObj[key][i][keyName].value);
-          console.log(keyName, useTemplate[keyName]);
-          console.log("1", useTemplate[keyName]);
-          console.log(useTemplate);
-          console.log("frozed? ", Object.isFrozen(useTemplate));
+          // console.log(key, simplifiedObj[key][i]);
+          // console.log("0", keyName, simplifiedObj[key][i][keyName]);
+          // console.log(simplifiedObj[key][i][keyName].value);
+          // console.log(keyName, useTemplate[keyName]);
+          // console.log("1", useTemplate[keyName]);
+          // console.log(useTemplate);
+          // console.log("frozed? ", Object.isFrozen(useTemplate));
           useTemplate[keyName].value = simplifiedObj[key][i][keyName].value;
         }
         stepArray.push({ ...useTemplate });
