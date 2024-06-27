@@ -135,6 +135,9 @@ export const filterAndSortData = (allData, combinedData, combinedSort) => {
           if (a[Object.keys(a)[i]] > b[Object.keys(b)[i]]) return -1;
           if (a[Object.keys(a)[i]] < b[Object.keys(b)[i]]) return 1;
         }
+        if (combinedSort[i][0] === 0) {
+          continue;
+        }
       }
       return 0;
     });

@@ -53,6 +53,17 @@ export default function HomeLayout() {
         }
         // if (user.displayName === "Travis Heidelberger") {
         let dataHold2 = [];
+        let settingsPush = [];
+        dataHold.forEach((element) => {
+          settingsPush.push({
+            DataBaseUUID: element.Current.DataBaseUUID,
+            dcTrackLocationCode:
+              element.Location[0]["dcTrack Location Code *"].value,
+            NamingCon: element.Current.NamingCon ?? [],
+          });
+        });
+        localStorage.setItem("NamingList", JSON.stringify(settingsPush));
+        console.log(settingsPush);
         for (let i = 0; i < dataHold.length; i++) {
           dataHold2.push(SMALLtoLARGE(dataHold[i]));
           console.log(

@@ -19,6 +19,8 @@ export default function BuildInputs({ SelectedMLTItem, UPosition }) {
   if (Class === "UPS") Step = "ATSs";
   //   ! Add Additional Classes here
 
+  console.log(SelectedMLTItem);
+
   const [SaveTemplate, setSaveTemplate] = React.useState(
     Step === "Assets"
       ? {
@@ -32,8 +34,28 @@ export default function BuildInputs({ SelectedMLTItem, UPosition }) {
             value: "Both",
           },
           "Orientation *": {
-            ...Template[Step]["Orientation *"],
+            ...Template[Step]["Orient ation *"],
             value: "Item Front Faces Cabinet Front",
+          },
+          "Make *": {
+            ...Template[Step]["Make *"],
+            value: SelectedMLTItem.Make,
+          },
+          "Model *": {
+            ...Template[Step]["Model *"],
+            value: SelectedMLTItem.Model,
+          },
+          Ports: {
+            ...Template[Step]["Ports"],
+            value: SelectedMLTItem.DataPortsCount,
+          },
+          "Location *": {
+            ...Template[Step]["Location *"],
+            value: LocationName,
+          },
+          "Cabinet *": {
+            ...Template[Step]["Cabinet *"],
+            value: CabinetName,
           },
         }
       : Step === "PDUs"
@@ -42,6 +64,26 @@ export default function BuildInputs({ SelectedMLTItem, UPosition }) {
           "U Position *": {
             ...Template[Step]["U Position *"],
             value: UPosition,
+          },
+          "Make *": {
+            ...Template[Step]["Make *"],
+            value: SelectedMLTItem.Make,
+          },
+          "Model *": {
+            ...Template[Step]["Model *"],
+            value: SelectedMLTItem.Model,
+          },
+          Ports: {
+            ...Template[Step]["Ports"],
+            value: SelectedMLTItem.DataPortsCount,
+          },
+          "Location *": {
+            ...Template[Step]["Location *"],
+            value: LocationName,
+          },
+          "Cabinet *": {
+            ...Template[Step]["Cabinet *"],
+            value: CabinetName,
           },
         }
       : { ...Template[Step] }

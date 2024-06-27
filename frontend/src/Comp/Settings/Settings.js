@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import * as actions from "../../Store/Slices/Slice";
+import NamingCons from "./NamingCons";
 
 export default function Settings() {
   const dispatch = useDispatch();
@@ -14,7 +15,7 @@ export default function Settings() {
       </div>
       <div className="flex flex-col justify-items items-center w-full">
         {/* LOAD LOCAL STORAGE */}
-        <div>
+        <div className="w-full">
           <label
             className={
               "text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center w-[8rem]"
@@ -22,7 +23,9 @@ export default function Settings() {
           >
             Name Convention
           </label>
-          <div>Box</div>
+          <div>
+            <NamingCons />
+          </div>
         </div>
         {/* <div className="flex flex-row justify-start gap-6 px-6 w-[15rem]">
           <div className="py-2 flex flex-row">

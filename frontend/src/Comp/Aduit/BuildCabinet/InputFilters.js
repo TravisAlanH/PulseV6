@@ -16,8 +16,9 @@ export default function InputFilters({
   setAvalableSlots,
   visable,
   setSelectedMLTItem,
+  mltFilteredData,
+  setMltFilteredData,
 }) {
-  console.log(AllData);
   // const [mltFilteredData, setMltFilteredData] = React.useState([...AllData]);
 
   const [make, setMake] = useState("");
@@ -43,8 +44,8 @@ export default function InputFilters({
   const [backSlotsCountSort, setBackSlotsCountSort] = useState(0);
 
   const [deviceClassFilter, setDeviceClassFilter] = useState([]);
-  const [subclassFilter, setSubclassFilter] = useState([]);
-  const [mountingFilter, setMountingFilter] = useState([]);
+  // const [subclassFilter, setSubclassFilter] = useState([]);
+  // const [mountingFilter, setMountingFilter] = useState([]);
 
   let CombinedData = [
     [make, setMake],
@@ -72,17 +73,18 @@ export default function InputFilters({
     [backSlotsCountSort, setBackSlotsCountSort],
   ];
 
-  let CombinedFilter = [
-    [deviceClassFilter, setDeviceClassFilter],
-    [subclassFilter, setSubclassFilter],
-    [mountingFilter, setMountingFilter],
-  ];
+  // let CombinedFilter = [
+  //   [deviceClassFilter, setDeviceClassFilter],
+  //   [subclassFilter, setSubclassFilter],
+  //   [mountingFilter, setMountingFilter],
+  // ];
 
-  console.log(CombinedFilter);
+  // console.log(CombinedFilter);
 
-  const [mltFilteredData, setMltFilteredData] = React.useState(
-    filterAndSortData(AllData, CombinedData, CombinedSort)
-  );
+  // const [mltFilteredData, setMltFilteredData] = React.useState(
+  //   // filterAndSortData(AllData, CombinedData, CombinedSort)
+  //   AllData
+  // );
 
   React.useEffect(() => {
     setRuHeight(AvalableSlots);
@@ -152,18 +154,37 @@ export default function InputFilters({
               key={index}
               className="min-w-[8rem] max-w-[8rem] flex flex-row"
             >
-              <input
-                id={"FilterInput" + index}
-                type="text"
-                className="border-2 border-gray-300 w-full"
-                value={item[0]}
-                onChange={(e) => {
-                  item[1](e.target.value);
-                  setMltFilteredData(
-                    filterAndSortData(AllData, CombinedData, CombinedSort)
-                  );
-                }}
-              />
+              {Headers[index] === "RUHeight" ||
+              Headers[index] === "DataPorts" ||
+              Headers[index] === "PowerPorts" ||
+              Headers[index] === "FrontSlots" ||
+              Headers[index] === "BackSlots" ? (
+                <input
+                  id={"FilterInput" + index}
+                  type="number"
+                  className="border-2 border-gray-300 w-full"
+                  value={item[0]}
+                  onChange={(e) => {
+                    item[1](e.target.value);
+                    setMltFilteredData(
+                      filterAndSortData(AllData, CombinedData, CombinedSort)
+                    );
+                  }}
+                />
+              ) : (
+                <input
+                  id={"FilterInput" + index}
+                  type="text"
+                  className="border-2 border-gray-300 w-full"
+                  value={item[0]}
+                  onChange={(e) => {
+                    item[1](e.target.value);
+                    setMltFilteredData(
+                      filterAndSortData(AllData, CombinedData, CombinedSort)
+                    );
+                  }}
+                />
+              )}
               <button
                 className="w-[2rem] border-2 rounded-md"
                 onClick={() => {
@@ -217,7 +238,8 @@ export default function InputFilters({
               <button
                 className="flex flex-row gap-3 items-center"
                 onClick={() => {
-                  CombinedSort[index][1](-1);
+                  if (CombinedSort[index][0] !== -1) CombinedSort[index][1](-1);
+                  if (CombinedSort[index][0] === -1) CombinedSort[index][1](0);
                   setMltFilteredData(
                     filterAndSortData(AllData, CombinedData, CombinedSort)
                   );
@@ -231,7 +253,8 @@ export default function InputFilters({
               <button
                 className="flex flex-row gap-3 items-center"
                 onClick={() => {
-                  CombinedSort[index][1](1);
+                  if (CombinedSort[index][0] !== 1) CombinedSort[index][1](1);
+                  if (CombinedSort[index][0] === 1) CombinedSort[index][1](0);
                   setMltFilteredData(
                     filterAndSortData(AllData, CombinedData, CombinedSort)
                   );

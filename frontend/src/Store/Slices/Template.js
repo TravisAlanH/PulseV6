@@ -1841,6 +1841,7 @@ const state = {
   },
   OpenRU: [],
   Current: {
+    Naming: [],
     DataBaseUUID: "",
     DataBaseTime: "",
     StructuredCablingSet: {
@@ -1898,6 +1899,7 @@ const state = {
   SurveyRoom: [Template.SurveyRoom],
   SurveySecurity: [Template.SurveySecurity],
   SurveySafety: [Template.SurveySafety],
+
   // Survey: {
   //   Location: [],
   //   Rooms: [],

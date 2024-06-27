@@ -9,6 +9,17 @@
   /* "w-[4rem] h-[1.5rem] bg-slate-200 rounded-md" */
 }
 
+.grayButton {
+  /* width: 4rem; */
+  padding-left: 0.7rem;
+  padding-right: 0.7rem;
+  height: 1.8rem;
+  background-color: #979796;
+  border-radius: 0.25rem;
+  color: white;
+  /* "w-[4rem] h-[1.5rem] bg-slate-200 rounded-md" */
+}
+
 .orangeButton2 {
   /* width: 4rem; */
   padding-left: 0.7rem;

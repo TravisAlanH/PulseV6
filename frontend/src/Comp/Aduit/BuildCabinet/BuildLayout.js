@@ -14,8 +14,7 @@ export default function BuildLayout({ AllData }) {
   );
   const [visable, setVisable] = useState(15);
 
-  const [MLTData, setMLTData] = React.useState(AllData);
-  console.log("B ", MLTData);
+  // const [MLTData, setMLTData] = React.useState(AllData);
   const Assets = useSelector((state) => state.data.Assets);
   const PDUs = useSelector((state) => state.data.PDUs);
   const UPSs = useSelector((state) => state.data.UPSs);
@@ -24,7 +23,13 @@ export default function BuildLayout({ AllData }) {
   const [UPosition, setUPosition] = useState(0);
   // const [openAT, setOpenAT] = React.useState(-1);
   const [AvalableSlots, setAvalableSlots] = React.useState(100);
-  console.log("Av Slots ", AvalableSlots);
+
+  const [mltFilteredData, setMltFilteredData] = React.useState(
+    // filterAndSortData(AllData, CombinedData, CombinedSort)
+    AllData
+  );
+
+  // console.log("Av Slots ", AvalableSlots);
 
   if (!CurrentCabinet) {
     return <div>Build Layout</div>;
@@ -78,12 +83,17 @@ export default function BuildLayout({ AllData }) {
     setAvalableSlots(open);
 
     // Filter the MLTData based on the available slots
-    setMLTData(
-      MLTData.filter((obj) => {
+    // setMLTData(
+    //   MLTData.filter((obj) => {
+    //     return obj.RUHeight <= open;
+    //   })
+    setMltFilteredData(
+      mltFilteredData.filter((obj) => {
         return obj.RUHeight <= open;
       })
     );
 
+    console.log(open);
     return open;
   };
 
@@ -150,11 +160,13 @@ export default function BuildLayout({ AllData }) {
                     className="DataDrop overflow-scroll w-[38rem] h-[35rem] px-6 border-y-2 transition-all ease-in-out duration-300"
                   >
                     <InputFilters
-                      AllData={MLTData}
+                      AllData={AllData}
                       AvalableSlots={AvalableSlots}
                       setAvalableSlots={setAvalableSlots}
                       visable={visable}
                       setSelectedMLTItem={setSelectedMLTItem}
+                      mltFilteredData={mltFilteredData}
+                      setMltFilteredData={setMltFilteredData}
                     />
                   </div>
                 </div>
@@ -184,6 +196,14 @@ export default function BuildLayout({ AllData }) {
           onClick={() => {
             setSelectedMLTItem({});
             document.getElementById("ModalRackable").style.display = "none";
+            setAvalableSlots(100);
+
+            // Filter the MLTData based on the available slots
+            setMltFilteredData(
+              AllData.filter((obj) => {
+                return obj.RUHeight <= 100;
+              })
+            );
           }}
         >
           x
