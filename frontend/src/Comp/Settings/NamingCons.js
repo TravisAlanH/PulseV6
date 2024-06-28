@@ -92,15 +92,15 @@ export default function NamingCons() {
               );
             })}
           </div>
-          <div className="flex flex-col gap-3 w-full overflow-scroll">
+          <div className="flex flex-col gap-3 w-full overflow-x-auto">
             {namingCon.map((item, index) => {
               console.log(item);
               return (
                 <div className="flex flex-col border-2">
                   <div className="flex flex-row justify-between">
-                    <div key={index} className="overflow-scroll flex flex-row">
+                    <div key={index} className="overflow-x-auto flex flex-row">
                       <label className={"text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-between w-[6rem]"}>
-                        <p>{item.Step}</p>
+                        <p className="text-xl">{item.Step}</p>
                         <div>
                           <p>Delimiter:</p>
                           <select
@@ -197,7 +197,7 @@ export default function NamingCons() {
                     )}
                   </div>
                   <div id="Preview">
-                    <div className="flex flex-row overflow-scroll">
+                    <div className="flex flex-row overflow-x-auto">
                       <label className={"text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-between w-[6rem]"}>Preview:</label>
                       {item.Format.map((itemParameter, index) => {
                         console.log(item);
