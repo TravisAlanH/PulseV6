@@ -7,9 +7,26 @@ export default function NamingCons() {
   const [selectedStep, setSelectedStep] = React.useState("");
   const [selectedEditListIndex, setselectedEditListIndex] = React.useState(0);
   const [customTag, setCustomTag] = React.useState("");
-  const currentLocationSettingData = JSON.parse(localStorage.getItem("NamingList")).filter((item) => item.DataBaseUUID === UUID);
+  // Retrieve the naming list from local storage
+  const namingList = JSON.parse(localStorage.getItem("NamingList")) || [];
 
-  const [namingCon, setNamingCon] = React.useState(JSON.parse(localStorage.getItem("NamingList")).filter((item) => item.DataBaseUUID === UUID)[0].NamingCon);
+  // Filter the naming list based on the UUID
+  const currentLocationSettingData = namingList.filter((item) => item.DataBaseUUID === UUID);
+
+  // Initialize namingCon safely
+  const initialNamingCon = currentLocationSettingData.length > 0 ? currentLocationSettingData[0].NamingCon : "";
+  const [namingCon, setNamingCon] = React.useState(initialNamingCon);
+  if (UUID === "") {
+    console.log("UUID is empty");
+    return (
+      <div>
+        <p>No Location found. Please select a valid data base entry from the Created Locations page.</p>
+      </div>
+    );
+  } else {
+    console.log("UUID is not empty");
+  }
+  console.log(UUID);
   console.log(namingCon);
   const OptionListRackable = [
     {
