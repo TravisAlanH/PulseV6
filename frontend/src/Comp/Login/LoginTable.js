@@ -203,7 +203,8 @@ export default function LoginTable({ setAllData }) {
                 } finally {
                   setLoading(false);
                 }
-              }}>
+              }}
+            >
               Login
             </button>
           </li>
@@ -215,7 +216,8 @@ export default function LoginTable({ setAllData }) {
               className="LoginButton mb-4"
               onClick={() => {
                 setCreateAccount(true);
-              }}>
+              }}
+            >
               Create Account
             </button>
           </li>
@@ -246,7 +248,8 @@ export default function LoginTable({ setAllData }) {
 
                   alert("Account Created, Please verify your email to gain Access");
                 }
-              }}>
+              }}
+            >
               Create
             </button>
           </li>
@@ -263,7 +266,8 @@ export default function LoginTable({ setAllData }) {
                   confirmPassword: "",
                   FullName: "",
                 });
-              }}>
+              }}
+            >
               Cancel
             </button>
           </li>
@@ -272,8 +276,7 @@ export default function LoginTable({ setAllData }) {
 
       <h2 className="text-white tracking-[-.42px] border-t-[2px] pt-3 w-[80%] text-center">dcTrack Auditor Tool</h2>
       <p className="text-white opacity-60 text-xs text-center px-4 py-3">
-        Access to this system is prohibited unless authorized. Accessing programs or data unrelated to your job is
-        prohibited.
+        Access to this system is prohibited unless authorized. Accessing programs or data unrelated to your job is prohibited.
       </p>
       <div className="absolute top-[7.5rem]">
         {loading ? <LoadingSpinner /> : null}

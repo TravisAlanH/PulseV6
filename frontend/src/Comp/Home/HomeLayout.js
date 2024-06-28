@@ -26,9 +26,7 @@ export default function HomeLayout() {
   const [loading, setLoading] = React.useState(false);
   const UUID = useSelector((state) => state.data.Current.DataBaseUUID);
   const fullState = useSelector((state) => state.data);
-  const [saveConfirm, setSaveConfirm] = React.useState(
-    UUID === "" ? true : false
-  );
+  const [saveConfirm, setSaveConfirm] = React.useState(UUID === "" ? true : false);
   const [downloadedItem, setDownloadedItem] = React.useState({});
 
   const dispatch = useDispatch();
@@ -57,18 +55,16 @@ export default function HomeLayout() {
         dataHold.forEach((element) => {
           settingsPush.push({
             DataBaseUUID: element.Current.DataBaseUUID,
-            dcTrackLocationCode:
-              element.Location[0]["dcTrack Location Code *"].value,
-            NamingCon: element.Current.NamingCon ?? [],
+            dcTrackLocationCode: element.Location[0]["dcTrack Location Code *"].value,
+            NamingCon: element.Current.Naming ?? [],
           });
         });
+        console.log("Settings Push", settingsPush);
         localStorage.setItem("NamingList", JSON.stringify(settingsPush));
         console.log(settingsPush);
         for (let i = 0; i < dataHold.length; i++) {
           dataHold2.push(SMALLtoLARGE(dataHold[i]));
-          console.log(
-            dataHold2[i]["Location"][0]["dcTrack Location Code *"].value
-          );
+          console.log(dataHold2[i]["Location"][0]["dcTrack Location Code *"].value);
         }
         setLocationData(dataHold2);
         // } else {
@@ -103,11 +99,7 @@ export default function HomeLayout() {
     e.preventDefault();
     setLoading(true);
     for (let i = 0; i < locationData.length; i++) {
-      if (
-        locationData[i].Location[0]["dcTrack Location Code *"].value ===
-          locationCode ||
-        locationCode === ""
-      ) {
+      if (locationData[i].Location[0]["dcTrack Location Code *"].value === locationCode || locationCode === "") {
         codeExists = true;
         setExistMessageShow(true);
         setLoading(false);
@@ -165,9 +157,7 @@ export default function HomeLayout() {
 
   return (
     <div className="flex flex-col border-2 m-2">
-      <div className="bg-[#F7F5F1] flex flex-row justify-start h-[3rem] items-center pl-6 text-lg font-bold">
-        Created Locations
-      </div>
+      <div className="bg-[#F7F5F1] flex flex-row justify-start h-[3rem] items-center pl-6 text-lg font-bold">Created Locations</div>
       <div className="flex flex-col gap-3 w-full items-center justify-center p-2 border-b-2 mb-2">
         <div className="flex flex-row">
           {CreateLocationForm()}
@@ -195,9 +185,7 @@ export default function HomeLayout() {
           </button>
           <ImportButton />
         </div>
-        {existMessageShow ? (
-          <div className="text-sm text-red-500">** Location Code in Use **</div>
-        ) : null}
+        {existMessageShow ? <div className="text-sm text-red-500">** Location Code in Use **</div> : null}
       </div>
       <div className="flex flex-col justify-center gap-6 px-6 pb-4">
         {locationData.length > 0 ? (
@@ -205,38 +193,22 @@ export default function HomeLayout() {
             {LocationSorting()}
             {locationData
               .filter((obj) => obj.Current.DataBaseUUID === UUID)
-              .concat(
-                locationData.filter((obj) => obj.Current.DataBaseUUID !== UUID)
-              )
+              .concat(locationData.filter((obj) => obj.Current.DataBaseUUID !== UUID))
               .map((item, index) => {
                 let showButton = true;
                 let Name = item.Location[0]["dcTrack Location Name *"].value;
                 let Code = item.Location[0]["dcTrack Location Code *"].value;
                 // console.log(Code);
-                let Hierarchy =
-                  item.Location[0]["dcTrack Location Hierarchy *"].value;
+                let Hierarchy = item.Location[0]["dcTrack Location Hierarchy *"].value;
                 if (item.Current.DataBaseUUID === UUID) {
                   Name = fullState.Location[0]["dcTrack Location Name *"].value;
                   Code = fullState.Location[0]["dcTrack Location Code *"].value;
-                  Hierarchy =
-                    fullState.Location[0]["dcTrack Location Hierarchy *"].value;
+                  Hierarchy = fullState.Location[0]["dcTrack Location Hierarchy *"].value;
                   showButton = false;
                 }
                 return (
-                  <div
-                    key={index}
-                    className={
-                      "border-2 w-full  py-3 px-2 rounded-md transition-all flex flex-col justify-start"
-                    }
-                  >
-                    {LocationBaseDataCard(
-                      index,
-                      showButton,
-                      Code,
-                      Name,
-                      Hierarchy,
-                      item
-                    )}
+                  <div key={index} className={"border-2 w-full  py-3 px-2 rounded-md transition-all flex flex-col justify-start"}>
+                    {LocationBaseDataCard(index, showButton, Code, Name, Hierarchy, item)}
                     {LocationAdditionalDataCard(showButton, item)}
                   </div>
                 );
@@ -267,11 +239,7 @@ export default function HomeLayout() {
               onClick={() => {
                 let locationDataCopy = structuredClone(locationData);
                 locationDataCopy = locationDataCopy.sort((a, b) => {
-                  return a.Location[0][
-                    "dcTrack Location Code *"
-                  ].value.localeCompare(
-                    b.Location[0]["dcTrack Location Code *"].value
-                  );
+                  return a.Location[0]["dcTrack Location Code *"].value.localeCompare(b.Location[0]["dcTrack Location Code *"].value);
                 });
                 setLocationData(locationDataCopy);
               }}
@@ -283,11 +251,7 @@ export default function HomeLayout() {
               onClick={() => {
                 let locationDataCopy = structuredClone(locationData);
                 locationDataCopy = locationDataCopy.sort((a, b) => {
-                  return b.Location[0][
-                    "dcTrack Location Code *"
-                  ].value.localeCompare(
-                    a.Location[0]["dcTrack Location Code *"].value
-                  );
+                  return b.Location[0]["dcTrack Location Code *"].value.localeCompare(a.Location[0]["dcTrack Location Code *"].value);
                 });
                 setLocationData(locationDataCopy);
               }}
@@ -304,11 +268,7 @@ export default function HomeLayout() {
               onClick={() => {
                 let locationDataCopy = structuredClone(locationData);
                 locationDataCopy = locationDataCopy.sort((a, b) => {
-                  return a.Location[0][
-                    "dcTrack Location Name *"
-                  ].value.localeCompare(
-                    b.Location[0]["dcTrack Location Name *"].value
-                  );
+                  return a.Location[0]["dcTrack Location Name *"].value.localeCompare(b.Location[0]["dcTrack Location Name *"].value);
                 });
                 setLocationData(locationDataCopy);
               }}
@@ -320,11 +280,7 @@ export default function HomeLayout() {
               onClick={() => {
                 let locationDataCopy = structuredClone(locationData);
                 locationDataCopy = locationDataCopy.sort((a, b) => {
-                  return b.Location[0][
-                    "dcTrack Location Name *"
-                  ].value.localeCompare(
-                    a.Location[0]["dcTrack Location Name *"].value
-                  );
+                  return b.Location[0]["dcTrack Location Name *"].value.localeCompare(a.Location[0]["dcTrack Location Name *"].value);
                 });
                 setLocationData(locationDataCopy);
               }}
@@ -341,9 +297,7 @@ export default function HomeLayout() {
               onClick={() => {
                 let locationDataCopy = structuredClone(locationData);
                 locationDataCopy = locationDataCopy.sort((a, b) => {
-                  return a.Current.DataBaseTime.localeCompare(
-                    b.Current.DataBaseTime
-                  );
+                  return a.Current.DataBaseTime.localeCompare(b.Current.DataBaseTime);
                 });
                 setLocationData(locationDataCopy);
               }}
@@ -355,9 +309,7 @@ export default function HomeLayout() {
               onClick={() => {
                 let locationDataCopy = structuredClone(locationData);
                 locationDataCopy = locationDataCopy.sort((a, b) => {
-                  return b.Current.DataBaseTime.localeCompare(
-                    a.Current.DataBaseTime
-                  );
+                  return b.Current.DataBaseTime.localeCompare(a.Current.DataBaseTime);
                 });
                 setLocationData(locationDataCopy);
               }}
@@ -370,72 +322,38 @@ export default function HomeLayout() {
     );
   }
 
-  function LocationBaseDataCard(
-    index,
-    showButton,
-    Code,
-    Name,
-    Hierarchy,
-    item
-  ) {
+  function LocationBaseDataCard(index, showButton, Code, Name, Hierarchy, item) {
     return (
-      <div
-        key={fullState + index}
-        className={"flex flex-row  w-full px-2 h-full"}
-      >
-        <div className="w-[2rem] flex flex-row justify-center items-center">
-          {!showButton ? (
-            <RiCheckboxFill className="text-[#f59439] text-2xl" />
-          ) : null}
-        </div>
+      <div key={fullState + index} className={"flex flex-row  w-full px-2 h-full"}>
+        <div className="w-[2rem] flex flex-row justify-center items-center">{!showButton ? <RiCheckboxFill className="text-[#f59439] text-2xl" /> : null}</div>
         <div className="lg:flex lg:flex-row justify-between md:grid md:grid-cols-2 w-full">
           <div className="flex flex-row">
             <div>
-              <label className="text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center w-[7rem] h-[2rem] pl-2">
-                Location Code
-              </label>
+              <label className="text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center w-[7rem] h-[2rem] pl-2">Location Code</label>
             </div>
             <div>
-              <p
-                className={
-                  "h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-[10rem]"
-                }
-              >
+              <p className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-[10rem]"}>
                 {Code.length > 12 ? Code.substring(0, 12) + "..." : Code}
               </p>
             </div>
           </div>
           <div className="flex flex-row">
             <div>
-              <label className="text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center w-[7rem] h-[2rem] pl-2">
-                Location Name
-              </label>
+              <label className="text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center w-[7rem] h-[2rem] pl-2">Location Name</label>
             </div>
             <div>
-              <p
-                className={
-                  "h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-[10rem]"
-                }
-              >
+              <p className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-[10rem]"}>
                 {Name.length > 12 ? Name.substring(0, 12) + "..." : Name}
               </p>
             </div>
           </div>
           <div className="flex flex-row">
             <div>
-              <label className="text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center w-[7rem] h-[2rem] pl-2">
-                Hierarchy
-              </label>
+              <label className="text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center w-[7rem] h-[2rem] pl-2">Hierarchy</label>
             </div>
             <div>
-              <p
-                className={
-                  "h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-[10rem]"
-                }
-              >
-                {Hierarchy.length > 12
-                  ? Hierarchy.substring(0, 12) + "..."
-                  : Hierarchy}
+              <p className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-[10rem]"}>
+                {Hierarchy.length > 12 ? Hierarchy.substring(0, 12) + "..." : Hierarchy}
               </p>
             </div>
           </div>
@@ -449,9 +367,7 @@ export default function HomeLayout() {
                     setReload(!reload);
                   } else {
                     setDownloadedItem(item);
-                    document.getElementById(
-                      "confirmationDialog"
-                    ).style.display = "flex";
+                    document.getElementById("confirmationDialog").style.display = "flex";
                   }
                 }}
               >
@@ -477,46 +393,22 @@ export default function HomeLayout() {
 
   function LocationAdditionalDataCard(showButton, item) {
     return (
-      <div
-        id="LocationCard"
-        className="h-[0rem] overflow-clip transition-all flex flex-col justify-center"
-      >
-        <div className="flex flex-row justify-end w-full">
-          {showButton ? null : (
-            <p className="text-[red] text-sm">
-              Save data to see most recent changes
-            </p>
-          )}
-        </div>
+      <div id="LocationCard" className="h-[0rem] overflow-clip transition-all flex flex-col justify-center">
+        <div className="flex flex-row justify-end w-full">{showButton ? null : <p className="text-[red] text-sm">Save data to see most recent changes</p>}</div>
         <div className="flex flex-col gap-2">
           <div className="border-2 rounded-md p-2 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 ">
             <div>Building: {item.SurveySite[0]["Building"].value}</div>
-            <div>
-              Room Number: {item.SurveySite[0]["ATG Room Number"].value}
-            </div>
-            <div>
-              Site Contact Name:{" "}
-              {item.SurveySite[0]["Local Site Contact"].value}
-            </div>
-            <div>
-              Site Contact Email:{" "}
-              {item.SurveySite[0]["Site Contact Email"].value}
-            </div>
-            <div>
-              Site Contact Phone:{" "}
-              {item.SurveySite[0]["Site Contact Phone"].value}
-            </div>
-            <div>
-              Updated: {Functions.formatTimestamp(item.Current.DataBaseTime)}
-            </div>
+            <div>Room Number: {item.SurveySite[0]["ATG Room Number"].value}</div>
+            <div>Site Contact Name: {item.SurveySite[0]["Local Site Contact"].value}</div>
+            <div>Site Contact Email: {item.SurveySite[0]["Site Contact Email"].value}</div>
+            <div>Site Contact Phone: {item.SurveySite[0]["Site Contact Phone"].value}</div>
+            <div>Updated: {Functions.formatTimestamp(item.Current.DataBaseTime)}</div>
           </div>
           <div className="border-2 rounded-md p-2 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 ">
             <div>Cabinets: {item.Racks.length}</div>
             <div>Assets:{item.Assets.length}</div>
             <div>PDU: {item.PDUs.length}</div>
-            <div>
-              {/* Structured Cable Connections: {item.StructuredCabling.length} */}
-            </div>
+            <div>{/* Structured Cable Connections: {item.StructuredCabling.length} */}</div>
             <div></div>
             <div className="flex flex-row justify-end">
               <button className="redButton">Delete</button>
@@ -535,8 +427,7 @@ export default function HomeLayout() {
             <p className="font-bold">Warning:</p>
             <p
               onClick={() => {
-                document.getElementById("confirmationDialog").style.display =
-                  "none";
+                document.getElementById("confirmationDialog").style.display = "none";
                 document.getElementById("confirmChange").checked = false;
                 setSaveConfirm(false);
               }}
@@ -546,14 +437,10 @@ export default function HomeLayout() {
           </div>
           <p>Replace Current Data without Saving?</p>
           <p className="text-xs">
-            The current data that is saved locally is not synced with the
-            database, continuing will remove your local data and replace it with
-            the location data you selected
+            The current data that is saved locally is not synced with the database, continuing will remove your local data and replace it with the location data
+            you selected
           </p>
-          <div
-            className="flex flex-row items-center justify-center gap-2"
-            id="confirmBox"
-          >
+          <div className="flex flex-row items-center justify-center gap-2" id="confirmBox">
             <label>{"Replace: "}</label>
             <input
               type="checkbox"
@@ -562,12 +449,8 @@ export default function HomeLayout() {
               onChange={(e) => {
                 setSaveConfirm(e.target.checked);
                 document.getElementById("confirmBox").classList.remove("p-2");
-                document
-                  .getElementById("confirmBox")
-                  .classList.remove("border-2");
-                document
-                  .getElementById("confirmBox")
-                  .classList.remove("border-red-500");
+                document.getElementById("confirmBox").classList.remove("border-2");
+                document.getElementById("confirmBox").classList.remove("border-red-500");
               }}
             />
           </div>
@@ -583,17 +466,12 @@ export default function HomeLayout() {
                 if (confirm) {
                   downloadData(downloadedItem);
                   setReload(!reload);
-                  document.getElementById("confirmationDialog").style.display =
-                    "none";
+                  document.getElementById("confirmationDialog").style.display = "none";
                   document.getElementById("confirmChange").checked = false;
                 } else {
                   document.getElementById("confirmBox").classList.add("p-2");
-                  document
-                    .getElementById("confirmBox")
-                    .classList.add("border-2");
-                  document
-                    .getElementById("confirmBox")
-                    .classList.add("border-red-500");
+                  document.getElementById("confirmBox").classList.add("border-2");
+                  document.getElementById("confirmBox").classList.add("border-red-500");
                 }
               }}
             >
@@ -603,8 +481,7 @@ export default function HomeLayout() {
               id="noButton"
               className="redButton"
               onClick={() => {
-                document.getElementById("confirmationDialog").style.display =
-                  "none";
+                document.getElementById("confirmationDialog").style.display = "none";
                 setSaveConfirm(false);
                 document.getElementById("confirmChange").checked = false;
               }}
@@ -621,22 +498,12 @@ export default function HomeLayout() {
   function CreateLocationForm() {
     return (
       <form className="flex flex-row" onSubmit={createLocation}>
-        <div className="w-[1rem] flex flex-row justify-center items-center text-red-500">
-          *
-        </div>
-        <label
-          className={
-            "text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center w-[11rem] pl-2"
-          }
-        >
-          dcTrack Location Code
-        </label>
+        <div className="w-[1rem] flex flex-row justify-center items-center text-red-500">*</div>
+        <label className={"text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center w-[11rem] pl-2"}>dcTrack Location Code</label>
         <input
           type="text"
           required={true}
-          className={
-            "h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-[10rem]"
-          }
+          className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-[10rem]"}
           placeholder="Location Name"
           defaultValue={locationCode}
           onChange={(e) => {
@@ -644,11 +511,7 @@ export default function HomeLayout() {
             setExistMessageShow(false);
           }}
         />
-        <input
-          type="submit"
-          className="orangeButton ml-3"
-          value={"Create Location"}
-        />
+        <input type="submit" className="orangeButton ml-3" value={"Create Location"} />
       </form>
     );
   }

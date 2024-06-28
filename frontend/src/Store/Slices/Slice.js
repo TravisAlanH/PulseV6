@@ -327,10 +327,15 @@ const Slice = createSlice({
       }
       if (state.Settings.localStorage) localStorage.setItem("PulseStateData", JSON.stringify(state));
     },
+    updateNamingCon: (state, action) => {
+      state.Current.Naming = action.payload.value;
+      if (state.Settings.localStorage) localStorage.setItem("PulseStateData", JSON.stringify(state));
+    },
   },
 });
 
 export const {
+  updateNamingCon,
   bulkAddToRacks,
   UpdateSurveyData,
   replaceSetStructuredCabling,

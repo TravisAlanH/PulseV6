@@ -1,21 +1,20 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { TiPlus } from "react-icons/ti";
+import * as actions from "../../Store/Slices/Slice";
+import LoadingSpinner from "../Reuse/LoadingSpinner/Spinner";
 
 export default function NamingCons() {
+  const dispatch = useDispatch();
   const UUID = useSelector((state) => state.data.Current.DataBaseUUID);
   const [selectedStep, setSelectedStep] = React.useState("");
-  const [selectedEditListIndex, setselectedEditListIndex] = React.useState(0);
+  const [selectedEditListIndex, setselectedEditListIndex] = React.useState(-1);
   const [customTag, setCustomTag] = React.useState("");
-  // Retrieve the naming list from local storage
   const namingList = JSON.parse(localStorage.getItem("NamingList")) || [];
-
-  // Filter the naming list based on the UUID
   const currentLocationSettingData = namingList.filter((item) => item.DataBaseUUID === UUID);
-
-  // Initialize namingCon safely
   const initialNamingCon = currentLocationSettingData.length > 0 ? currentLocationSettingData[0].NamingCon : "";
   const [namingCon, setNamingCon] = React.useState(initialNamingCon);
+  const [Loading, setLoading] = React.useState(false);
   if (UUID === "") {
     console.log("UUID is empty");
     return (
@@ -23,11 +22,9 @@ export default function NamingCons() {
         <p>No Location found. Please select a valid data base entry from the Created Locations page.</p>
       </div>
     );
-  } else {
-    console.log("UUID is not empty");
   }
-  console.log(UUID);
-  console.log(namingCon);
+  console.log("NamingCon: ", namingCon);
+
   const OptionListRackable = [
     {
       Step: "Assets",
@@ -50,8 +47,10 @@ export default function NamingCons() {
     Delimiters: "",
   };
 
-  function handleAddingToNamingCon() {
+  function handleAddingToNamingCon(step) {
+    if (document.getElementById("StepSelection").value === "N/A") return;
     setNamingCon([...namingCon, NamingTemplate]);
+    setselectedEditListIndex(step);
     document.getElementById("StepSelection").value = "N/A";
   }
 
@@ -59,13 +58,20 @@ export default function NamingCons() {
     <div className="w-full border-2">
       <div className="flex flex-row">
         <label className={"text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center w-[8rem]"}>Load Location Presets</label>
-        <select>
-          <option>{currentLocationSettingData[0].dcTrackLocationCode}</option>
+        <select
+          onChange={(e) => {
+            const newNameCon = JSON.parse(localStorage.getItem("NamingList")).filter((item) => item.DataBaseUUID === e.target.value);
+            console.log(newNameCon);
+            if (newNameCon.length > 0) setNamingCon(newNameCon[0].NamingCon);
+            else setNamingCon([]);
+          }}
+        >
+          <option value={UUID}>{currentLocationSettingData[0].dcTrackLocationCode}</option>
           {JSON.parse(localStorage.getItem("NamingList"))
             .filter((item) => item.DataBaseUUID !== UUID)
             .map((item, index) => {
               return (
-                <option key={index} value={item.NamingCon}>
+                <option key={index} value={item.DataBaseUUID}>
                   {item.dcTrackLocationCode}
                 </option>
               );
@@ -75,14 +81,14 @@ export default function NamingCons() {
       <div className="p-3">
         <label className={"text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center w-[8rem]"}>Custom Naming</label>
         <div className="flex flex-row">
-          <div className="w-[12rem] border-2 flex flex-col gap-2">
+          <div className="w-[12rem] border-2 flex flex-col gap-2 p-2">
             {addToNamingButtons.map((item) => {
               const AssociatedToStep = OptionListRackable.find((atIndex) => atIndex.Step === selectedStep);
               return (
                 <div>
                   <button
                     disabled={AssociatedToStep && !AssociatedToStep.Associated.includes(item)}
-                    className={AssociatedToStep && AssociatedToStep.Associated.includes(item) ? "orangeButton" : "grayButton"}
+                    className={"text-sm " + (AssociatedToStep && AssociatedToStep.Associated.includes(item) ? "orangeButton" : "grayButton")}
                     onClick={() => {
                       if (item === "Custom") {
                         document.getElementById("ModalRackable").style.display = "block";
@@ -109,74 +115,56 @@ export default function NamingCons() {
               );
             })}
           </div>
-          <div className="flex flex-col gap-3 w-full overflow-x-auto">
-            {namingCon.map((item, index) => {
-              console.log(item);
-              return (
-                <div className="flex flex-col border-2">
-                  <div className="flex flex-row justify-between">
-                    <div key={index} className="overflow-x-auto flex flex-row">
-                      <label className={"text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-between w-[6rem]"}>
-                        <p className="text-xl">{item.Step}</p>
-                        <div>
-                          <p>Delimiter:</p>
-                          <select
-                            onChange={(e) => {
-                              if (e.target.value !== "N/A") {
-                                let namingComUpdated = namingCon.find((item) => item.Step === selectedStep);
-                                namingComUpdated.Delimiters = e.target.value;
-                                setNamingCon(
-                                  namingCon.map((namingConItem) => {
-                                    if (namingConItem.Step === selectedStep) {
-                                      return namingComUpdated;
-                                    }
-                                    return namingConItem;
-                                  })
-                                );
-                              }
-                            }}
-                          >
-                            <option value="N/A">Select</option>
-                            <option value="-">-</option>
-                            <option value="_">_</option>
-                            <option value=".">.</option>
-                            <option value=" ">Space</option>
-                            <option value="">None</option>
-                          </select>
-                        </div>
-                      </label>
-                      <div className="flex flex-row gap-2">
-                        {item.Format.map((itemParameter, index) => {
-                          return (
-                            <div className="flex flex-col border-2 p-2">
-                              <div className="flex flex-row justify-between gap-2">
-                                <p>{itemParameter}</p>
-                                <button
-                                  className="redButton"
-                                  onClick={() => {
-                                    let namingComUpdated = namingCon.find((item) => item.Step === selectedStep);
-                                    namingComUpdated.Format.splice(index, 1);
-                                    namingComUpdated.CharacterCount.splice(index, 1);
-                                    setNamingCon(
-                                      namingCon.map((namingConItem) => {
-                                        if (namingConItem.Step === selectedStep) {
-                                          return namingComUpdated;
-                                        }
-                                        return namingConItem;
-                                      })
-                                    );
-                                  }}
-                                >
-                                  X
-                                </button>
-                              </div>
-                              {itemParameter.includes("Count") ? null : (
-                                <select
-                                  className="w-full"
-                                  onChange={(e) => {
-                                    if (e.target.value !== "N/A") {
+          <div className="flex flex-col gap-3 w-full overflow-x-auto px-2 ">
+            <div className="">
+              {namingCon.map((item, index) => {
+                return (
+                  <div className={"flex flex-col border-b-2 " + (selectedEditListIndex !== item.Step ? "bg-[#aaaaaa25]" : "")}>
+                    <div className="flex flex-row justify-between ">
+                      <div key={index} className="overflow-x-auto flex flex-row">
+                        <label className={"text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-between min-w-[6rem]"}>
+                          <p className="text-xl">{item.Step}</p>
+                          <div>
+                            <p>Delimiter:</p>
+                            <select
+                              {...(selectedEditListIndex !== item.Step ? { disabled: true } : {})}
+                              onChange={(e) => {
+                                if (e.target.value !== "N/A") {
+                                  let namingComUpdated = namingCon.find((item) => item.Step === selectedStep);
+                                  namingComUpdated.Delimiters = e.target.value;
+                                  setNamingCon(
+                                    namingCon.map((namingConItem) => {
+                                      if (namingConItem.Step === selectedStep) {
+                                        return namingComUpdated;
+                                      }
+                                      return namingConItem;
+                                    })
+                                  );
+                                }
+                              }}
+                            >
+                              <option value="N/A">Select</option>
+                              <option value="-">-</option>
+                              <option value="_">_</option>
+                              <option value=".">.</option>
+                              <option value=" ">Space</option>
+                              <option value="">None</option>
+                            </select>
+                          </div>
+                        </label>
+                        <div className={"flex flex-row gap-2 "}>
+                          {item.Format.map((itemParameter, index) => {
+                            return (
+                              <div className="flex flex-col border-2 p-2">
+                                <div className="flex flex-row justify-between gap-2">
+                                  <p>{itemParameter.slice(0, 12)}</p>
+                                  <button
+                                    {...(selectedEditListIndex !== item.Step ? { disabled: true } : {})}
+                                    className={selectedEditListIndex !== item.Step ? "grayButton" : "redButton"}
+                                    onClick={() => {
                                       let namingComUpdated = namingCon.find((item) => item.Step === selectedStep);
-                                      namingComUpdated.CharacterCount[index] = parseInt(e.target.value);
+                                      namingComUpdated.Format.splice(index, 1);
+                                      namingComUpdated.CharacterCount.splice(index, 1);
                                       setNamingCon(
                                         namingCon.map((namingConItem) => {
                                           if (namingConItem.Step === selectedStep) {
@@ -185,51 +173,105 @@ export default function NamingCons() {
                                           return namingConItem;
                                         })
                                       );
-                                    }
-                                  }}
-                                >
-                                  <option value="N/A">Chars</option>
-                                  <option value={-1}>Show All</option>
-                                  <option value={1}>1</option>
-                                  <option value={2}>2</option>
-                                  <option value={3}>3</option>
-                                  <option value={5}>5</option>
-                                </select>
-                              )}
+                                    }}
+                                  >
+                                    X
+                                  </button>
+                                </div>
+                                {itemParameter.includes("Count") ? null : (
+                                  <select
+                                    {...(selectedEditListIndex !== item.Step ? { disabled: true } : {})}
+                                    className="w-full"
+                                    onChange={(e) => {
+                                      if (e.target.value !== "N/A") {
+                                        let namingComUpdated = namingCon.find((item) => item.Step === selectedStep);
+                                        namingComUpdated.CharacterCount[index] = parseInt(e.target.value);
+                                        setNamingCon(
+                                          namingCon.map((namingConItem) => {
+                                            if (namingConItem.Step === selectedStep) {
+                                              return namingComUpdated;
+                                            }
+                                            return namingConItem;
+                                          })
+                                        );
+                                      }
+                                    }}
+                                  >
+                                    <option value="N/A">Chars</option>
+                                    <option value={-1}>Show All</option>
+                                    <option value={1}>1</option>
+                                    <option value={2}>2</option>
+                                    <option value={3}>3</option>
+                                    <option value={5}>5</option>
+                                  </select>
+                                )}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                      {selectedEditListIndex === item.Step ? null : (
+                        <button
+                          className="orangeButton m-2"
+                          onClick={() => {
+                            setSelectedStep(item.Step);
+                            setselectedEditListIndex(item.Step);
+                          }}
+                        >
+                          Edit
+                        </button>
+                      )}
+                    </div>
+                    <div id="Preview">
+                      <div className="flex flex-row overflow-x-auto">
+                        <label className={"text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-between min-w-[6rem]"}>Preview:</label>
+                        {item.Format.map((itemParameter, index) => {
+                          return (
+                            <div key={index} className="flex flex-row text-nowrap">
+                              {item.CharacterCount[index] === -1 ? <p>{itemParameter}</p> : <p>{itemParameter.slice(0, item.CharacterCount[index])}</p>}
+                              {item.CharacterCount.length > index + 1 ? <div>{item.Delimiters === " " ? <p>&nbsp;</p> : <p>{item.Delimiters}</p>} </div> : null}
                             </div>
                           );
                         })}
                       </div>
                     </div>
-                    {selectedEditListIndex === index ? null : (
-                      <button
-                        className="orangeButton"
-                        onClick={() => {
-                          setSelectedStep(item.Step);
-                          setselectedEditListIndex(index);
-                        }}
-                      >
-                        Edit
-                      </button>
-                    )}
                   </div>
-                  <div id="Preview">
-                    <div className="flex flex-row overflow-x-auto">
-                      <label className={"text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-between w-[6rem]"}>Preview:</label>
-                      {item.Format.map((itemParameter, index) => {
-                        console.log(item);
-                        return (
-                          <div key={index} className="flex flex-row text-nowrap">
-                            {item.CharacterCount[index] === -1 ? <p>{itemParameter}</p> : <p>{itemParameter.slice(0, item.CharacterCount[index])}</p>}
-                            {item.CharacterCount.length > index + 1 ? <p>{item.Delimiters === " " ? <p>&nbsp;</p> : item.Delimiters}</p> : null}
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
+                );
+              })}
+              {!namingCon.length > 0 ? null : (
+                <div className="w-full flex flex-row justify-end ">
+                  <button
+                    className="orangeButton"
+                    onClick={() => {
+                      setLoading(true);
+                      const payload = {
+                        value: namingCon,
+                      };
+                      dispatch(actions.updateNamingCon(payload));
+                      localStorage.setItem(
+                        "NamingList",
+                        JSON.stringify(
+                          namingList.map((item) => {
+                            if (item.DataBaseUUID === UUID) {
+                              return {
+                                ...item,
+                                NamingCon: namingCon,
+                              };
+                            }
+                            return item;
+                          })
+                        )
+                      );
+                      setTimeout(() => {
+                        setLoading(false);
+                      }, 2000);
+                    }}
+                  >
+                    Save
+                  </button>
                 </div>
-              );
-            })}
+              )}
+            </div>
             <div className="flex flex-row justify-center items-center">
               <label className={"text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center w-[8rem]"}>Select Type</label>
               <select
@@ -254,7 +296,7 @@ export default function NamingCons() {
               <button
                 className="orangeButton"
                 onClick={() => {
-                  if (selectedStep !== "") handleAddingToNamingCon();
+                  if (selectedStep !== "") handleAddingToNamingCon(selectedStep);
                 }}
               >
                 <TiPlus />
@@ -294,6 +336,7 @@ export default function NamingCons() {
           </div>
         </div>
       </div>
+      {!Loading ? null : <LoadingSpinner />}
     </div>
   );
 
