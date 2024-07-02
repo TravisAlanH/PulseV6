@@ -11,16 +11,17 @@ export default function InputFilters({
   AvalableSlots,
   // setAvalableSlots,
   visable,
-  update,
+  MLTClass,
   setSelectedMLTItem,
   mltFilteredData,
   setMltFilteredData,
 }) {
+  console.log(AvalableSlots);
   // const [mltFilteredData, setMltFilteredData] = React.useState([...AllData]);
 
   const [make, setMake] = useState("");
   const [model, setModel] = useState("");
-  const [ruHeight, setRuHeight] = useState(AvalableSlots);
+  const [ruHeight, setRuHeight] = useState();
   const [deviceClass, setDeviceClass] = useState("");
   const [subclass, setSubclass] = useState("");
   const [mounting, setMounting] = useState("");
@@ -41,51 +42,79 @@ export default function InputFilters({
   const [backSlotsCountSort, setBackSlotsCountSort] = useState(0);
 
   const [deviceClassFilter, setDeviceClassFilter] = useState([]);
-  // const [subclassFilter, setSubclassFilter] = useState([]);
-  // const [mountingFilter, setMountingFilter] = useState([]);
+  const [subclassFilter, setSubclassFilter] = useState([]);
+  const [mountingFilter, setMountingFilter] = useState([]);
 
   React.useEffect(() => {
-    console.log("update");
-  }, [update]);
+    setMountingFilter([MLTClass]);
+  }, [MLTClass, setMountingFilter]);
+
+  React.useEffect(() => {
+    setRuHeight(AvalableSlots);
+  }, [AvalableSlots, setRuHeight]);
 
   // AllData = AllData.filter((item) => item.Mounting === MLTClass);
 
-  let CombinedData = [
-    [make, setMake],
-    [model, setModel],
-    [ruHeight, setRuHeight],
-    [deviceClass, setDeviceClass],
-    [subclass, setSubclass],
-    [mounting, setMounting],
-    [dataPortsCount, setDataPortsCount],
-    [powerPortsCount, setPowerPortsCount],
-    [frontSlotsCount, setFrontSlotsCount],
-    [backSlotsCount, setBackSlotsCount],
-  ];
+  let CombinedData = React.useMemo(
+    () => [
+      [make, setMake],
+      [model, setModel],
+      [ruHeight, setRuHeight],
+      [deviceClass, setDeviceClass],
+      [subclass, setSubclass],
+      [mounting, setMounting],
+      [dataPortsCount, setDataPortsCount],
+      [powerPortsCount, setPowerPortsCount],
+      [frontSlotsCount, setFrontSlotsCount],
+      [backSlotsCount, setBackSlotsCount],
+    ],
+    [make, model, ruHeight, deviceClass, subclass, mounting, dataPortsCount, powerPortsCount, frontSlotsCount, backSlotsCount]
+  );
 
-  let CombinedSort = [
-    [makeSort, setMakeSort],
-    [modelSort, setModelSort],
-    [ruHeightSort, setRuHeightSort],
-    [deviceClassSort, setDeviceClassSort],
-    [subclassSort, setSubclassSort],
-    [mountingSort, setMountingSort],
-    [dataPortsCountSort, setDataPortsCountSort],
-    [powerPortsCountSort, setPowerPortsCountSort],
-    [frontSlotsCountSort, setFrontSlotsCountSort],
-    [backSlotsCountSort, setBackSlotsCountSort],
-  ];
+  let CombinedSort = React.useMemo(
+    () => [
+      [makeSort, setMakeSort],
+      [modelSort, setModelSort],
+      [ruHeightSort, setRuHeightSort],
+      [deviceClassSort, setDeviceClassSort],
+      [subclassSort, setSubclassSort],
+      [mountingSort, setMountingSort],
+      [dataPortsCountSort, setDataPortsCountSort],
+      [powerPortsCountSort, setPowerPortsCountSort],
+      [frontSlotsCountSort, setFrontSlotsCountSort],
+      [backSlotsCountSort, setBackSlotsCountSort],
+    ],
+    [
+      makeSort,
+      modelSort,
+      ruHeightSort,
+      deviceClassSort,
+      subclassSort,
+      mountingSort,
+      dataPortsCountSort,
+      powerPortsCountSort,
+      frontSlotsCountSort,
+      backSlotsCountSort,
+    ]
+  );
 
-  // let CombinedFilter = [
-  //   [deviceClassFilter, setDeviceClassFilter],
-  //   [subclassFilter, setSubclassFilter],
-  //   [mountingFilter, setMountingFilter],
-  // ];
+  let CombinedFilter = React.useMemo(
+    () => [
+      [deviceClassFilter, setDeviceClassFilter],
+      [subclassFilter, setSubclassFilter],
+      [mountingFilter, setMountingFilter],
+    ],
+    [deviceClassFilter, subclassFilter, mountingFilter]
+  );
+
+  React.useEffect(() => {
+    setMltFilteredData(filterAndSortData(AllData, CombinedData, CombinedSort, CombinedFilter));
+  }, [CombinedFilter, CombinedSort, CombinedData, setMltFilteredData, AllData]);
 
   // console.log(CombinedFilter);
 
   // const [mltFilteredData, setMltFilteredData] = React.useState(
-  //   // filterAndSortData(AllData, CombinedData, CombinedSort)
+  //   // filterAndSortData(AllData, CombinedData, CombinedSort, CombinedFilter)
   //   AllData
   // );
 
@@ -155,7 +184,7 @@ export default function InputFilters({
                   value={item[0]}
                   onChange={(e) => {
                     item[1](e.target.value);
-                    setMltFilteredData(filterAndSortData(AllData, CombinedData, CombinedSort));
+                    setMltFilteredData(filterAndSortData(AllData, CombinedData, CombinedSort, CombinedFilter));
                   }}
                 />
               ) : (
@@ -166,7 +195,7 @@ export default function InputFilters({
                   value={item[0]}
                   onChange={(e) => {
                     item[1](e.target.value);
-                    setMltFilteredData(filterAndSortData(AllData, CombinedData, CombinedSort));
+                    setMltFilteredData(filterAndSortData(AllData, CombinedData, CombinedSort, CombinedFilter));
                   }}
                 />
               )}
@@ -175,7 +204,7 @@ export default function InputFilters({
                 onClick={() => {
                   item[1]("");
                   closeAllFilterBars();
-                  setMltFilteredData(filterAndSortData(AllData, CombinedData, CombinedSort));
+                  setMltFilteredData(filterAndSortData(AllData, CombinedData, CombinedSort, CombinedFilter));
                 }}
               >
                 X
@@ -211,7 +240,7 @@ export default function InputFilters({
                 onClick={() => {
                   if (CombinedSort[index][0] !== -1) CombinedSort[index][1](-1);
                   if (CombinedSort[index][0] === -1) CombinedSort[index][1](0);
-                  setMltFilteredData(filterAndSortData(AllData, CombinedData, CombinedSort));
+                  setMltFilteredData(filterAndSortData(AllData, CombinedData, CombinedSort, CombinedFilter));
                 }}
               >
                 <ImSortAmountAsc />
@@ -224,7 +253,7 @@ export default function InputFilters({
                 onClick={() => {
                   if (CombinedSort[index][0] !== 1) CombinedSort[index][1](1);
                   if (CombinedSort[index][0] === 1) CombinedSort[index][1](0);
-                  setMltFilteredData(filterAndSortData(AllData, CombinedData, CombinedSort));
+                  setMltFilteredData(filterAndSortData(AllData, CombinedData, CombinedSort, CombinedFilter));
                 }}
               >
                 <ImSortAmountDesc />
@@ -236,7 +265,7 @@ export default function InputFilters({
                 className="flex flex-row gap-3 items-center"
                 onClick={() => {
                   CombinedSort[index][1](0);
-                  setMltFilteredData(filterAndSortData(AllData, CombinedData, CombinedSort));
+                  setMltFilteredData(filterAndSortData(AllData, CombinedData, CombinedSort, CombinedFilter));
                 }}
               >
                 <IoClose /> <label className="cursor-pointer">Clear Sort</label>
@@ -270,7 +299,7 @@ export default function InputFilters({
               onClick={() => {
                 CombinedData[index][1]("");
                 CombinedSort[index][1](0);
-                setMltFilteredData(filterAndSortData(AllData, CombinedData, CombinedSort));
+                setMltFilteredData(filterAndSortData(AllData, CombinedData, CombinedSort, CombinedFilter));
               }}
             >
               <TbClearAll />
@@ -292,12 +321,14 @@ export default function InputFilters({
                 <div key={index} className="flex flex-row gap-2">
                   <input
                     type="checkbox"
-                    checked={deviceClassFilter.includes(item)}
+                    checked={CombinedFilter[0][0].includes(item)}
                     onChange={() => {
-                      if (deviceClassFilter.includes(item)) {
-                        setDeviceClassFilter(deviceClassFilter.filter((i) => i !== item));
+                      if (CombinedFilter[0][0].includes(item)) {
+                        CombinedFilter[0][1](CombinedFilter[0][0].filter((i) => i !== item));
+                        setMltFilteredData(filterAndSortData(AllData, CombinedData, CombinedSort, CombinedFilter));
                       } else {
-                        setDeviceClassFilter([...deviceClassFilter, item]);
+                        CombinedFilter[0][1]([...CombinedFilter[0][0], item]);
+                        setMltFilteredData(filterAndSortData(AllData, CombinedData, CombinedSort, CombinedFilter));
                       }
                     }}
                   />
@@ -315,12 +346,14 @@ export default function InputFilters({
                 <div key={index} className="flex flex-row gap-2">
                   <input
                     type="checkbox"
-                    checked={deviceClassFilter.includes(item)}
+                    checked={CombinedFilter[1][0].includes(item)}
                     onChange={() => {
-                      if (deviceClassFilter.includes(item)) {
-                        setDeviceClassFilter(deviceClassFilter.filter((i) => i !== item));
+                      if (CombinedFilter[1][0].includes(item)) {
+                        CombinedFilter[1][1](CombinedFilter[1][0].filter((i) => i !== item));
+                        setMltFilteredData(filterAndSortData(AllData, CombinedData, CombinedSort, CombinedFilter));
                       } else {
-                        setDeviceClassFilter([...deviceClassFilter, item]);
+                        CombinedFilter[1][1]([...CombinedFilter[1][0], item]);
+                        setMltFilteredData(filterAndSortData(AllData, CombinedData, CombinedSort, CombinedFilter));
                       }
                     }}
                   />
@@ -338,12 +371,14 @@ export default function InputFilters({
                 <div key={index} className="flex flex-row gap-2">
                   <input
                     type="checkbox"
-                    checked={deviceClassFilter.includes(item)}
+                    checked={CombinedFilter[2][0].includes(item)}
                     onChange={() => {
-                      if (deviceClassFilter.includes(item)) {
-                        setDeviceClassFilter(deviceClassFilter.filter((i) => i !== item));
+                      if (CombinedFilter[2][0].includes(item)) {
+                        CombinedFilter[2][1](CombinedFilter[2][0].filter((i) => i !== item));
+                        setMltFilteredData(filterAndSortData(AllData, CombinedData, CombinedSort, CombinedFilter));
                       } else {
-                        setDeviceClassFilter([...deviceClassFilter, item]);
+                        CombinedFilter[2][1]([...CombinedFilter[2][0], item]);
+                        setMltFilteredData(filterAndSortData(AllData, CombinedData, CombinedSort, CombinedFilter));
                       }
                     }}
                   />

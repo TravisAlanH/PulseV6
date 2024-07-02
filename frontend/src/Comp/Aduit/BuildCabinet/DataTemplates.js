@@ -1,4 +1,5 @@
 function Assets(Template, Step, UPosition, SelectedMLTItem, LocationName, CabinetName) {
+  console.log("SelectedMLTItem", SelectedMLTItem);
   const data = {
     ...Template[Step],
     "U Position *": {
@@ -41,8 +42,8 @@ function Assets(Template, Step, UPosition, SelectedMLTItem, LocationName, Cabine
       ...Template[Step]["Mounting"],
       value: SelectedMLTItem.Mounting,
     },
-    "Slots Frount": {
-      ...Template[Step]["Slot Frount"],
+    "Slots Front": {
+      ...Template[Step]["Slot Front"],
       value: SelectedMLTItem.FrontSlotsCount,
     },
     "Slots Back": {

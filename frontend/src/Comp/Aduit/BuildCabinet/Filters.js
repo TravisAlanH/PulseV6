@@ -56,74 +56,50 @@ const FilterList = {
     "DC FAP",
     "Rack Inverter",
   ],
-  Mounting: [
-    "Busway",
-    "VStack",
-    "Blade",
-    "Rackable",
-    "ZeroU",
-    "Free-Standing",
-    "Non-Rackable",
-    "Suspended",
-  ],
+  Mounting: ["Busway", "VStack", "Blade", "Rackable", "ZeroU", "Free-Standing", "Non-Rackable", "Suspended"],
 };
 
 // External function to filter and sort data
-export const filterAndSortData = (allData, combinedData, combinedSort) => {
-  // Function to filter data based on combinedData criteria
+export function filterAndSortData(allData, combinedData, combinedSort, CombinedFilter) {
+  if (CombinedFilter[0][0].length !== 0) {
+    const classFilters = CombinedFilter[0][0].map((filter) => filter.toLowerCase());
+    console.log(classFilters);
+    allData = allData.filter((item) => classFilters.includes(item.Class.toLowerCase()));
+  }
+
+  if (CombinedFilter[1][0].length !== 0) {
+    const subclassFilters = CombinedFilter[1][0].map((filter) => filter.toLowerCase());
+    console.log(subclassFilters);
+    allData = allData.filter((item) => subclassFilters.includes(item.Subclass.toLowerCase()));
+  }
+
+  if (CombinedFilter[2][0].length !== 0) {
+    const mountingFilters = CombinedFilter[2][0];
+    console.log(mountingFilters);
+    allData = allData.filter((item) => mountingFilters.includes(item.Mounting));
+  }
+
   const filterData = () => {
     return allData.filter((item) => {
-      // Check if item is not empty or an empty string
       if (!item || item === "") {
         return false;
       }
 
-      // Apply filtering criteria
       return (
-        (!combinedData[0][0] ||
-          (item.Make &&
-            item.Make.toLowerCase().includes(
-              combinedData[0][0].toLowerCase()
-            ))) &&
-        (!combinedData[1][0] ||
-          (item.Model &&
-            item.Model.toLowerCase().includes(
-              combinedData[1][0].toLowerCase()
-            ))) &&
-        (!combinedData[2][0] ||
-          (item.RUHeight && item.RUHeight <= parseInt(combinedData[2][0]))) &&
-        (!combinedData[3][0] ||
-          (item.Class &&
-            item.Class.toLowerCase().includes(
-              combinedData[3][0].toLowerCase()
-            ))) &&
-        (!combinedData[4][0] ||
-          (item.Subclass &&
-            item.Subclass.toLowerCase().includes(
-              combinedData[4][0].toLowerCase()
-            ))) &&
-        (!combinedData[5][0] ||
-          (item.Mounting &&
-            item.Mounting.toLowerCase().includes(
-              combinedData[5][0].toLowerCase()
-            ))) &&
-        (!combinedData[6][0] ||
-          (item.DataPortsCount !== undefined &&
-            item.DataPortsCount === parseInt(combinedData[6][0]))) &&
-        (!combinedData[7][0] ||
-          (item.PowerPortsCount !== undefined &&
-            item.PowerPortsCount === parseInt(combinedData[7][0]))) &&
-        (!combinedData[8][0] ||
-          (item.FrontSlotsCount !== undefined &&
-            item.FrontSlotsCount === parseInt(combinedData[8][0]))) &&
-        (!combinedData[9][0] ||
-          (item.BackSlotsCount !== undefined &&
-            item.BackSlotsCount === parseInt(combinedData[9][0])))
+        (!combinedData[0][0] || (item.Make && item.Make.toLowerCase().includes(combinedData[0][0].toLowerCase()))) &&
+        (!combinedData[1][0] || (item.Model && item.Model.toLowerCase().includes(combinedData[1][0].toLowerCase()))) &&
+        (!combinedData[2][0] || (item.RUHeight && item.RUHeight <= parseInt(combinedData[2][0]))) &&
+        (!combinedData[3][0] || (item.Class && item.Class.toLowerCase().includes(combinedData[3][0].toLowerCase()))) &&
+        (!combinedData[4][0] || (item.Subclass && item.Subclass.toLowerCase().includes(combinedData[4][0].toLowerCase()))) &&
+        (!combinedData[5][0] || (item.Mounting && item.Mounting.toLowerCase().includes(combinedData[5][0].toLowerCase()))) &&
+        (!combinedData[6][0] || (item.DataPortsCount !== undefined && item.DataPortsCount === parseInt(combinedData[6][0]))) &&
+        (!combinedData[7][0] || (item.PowerPortsCount !== undefined && item.PowerPortsCount === parseInt(combinedData[7][0]))) &&
+        (!combinedData[8][0] || (item.FrontSlotsCount !== undefined && item.FrontSlotsCount === parseInt(combinedData[8][0]))) &&
+        (!combinedData[9][0] || (item.BackSlotsCount !== undefined && item.BackSlotsCount === parseInt(combinedData[9][0])))
       );
     });
   };
 
-  // Function to sort data based on combinedSort criteria
   const sortData = () => {
     return filterData().sort((a, b) => {
       for (let i = 0; i < combinedSort.length; i++) {
@@ -143,8 +119,7 @@ export const filterAndSortData = (allData, combinedData, combinedSort) => {
     });
   };
 
-  // Return the sorted data
   return sortData();
-};
+}
 
 export default FilterList;

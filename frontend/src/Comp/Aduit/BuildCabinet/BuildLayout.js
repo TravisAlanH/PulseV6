@@ -9,6 +9,7 @@ import LoadingSpinner from "../../Reuse/LoadingSpinner/Spinner";
 import { useDispatch } from "react-redux";
 import * as actions from "../../../Store/Slices/Slice";
 import PDUViewVertical from "./PDUViewVertical";
+import { GrDatabase } from "react-icons/gr";
 
 export default function BuildLayout({ AllData }) {
   const dispatch = useDispatch();
@@ -29,7 +30,6 @@ export default function BuildLayout({ AllData }) {
   const [savingData, setSavingData] = React.useState({});
   const [Step, setStep] = React.useState("");
   const [loading, setLoading] = React.useState(false);
-  const [update, setUpdate] = React.useState(false);
   // const [openAT, setOpenAT] = React.useState(-1);
   const [AvalableSlots, setAvalableSlots] = React.useState(100);
 
@@ -37,6 +37,11 @@ export default function BuildLayout({ AllData }) {
     // filterAndSortData(AllData, CombinedData, CombinedSort)
     AllData
   );
+  let InAllCabinets = [...Assets, ...PDUs, ...UPSs, ...ATSs];
+
+  let RackedInCurrentCabinet = InAllCabinets.filter((item) => {
+    return item["Cabinet *"].value === CurrentCabinet["Name *"].value && item["Mounting"].value !== "ZeroU";
+  });
 
   // console.log("Av Slots ", AvalableSlots);
 
@@ -50,14 +55,10 @@ export default function BuildLayout({ AllData }) {
     return <div>Build Layout</div>;
   }
 
-  const InAllCabinets = [...Assets, ...PDUs, ...UPSs, ...ATSs];
-
-  const RackedInCurrentCabinet = InAllCabinets.filter((item) => {
-    return item["Cabinet *"].value === CurrentCabinet["Name *"].value && item["Mounting"].value !== "ZeroU";
-  });
-
   const cleanRackData = (data) => {
     let cleanData = [...data];
+    console.log("cleanData", cleanData);
+    console.log("RackedInCurrentCabinet", RackedInCurrentCabinet);
     RackedInCurrentCabinet.forEach((item) => {
       let start = item["U Position *"].value + item["RU Height"].value - 2;
       for (let i = 0; i < item["RU Height"].value - 1; i++) {
@@ -169,7 +170,7 @@ export default function BuildLayout({ AllData }) {
                       AvalableSlots={AvalableSlots}
                       setAvalableSlots={setAvalableSlots}
                       visable={visable}
-                      update={update}
+                      MLTClass={MLTClass}
                       setSelectedMLTItem={setSelectedMLTItem}
                       mltFilteredData={mltFilteredData}
                       setMltFilteredData={setMltFilteredData}
@@ -287,12 +288,11 @@ export default function BuildLayout({ AllData }) {
           onClick={() => {
             document.getElementById("ModalRackable").style.display = "block";
             // setMLTClass(Type);
-            console.log(mltFilteredData);
-            AllData = AllData.filter((item) => item.Mounting === Type);
+            setMLTClass(Type);
             setSideDepth({ Depth: depth, Side: side });
             setUPosition(index + 1);
             openAbover(index, depth);
-            setUpdate(!update);
+            // setUpdate(!update);
           }}
         >
           Open {Type} {index + 1}
@@ -327,27 +327,33 @@ export default function BuildLayout({ AllData }) {
           exspandFilledUnit(index);
         }}
       >
-        {RackedInCurrentCabinet.filter((items) => items["U Position *"].value === index + 1).map((item, index) => {
-          return (
+        <div className="h-[8rem] flex flex-col justify-between p-1">
+          {RackedInCurrentCabinet.filter((items) => items["U Position *"].value === index + 1).map((item, index) => {
+            return (
+              <div className="flex flex-row gap-3 justify-between">
+                <div className="flex flex-row gap-3 ">
+                  <div className="h-[2rem]">{item["Make *"].value}</div>
+                  <div className="h-[2rem]">{item["Model *"].value}</div>
+                </div>
+                {item["Slots Front"].value !== 0 || item["Slots Back"].value !== 0 ? <GrDatabase /> : null}
+              </div>
+            );
+          })}
+          <div className="flex flex-row items-end justify-between">
+            <div></div>
             <div>
-              <div className="h-[2rem] flex flex-row">
-                <div>{item["Make *"].value}</div>
-              </div>
-              <div className="h-[2rem]">{item["Model *"].value}</div>
-              <div className="flex flex-row items-end justify-end">
-                <button
-                  className="orangeButton"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    closeAllFilledUnits();
-                  }}
-                >
-                  <MdOutlineKeyboardArrowUp />
-                </button>
-              </div>
+              <button
+                className="orangeButton"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  closeAllFilledUnits();
+                }}
+              >
+                <MdOutlineKeyboardArrowUp />
+              </button>
             </div>
-          );
-        })}
+          </div>
+        </div>
       </div>
     );
   }

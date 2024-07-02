@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import Template, * as TemplateState from "./Template";
-import { parse } from "alasql";
 
 // const initState = state;
 console.log(JSON.parse(localStorage.getItem("PulseStateData")));
@@ -21,7 +20,7 @@ const Slice = createSlice({
       const RUHeight = action.payload.RUHeight - 1;
       console.log("RUHeight", RUHeight);
       console.log("UP", UP);
-      OriginOpenRU[parseInt(UP - 1)] = 1;
+      OriginOpenRU[parseInt(UP)] = 1;
       for (let i = 1; i < parseInt(RUHeight); i++) {
         OriginOpenRU[parseInt(UP) + i] = 1;
       }
