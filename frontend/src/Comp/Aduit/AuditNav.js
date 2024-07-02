@@ -51,19 +51,17 @@ export default function AuditNav({ setCurrentAudit, AllData }) {
       >
         Cabinet
       </button>
-      {user === "Travis Heidelberger" ? (
-        <button
-          id="AuditLinks"
-          className={buttonStyle}
-          onClick={(e) => {
-            removeSelected();
-            e.target.classList.add("selected");
-            setCurrentAudit(<BuildLayout AllData={AllData} />);
-          }}
-        >
-          Build Cabinet
-        </button>
-      ) : null}
+      <button
+        id="AuditLinks"
+        className={buttonStyle}
+        onClick={(e) => {
+          removeSelected();
+          e.target.classList.add("selected");
+          setCurrentAudit(<BuildLayout AllData={AllData} />);
+        }}
+      >
+        Build Cabinet
+      </button>
       <button
         id="AuditLinks"
         className={buttonStyle}
