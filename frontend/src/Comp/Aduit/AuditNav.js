@@ -8,12 +8,12 @@ import LocationLayout from "../Location/LocationLayout";
 import ExportPageAudit from "../Export/ExportPageAudit";
 import StructuredCablingLayout from "./StructuredCabling/StructuredCablingLayout";
 import BuildLayout from "./BuildCabinet/BuildLayout";
-import * as FireActions from "../../FireActions";
+// import * as FireActions from "../../FireActions";
 
 export default function AuditNav({ setCurrentAudit, AllData }) {
   const buttons = document.getElementsByClassName("AuditLinks");
 
-  const user = FireActions.auth.currentUser.displayName;
+  // const user = FireActions.auth.currentUser.displayName;
 
   function removeSelected() {
     for (var i = 0; i < buttons.length; i++) {
