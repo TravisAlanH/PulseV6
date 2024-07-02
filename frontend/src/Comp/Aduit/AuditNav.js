@@ -11,7 +11,6 @@ import BuildLayout from "./BuildCabinet/BuildLayout";
 import * as FireActions from "../../FireActions";
 
 export default function AuditNav({ setCurrentAudit, AllData }) {
-  const [editAllData, setEditAllData] = React.useState(AllData);
   const buttons = document.getElementsByClassName("AuditLinks");
 
   const user = FireActions.auth.currentUser.displayName;
@@ -59,7 +58,7 @@ export default function AuditNav({ setCurrentAudit, AllData }) {
           onClick={(e) => {
             removeSelected();
             e.target.classList.add("selected");
-            setCurrentAudit(<BuildLayout AllData={AllData} editAllData={editAllData} setEditAllData={setEditAllData} />);
+            setCurrentAudit(<BuildLayout AllData={AllData} />);
           }}
         >
           Build Cabinet
