@@ -66,6 +66,7 @@ export default function HomeLayout() {
           dataHold2.push(SMALLtoLARGE(dataHold[i]));
           console.log(dataHold2[i]["Location"][0]["dcTrack Location Code *"].value);
         }
+        console.log("Data Hold 2", dataHold2);
         setLocationData(dataHold2);
         // } else {
         //   setLocationData(dataHold);

@@ -5,14 +5,18 @@ import "./BuildCabinetModal.css";
 import { useState } from "react";
 import { MdOutlineKeyboardArrowUp } from "react-icons/md";
 import BuildInputs from "./BuildInputs";
+import LoadingSpinner from "../../Reuse/LoadingSpinner/Spinner";
+import { useDispatch } from "react-redux";
+import * as actions from "../../../Store/Slices/Slice";
+import PDUViewVertical from "./PDUViewVertical";
 
 export default function BuildLayout({ AllData }) {
+  const dispatch = useDispatch();
   const CurrentRack = useSelector((state) => state.data.Current.Racks);
   const CurrentCabinet = useSelector((state) => state.data.Racks[CurrentRack]);
-  const CurrentFilledCabinet = useSelector(
-    (state) => state.data.OpenRU[CurrentRack]
-  );
+  const CurrentFilledCabinet = useSelector((state) => state.data.OpenRU[CurrentRack]);
   const [visable, setVisable] = useState(15);
+  const [MLTClass, setMLTClass] = useState("");
 
   // const [MLTData, setMLTData] = React.useState(AllData);
   const Assets = useSelector((state) => state.data.Assets);
@@ -21,6 +25,11 @@ export default function BuildLayout({ AllData }) {
   const ATSs = useSelector((state) => state.data.ATSs);
   const [SelectedMLTItem, setSelectedMLTItem] = useState({});
   const [UPosition, setUPosition] = useState(0);
+  const [SideDepth, setSideDepth] = useState({ Depth: "", Side: "" });
+  const [savingData, setSavingData] = React.useState({});
+  const [Step, setStep] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
+  const [update, setUpdate] = React.useState(false);
   // const [openAT, setOpenAT] = React.useState(-1);
   const [AvalableSlots, setAvalableSlots] = React.useState(100);
 
@@ -44,12 +53,12 @@ export default function BuildLayout({ AllData }) {
   const InAllCabinets = [...Assets, ...PDUs, ...UPSs, ...ATSs];
 
   const RackedInCurrentCabinet = InAllCabinets.filter((item) => {
-    return item["Cabinet *"].value === CurrentCabinet["Name *"].value;
+    return item["Cabinet *"].value === CurrentCabinet["Name *"].value && item["Mounting"].value !== "ZeroU";
   });
 
   const cleanRackData = (data) => {
     let cleanData = [...data];
-    InAllCabinets.forEach((item) => {
+    RackedInCurrentCabinet.forEach((item) => {
       let start = item["U Position *"].value + item["RU Height"].value - 2;
       for (let i = 0; i < item["RU Height"].value - 1; i++) {
         cleanData[start - i] = -1;
@@ -58,7 +67,17 @@ export default function BuildLayout({ AllData }) {
     return cleanData;
   };
 
-  const openAbover = (index) => {
+  const openAbover = (index, depth) => {
+    if (depth === "") {
+      setAvalableSlots(100);
+      // Filter the MLTData based on the available slots
+      setMltFilteredData(
+        AllData.filter((obj) => {
+          return obj.RUHeight <= 100;
+        })
+      );
+      return 100;
+    }
     let open = 0;
 
     // Ensure index is within bounds of the array
@@ -92,30 +111,22 @@ export default function BuildLayout({ AllData }) {
         return obj.RUHeight <= open;
       })
     );
-
-    console.log(open);
     return open;
   };
 
   return (
-    <div>
-      <div
-        id="BuildCabinet_CabView"
-        className="flex flex-col-reverse items-center"
-      >
+    <div className="flex flex-row gap-3 justify-center m-4">
+      <div>
+        <ZeroUPDULeft />
+      </div>
+      <div id="BuildCabinet_CabView" className="flex flex-col-reverse items-center">
         {cleanRackData(CurrentFilledCabinet.value).map((item, index) => {
           if (item === -1) {
             return null;
           }
           return (
-            <div
-              key={index}
-              className="flex flex-rows border-2 border-gray-500"
-            >
-              <div
-                id="BuildCabinet_CabView_UP"
-                className="border-r-2 border-gray-500"
-              >
+            <div key={index} className="flex flex-rows border-2 border-gray-500">
+              <div id="BuildCabinet_CabView_UP" className="border-r-2 border-gray-500">
                 {index + 1}
               </div>
               <div className="min-w-[20rem]">
@@ -125,7 +136,7 @@ export default function BuildLayout({ AllData }) {
                   </div>
                 ) : (
                   <div id="empty" className="h-[2rem]">
-                    {emptyInRack(index)}
+                    {emptyInRack(index, "", "", "Rackable")}
                   </div>
                 )}
               </div>
@@ -138,10 +149,7 @@ export default function BuildLayout({ AllData }) {
           <div className="flex flex-col justify-center w-full">
             {Object.keys(SelectedMLTItem).length === 0 ? (
               <div>
-                <div
-                  id="Entries and Close"
-                  className="flex flex-row justify-end gap-4"
-                >
+                <div id="Entries and Close" className="flex flex-row justify-end gap-4">
                   {EntriesNumber()}
                   {CloseButton()}
                 </div>
@@ -155,15 +163,13 @@ export default function BuildLayout({ AllData }) {
                   >
                     Down
                   </button>
-                  <div
-                    id="MLTDataDrop"
-                    className="DataDrop overflow-scroll w-[38rem] h-[35rem] px-6 border-y-2 transition-all ease-in-out duration-300"
-                  >
+                  <div id="MLTDataDrop" className="DataDrop overflow-scroll w-[38rem] h-[35rem] px-6 border-y-2 transition-all ease-in-out duration-300">
                     <InputFilters
                       AllData={AllData}
                       AvalableSlots={AvalableSlots}
                       setAvalableSlots={setAvalableSlots}
                       visable={visable}
+                      update={update}
                       setSelectedMLTItem={setSelectedMLTItem}
                       mltFilteredData={mltFilteredData}
                       setMltFilteredData={setMltFilteredData}
@@ -173,17 +179,63 @@ export default function BuildLayout({ AllData }) {
               </div>
             ) : (
               <div className="w-full">
-                <div className="w-full flex flex-row justify-end">
-                  {CloseButton()}
+                <div className="w-full flex flex-row justify-end">{CloseButton()}</div>
+                <BuildInputs SelectedMLTItem={SelectedMLTItem} UPosition={UPosition} setSavingData={setSavingData} setStep={setStep} SideDepth={SideDepth} />
+                <div className="flex flex-row justify-end gap-8">
+                  <button
+                    className="redButton"
+                    onClick={() => {
+                      setSavingData({});
+                      setSelectedMLTItem({});
+                      document.getElementById("ModalRackable").style.display = "none";
+                      setAvalableSlots(100);
+                      setMltFilteredData(
+                        AllData.filter((obj) => {
+                          return obj.RUHeight <= 100;
+                        })
+                      );
+                    }}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    className="orangeButton"
+                    onClick={() => {
+                      setLoading(true);
+                      console.log(savingData);
+                      const payload = {
+                        Step: Step,
+                        value: savingData,
+                        RUHeight: savingData["RU Height"].value,
+                        UPosition: UPosition - 1,
+                      };
+                      dispatch(actions.AddToStepFullData(payload));
+                      dispatch(actions.AdjustOpenRU(payload));
+                      setTimeout(() => {
+                        setSavingData({});
+                        setSelectedMLTItem({});
+                        document.getElementById("ModalRackable").style.display = "none";
+                        setAvalableSlots(100);
+                        setMltFilteredData(
+                          AllData.filter((obj) => {
+                            return obj.RUHeight <= 100;
+                          })
+                        );
+                        setLoading(false);
+                      }, 3000);
+                    }}
+                  >
+                    Save
+                  </button>
                 </div>
-                <BuildInputs
-                  SelectedMLTItem={SelectedMLTItem}
-                  UPosition={UPosition}
-                />
               </div>
             )}
           </div>
         </div>
+      </div>
+      {loading && <LoadingSpinner />}
+      <div>
+        <ZeroUPDURight />
       </div>
     </div>
   );
@@ -227,18 +279,23 @@ export default function BuildLayout({ AllData }) {
     );
   }
 
-  function emptyInRack(index) {
+  function emptyInRack(index, depth, side, Type) {
     return (
       <div className="flex flex-row justify-center">
         <button
-          className="orangeButton"
+          className={Type !== "ZeroU" ? "orangeButton" : "orangeButtonVertical"}
           onClick={() => {
             document.getElementById("ModalRackable").style.display = "block";
-            setUPosition(index);
-            openAbover(index);
+            // setMLTClass(Type);
+            console.log(mltFilteredData);
+            AllData = AllData.filter((item) => item.Mounting === Type);
+            setSideDepth({ Depth: depth, Side: side });
+            setUPosition(index + 1);
+            openAbover(index, depth);
+            setUpdate(!update);
           }}
         >
-          Open
+          Open {Type} {index + 1}
         </button>
       </div>
     );
@@ -250,9 +307,7 @@ export default function BuildLayout({ AllData }) {
     for (let i = 0; i < filledRacksUP.length; i++) {
       filledRacksUP[i].classList.remove(highSet);
     }
-    document
-      .getElementById("BuildCabinet_CabView_FilledInRack" + index)
-      .classList.add(highSet);
+    document.getElementById("BuildCabinet_CabView_FilledInRack" + index).classList.add(highSet);
   }
 
   function closeAllFilledUnits() {
@@ -272,9 +327,7 @@ export default function BuildLayout({ AllData }) {
           exspandFilledUnit(index);
         }}
       >
-        {RackedInCurrentCabinet.filter(
-          (items) => items["U Position *"].value === index + 1
-        ).map((item, index) => {
+        {RackedInCurrentCabinet.filter((items) => items["U Position *"].value === index + 1).map((item, index) => {
           return (
             <div>
               <div className="h-[2rem] flex flex-row">
@@ -295,6 +348,26 @@ export default function BuildLayout({ AllData }) {
             </div>
           );
         })}
+      </div>
+    );
+  }
+
+  function ZeroUPDULeft() {
+    return (
+      <div className="flex flex-row gap-2 sticky top-[5rem]">
+        <PDUViewVertical CabinetSide={"Left Side"} DepthPosition={"Front"} Step={Step} emptyInRack={emptyInRack(0, "Front", "Left Side", "ZeroU")} />
+        <PDUViewVertical CabinetSide={"Left Side"} DepthPosition={"Center"} Step={Step} emptyInRack={emptyInRack(0, "Center", "Left Side", "ZeroU")} />
+        <PDUViewVertical CabinetSide={"Left Side"} DepthPosition={"Back"} Step={Step} emptyInRack={emptyInRack(0, "Back", "Left Side", "ZeroU")} />
+      </div>
+    );
+  }
+
+  function ZeroUPDURight() {
+    return (
+      <div className="flex flex-row gap-2 sticky top-[5rem]">
+        <PDUViewVertical CabinetSide={"Right Side"} DepthPosition={"Back"} Step={Step} emptyInRack={emptyInRack(0, "Front", "Right Side", "ZeroU")} />
+        <PDUViewVertical CabinetSide={"Right Side"} DepthPosition={"Center"} Step={Step} emptyInRack={emptyInRack(0, "Center", "Right Side", "ZeroU")} />
+        <PDUViewVertical CabinetSide={"Right Side"} DepthPosition={"Front"} Step={Step} emptyInRack={emptyInRack(0, "Back", "Right Side", "ZeroU")} />
       </div>
     );
   }

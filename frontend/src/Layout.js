@@ -26,35 +26,15 @@ export default function Layout() {
       <div className="pb-[2rem]">
         <Routes>
           <Route path="/" element={<Login setAllData={setAllData} />} />
-          <Route
-            path="/survey"
-            element={auth && auth.emailVerified ? <SurveyLayout /> : <Login setAllData={setAllData} />}
-          />
-          <Route
-            path="/electrical"
-            element={
-              auth && auth.emailVerified ? <ElectricalLayout AllData={AllData} /> : <Login setAllData={setAllData} />
-            }
-          />
+          <Route path="/survey" element={auth && auth.emailVerified ? <SurveyLayout /> : <Login setAllData={setAllData} />} />
+          <Route path="/electrical" element={auth && auth.emailVerified ? <ElectricalLayout AllData={AllData} /> : <Login setAllData={setAllData} />} />
           <Route path="/login" element={<Login setAllData={setAllData} />} />
-          <Route
-            path="/drawing"
-            element={auth && auth.emailVerified ? <Drawing /> : <Login setAllData={setAllData} />}
-          />
+          <Route path="/drawing" element={auth && auth.emailVerified ? <Drawing /> : <Login setAllData={setAllData} />} />
 
-          <Route
-            path="/home"
-            element={auth && auth.emailVerified ? <HomeLayout /> : <Login setAllData={setAllData} />}
-          />
-          <Route
-            path="/settings"
-            element={auth && auth.emailVerified ? <Settings /> : <Login setAllData={setAllData} />}
-          />
+          <Route path="/home" element={auth && auth.emailVerified ? <HomeLayout /> : <Login setAllData={setAllData} />} />
+          <Route path="/settings" element={auth && auth.emailVerified ? <Settings /> : <Login setAllData={setAllData} />} />
 
-          <Route
-            path="/audit"
-            element={auth && auth.emailVerified ? <AuditLayout AllData={AllData} /> : <Login setAllData={setAllData} />}
-          />
+          <Route path="/audit" element={auth && auth.emailVerified ? <AuditLayout AllData={AllData} /> : <Login setAllData={setAllData} />} />
         </Routes>
       </div>
       {auth && auth.emailVerified ? <Footer /> : null}

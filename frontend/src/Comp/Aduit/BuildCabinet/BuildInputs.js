@@ -2,8 +2,9 @@ import React from "react";
 import { useSelector } from "react-redux";
 import Template from "../../../Store/Slices/Template";
 import FillNames from "./FillNames";
+import * as DataTemplates from "./DataTemplates";
 
-export default function BuildInputs({ SelectedMLTItem, UPosition }) {
+export default function BuildInputs({ SelectedMLTItem, UPosition, setSavingData, setStep, SideDepth }) {
   const LocationName = useSelector((state) => state.data.Location[0]["dcTrack Location Code *"].value);
   const UUID = useSelector((state) => state.data.Current.DataBaseUUID);
   const State = useSelector((state) => state.data);
@@ -14,81 +15,32 @@ export default function BuildInputs({ SelectedMLTItem, UPosition }) {
   const Class = SelectedMLTItem.Class;
   let Step = "";
   //   ! Add Additional Classes here
-  if (Class === "Device" || "Networks" || "Data Panel" || "Passive") Step = "Assets";
-  if (Class === "Rack PDU") Step = "PDUs";
-  if (Class === "UPS") Step = "ATSs";
-  const [name, setName] = React.useState("");
-  //   ! Add Additional Classes here
+  if (Class === "Device" || "Networks" || "Data Panel" || "Passive") {
+    Step = "Assets";
+    setStep("Assets");
+  }
+  if (Class === "Rack PDU") {
+    Step = "PDUs";
+    setStep("PDUs");
+  }
+  if (Class === "UPS") {
+    Step = "UPS";
+    setStep("UPS");
+  }
 
-  console.log(SelectedMLTItem);
+  //   ! Add Additional Classes here
 
   const [SaveTemplate, setSaveTemplate] = React.useState(
     Step === "Assets"
-      ? {
-          ...Template[Step],
-          "U Position *": {
-            ...Template[Step]["U Position *"],
-            value: UPosition,
-          },
-          "Rails Used *": {
-            ...Template[Step]["Rails Used *"],
-            value: "Both",
-          },
-          "Orientation *": {
-            ...Template[Step]["Orient ation *"],
-            value: "Item Front Faces Cabinet Front",
-          },
-          "Make *": {
-            ...Template[Step]["Make *"],
-            value: SelectedMLTItem.Make,
-          },
-          "Model *": {
-            ...Template[Step]["Model *"],
-            value: SelectedMLTItem.Model,
-          },
-          Ports: {
-            ...Template[Step]["Ports"],
-            value: SelectedMLTItem.DataPortsCount,
-          },
-          "Location *": {
-            ...Template[Step]["Location *"],
-            value: LocationName,
-          },
-          "Cabinet *": {
-            ...Template[Step]["Cabinet *"],
-            value: CabinetName,
-          },
-        }
+      ? DataTemplates.Assets(Template, Step, UPosition, SelectedMLTItem, LocationName, CabinetName)
       : Step === "PDUs"
-      ? {
-          ...Template[Step],
-          "U Position *": {
-            ...Template[Step]["U Position *"],
-            value: UPosition,
-          },
-          "Make *": {
-            ...Template[Step]["Make *"],
-            value: SelectedMLTItem.Make,
-          },
-          "Model *": {
-            ...Template[Step]["Model *"],
-            value: SelectedMLTItem.Model,
-          },
-          Ports: {
-            ...Template[Step]["Ports"],
-            value: SelectedMLTItem.DataPortsCount,
-          },
-          "Location *": {
-            ...Template[Step]["Location *"],
-            value: LocationName,
-          },
-          "Cabinet *": {
-            ...Template[Step]["Cabinet *"],
-            value: CabinetName,
-          },
-        }
+      ? DataTemplates.PDUs(Template, Step, UPosition, SelectedMLTItem, LocationName, CabinetName, SideDepth)
       : { ...Template[Step] }
   );
+
+  React.useEffect(() => {
+    setSavingData(SaveTemplate);
+  }, [SaveTemplate, setSavingData]);
 
   function handleNameFill() {
     const payload = {
@@ -98,13 +50,16 @@ export default function BuildInputs({ SelectedMLTItem, UPosition }) {
       SelectedMLTItem: SelectedMLTItem,
       UPosition: UPosition,
     };
+
     let FillData = FillNames(payload);
-    console.log(FillData);
-    let newTemplate = { ...SaveTemplate };
-    newTemplate["Name *"]["value"] = FillData;
-    setSaveTemplate(newTemplate);
-    setName(FillData);
-    console.log(SaveTemplate);
+    let newTemplate = JSON.parse(JSON.stringify(SaveTemplate));
+
+    if (!Object.isFrozen(newTemplate) && !Object.isFrozen(newTemplate["Name *"])) {
+      newTemplate["Name *"]["value"] = FillData;
+      setSaveTemplate(newTemplate);
+    } else {
+      console.error("newTemplate or newTemplate['Name *'] is frozen or sealed.");
+    }
   }
 
   const MapArray = Object.keys(Template[Step]);
@@ -112,13 +67,12 @@ export default function BuildInputs({ SelectedMLTItem, UPosition }) {
   const textInputStyle = "w-[13rem] h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit border-l-2";
   const textInputStyleWithButton = "w-[10.5rem] h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit border-l-2";
 
-  //   console.log(SaveTemplate);
-  //   console.log(MapArray);
-  console.log(SaveTemplate);
-
   function HandleTemplateUpdate(item, value) {
+    console.log(value);
+    console.log(item);
     let newTemplate = { ...SaveTemplate };
     newTemplate[item]["value"] = value;
+    console.log("newTemplate", newTemplate);
     setSaveTemplate(newTemplate);
   }
 
@@ -130,12 +84,13 @@ export default function BuildInputs({ SelectedMLTItem, UPosition }) {
           <div id="textInput">
             <input
               type="text"
-              defaultValue={item === "Name *" ? name : ""}
               className={item === "Name *" ? textInputStyleWithButton : textInputStyle}
-              {...(item === "Make *" ? { value: SelectedMLTItem["Make"], disabled: true } : {})}
-              {...(item === "Model *" ? { value: SelectedMLTItem["Model"], disabled: true } : {})}
-              {...(item === "Cabinet *" ? { value: CabinetName, disabled: true } : {})}
-              {...(item === "Location *" ? { value: LocationName, disabled: true } : {})}
+              {...(item === "Name *" ? { value: SaveTemplate[item].value } : {})}
+              {...(item === "Make *" ? { value: SaveTemplate[item].value, disabled: true } : {})}
+              {...(item === "Model *" ? { value: SaveTemplate[item].value, disabled: true } : {})}
+              {...(item === "Cabinet *" ? { value: SaveTemplate[item].value, disabled: true } : {})}
+              {...(item === "Location *" ? { value: SaveTemplate[item].value, disabled: true } : {})}
+              {...(item === "Mounting" ? { value: SaveTemplate[item].value, disabled: true } : {})}
               onChange={(e) => HandleTemplateUpdate(item, e.target.value)}
             />
             {item === "Name *" ? (
@@ -153,26 +108,19 @@ export default function BuildInputs({ SelectedMLTItem, UPosition }) {
             {...(item === "U Position *" ? { value: SaveTemplate[item].value, disabled: true } : {})}
             {...(item === "RU Height" ? { value: SelectedMLTItem.RUHeight, disabled: true } : {})}
             {...(item === "Ports" ? { value: SelectedMLTItem.DataPortsCount, disabled: true } : {})}
+            {...(item === "Slots Front" ? { value: SaveTemplate[item].value, disabled: true } : {})}
+            {...(item === "Slots Back" ? { value: SaveTemplate[item].value, disabled: true } : {})}
             onChange={(e) => HandleTemplateUpdate(item, e.target.value)}
           />
         );
       case "select":
         return (
-          <select className={textInputStyle} onChange={(e) => HandleTemplateUpdate(item, e.target.value)}>
-            {SaveTemplate[item].options.map((option, index) => {
-              if (option === SaveTemplate[item].value) {
-                return (
-                  <option key={index} value={option} selected>
-                    {option}
-                  </option>
-                );
-              }
-              return (
-                <option key={index} value={option}>
-                  {option}
-                </option>
-              );
-            })}
+          <select className={textInputStyle} onChange={(e) => HandleTemplateUpdate(item, e.target.value)} value={SaveTemplate[item].value}>
+            {SaveTemplate[item].options.map((option, index) => (
+              <option key={index} value={option}>
+                {option}
+              </option>
+            ))}
           </select>
         );
       default:

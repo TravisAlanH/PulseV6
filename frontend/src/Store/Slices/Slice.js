@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import Template, * as TemplateState from "./Template";
+import { parse } from "alasql";
 
 // const initState = state;
 console.log(JSON.parse(localStorage.getItem("PulseStateData")));
@@ -14,6 +15,24 @@ const Slice = createSlice({
   name: "Template",
   initialState: initState,
   reducers: {
+    AdjustOpenRU: (state, action) => {
+      const OriginOpenRU = JSON.parse(JSON.stringify(state.OpenRU[state.Current.Racks].value));
+      const UP = action.payload.UPosition;
+      const RUHeight = action.payload.RUHeight - 1;
+      console.log("RUHeight", RUHeight);
+      console.log("UP", UP);
+      OriginOpenRU[parseInt(UP - 1)] = 1;
+      for (let i = 1; i < parseInt(RUHeight); i++) {
+        OriginOpenRU[parseInt(UP) + i] = 1;
+      }
+      console.log("finished Slice", OriginOpenRU);
+      state.OpenRU[state.Current.Racks].value = OriginOpenRU;
+      if (state.Settings.localStorage) localStorage.setItem("PulseStateData", JSON.stringify(state));
+    },
+    AddToStepFullData: (state, action) => {
+      state[action.payload.Step] = [...state[action.payload.Step], action.payload.value];
+      if (state.Settings.localStorage) localStorage.setItem("PulseStateData", JSON.stringify(state));
+    },
     changeData: (state, action) => {
       console.log(action.payload);
       state[action.payload.Step][action.payload.Current][action.payload.Key].value = action.payload.value;
@@ -335,6 +354,8 @@ const Slice = createSlice({
 });
 
 export const {
+  AdjustOpenRU,
+  AddToStepFullData,
   updateNamingCon,
   bulkAddToRacks,
   UpdateSurveyData,

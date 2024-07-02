@@ -24,12 +24,7 @@ export default function STDInput({ keyName, Step }) {
     value: undefined,
   };
 
-  if (
-    keyName === "Status *" ||
-    keyName === "# Operation *" ||
-    keyName === "Object *" ||
-    keyName.includes("!!!")
-  ) {
+  if (keyName === "Status *" || keyName === "# Operation *" || keyName === "Object *" || keyName.includes("!!!")) {
     return null;
   }
 
@@ -73,10 +68,7 @@ export default function STDInput({ keyName, Step }) {
   } else if (typeOf === "number") {
     STDInput = (
       <input
-        className={
-          "h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit " +
-          inputSize
-        }
+        className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit " + inputSize}
         value={state[current][keyName].value}
         type="number"
         id={keyName + Step}
@@ -132,10 +124,7 @@ export default function STDInput({ keyName, Step }) {
 
     STDInput = (
       <select
-        className={
-          "Select h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit " +
-          inputSize
-        }
+        className={"Select h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit " + inputSize}
         onChange={(e) => {
           payload.value = e.target.value;
           dispatch(Actions.changeData(payload));
@@ -164,10 +153,7 @@ export default function STDInput({ keyName, Step }) {
         <div>
           <input
             id={keyName + Step}
-            className={
-              "h-[2rem] px-2 text-black border-2 border-[#F7F5F1] bg-inherit border-l-2" +
-              inputSizeWithButton
-            }
+            className={"h-[2rem] px-2 text-black border-2 border-[#F7F5F1] bg-inherit border-l-2" + inputSizeWithButton}
             value={state[current][keyName].value}
             type="text"
             disabled={state[current][keyName].disabled ? true : false}
@@ -189,10 +175,7 @@ export default function STDInput({ keyName, Step }) {
         <div>
           <input
             id={keyName + Step}
-            className={
-              "h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit border-l-2" +
-              inputSizeWithButton
-            }
+            className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit border-l-2" + inputSizeWithButton}
             value={state[current][keyName].value}
             type="text"
             disabled={state[current][keyName].disabled ? true : false}
@@ -200,23 +183,16 @@ export default function STDInput({ keyName, Step }) {
             // required={state[current][keyName].required}
             onChange={(e) => {
               console.log("e.target.value", e.target.value);
-              let CurrentRackName =
-                fullState.Racks[fullState.Current.Racks]["Name *"].value;
+              let CurrentRackName = fullState.Racks[fullState.Current.Racks]["Name *"].value;
               if (keyName === "Name *") {
                 document.getElementById("NameRequired").style.opacity = "0";
               }
               payload.value = e.target.value;
               dispatch(Actions.changeData(payload));
               Object.keys(fullState).forEach((key) => {
-                if (
-                  Array.isArray(fullState[key]) &&
-                  fullState[key].length > 0
-                ) {
+                if (Array.isArray(fullState[key]) && fullState[key].length > 0) {
                   for (let i = 0; i < fullState[key].length; i++) {
-                    if (
-                      fullState[key][i].hasOwnProperty("Cabinet *") &&
-                      fullState[key][i]["Cabinet *"].value === CurrentRackName
-                    ) {
+                    if (fullState[key][i].hasOwnProperty("Cabinet *") && fullState[key][i]["Cabinet *"].value === CurrentRackName) {
                       payload.value = e.target.value;
                       payload.Step = key;
                       payload.Current = i;
@@ -235,10 +211,7 @@ export default function STDInput({ keyName, Step }) {
       STDInput = (
         <input
           id={keyName + Step}
-          className={
-            "h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit " +
-            inputSize
-          }
+          className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit " + inputSize}
           value={state[current][keyName].value}
           type="text"
           disabled={state[current][keyName].disabled ? true : false}
@@ -257,10 +230,7 @@ export default function STDInput({ keyName, Step }) {
   } else if (typeOf === "date") {
     STDInput = (
       <input
-        className={
-          "h-[2rem] w-[13rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit " +
-          inputSize
-        }
+        className={"h-[2rem] w-[13rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit " + inputSize}
         value={state[current][keyName].value}
         type="date"
         placeholder={state[current][keyName].placeholder}
@@ -273,8 +243,7 @@ export default function STDInput({ keyName, Step }) {
     );
   } else if (typeOf === "GPS") {
     function showPosition(position) {
-      payload.value =
-        position.coords.latitude + ", " + position.coords.longitude;
+      payload.value = position.coords.latitude + ", " + position.coords.longitude;
     }
 
     STDInput = (
@@ -310,10 +279,7 @@ export default function STDInput({ keyName, Step }) {
     STDInput = (
       <div className="flex flex-row">
         <input
-          className={
-            "h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit " +
-            inputSizeWithButton
-          }
+          className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit " + inputSizeWithButton}
           value={state[current][keyName].value}
           type="text"
           disabled={state[current][keyName].disabled ? true : false}
@@ -332,18 +298,9 @@ export default function STDInput({ keyName, Step }) {
   return (
     <div className="flex md:flex-row lg:flex-row flex-row justify-start">
       <div className="flex flex-row">
-        <div className="w-[1rem] flex flex-row justify-center items-center text-red-500">
-          {keyName.includes("*") ? "*" : ""}
-        </div>
-        <label
-          className={
-            "text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center " +
-            labelSize
-          }
-        >
-          {ShowAll
-            ? keyName.replace("*", "")
-            : keyName.slice(0, 12).replace("*", "")}
+        <div className="w-[1rem] flex flex-row justify-center items-center text-red-500">{keyName.includes("*") ? "*" : ""}</div>
+        <label className={"text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center " + labelSize}>
+          {ShowAll ? keyName.replace("*", "") : keyName.slice(0, 12).replace("*", "")}
         </label>
       </div>
       <div className="">{STDInput}</div>

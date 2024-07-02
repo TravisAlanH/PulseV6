@@ -2,18 +2,19 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import * as Action from "../../../Store/Slices/Slice";
 
-export default function PDUViewVertical({ CabinetSide, DepthPosition, Step }) {
+export default function PDUViewVertical({ CabinetSide, DepthPosition, Step, emptyInRack }) {
   const current = useSelector((state) => state.data.Current["Racks"]);
   const RackState = useSelector((state) => state.data["Racks"][current]);
   const PDUState = useSelector((state) => state.data["PDUs"]);
   const dispatch = useDispatch();
 
-  let render =
-    Step === "PDUs" ? (
-      <div className="text-vertical flex flex-row gap-4 justify-center items-center w-[3rem] h-[24.5rem] pt-3">
-        <button
+  let render = (
+    // Step === "PDUs" ?
+    <div className="text-vertical flex flex-row gap-4 justify-center items-center w-[3rem] h-[24.5rem] pt-3">
+      {/* <button
           className="orangeButtonVertical flex flex-row items-center justify-center"
           onClick={() => {
+            setDepthSide({ Depth: DepthPosition, Side: CabinetSide });
             let payload = {
               Step: "PDUs",
               CabinetSide: CabinetSide,
@@ -25,11 +26,13 @@ export default function PDUViewVertical({ CabinetSide, DepthPosition, Step }) {
           }}
         >
           <div className="text-vertical">Add PDU</div>
-        </button>
-      </div>
-    ) : (
-      <div className="text-vertical flex flex-row gap-4 justify-center items-center w-[3rem] h-[24.5rem] pt-3"></div>
-    );
+        </button> */}
+      {emptyInRack}
+    </div>
+  );
+  //  : (
+  //   <div className="text-vertical flex flex-row gap-4 justify-center items-center w-[3rem] h-[24.5rem] pt-3"></div>
+  // );
 
   PDUState.map((object, index) => {
     if (

@@ -15,18 +15,11 @@ export default function PDUViewVerticalComp({ Step, setDepthSide }) {
           <PDUViewVertical CabinetSide={"Left Side"} DepthPosition={"Back"} setDepthSide={setDepthSide} Step={Step} />
         </div>
       )}
-      <div className="text-vertical h-[24.5rem] w-[4rem] flex flex-col justify-center items-center">
-        Cabinet: {RackState["Name *"].value}
-      </div>
+      <div className="text-vertical h-[24.5rem] w-[4rem] flex flex-col justify-center items-center">Cabinet: {RackState["Name *"].value}</div>
       {Step === "Assets" ? null : (
         <div className="flex flex-row">
           <PDUViewVertical CabinetSide={"Right Side"} DepthPosition={"Back"} setDepthSide={setDepthSide} Step={Step} />
-          <PDUViewVertical
-            CabinetSide={"Right Side"}
-            DepthPosition={"Center"}
-            setDepthSide={setDepthSide}
-            Step={Step}
-          />
+          <PDUViewVertical CabinetSide={"Right Side"} DepthPosition={"Center"} setDepthSide={setDepthSide} Step={Step} />
           <PDUViewVertical CabinetSide={"Right Side"} DepthPosition={"Front"} setDepthSide={setDepthSide} Step={Step} />
         </div>
       )}

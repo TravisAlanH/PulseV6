@@ -1,10 +1,6 @@
 import React, { useState } from "react";
 import DataFiltered from "./DataFiltered";
-import {
-  ImSortAmountAsc,
-  ImSortAmountDesc,
-  ImCircleDown,
-} from "react-icons/im";
+import { ImSortAmountAsc, ImSortAmountDesc, ImCircleDown } from "react-icons/im";
 import { IoClose } from "react-icons/io5";
 import { TbClearAll } from "react-icons/tb";
 import FilterList from "./Filters";
@@ -13,8 +9,9 @@ import { filterAndSortData } from "./Filters";
 export default function InputFilters({
   AllData,
   AvalableSlots,
-  setAvalableSlots,
+  // setAvalableSlots,
   visable,
+  update,
   setSelectedMLTItem,
   mltFilteredData,
   setMltFilteredData,
@@ -46,6 +43,12 @@ export default function InputFilters({
   const [deviceClassFilter, setDeviceClassFilter] = useState([]);
   // const [subclassFilter, setSubclassFilter] = useState([]);
   // const [mountingFilter, setMountingFilter] = useState([]);
+
+  React.useEffect(() => {
+    console.log("update");
+  }, [update]);
+
+  // AllData = AllData.filter((item) => item.Mounting === MLTClass);
 
   let CombinedData = [
     [make, setMake],
@@ -90,18 +93,7 @@ export default function InputFilters({
     setRuHeight(AvalableSlots);
   }, [AvalableSlots, setRuHeight]);
 
-  const Headers = [
-    "Make",
-    "Model",
-    "RUHeight",
-    "Class",
-    "Subclass",
-    "Mounting",
-    "DataPorts",
-    "PowerPorts",
-    "FrontSlots",
-    "BackSlots",
-  ];
+  const Headers = ["Make", "Model", "RUHeight", "Class", "Subclass", "Mounting", "DataPorts", "PowerPorts", "FrontSlots", "BackSlots"];
 
   function showHideFilterBar(shownIndex) {
     let filterBar = document.getElementById("FilterBar" + shownIndex);
@@ -150,10 +142,7 @@ export default function InputFilters({
         <div className="min-w-[2.8rem]"></div>
         {CombinedData.map((item, index) => {
           return (
-            <div
-              key={index}
-              className="min-w-[8rem] max-w-[8rem] flex flex-row"
-            >
+            <div key={index} className="min-w-[8rem] max-w-[8rem] flex flex-row">
               {Headers[index] === "RUHeight" ||
               Headers[index] === "DataPorts" ||
               Headers[index] === "PowerPorts" ||
@@ -166,9 +155,7 @@ export default function InputFilters({
                   value={item[0]}
                   onChange={(e) => {
                     item[1](e.target.value);
-                    setMltFilteredData(
-                      filterAndSortData(AllData, CombinedData, CombinedSort)
-                    );
+                    setMltFilteredData(filterAndSortData(AllData, CombinedData, CombinedSort));
                   }}
                 />
               ) : (
@@ -179,9 +166,7 @@ export default function InputFilters({
                   value={item[0]}
                   onChange={(e) => {
                     item[1](e.target.value);
-                    setMltFilteredData(
-                      filterAndSortData(AllData, CombinedData, CombinedSort)
-                    );
+                    setMltFilteredData(filterAndSortData(AllData, CombinedData, CombinedSort));
                   }}
                 />
               )}
@@ -190,9 +175,7 @@ export default function InputFilters({
                 onClick={() => {
                   item[1]("");
                   closeAllFilterBars();
-                  setMltFilteredData(
-                    filterAndSortData(AllData, CombinedData, CombinedSort)
-                  );
+                  setMltFilteredData(filterAndSortData(AllData, CombinedData, CombinedSort));
                 }}
               >
                 X
@@ -202,11 +185,7 @@ export default function InputFilters({
         })}
       </div>
       <div>
-        <DataFiltered
-          setSelectedMLTItem={setSelectedMLTItem}
-          mltFilteredData={mltFilteredData}
-          visable={visable}
-        />
+        <DataFiltered setSelectedMLTItem={setSelectedMLTItem} mltFilteredData={mltFilteredData} visable={visable} />
       </div>
     </div>
   );
@@ -214,12 +193,7 @@ export default function InputFilters({
   function FilterButton(index) {
     return (
       <div className="flex flex-row">
-        <button
-          className={
-            CombinedSort[index][0] !== 0 ? "orangeButtonActive" : "orangeButton"
-          }
-          onClick={() => showHideFilterBar(index)}
-        >
+        <button className={CombinedSort[index][0] !== 0 ? "orangeButtonActive" : "orangeButton"} onClick={() => showHideFilterBar(index)}>
           <ImCircleDown />
         </button>
       </div>
@@ -228,10 +202,7 @@ export default function InputFilters({
 
   function FilterData(index) {
     return (
-      <div
-        id={"FilterBar" + index}
-        className="filterBar hidden absolute -translate-x-[9.8rem] translate-y-[3.8rem] min-w-[30rem]"
-      >
+      <div id={"FilterBar" + index} className="filterBar hidden absolute -translate-x-[9.8rem] translate-y-[3.8rem] min-w-[30rem]">
         <div className="bg-white p-2 border-2 sticky z-10">
           <div className="flex flex-col ">
             <div>
@@ -240,9 +211,7 @@ export default function InputFilters({
                 onClick={() => {
                   if (CombinedSort[index][0] !== -1) CombinedSort[index][1](-1);
                   if (CombinedSort[index][0] === -1) CombinedSort[index][1](0);
-                  setMltFilteredData(
-                    filterAndSortData(AllData, CombinedData, CombinedSort)
-                  );
+                  setMltFilteredData(filterAndSortData(AllData, CombinedData, CombinedSort));
                 }}
               >
                 <ImSortAmountAsc />
@@ -255,9 +224,7 @@ export default function InputFilters({
                 onClick={() => {
                   if (CombinedSort[index][0] !== 1) CombinedSort[index][1](1);
                   if (CombinedSort[index][0] === 1) CombinedSort[index][1](0);
-                  setMltFilteredData(
-                    filterAndSortData(AllData, CombinedData, CombinedSort)
-                  );
+                  setMltFilteredData(filterAndSortData(AllData, CombinedData, CombinedSort));
                 }}
               >
                 <ImSortAmountDesc />
@@ -269,9 +236,7 @@ export default function InputFilters({
                 className="flex flex-row gap-3 items-center"
                 onClick={() => {
                   CombinedSort[index][1](0);
-                  setMltFilteredData(
-                    filterAndSortData(AllData, CombinedData, CombinedSort)
-                  );
+                  setMltFilteredData(filterAndSortData(AllData, CombinedData, CombinedSort));
                 }}
               >
                 <IoClose /> <label className="cursor-pointer">Clear Sort</label>
@@ -305,9 +270,7 @@ export default function InputFilters({
               onClick={() => {
                 CombinedData[index][1]("");
                 CombinedSort[index][1](0);
-                setMltFilteredData(
-                  filterAndSortData(AllData, CombinedData, CombinedSort)
-                );
+                setMltFilteredData(filterAndSortData(AllData, CombinedData, CombinedSort));
               }}
             >
               <TbClearAll />
@@ -332,9 +295,7 @@ export default function InputFilters({
                     checked={deviceClassFilter.includes(item)}
                     onChange={() => {
                       if (deviceClassFilter.includes(item)) {
-                        setDeviceClassFilter(
-                          deviceClassFilter.filter((i) => i !== item)
-                        );
+                        setDeviceClassFilter(deviceClassFilter.filter((i) => i !== item));
                       } else {
                         setDeviceClassFilter([...deviceClassFilter, item]);
                       }
@@ -357,9 +318,7 @@ export default function InputFilters({
                     checked={deviceClassFilter.includes(item)}
                     onChange={() => {
                       if (deviceClassFilter.includes(item)) {
-                        setDeviceClassFilter(
-                          deviceClassFilter.filter((i) => i !== item)
-                        );
+                        setDeviceClassFilter(deviceClassFilter.filter((i) => i !== item));
                       } else {
                         setDeviceClassFilter([...deviceClassFilter, item]);
                       }
@@ -382,9 +341,7 @@ export default function InputFilters({
                     checked={deviceClassFilter.includes(item)}
                     onChange={() => {
                       if (deviceClassFilter.includes(item)) {
-                        setDeviceClassFilter(
-                          deviceClassFilter.filter((i) => i !== item)
-                        );
+                        setDeviceClassFilter(deviceClassFilter.filter((i) => i !== item));
                       } else {
                         setDeviceClassFilter([...deviceClassFilter, item]);
                       }

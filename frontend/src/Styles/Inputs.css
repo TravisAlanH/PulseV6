@@ -80,6 +80,10 @@
 }
 
 .orangeButtonVertical {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: 1rem;
   height: 8rem;
   padding-left: 0.7rem;

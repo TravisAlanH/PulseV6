@@ -6,12 +6,7 @@ export function LARGEtoSMALL(obj) {
   let holdObj = {};
 
   keys.forEach((item) => {
-    if (
-      Array.isArray(obj[item]) &&
-      obj[item] !== null &&
-      obj[item].length > 0 &&
-      item !== "OpenRU"
-    ) {
+    if (Array.isArray(obj[item]) && obj[item] !== null && obj[item].length > 0 && item !== "OpenRU") {
       let baseHoldArray = [];
 
       obj[item].forEach((itemLevel2) => {
@@ -20,10 +15,7 @@ export function LARGEtoSMALL(obj) {
 
         level2Keys.forEach((baseKey) => {
           newEntry[baseKey] = {
-            value:
-              itemLevel2[baseKey]?.value !== undefined
-                ? itemLevel2[baseKey].value
-                : "",
+            value: itemLevel2[baseKey]?.value !== undefined ? itemLevel2[baseKey].value : "",
           };
         });
         baseHoldArray.push(newEntry);
@@ -58,6 +50,7 @@ export function SMALLtoLARGE(simplifiedObj) {
       let stepArray = [];
       for (let i = 0; i < simplifiedObj[key].length; i++) {
         let useTemplate = templates[key];
+        console.log(useTemplate);
         for (const keyName in useTemplate) {
           if ((keyName, simplifiedObj[key][i][keyName] === undefined)) {
             continue;
@@ -79,57 +72,5 @@ export function SMALLtoLARGE(simplifiedObj) {
     }
   }
 
-  // SimObjKeys.forEach((element) => {
-  //   // Step Level
-  //   if (
-  //     Array.isArray(simplifiedObj[element]) && // Step Array Level
-  //     simplifiedObj[element] !== null &&
-  //     simplifiedObj[element].length > 0
-  //   ) {
-  //     let Template = templates[element];
-  //     simplifiedObj[element].forEach((StepItem) => {
-  //       // Loops the Array
-  //       console.log(StepItem);
-  //       for (const key in StepItem) {
-  //         Template[key].value = simplifiedObj[]
-  //       }
-
-  //       const StepObjectKeys = Object.keys(StepItem);
-  //       StepObjectKeys.forEach((StepKey) => {
-  //         console.log("StepItem", StepItem);
-  //         console.log("StepKey", StepKey);
-  //         console.log(simplifiedObj[element][StepKey]);
-  //         console.log(simplifiedObj[element]);
-  //         Template[StepKey].value = simplifiedObj[element][StepKey].value;
-  //       });
-  //       Template = templates[element];
-  //     });
-  //     ReturnedObject[element] = Template;
-  //   } else {
-  //     ReturnedObject[element] = simplifiedObj[element];
-  //   }
-  // });
-
-  // for (const key in simplifiedObj) {
-  //   if (templates[key]) {
-  //     // Deep clone the template
-  //     const fullObj = JSON.parse(JSON.stringify(templates[key]));
-
-  //     // Fill in the values from the simplified object
-  //     for (const subKey in simplifiedObj[key][0]) {
-  //       if (simplifiedObj[key][0][subKey].hasOwnProperty("value")) {
-  //         // console.log(simplifiedObj[key][0][subKey].value);
-  //         fullObj[subKey].value = simplifiedObj[key][0][subKey].value;
-  //       }
-  //     }
-
-  //     // Add the transformed data to the result
-  //     result[key] = [fullObj];
-  //   } else {
-  //     // Directly add keys that do not have a template
-  //     result[key] = simplifiedObj[key];
-  //   }
-  // }
-  // console.log(ReturnedObject);
   return ReturnedObject;
 }
