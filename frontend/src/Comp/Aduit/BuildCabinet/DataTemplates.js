@@ -43,7 +43,7 @@ function Assets(Template, Step, UPosition, SelectedMLTItem, LocationName, Cabine
       value: SelectedMLTItem.Mounting,
     },
     "Slots Front": {
-      ...Template[Step]["Slot Front"],
+      ...Template[Step]["Slots Front"],
       value: SelectedMLTItem.FrontSlotsCount,
     },
     "Slots Back": {

@@ -3,13 +3,14 @@ import InputFilters from "./InputFilters";
 import { useSelector } from "react-redux";
 import "./BuildCabinetModal.css";
 import { useState } from "react";
-import { MdOutlineKeyboardArrowUp } from "react-icons/md";
+import { MdOutlineKeyboardArrowDown, MdOutlineKeyboardArrowUp } from "react-icons/md";
 import BuildInputs from "./BuildInputs";
 import LoadingSpinner from "../../Reuse/LoadingSpinner/Spinner";
 import { useDispatch } from "react-redux";
 import * as actions from "../../../Store/Slices/Slice";
 import PDUViewVertical from "./PDUViewVertical";
 import { GrDatabase } from "react-icons/gr";
+import BladeView from "./BladeView";
 
 export default function BuildLayout({ AllData }) {
   const dispatch = useDispatch();
@@ -32,6 +33,8 @@ export default function BuildLayout({ AllData }) {
   const [loading, setLoading] = React.useState(false);
   // const [openAT, setOpenAT] = React.useState(-1);
   const [AvalableSlots, setAvalableSlots] = React.useState(100);
+  const [OpenView, setOpenView] = React.useState(-1);
+  const [showingFront, setShowingFront] = React.useState(true);
 
   const [mltFilteredData, setMltFilteredData] = React.useState(
     // filterAndSortData(AllData, CombinedData, CombinedSort)
@@ -324,38 +327,76 @@ export default function BuildLayout({ AllData }) {
         id={"BuildCabinet_CabView_FilledInRack" + index}
         className="h-[2rem] filledRackUP overflow-clip transition-all ease-in-out duration-300"
         onClick={() => {
+          setOpenView(index);
           exspandFilledUnit(index);
         }}
       >
-        <div className="h-[8rem] flex flex-col justify-between p-1">
-          {RackedInCurrentCabinet.filter((items) => items["U Position *"].value === index + 1).map((item, index) => {
+        <div className="h-[8rem] flex flex-col justify-between px-2">
+          {RackedInCurrentCabinet.filter((items) => items["U Position *"].value === index + 1).map((item, indexRack) => {
             return (
-              <div className="flex flex-row gap-3 justify-between">
-                <div className="flex flex-row gap-3 ">
-                  <div className="h-[2rem]">{item["Make *"].value}</div>
-                  <div className="h-[2rem]">{item["Model *"].value}</div>
+              <div className="flex flex-col h-full">
+                <div className="flex flex-row gap-3 justify-between items-center">
+                  <div className="flex flex-row gap-3">
+                    <div className="h-[2rem] flex flex-row items-center">{item["Make *"].value}</div>
+                    <div className="h-[full] flex flex-row items-center">
+                      {item["Model *"].value.length > 16 && OpenView !== index ? item["Model *"].value.slice(0, 16) + "..." : item["Model *"].value}
+                    </div>
+                  </div>
+                  <div className="flex flex-row gap-3">
+                    <div className="flex flex-row">
+                      {(item["Slots Front"].value !== 0 || item["Slots Back"].value !== 0) && OpenView !== index ? (
+                        <div className="flex flex-row justify-center items-center h-full rotate-90 text-xl">
+                          <GrDatabase />
+                        </div>
+                      ) : null}
+                    </div>
+                    {OpenCloseButtonPerSlot()}
+                  </div>
                 </div>
-                {item["Slots Front"].value !== 0 || item["Slots Back"].value !== 0 ? <GrDatabase /> : null}
+                <div>
+                  {item["Slots Front"].value !== 0 || item["Slots Back"].value !== 0 ? (
+                    <BladeView SlottedItem={item} showingFront={showingFront} setShowingFront={setShowingFront} />
+                  ) : null}
+                </div>
               </div>
             );
           })}
           <div className="flex flex-row items-end justify-between">
             <div></div>
-            <div>
-              <button
-                className="orangeButton"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  closeAllFilledUnits();
-                }}
-              >
-                <MdOutlineKeyboardArrowUp />
-              </button>
-            </div>
           </div>
         </div>
       </div>
     );
+
+    function OpenCloseButtonPerSlot() {
+      return (
+        <div className="flex flex-row items-center">
+          {OpenView === index ? (
+            <button
+              className="orangeButton"
+              onClick={(e) => {
+                setOpenView(-1);
+                e.stopPropagation();
+                closeAllFilledUnits();
+              }}
+            >
+              <MdOutlineKeyboardArrowUp />
+            </button>
+          ) : (
+            <button
+              className="orangeButton"
+              onClick={(e) => {
+                setOpenView(index);
+                e.stopPropagation();
+                exspandFilledUnit(index);
+              }}
+            >
+              <MdOutlineKeyboardArrowDown />
+            </button>
+          )}
+        </div>
+      );
+    }
   }
 
   function ZeroUPDULeft() {
