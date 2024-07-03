@@ -35,6 +35,7 @@ export default function BuildLayout({ AllData }) {
   const [AvalableSlots, setAvalableSlots] = React.useState(100);
   const [OpenView, setOpenView] = React.useState(-1);
   const [showingFront, setShowingFront] = React.useState(true);
+  const [tabView, setTabView] = React.useState(0);
 
   const [mltFilteredData, setMltFilteredData] = React.useState(
     // filterAndSortData(AllData, CombinedData, CombinedSort)
@@ -287,7 +288,7 @@ export default function BuildLayout({ AllData }) {
     return (
       <div className="flex flex-row justify-center">
         <button
-          className={Type !== "ZeroU" ? "orangeButton" : "orangeButtonVertical"}
+          className={Type === "Rackable" ? "orangeButton" : "orangeButtonVertical"}
           onClick={() => {
             document.getElementById("ModalRackable").style.display = "block";
             // setMLTClass(Type);
@@ -298,14 +299,14 @@ export default function BuildLayout({ AllData }) {
             // setUpdate(!update);
           }}
         >
-          Open {Type} {index + 1}
+          Open {Type} {index + 1 === 0 ? "" : index + 1}
         </button>
       </div>
     );
   }
 
   function exspandFilledUnit(index) {
-    const highSet = "h-[8rem]";
+    const highSet = "h-[17rem]";
     const filledRacksUP = document.getElementsByClassName("filledRackUP");
     for (let i = 0; i < filledRacksUP.length; i++) {
       filledRacksUP[i].classList.remove(highSet);
@@ -314,7 +315,7 @@ export default function BuildLayout({ AllData }) {
   }
 
   function closeAllFilledUnits() {
-    const highSet = "h-[8rem]";
+    const highSet = "h-[17rem]";
     const filledRacksUP = document.getElementsByClassName("filledRackUP");
     for (let i = 0; i < filledRacksUP.length; i++) {
       filledRacksUP[i].classList.remove(highSet);
@@ -333,6 +334,7 @@ export default function BuildLayout({ AllData }) {
       >
         <div className="h-[8rem] flex flex-col justify-between px-2">
           {RackedInCurrentCabinet.filter((items) => items["U Position *"].value === index + 1).map((item, indexRack) => {
+            const hasSlots = item["Slots Front"].value !== 0 || item["Slots Back"].value !== 0;
             return (
               <div className="flex flex-col h-full">
                 <div className="flex flex-row gap-3 justify-between items-center">
@@ -344,20 +346,17 @@ export default function BuildLayout({ AllData }) {
                   </div>
                   <div className="flex flex-row gap-3">
                     <div className="flex flex-row">
-                      {(item["Slots Front"].value !== 0 || item["Slots Back"].value !== 0) && OpenView !== index ? (
+                      {hasSlots && OpenView !== index ? (
                         <div className="flex flex-row justify-center items-center h-full rotate-90 text-xl">
                           <GrDatabase />
                         </div>
                       ) : null}
                     </div>
-                    {OpenCloseButtonPerSlot()}
+                    {OpenCloseButtonPerSlot(hasSlots)}
                   </div>
                 </div>
-                <div>
-                  {item["Slots Front"].value !== 0 || item["Slots Back"].value !== 0 ? (
-                    <BladeView SlottedItem={item} showingFront={showingFront} setShowingFront={setShowingFront} />
-                  ) : null}
-                </div>
+                {TabsPerFilledUP()}
+                <div>{tabView === 0 ? InfoTab() : BladeViewTab(hasSlots, item)}</div>
               </div>
             );
           })}
@@ -367,6 +366,42 @@ export default function BuildLayout({ AllData }) {
         </div>
       </div>
     );
+
+    function TabsPerFilledUP() {
+      const Tabs = ["Info", "Blades"];
+
+      return (
+        <div className="flex flex-row gap-2">
+          {Tabs.map((tab, index) => {
+            return (
+              <div
+                key={index}
+                className={tabView === index ? "orangeButton font-bold" : "orangeButton"}
+                onClick={() => {
+                  setTabView(index);
+                }}
+              >
+                {tab}
+              </div>
+            );
+          })}
+        </div>
+      );
+    }
+
+    function InfoTab() {
+      return <div>INFORMATION</div>;
+    }
+
+    function BladeViewTab(hasSlots, item) {
+      return (
+        <div>
+          {hasSlots ? (
+            <BladeView SlottedItem={item} showingFront={showingFront} setShowingFront={setShowingFront} emptyInRack={emptyInRack(-1, "", "", "Blade")} />
+          ) : null}
+        </div>
+      );
+    }
 
     function OpenCloseButtonPerSlot() {
       return (
