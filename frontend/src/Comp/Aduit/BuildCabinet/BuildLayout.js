@@ -429,7 +429,7 @@ export default function BuildLayout({ AllData }) {
     }
 
     function InfoTab() {
-      return <div>INFORMATION</div>;
+      return <div>INFORMATIONs</div>;
     }
 
     function BladeViewTab(hasSlots, item) {
