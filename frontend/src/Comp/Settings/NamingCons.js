@@ -31,6 +31,10 @@ export default function NamingCons() {
       Associated: ["Location", "Make", "Model", "Cabinet", "UP", "Count In Rack", "Count In Location", "Custom"],
     },
     {
+      Step: "PDUs",
+      Associated: ["Location", "Make", "Model", "Cabinet", "UP", "Count In Rack", "Count In Location", "Custom"],
+    },
+    {
       Step: "Racks",
       Associated: ["Location", "Make", "Model", "Count In Location", "Custom"],
     },
@@ -38,7 +42,7 @@ export default function NamingCons() {
 
   const addToNamingButtons = ["Location", "Make", "Model", "Cabinet", "UP", "Count In Rack", "Count In Location", "Custom"];
 
-  const Steps = ["Racks", "Assets"];
+  const Steps = ["Racks", "Assets", "PDUs"];
 
   let NamingTemplate = {
     Step: selectedStep,

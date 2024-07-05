@@ -11,6 +11,7 @@ import * as actions from "../../../Store/Slices/Slice";
 import PDUViewVertical from "./PDUViewVertical";
 import { GrDatabase } from "react-icons/gr";
 import BladeView from "./BladeView";
+import EmptyInRack from "./EmptyInRack";
 
 export default function BuildLayout({ AllData }) {
   const dispatch = useDispatch();
@@ -36,6 +37,7 @@ export default function BuildLayout({ AllData }) {
   const [OpenView, setOpenView] = React.useState(-1);
   const [showingFront, setShowingFront] = React.useState(true);
   const [tabView, setTabView] = React.useState(0);
+  const [Chassis, setChassis] = React.useState("");
 
   const [mltFilteredData, setMltFilteredData] = React.useState(
     // filterAndSortData(AllData, CombinedData, CombinedSort)
@@ -141,7 +143,20 @@ export default function BuildLayout({ AllData }) {
                   </div>
                 ) : (
                   <div id="empty" className="h-[2rem]">
-                    {emptyInRack(index, "", "", "Rackable")}
+                    {/* {EmptyInRack(index, "", "", "Rackable")} */}
+                    {/* EmptyInRack(index, depth, side, Type, Chassis, setMLTClass, setChassis, setSideDepth, setUPosition, openAbover) */}
+                    <EmptyInRack
+                      index={index}
+                      depth={""}
+                      side={""}
+                      Type={"Rackable"}
+                      Chassis={""}
+                      setMLTClass={setMLTClass}
+                      setChassis={setChassis}
+                      setSideDepth={setSideDepth}
+                      setUPosition={setUPosition}
+                      openAbover={openAbover}
+                    />
                   </div>
                 )}
               </div>
@@ -185,7 +200,14 @@ export default function BuildLayout({ AllData }) {
             ) : (
               <div className="w-full">
                 <div className="w-full flex flex-row justify-end">{CloseButton()}</div>
-                <BuildInputs SelectedMLTItem={SelectedMLTItem} UPosition={UPosition} setSavingData={setSavingData} setStep={setStep} SideDepth={SideDepth} />
+                <BuildInputs
+                  SelectedMLTItem={SelectedMLTItem}
+                  UPosition={UPosition}
+                  setSavingData={setSavingData}
+                  setStep={setStep}
+                  SideDepth={SideDepth}
+                  Chassis={Chassis}
+                />
                 <div className="flex flex-row justify-end gap-8">
                   <button
                     className="redButton"
@@ -284,26 +306,28 @@ export default function BuildLayout({ AllData }) {
     );
   }
 
-  function emptyInRack(index, depth, side, Type) {
-    return (
-      <div className="flex flex-row justify-center">
-        <button
-          className={Type === "Rackable" ? "orangeButton" : "orangeButtonVertical"}
-          onClick={() => {
-            document.getElementById("ModalRackable").style.display = "block";
-            // setMLTClass(Type);
-            setMLTClass(Type);
-            setSideDepth({ Depth: depth, Side: side });
-            setUPosition(index + 1);
-            openAbover(index, depth);
-            // setUpdate(!update);
-          }}
-        >
-          Open {Type} {index + 1 === 0 ? "" : index + 1}
-        </button>
-      </div>
-    );
-  }
+  // function EmptyInRack(index, depth, side, Type, Chassis) {
+  //   return (
+  //     <div className="flex flex-row justify-center">
+  //       <button
+  //         className={Type === "Rackable" ? "orangeButton" : "orangeButtonVertical"}
+  //         onClick={() => {
+  //           document.getElementById("ModalRackable").style.display = "block";
+  //           // setMLTClass(Type);
+  //           if (Type === "Blade") setChassis(Chassis);
+  //           else setChassis("");
+  //           setMLTClass(Type);
+  //           setSideDepth({ Depth: depth, Side: side });
+  //           setUPosition(index + 1);
+  //           openAbover(index, depth);
+  //           // setUpdate(!update);
+  //         }}
+  //       >
+  //         Open {Type} {index + 1 === 0 ? "" : index + 1}
+  //       </button>
+  //     </div>
+  //   );
+  // }
 
   function exspandFilledUnit(index) {
     const highSet = "h-[17rem]";
@@ -311,12 +335,14 @@ export default function BuildLayout({ AllData }) {
     for (let i = 0; i < filledRacksUP.length; i++) {
       filledRacksUP[i].classList.remove(highSet);
     }
+    document.getElementById("BuildCabinet_CabView_FilledInRack" + index).classList.remove("h-[2rem]");
     document.getElementById("BuildCabinet_CabView_FilledInRack" + index).classList.add(highSet);
   }
 
-  function closeAllFilledUnits() {
+  function closeAllFilledUnits(index) {
     const highSet = "h-[17rem]";
     const filledRacksUP = document.getElementsByClassName("filledRackUP");
+    document.getElementById("BuildCabinet_CabView_FilledInRack" + index).classList.add("h-[2rem]");
     for (let i = 0; i < filledRacksUP.length; i++) {
       filledRacksUP[i].classList.remove(highSet);
     }
@@ -356,7 +382,7 @@ export default function BuildLayout({ AllData }) {
                   </div>
                 </div>
                 {TabsPerFilledUP()}
-                <div>{tabView === 0 ? InfoTab() : BladeViewTab(hasSlots, item)}</div>
+                <div>{tabView === 0 ? InfoTab() : tabView === 1 ? BladeViewTab(hasSlots, item) : InfoTab()}</div>
               </div>
             );
           })}
@@ -368,7 +394,18 @@ export default function BuildLayout({ AllData }) {
     );
 
     function TabsPerFilledUP() {
-      const Tabs = ["Info", "Blades"];
+      const Tabs = ["Info", "Blades", "testing"];
+      const tabButtons = document.getElementsByClassName("TabButtons");
+
+      function removeSelected() {
+        for (var i = 0; i < tabButtons.length; i++) {
+          tabButtons[i].addEventListener("click", function () {
+            for (var j = 0; j < tabButtons.length; j++) {
+              tabButtons[j].classList.remove("selected");
+            }
+          });
+        }
+      }
 
       return (
         <div className="flex flex-row gap-2">
@@ -376,8 +413,10 @@ export default function BuildLayout({ AllData }) {
             return (
               <div
                 key={index}
-                className={tabView === index ? "orangeButton font-bold" : "orangeButton"}
-                onClick={() => {
+                className={"bg-[#F7F5F1] text-[black] font-bold py-2 px-6 TabButtons  " + (index === tabView ? "selected" : "")}
+                onClick={(e) => {
+                  removeSelected();
+                  e.target.classList.add("selected");
                   setTabView(index);
                 }}
               >
@@ -397,8 +436,23 @@ export default function BuildLayout({ AllData }) {
       return (
         <div>
           {hasSlots ? (
-            <BladeView SlottedItem={item} showingFront={showingFront} setShowingFront={setShowingFront} emptyInRack={emptyInRack(-1, "", "", "Blade")} />
-          ) : null}
+            <BladeView
+              SlottedItem={item}
+              showingFront={showingFront}
+              Step={Step}
+              setShowingFront={setShowingFront}
+              setMLTClass={setMLTClass}
+              setChassis={setChassis}
+              setSideDepth={setSideDepth}
+              setUPosition={setUPosition}
+              openAbover={openAbover}
+              // ! HAVE TO SET DEPTH AND SIDE
+              // emptyInRack={EmptyInRack(-1, "", "", "Blade", item["Name *"].value)}
+              // <EmptyInRack index={-1} depth={""} side={""} Type={"Blade"} Chassis={item["Name *"].value} setMLTClass={setMLTClass} setChassis={setChassis} setSideDepth={setSideDepth} setUPosition={setUPosition} openAbover={openAbover} />
+            />
+          ) : (
+            "No Slots (Front Or Back)"
+          )}
         </div>
       );
     }
@@ -412,7 +466,7 @@ export default function BuildLayout({ AllData }) {
               onClick={(e) => {
                 setOpenView(-1);
                 e.stopPropagation();
-                closeAllFilledUnits();
+                closeAllFilledUnits(index);
               }}
             >
               <MdOutlineKeyboardArrowUp />
@@ -434,22 +488,98 @@ export default function BuildLayout({ AllData }) {
     }
   }
 
+  // function ZeroUPDULeft() {
+  //   return (
+  //     <div className="flex flex-row gap-2 sticky top-[5rem]">
+  //       <PDUViewVertical CabinetSide={"Left Side"} DepthPosition={"Front"} Step={Step} emptyInRack={EmptyInRack(0, "Front", "Left Side", "ZeroU")} />
+  //       <PDUViewVertical CabinetSide={"Left Side"} DepthPosition={"Center"} Step={Step} emptyInRack={EmptyInRack(0, "Center", "Left Side", "ZeroU")} />
+  //       <PDUViewVertical CabinetSide={"Left Side"} DepthPosition={"Back"} Step={Step} emptyInRack={EmptyInRack(0, "Back", "Left Side", "ZeroU")} />
+  //     </div>
+  //   );
+  // }
+
+  // function ZeroUPDURight() {
+  //   return (
+  //     <div className="flex flex-row gap-2 sticky top-[5rem]">
+  //       <PDUViewVertical CabinetSide={"Right Side"} DepthPosition={"Back"} Step={Step} emptyInRack={EmptyInRack(0, "Front", "Right Side", "ZeroU")} />
+  //       <PDUViewVertical CabinetSide={"Right Side"} DepthPosition={"Center"} Step={Step} emptyInRack={EmptyInRack(0, "Center", "Right Side", "ZeroU")} />
+  //       <PDUViewVertical CabinetSide={"Right Side"} DepthPosition={"Front"} Step={Step} emptyInRack={EmptyInRack(0, "Back", "Right Side", "ZeroU")} />
+  //     </div>
+  //   );
+  // }
+
   function ZeroUPDULeft() {
+    console.log("!!!!!!!!!!!!!");
     return (
       <div className="flex flex-row gap-2 sticky top-[5rem]">
-        <PDUViewVertical CabinetSide={"Left Side"} DepthPosition={"Front"} Step={Step} emptyInRack={emptyInRack(0, "Front", "Left Side", "ZeroU")} />
-        <PDUViewVertical CabinetSide={"Left Side"} DepthPosition={"Center"} Step={Step} emptyInRack={emptyInRack(0, "Center", "Left Side", "ZeroU")} />
-        <PDUViewVertical CabinetSide={"Left Side"} DepthPosition={"Back"} Step={Step} emptyInRack={emptyInRack(0, "Back", "Left Side", "ZeroU")} />
+        <PDUViewVertical
+          CabinetSide={"Left Side"}
+          DepthPosition={"Front"}
+          Step={Step}
+          setMLTClass={setMLTClass}
+          setChassis={setChassis}
+          setSideDepth={setSideDepth}
+          setUPosition={setUPosition}
+          openAbover={openAbover}
+        />
+        <PDUViewVertical
+          CabinetSide={"Left Side"}
+          DepthPosition={"Center"}
+          Step={Step}
+          setMLTClass={setMLTClass}
+          setChassis={setChassis}
+          setSideDepth={setSideDepth}
+          setUPosition={setUPosition}
+          openAbover={openAbover}
+        />
+        <PDUViewVertical
+          CabinetSide={"Left Side"}
+          DepthPosition={"Back"}
+          Step={Step}
+          setMLTClass={setMLTClass}
+          setChassis={setChassis}
+          setSideDepth={setSideDepth}
+          setUPosition={setUPosition}
+          openAbover={openAbover}
+        />
       </div>
     );
   }
 
   function ZeroUPDURight() {
+    console.log("!!!!!!!!!!!!!");
     return (
       <div className="flex flex-row gap-2 sticky top-[5rem]">
-        <PDUViewVertical CabinetSide={"Right Side"} DepthPosition={"Back"} Step={Step} emptyInRack={emptyInRack(0, "Front", "Right Side", "ZeroU")} />
-        <PDUViewVertical CabinetSide={"Right Side"} DepthPosition={"Center"} Step={Step} emptyInRack={emptyInRack(0, "Center", "Right Side", "ZeroU")} />
-        <PDUViewVertical CabinetSide={"Right Side"} DepthPosition={"Front"} Step={Step} emptyInRack={emptyInRack(0, "Back", "Right Side", "ZeroU")} />
+        <PDUViewVertical
+          CabinetSide={"Right Side"}
+          DepthPosition={"Back"}
+          Step={Step}
+          setMLTClass={setMLTClass}
+          setChassis={setChassis}
+          setSideDepth={setSideDepth}
+          setUPosition={setUPosition}
+          openAbover={openAbover}
+        />
+        <PDUViewVertical
+          CabinetSide={"Right Side"}
+          DepthPosition={"Center"}
+          Step={Step}
+          setMLTClass={setMLTClass}
+          setChassis={setChassis}
+          setSideDepth={setSideDepth}
+          setUPosition={setUPosition}
+          openAbover={openAbover}
+        />
+        <PDUViewVertical
+          CabinetSide={"Right Side"}
+          DepthPosition={"Front"}
+          Step={Step}
+          setMLTClass={setMLTClass}
+          setChassis={setChassis}
+          setSideDepth={setSideDepth}
+          setUPosition={setUPosition}
+          openAbover={openAbover}
+        />
       </div>
     );
   }

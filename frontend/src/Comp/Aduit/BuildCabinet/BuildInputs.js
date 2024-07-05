@@ -4,7 +4,7 @@ import Template from "../../../Store/Slices/Template";
 import FillNames from "./FillNames";
 import * as DataTemplates from "./DataTemplates";
 
-export default function BuildInputs({ SelectedMLTItem, UPosition, setSavingData, setStep, SideDepth }) {
+export default function BuildInputs({ SelectedMLTItem, UPosition, setSavingData, setStep, SideDepth, ChassisName }) {
   const LocationName = useSelector((state) => state.data.Location[0]["dcTrack Location Code *"].value);
   const UUID = useSelector((state) => state.data.Current.DataBaseUUID);
   const State = useSelector((state) => state.data);
@@ -13,19 +13,25 @@ export default function BuildInputs({ SelectedMLTItem, UPosition, setSavingData,
   const CabinetName = CurrentCabinet["Name *"].value;
   // const [loading, setLoading] = React.useState(false);
   const Class = SelectedMLTItem.Class;
+  const subClass = SelectedMLTItem.SubClass;
+  const mounting = SelectedMLTItem.Mounting;
   let Step = "";
   //   ! Add Additional Classes here
-  if (Class === "Device" || "Networks" || "Data Panel" || "Passive") {
+  if (Class === "Device" || "Networks" || "Data Panel" || ("Passive" && mounting !== "Blade" && subClass !== "Blade")) {
     Step = "Assets";
     setStep("Assets");
   }
-  if (Class === "Rack PDU") {
-    Step = "PDUs";
-    setStep("PDUs");
-  }
-  if (Class === "UPS") {
-    Step = "UPS";
-    setStep("UPS");
+  if (subClass === "Blade" && mounting === "Blade") {
+    Step = "Blades";
+    setStep("Blades");
+    if (Class === "Rack PDU") {
+      Step = "PDUs";
+      setStep("PDUs");
+    }
+    if (Class === "UPS") {
+      Step = "UPS";
+      setStep("UPS");
+    }
   }
 
   //   ! Add Additional Classes here
@@ -35,6 +41,8 @@ export default function BuildInputs({ SelectedMLTItem, UPosition, setSavingData,
       ? DataTemplates.Assets(Template, Step, UPosition, SelectedMLTItem, LocationName, CabinetName)
       : Step === "PDUs"
       ? DataTemplates.PDUs(Template, Step, UPosition, SelectedMLTItem, LocationName, CabinetName, SideDepth)
+      : Step === "Blades"
+      ? DataTemplates.Blades(Template, Step, SelectedMLTItem, LocationName, CabinetName, ChassisName)
       : { ...Template[Step] }
   );
 

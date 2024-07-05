@@ -1,8 +1,9 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import * as Action from "../../../Store/Slices/Slice";
+import EmptyInRack from "./EmptyInRack";
 
-export default function PDUViewVertical({ CabinetSide, DepthPosition, Step, emptyInRack }) {
+export default function PDUViewVertical({ CabinetSide, DepthPosition, Step, setMLTClass, setChassis, setSideDepth, setUPosition, openAbover }) {
   const current = useSelector((state) => state.data.Current["Racks"]);
   const RackState = useSelector((state) => state.data["Racks"][current]);
   const PDUState = useSelector((state) => state.data["PDUs"]);
@@ -27,7 +28,17 @@ export default function PDUViewVertical({ CabinetSide, DepthPosition, Step, empt
         >
           <div className="text-vertical">Add PDU</div>
         </button> */}
-      {emptyInRack}
+      <EmptyInRack
+        index={0}
+        depth={DepthPosition}
+        side={CabinetSide}
+        Type={"Rack PDU"}
+        setMLTClass={setMLTClass}
+        setChassis={setChassis}
+        setSideDepth={setSideDepth}
+        setUPosition={setUPosition}
+        openAbover={openAbover}
+      />
     </div>
   );
   //  : (

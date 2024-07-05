@@ -1,9 +1,7 @@
 import React from "react";
+import EmptyInRack from "./EmptyInRack";
 
-export default function BladeView({ SlottedItem, showingFront, setShowingFront, emptyInRack }) {
-  console.log(showingFront);
-  console.log(SlottedItem);
-
+export default function BladeView({ SlottedItem, showingFront, Step, setShowingFront, setMLTClass, setChassis, setSideDepth, setUPosition, openAbover }) {
   const frontCountArray = Array.from({ length: SlottedItem["Slots Front"].value }, (_, i) => i + 1);
   const backCountArray = Array.from({ length: SlottedItem["Slots Back"].value }, (_, i) => i + 1);
 
@@ -27,11 +25,24 @@ export default function BladeView({ SlottedItem, showingFront, setShowingFront, 
   function renderSlots() {
     console.log(frontCountArray, backCountArray);
     return showingFront
-      ? frontCountArray.map((slot) => (
+      ? frontCountArray.map((slot, index) => (
           <div key={slot} className="flex flex-row items-start justify-center min-w-[2rem] h-[10rem] border-2 ">
             <div className="flex flex-col justify-start">
               <p>{slot}</p>
-              <div className="text-vertical">{emptyInRack}</div>
+              <div className="text-vertical">
+                <EmptyInRack
+                  index={-1}
+                  CabinetSide={"Front"}
+                  DepthPosition={slot}
+                  Type={"Blade"}
+                  Step={Step}
+                  setMLTClass={setMLTClass}
+                  setChassis={setChassis}
+                  setSideDepth={setSideDepth}
+                  setUPosition={setUPosition}
+                  openAbover={openAbover}
+                />
+              </div>
             </div>
           </div>
         ))
