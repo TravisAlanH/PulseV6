@@ -29,7 +29,7 @@ export default function PDUViewVertical({ CabinetSide, DepthPosition, Step, setM
           <div className="text-vertical">Add PDU</div>
         </button> */}
       <EmptyInRack
-        index={0}
+        index={-1}
         depth={DepthPosition}
         side={CabinetSide}
         Type={"Rack PDU"}

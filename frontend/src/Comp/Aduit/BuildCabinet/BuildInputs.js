@@ -4,7 +4,7 @@ import Template from "../../../Store/Slices/Template";
 import FillNames from "./FillNames";
 import * as DataTemplates from "./DataTemplates";
 
-export default function BuildInputs({ SelectedMLTItem, UPosition, setSavingData, setStep, SideDepth, ChassisName }) {
+export default function BuildInputs({ SelectedMLTItem, UPosition, setSavingData, setStep, SideDepth, Chassis }) {
   const LocationName = useSelector((state) => state.data.Location[0]["dcTrack Location Code *"].value);
   const UUID = useSelector((state) => state.data.Current.DataBaseUUID);
   const State = useSelector((state) => state.data);
@@ -17,11 +17,11 @@ export default function BuildInputs({ SelectedMLTItem, UPosition, setSavingData,
   const mounting = SelectedMLTItem.Mounting;
   let Step = "";
   //   ! Add Additional Classes here
-  if (Class === "Device" || "Networks" || "Data Panel" || ("Passive" && mounting !== "Blade" && subClass !== "Blade")) {
+  if (Class === "Device" || Class === "Networks" || Class === "Data Panel" || (Class === "Passive" && mounting !== "Blade" && subClass !== "Blade")) {
     Step = "Assets";
     setStep("Assets");
   }
-  if (subClass === "Blade" && mounting === "Blade") {
+  if (subClass === "Blade" || mounting === "Blade") {
     Step = "Blades";
     setStep("Blades");
     if (Class === "Rack PDU") {
@@ -42,9 +42,12 @@ export default function BuildInputs({ SelectedMLTItem, UPosition, setSavingData,
       : Step === "PDUs"
       ? DataTemplates.PDUs(Template, Step, UPosition, SelectedMLTItem, LocationName, CabinetName, SideDepth)
       : Step === "Blades"
-      ? DataTemplates.Blades(Template, Step, SelectedMLTItem, LocationName, CabinetName, ChassisName)
+      ? DataTemplates.Blades(Template, Step, SelectedMLTItem, LocationName, CabinetName, Chassis, SideDepth)
       : { ...Template[Step] }
   );
+
+  console.log("SaveTemplate", SaveTemplate);
+  console.log(Chassis);
 
   React.useEffect(() => {
     setSavingData(SaveTemplate);
@@ -57,6 +60,8 @@ export default function BuildInputs({ SelectedMLTItem, UPosition, setSavingData,
       State: State,
       SelectedMLTItem: SelectedMLTItem,
       UPosition: UPosition,
+      Chassis: Chassis,
+      Slot: SideDepth.Depth,
     };
 
     let FillData = FillNames(payload);
@@ -93,16 +98,22 @@ export default function BuildInputs({ SelectedMLTItem, UPosition, setSavingData,
             <input
               type="text"
               className={item === "Name *" ? textInputStyleWithButton : textInputStyle}
-              {...(item === "Name *" ? { value: SaveTemplate[item].value } : {})}
+              {...(item === "Name *" ? { value: SaveTemplate[item].value, required: true } : {})}
               {...(item === "Make *" ? { value: SaveTemplate[item].value, disabled: true } : {})}
               {...(item === "Model *" ? { value: SaveTemplate[item].value, disabled: true } : {})}
               {...(item === "Cabinet *" ? { value: SaveTemplate[item].value, disabled: true } : {})}
               {...(item === "Location *" ? { value: SaveTemplate[item].value, disabled: true } : {})}
               {...(item === "Mounting" ? { value: SaveTemplate[item].value, disabled: true } : {})}
+              {...(item === "Chassis *" ? { value: SaveTemplate[item].value, disabled: true } : {})}
               onChange={(e) => HandleTemplateUpdate(item, e.target.value)}
             />
             {item === "Name *" ? (
-              <button className="orangeButton" onClick={() => handleNameFill()}>
+              <button
+                className="orangeButton"
+                onClick={() => {
+                  handleNameFill();
+                }}
+              >
                 Fill
               </button>
             ) : null}
@@ -118,6 +129,7 @@ export default function BuildInputs({ SelectedMLTItem, UPosition, setSavingData,
             {...(item === "Ports" ? { value: SelectedMLTItem.DataPortsCount, disabled: true } : {})}
             {...(item === "Slots Front" ? { value: SaveTemplate[item].value, disabled: true } : {})}
             {...(item === "Slots Back" ? { value: SaveTemplate[item].value, disabled: true } : {})}
+            {...(item === "Slot Position *" ? { value: SaveTemplate[item].value, disabled: true } : {})}
             onChange={(e) => HandleTemplateUpdate(item, e.target.value)}
           />
         );

@@ -52,6 +52,7 @@ export default function HomeLayout() {
         // if (user.displayName === "Travis Heidelberger") {
         let dataHold2 = [];
         let settingsPush = [];
+        console.log("Data Hold", dataHold);
         dataHold.forEach((element) => {
           settingsPush.push({
             DataBaseUUID: element.Current.DataBaseUUID,
@@ -59,12 +60,11 @@ export default function HomeLayout() {
             NamingCon: element.Current.Naming ?? [],
           });
         });
-        console.log("Settings Push", settingsPush);
         localStorage.setItem("NamingList", JSON.stringify(settingsPush));
-        console.log(settingsPush);
         for (let i = 0; i < dataHold.length; i++) {
+          console.log("Data Hold i", dataHold[i]);
           dataHold2.push(SMALLtoLARGE(dataHold[i]));
-          console.log(dataHold2[i]["Location"][0]["dcTrack Location Code *"].value);
+          console.log(dataHold2[i]);
         }
         console.log("Data Hold 2", dataHold2);
         setLocationData(dataHold2);

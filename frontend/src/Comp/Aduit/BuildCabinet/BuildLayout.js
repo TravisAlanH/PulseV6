@@ -18,6 +18,7 @@ export default function BuildLayout({ AllData }) {
   const CurrentRack = useSelector((state) => state.data.Current.Racks);
   const CurrentCabinet = useSelector((state) => state.data.Racks[CurrentRack]);
   const CurrentFilledCabinet = useSelector((state) => state.data.OpenRU[CurrentRack]);
+  const BladeSupport = useSelector((state) => state.data.Blades);
   const [visable, setVisable] = useState(15);
   const [MLTClass, setMLTClass] = useState("");
 
@@ -49,8 +50,6 @@ export default function BuildLayout({ AllData }) {
     return item["Cabinet *"].value === CurrentCabinet["Name *"].value && item["Mounting"].value !== "ZeroU";
   });
 
-  // console.log("Av Slots ", AvalableSlots);
-
   if (!CurrentCabinet) {
     return <div>Build Layout</div>;
   }
@@ -63,8 +62,7 @@ export default function BuildLayout({ AllData }) {
 
   const cleanRackData = (data) => {
     let cleanData = [...data];
-    console.log("cleanData", cleanData);
-    console.log("RackedInCurrentCabinet", RackedInCurrentCabinet);
+
     RackedInCurrentCabinet.forEach((item) => {
       let start = item["U Position *"].value + item["RU Height"].value - 2;
       for (let i = 0; i < item["RU Height"].value - 1; i++) {
@@ -228,16 +226,27 @@ export default function BuildLayout({ AllData }) {
                   <button
                     className="orangeButton"
                     onClick={() => {
+                      if (savingData["Name *"].value === "") {
+                        alert("Please fill in the Name field");
+                        return;
+                      }
                       setLoading(true);
-                      console.log(savingData);
-                      const payload = {
-                        Step: Step,
-                        value: savingData,
-                        RUHeight: savingData["RU Height"].value,
-                        UPosition: UPosition - 1,
-                      };
-                      dispatch(actions.AddToStepFullData(payload));
-                      dispatch(actions.AdjustOpenRU(payload));
+                      if (Step !== "Blades") {
+                        const payload = {
+                          Step: Step,
+                          value: savingData,
+                          RUHeight: savingData["RU Height"].value,
+                          UPosition: UPosition - 1,
+                        };
+                        dispatch(actions.AddToStepFullData(payload));
+                        dispatch(actions.AdjustOpenRU(payload));
+                      } else {
+                        const payload = {
+                          Step: Step,
+                          value: savingData,
+                        };
+                        dispatch(actions.AddToStepFullData(payload));
+                      }
                       setTimeout(() => {
                         setSavingData({});
                         setSelectedMLTItem({});
@@ -330,7 +339,7 @@ export default function BuildLayout({ AllData }) {
   // }
 
   function exspandFilledUnit(index) {
-    const highSet = "h-[17rem]";
+    const highSet = "h-[17.5rem]";
     const filledRacksUP = document.getElementsByClassName("filledRackUP");
     for (let i = 0; i < filledRacksUP.length; i++) {
       filledRacksUP[i].classList.remove(highSet);
@@ -340,7 +349,7 @@ export default function BuildLayout({ AllData }) {
   }
 
   function closeAllFilledUnits(index) {
-    const highSet = "h-[17rem]";
+    const highSet = "h-[17.5rem]";
     const filledRacksUP = document.getElementsByClassName("filledRackUP");
     document.getElementById("BuildCabinet_CabView_FilledInRack" + index).classList.add("h-[2rem]");
     for (let i = 0; i < filledRacksUP.length; i++) {
@@ -358,7 +367,7 @@ export default function BuildLayout({ AllData }) {
           exspandFilledUnit(index);
         }}
       >
-        <div className="h-[8rem] flex flex-col justify-between px-2">
+        <div className="h-[2rem] flex flex-col justify-between px-2">
           {RackedInCurrentCabinet.filter((items) => items["U Position *"].value === index + 1).map((item, indexRack) => {
             const hasSlots = item["Slots Front"].value !== 0 || item["Slots Back"].value !== 0;
             return (
@@ -433,28 +442,31 @@ export default function BuildLayout({ AllData }) {
     }
 
     function BladeViewTab(hasSlots, item) {
-      return (
-        <div>
-          {hasSlots ? (
-            <BladeView
-              SlottedItem={item}
-              showingFront={showingFront}
-              Step={Step}
-              setShowingFront={setShowingFront}
-              setMLTClass={setMLTClass}
-              setChassis={setChassis}
-              setSideDepth={setSideDepth}
-              setUPosition={setUPosition}
-              openAbover={openAbover}
-              // ! HAVE TO SET DEPTH AND SIDE
-              // emptyInRack={EmptyInRack(-1, "", "", "Blade", item["Name *"].value)}
-              // <EmptyInRack index={-1} depth={""} side={""} Type={"Blade"} Chassis={item["Name *"].value} setMLTClass={setMLTClass} setChassis={setChassis} setSideDepth={setSideDepth} setUPosition={setUPosition} openAbover={openAbover} />
-            />
-          ) : (
-            "No Slots (Front Or Back)"
-          )}
-        </div>
-      );
+      if (BladeSupport) {
+        return (
+          <div>
+            {hasSlots ? (
+              <BladeView
+                SlottedItem={item}
+                showingFront={showingFront}
+                Step={Step}
+                setShowingFront={setShowingFront}
+                setMLTClass={setMLTClass}
+                setChassis={setChassis}
+                setSideDepth={setSideDepth}
+                setUPosition={setUPosition}
+                openAbover={openAbover}
+                // ! HAVE TO SET DEPTH AND SIDE
+                // emptyInRack={EmptyInRack(-1, "", "", "Blade", item["Name *"].value)}
+                // <EmptyInRack index={-1} depth={""} side={""} Type={"Blade"} Chassis={item["Name *"].value} setMLTClass={setMLTClass} setChassis={setChassis} setSideDepth={setSideDepth} setUPosition={setUPosition} openAbover={openAbover} />
+              />
+            ) : (
+              "No Slots (Front Or Back)"
+            )}
+          </div>
+        );
+      }
+      return <div>Blade Not Supported</div>;
     }
 
     function OpenCloseButtonPerSlot() {
@@ -509,7 +521,6 @@ export default function BuildLayout({ AllData }) {
   // }
 
   function ZeroUPDULeft() {
-    console.log("!!!!!!!!!!!!!");
     return (
       <div className="flex flex-row gap-2 sticky top-[5rem]">
         <PDUViewVertical
@@ -547,7 +558,6 @@ export default function BuildLayout({ AllData }) {
   }
 
   function ZeroUPDURight() {
-    console.log("!!!!!!!!!!!!!");
     return (
       <div className="flex flex-row gap-2 sticky top-[5rem]">
         <PDUViewVertical

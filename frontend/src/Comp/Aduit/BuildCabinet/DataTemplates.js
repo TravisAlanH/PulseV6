@@ -55,21 +55,21 @@ function Assets(Template, Step, UPosition, SelectedMLTItem, LocationName, Cabine
   return data;
 }
 
-function Blades(Template, Step, SelectedMLTItem, LocationName, CabinetName, ChassisName) {
-  console.log("SelectedMLTItem", SelectedMLTItem);
+function Blades(Template, Step, SelectedMLTItem, LocationName, CabinetName, Chassis, SideDepth) {
+  console.log(Chassis);
   const data = {
     ...Template[Step],
     "Chassis *": {
-      ...Template[Step]["U Position *"],
-      value: ChassisName,
+      ...Template[Step]["Chassis *"],
+      value: Chassis,
     },
     "Chassis Face *": {
-      ...Template[Step]["Rails Used *"],
-      value: "Both",
+      ...Template[Step]["Chassis Face *"],
+      value: SideDepth.Side,
     },
     "Slot Position *": {
-      ...Template[Step]["Orientation *"],
-      value: "Item Front Faces Cabinet Front",
+      ...Template[Step]["Slot Position *"],
+      value: SideDepth.Depth,
     },
     "Make *": {
       ...Template[Step]["Make *"],

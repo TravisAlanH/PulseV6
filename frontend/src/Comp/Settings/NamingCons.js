@@ -38,11 +38,15 @@ export default function NamingCons() {
       Step: "Racks",
       Associated: ["Location", "Make", "Model", "Count In Location", "Custom"],
     },
+    {
+      Step: "Blades",
+      Associated: ["Location", "Make", "Model", "Cabinet", "Slot", "Chassis", "Count In Rack", "Count In Location", "Custom"],
+    },
   ];
 
-  const addToNamingButtons = ["Location", "Make", "Model", "Cabinet", "UP", "Count In Rack", "Count In Location", "Custom"];
+  const addToNamingButtons = ["Location", "Make", "Model", "Cabinet", "UP", "Chassis", "Slot", "Count In Rack", "Count In Location", "Custom"];
 
-  const Steps = ["Racks", "Assets", "PDUs"];
+  const Steps = ["Racks", "Assets", "PDUs", "Blades"];
 
   let NamingTemplate = {
     Step: selectedStep,
@@ -182,7 +186,7 @@ export default function NamingCons() {
                                     X
                                   </button>
                                 </div>
-                                {itemParameter.includes("Count") ? null : (
+                                {itemParameter.includes("Count") || itemParameter.includes("Slot") ? null : (
                                   <select
                                     {...(selectedEditListIndex !== item.Step ? { disabled: true } : {})}
                                     className="w-full"

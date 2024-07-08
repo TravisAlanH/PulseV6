@@ -12,18 +12,7 @@ const OrderData = {
     "Status *",
   ],
 
-  Racks: [
-    "# Operation *",
-    "Object *",
-    "Name *",
-    "Make *",
-    "Model *",
-    "RU Height",
-    "Location *",
-    "Front Faces",
-    "Ports",
-    "Status *",
-  ],
+  Racks: ["# Operation *", "Object *", "Name *", "Make *", "Model *", "Location *", "Front Faces", "Status *"],
 
   PDUs: [
     "# Operation *",
@@ -36,7 +25,6 @@ const OrderData = {
     "Cabinet Side *",
     "Depth Position *",
     "U Position *",
-    "RU Height",
     "Ports",
     "Status *",
   ],
@@ -51,8 +39,6 @@ const OrderData = {
     "Cabinet Side *",
     "Depth Position *",
     "U Position *",
-    "RU Height",
-    "Ports",
     "Status *",
   ],
   Assets: [
@@ -64,11 +50,23 @@ const OrderData = {
     "Location *",
     "Cabinet *",
     "U Position *",
-    "RU Height",
     "Asset Tag",
     "Rails Used *",
     "Orientation *",
-    "Ports",
+    "Status *",
+  ],
+  Blades: [
+    "# Operation *",
+    "Object *",
+    "Name *",
+    "Make *",
+    "Model *",
+    "Location *",
+    "Cabinet *",
+    "Chassis *",
+    "Slot Position *",
+    "Asset Tag",
+    "Chassis Face *",
     "Status *",
   ],
 
@@ -87,9 +85,6 @@ const OrderData = {
     "Utilized kw",
     "Network connected",
     "Asset Tag",
-    "Total connections",
-    "Type of Connections",
-    "Ports",
   ],
   "Zero U PDUs": [
     "# Operation *",
@@ -106,9 +101,6 @@ const OrderData = {
     "Utilized kw",
     "Network connected",
     "Asset Tag",
-    "Total connections",
-    "Type of Connections",
-    "Ports",
   ],
   ATSs: [
     "# Operation *",
@@ -125,9 +117,6 @@ const OrderData = {
     "Utilized kw",
     "Network connected",
     "Asset Tag",
-    "Total connections",
-    "Type of Connections",
-    "Ports",
   ],
   SurveyGlobal: [
     "Key Holder Record",
@@ -151,13 +140,7 @@ const OrderData = {
     "Cleanliness *",
     "Room Notes",
   ],
-  SurveySecurity: [
-    "Access Door Control",
-    "Is the Room Secure?",
-    "Available Key Access",
-    "Door Manual Unlocking",
-    "Avigilon camera Present?",
-  ],
+  SurveySecurity: ["Access Door Control", "Is the Room Secure?", "Available Key Access", "Door Manual Unlocking", "Avigilon camera Present?"],
 
   SurveySite: [
     "Survey Date",
@@ -221,11 +204,37 @@ export default function sortArrayToMatchReference(arrayToSort, Step) {
   });
 }
 
-export function sortObjectByTemplate(object, Step) {
+export function sortObjectByTemplate(object, Step, Data) {
   var reorderedObject = {};
 
-  OrderData[Step].forEach(function (key) {
-    reorderedObject[key] = object[key];
+  console.log(Data);
+
+  let DataOrder = OrderData[Step];
+  let DataObject = object;
+  if (Step === "Location") {
+    const SurveyObject = { ...Data.SurveyGlobal[0], ...Data.SurveySite[0], ...Data.SurveyRoom[0], ...Data.SurveySecurity[0], ...Data.SurveySafety[0] };
+    const keys = Object.keys(SurveyObject);
+    let temp = {};
+    for (let i = 0; i < keys.length; i++) {
+      temp[`${keys[i]}`] = SurveyObject[keys[i]].value;
+    }
+
+    DataObject = { ...DataObject, ...temp };
+
+    console.log(DataObject);
+
+    DataOrder = [
+      ...DataOrder,
+      ...OrderData.SurveyGlobal,
+      ...OrderData.SurveyRoom,
+      ...OrderData.SurveySecurity,
+      ...OrderData.SurveySite,
+      ...OrderData.SurveySafety,
+    ];
+  }
+
+  DataOrder.forEach(function (key) {
+    reorderedObject[key] = DataObject[key];
   });
   return reorderedObject;
 }

@@ -14,6 +14,11 @@ const Slice = createSlice({
   name: "Template",
   initialState: initState,
   reducers: {
+    setChassisSlot: (state, action) => {
+      state.Current.Chassis = action.payload.Chassis;
+      state.Current.Slot = action.payload.Slot;
+      if (state.Settings.localStorage) localStorage.setItem("PulseStateData", JSON.stringify(state));
+    },
     AdjustOpenRU: (state, action) => {
       const OriginOpenRU = JSON.parse(JSON.stringify(state.OpenRU[state.Current.Racks].value));
       const UP = action.payload.UPosition;
@@ -303,6 +308,9 @@ const Slice = createSlice({
     },
     deleteCurrentIndex: (state, action) => {
       state.Current[action.payload.Step] = state.Current[action.payload.Step] - 1;
+      if (state.Current[action.payload.Step] < 0) {
+        state.Current[action.payload.Step] = 0;
+      }
       state[action.payload.Step].splice(action.payload.Current, 1);
       if (state.Settings.localStorage) localStorage.setItem("PulseStateData", JSON.stringify(state));
     },
@@ -353,6 +361,7 @@ const Slice = createSlice({
 });
 
 export const {
+  setChassisSlot,
   AdjustOpenRU,
   AddToStepFullData,
   updateNamingCon,

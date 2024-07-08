@@ -36,16 +36,15 @@ function SubstringInputString(inputString, CharacterCount) {
 }
 
 export default function FillNames(payload) {
+  if (localStorage.getItem("NamingList") === null) return "";
   let name = "";
-  console.log(payload.UUID);
   const NameParameters = JSON.parse(localStorage.getItem("NamingList")).filter((item) => item.DataBaseUUID === payload.UUID)[0];
   const NamingCon = NameParameters.NamingCon;
-  console.log("NamingCon ", NamingCon);
-  console.log("Step ", payload.Step);
-  console.log("State ", payload.State);
+
   if (NamingCon.length === 0) return name;
   const NamingConStep = NamingCon.filter((item) => item.Step === payload.Step)[0];
-  console.log("NamingConStep ", NamingConStep);
+
+  if (NamingConStep === undefined) return;
 
   const CharCount = NamingConStep.CharacterCount;
   const Delimiter = NamingConStep.Delimiters;
@@ -59,7 +58,9 @@ export default function FillNames(payload) {
   const CountInRack = CountInRackTotal(payload);
   const countInLocation = CountInLocationTotal(payload);
 
-  const BaseLineArray = ["Location", "Make", "Model", "Cabinet", "UP", "Count In Rack", "Count In Location"];
+  const BaseLineArray = ["Location", "Make", "Model", "Cabinet", "UP", "Chassis", "Slot", "Count In Rack", "Count In Location"];
+
+  console.log("payload", payload);
 
   Format.forEach((element, index) => {
     if (findNonBaselineElements(BaseLineArray, [element]).length !== 0) {
@@ -87,6 +88,12 @@ export default function FillNames(payload) {
         break;
       case "Count In Location":
         name += SubstringInputString(countInLocation, CharCount[index]) + CheckIfDelimterIsNeeded(Delimiter, index, Format);
+        break;
+      case "Chassis":
+        name += SubstringInputString(payload.Chassis, CharCount[index]) + CheckIfDelimterIsNeeded(Delimiter, index, Format);
+        break;
+      case "Slot":
+        name += SubstringInputString(payload.Slot, CharCount[index]) + CheckIfDelimterIsNeeded(Delimiter, index, Format);
         break;
       default:
         break;

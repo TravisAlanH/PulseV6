@@ -14,9 +14,6 @@ export default function ExportPageAudit() {
   adjustedData = format.formatDataForPDU(adjustedData);
 
   const keys = Object.keys(adjustedData);
-
-  console.log(adjustedData);
-
   // const [modalBlock, setModalBlock] = React.useState();
 
   useEffect(() => {
@@ -41,16 +38,19 @@ export default function ExportPageAudit() {
         for (let key in Input[i]) {
           if (key === "Status *") continue;
           if (key === "RUHeight") continue;
+          if (key === "RU Height") continue;
+          if (key === "Ports") continue;
           if (Input[i][key]["Export"] === "") continue;
           // temp[key] = Input[i][key].value;
           temp[Input[i][key]["Export"]] = Input[i][key].value;
         }
-        temp = sortObjectByTemplate(temp, key);
+        if (key === "Location") temp = sortObjectByTemplate(temp, key, Data);
+        else temp = sortObjectByTemplate(temp, key);
         OutputAll.push(temp);
       }
       createTable(OutputAll, "ExportTable");
     });
-  }, [adjustedData]);
+  }, [adjustedData, Data]);
 
   return (
     <div className="w-screen h-screen p-3">
@@ -90,11 +90,13 @@ export default function ExportPageAudit() {
 
                     Output.push(temp);
                   }
+
                   createTable(Output, "ExportTable");
                   // createTable(BASE_DATA[e.target.value][e.target.value + "Array"], "ExportTable");
 
                   //
-                }}>
+                }}
+              >
                 <option value="default">Select</option>
                 {keys.map((key, index) => {
                   if (key === "Current" || key === "LoggedIn" || key.includes("Survey")) return null;
@@ -122,7 +124,8 @@ export default function ExportPageAudit() {
                 // delete modalBlock["Index"];
                 // download_to_excel(e, modalBlock, "ExportTable");
                 download_to_excel("xlsx");
-              }}>
+              }}
+            >
               Export
             </button>
           </div>
