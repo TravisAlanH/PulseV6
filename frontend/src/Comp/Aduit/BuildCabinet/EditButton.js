@@ -1,7 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../../../Store/Slices/Slice";
-import { doc } from "firebase/firestore";
 
 export default function EditButton({ Step, EditIndex }) {
   const dispatch = useDispatch();

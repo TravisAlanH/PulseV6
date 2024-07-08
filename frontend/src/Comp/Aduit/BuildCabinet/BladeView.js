@@ -75,6 +75,7 @@ export default function BladeView({ SlottedItem, showingFront, Step, setShowingF
           const SlottedBladeFront = SlottedBladesFront.find((item) => item["Slot Position *"].value === slot) || [];
           console.log(SlottedBladeFront);
           const SlottedBladeBack = SlottedBladesBack.find((item) => item["Slot Position *"].value === slot) || [];
+          console.log(SlottedBladeBack);
           console.log();
           return (
             <div>
