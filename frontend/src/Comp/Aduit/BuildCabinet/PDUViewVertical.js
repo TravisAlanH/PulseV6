@@ -32,7 +32,7 @@ export default function PDUViewVertical({ CabinetSide, DepthPosition, Step, setM
         index={-1}
         depth={DepthPosition}
         side={CabinetSide}
-        Type={"Rack PDU"}
+        Type={"ZeroU"}
         setMLTClass={setMLTClass}
         setChassis={setChassis}
         setSideDepth={setSideDepth}

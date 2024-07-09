@@ -163,7 +163,7 @@ export default function BuildLayout({ AllData }) {
         })}
       </div>
       <div id="ModalRackable" className="modal w-full">
-        <div className="modal-content">
+        <div className="modal-content overflow-auto mb-3">
           <div className="flex flex-col justify-center w-full">
             {Object.keys(SelectedMLTItem).length === 0 ? (
               <div>
@@ -171,17 +171,102 @@ export default function BuildLayout({ AllData }) {
                   {EntriesNumber()}
                   {CloseButton()}
                 </div>
+                {/* //! MLTSearchingData Box */}
                 <div id="MLTSearchingData Box">
                   <button
                     id="MLTSearchingData Drop Button"
+                    className="orangeButton"
                     onClick={() => {
-                      // const DataDrops =
-                      //   document.getElementsByClassName("DataDrop");
+                      const DataDrop = document.getElementById("MLTDataDrop");
+                      const allDataDrops = document.getElementsByClassName("DataDrop");
+                      if (DataDrop.classList.contains("h-[30rem]")) {
+                        DataDrop.classList.remove("h-[30rem]");
+                        DataDrop.classList.add("h-[0rem]");
+                      } else {
+                        for (let i = 0; i < allDataDrops.length; i++) {
+                          allDataDrops[i].classList.remove("h-[30rem]");
+                          allDataDrops[i].classList.add("h-[0rem]");
+                        }
+                        DataDrop.classList.remove("h-[0rem]");
+                        DataDrop.classList.add("h-[30rem]");
+                      }
                     }}
                   >
-                    Down
+                    MLT Data Base
                   </button>
-                  <div id="MLTDataDrop" className="DataDrop overflow-scroll w-[38rem] h-[35rem] px-6 border-y-2 transition-all ease-in-out duration-300">
+                  <div id="MLTDataDrop" className="DataDrop overflow-scroll w-[40rem] h-[30rem] px-6 border-y-2 transition-all ease-in-out duration-300">
+                    <InputFilters
+                      AllData={AllData}
+                      AvalableSlots={AvalableSlots}
+                      setAvalableSlots={setAvalableSlots}
+                      visable={visable}
+                      MLTClass={MLTClass}
+                      setSelectedMLTItem={setSelectedMLTItem}
+                      mltFilteredData={mltFilteredData}
+                      setMltFilteredData={setMltFilteredData}
+                    />
+                  </div>
+                </div>
+                {/* //! Common Use Search Box */}
+                <div id="CommonSearchingData Box">
+                  <button
+                    id="MLTSearchingData Drop Button"
+                    className="orangeButton"
+                    onClick={() => {
+                      const DataDrop = document.getElementById("CommonDataDrop");
+                      const allDataDrops = document.getElementsByClassName("DataDrop");
+                      if (DataDrop.classList.contains("h-[30rem]")) {
+                        DataDrop.classList.remove("h-[30rem]");
+                        DataDrop.classList.add("h-[0rem]");
+                      } else {
+                        for (let i = 0; i < allDataDrops.length; i++) {
+                          allDataDrops[i].classList.remove("h-[30rem]");
+                          allDataDrops[i].classList.add("h-[0rem]");
+                        }
+                        DataDrop.classList.remove("h-[0rem]");
+                        DataDrop.classList.add("h-[30rem]");
+                      }
+                    }}
+                  >
+                    Common Used Data Base
+                  </button>
+                  <div id="CommonDataDrop" className="DataDrop overflow-scroll w-[40rem] h-[30rem] px-6 border-y-2 transition-all ease-in-out duration-300">
+                    <InputFilters
+                      AllData={AllData}
+                      AvalableSlots={AvalableSlots}
+                      setAvalableSlots={setAvalableSlots}
+                      visable={visable}
+                      MLTClass={MLTClass}
+                      setSelectedMLTItem={setSelectedMLTItem}
+                      mltFilteredData={mltFilteredData}
+                      setMltFilteredData={setMltFilteredData}
+                    />
+                  </div>
+                </div>
+                {/* //! Created Items Seach Box */}
+                <div id="CreatedSearchingData Box">
+                  <button
+                    id="MLTSearchingData Drop Button"
+                    className="orangeButton"
+                    onClick={() => {
+                      const DataDrop = document.getElementById("CreatedDataDrop");
+                      const allDataDrops = document.getElementsByClassName("DataDrop");
+                      if (DataDrop.classList.contains("h-[30rem]")) {
+                        DataDrop.classList.remove("h-[30rem]");
+                        DataDrop.classList.add("h-[0rem]");
+                      } else {
+                        for (let i = 0; i < allDataDrops.length; i++) {
+                          allDataDrops[i].classList.remove("h-[30rem]");
+                          allDataDrops[i].classList.add("h-[0rem]");
+                        }
+                        DataDrop.classList.remove("h-[0rem]");
+                        DataDrop.classList.add("h-[30rem]");
+                      }
+                    }}
+                  >
+                    Created Data Base
+                  </button>
+                  <div id="CreatedDataDrop" className="DataDrop overflow-scroll w-[40rem] h-[30rem] px-6 border-y-2 transition-all ease-in-out duration-300">
                     <InputFilters
                       AllData={AllData}
                       AvalableSlots={AvalableSlots}
