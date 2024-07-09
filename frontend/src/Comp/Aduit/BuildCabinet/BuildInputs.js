@@ -12,7 +12,9 @@ export default function BuildInputs({ SelectedMLTItem, UPosition, setSavingData,
   const CurrentCabinet = useSelector((state) => state.data.Racks[CurrentRack]);
   const CabinetName = CurrentCabinet["Name *"].value;
   // const [loading, setLoading] = React.useState(false);
+  console.log("SelectedMLTItem", SelectedMLTItem);
   const Class = SelectedMLTItem.Class;
+  console.log("Class", Class);
   const subClass = SelectedMLTItem.SubClass;
   const mounting = SelectedMLTItem.Mounting;
   let Step = "";
@@ -24,14 +26,14 @@ export default function BuildInputs({ SelectedMLTItem, UPosition, setSavingData,
   if (subClass === "Blade" || mounting === "Blade") {
     Step = "Blades";
     setStep("Blades");
-    if (Class === "Rack PDU") {
-      Step = "PDUs";
-      setStep("PDUs");
-    }
-    if (Class === "UPS") {
-      Step = "UPS";
-      setStep("UPS");
-    }
+  }
+  if (Class === "Rack PDU") {
+    Step = "PDUs";
+    setStep("PDUs");
+  }
+  if (Class === "UPS") {
+    Step = "UPS";
+    setStep("UPS");
   }
 
   //   ! Add Additional Classes here
@@ -74,7 +76,7 @@ export default function BuildInputs({ SelectedMLTItem, UPosition, setSavingData,
       console.error("newTemplate or newTemplate['Name *'] is frozen or sealed.");
     }
   }
-
+  console.log(Step);
   const MapArray = Object.keys(Template[Step]);
 
   const textInputStyle = "w-[13rem] h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit border-l-2";

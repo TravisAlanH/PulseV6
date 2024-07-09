@@ -207,8 +207,6 @@ export default function sortArrayToMatchReference(arrayToSort, Step) {
 export function sortObjectByTemplate(object, Step, Data) {
   var reorderedObject = {};
 
-  console.log(Data);
-
   let DataOrder = OrderData[Step];
   let DataObject = object;
   if (Step === "Location") {
