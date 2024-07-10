@@ -21,19 +21,20 @@ export default function BuildInputs({ SelectedMLTItem, UPosition, setSavingData,
   console.log("mounting", mounting);
   let Step = "";
   //   ! Add Additional Classes here
-  if (Class === "Device" || Class === "Networks" || Class === "Data Panel" || (Class === "Passive" && mounting !== "Blade" && subClass !== "Blade")) {
+  // if (Class === "Device" || Class === "Networks" || Class === "Data Panel" || (Class === "Passive" && mounting !== "Blade" && subClass !== "Blade")) {
+  if (mounting === "Rackable") {
     Step = "Assets";
     setStep("Assets");
   }
-  if (subClass === "Blade" || mounting === "Blade") {
+  if (mounting === "Blade") {
     Step = "Blades";
     setStep("Blades");
   }
-  if (Class === "Rack PDU") {
+  if (mounting === "ZeroU") {
     Step = "PDUs";
     setStep("PDUs");
   }
-  if (Class === "UPS") {
+  if (Class === "Free-Standing") {
     Step = "UPS";
     setStep("UPS");
   }
