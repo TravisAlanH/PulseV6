@@ -64,18 +64,24 @@ export function filterAndSortData(allData, combinedData, combinedSort, CombinedF
   if (CombinedFilter[0][0].length !== 0) {
     const classFilters = CombinedFilter[0][0].map((filter) => filter.toLowerCase());
     console.log(classFilters);
-    allData = allData.filter((item) => classFilters.includes(item.Class.toLowerCase()));
+    allData = allData.filter((item) => {
+      return item.Class && classFilters.includes(item.Class.toLowerCase());
+    });
   }
 
   if (CombinedFilter[1][0].length !== 0) {
     const subclassFilters = CombinedFilter[1][0].map((filter) => filter.toLowerCase());
     console.log(subclassFilters);
-    allData = allData.filter((item) => subclassFilters.includes(item.Subclass.toLowerCase()));
+    allData = allData.filter((item) => {
+      return item.Subclass && subclassFilters.includes(item.Subclass.toLowerCase());
+    });
   }
 
   if (CombinedFilter[2][0].length !== 0) {
     const mountingFilters = CombinedFilter[2][0];
-    allData = allData.filter((item) => mountingFilters.includes(item.Mounting));
+    allData = allData.filter((item) => {
+      return item.Mounting && mountingFilters.includes(item.Mounting);
+    });
   }
 
   const filterData = () => {
