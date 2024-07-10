@@ -15,8 +15,7 @@ import EmptyInRack from "./EmptyInRack";
 import NewModelLayout from "./AddNewModel/NewModelLayout";
 import InputFiltersNonMLT from "./InputFiltersNonMLT";
 
-export default function BuildLayout({ AllData, AllCustomData }) {
-  console.log(AllCustomData);
+export default function BuildLayout({ AllData }) {
   const dispatch = useDispatch();
   const CurrentRack = useSelector((state) => state.data.Current.Racks);
   const CurrentCabinet = useSelector((state) => state.data.Racks[CurrentRack]);
@@ -43,8 +42,8 @@ export default function BuildLayout({ AllData, AllCustomData }) {
   const [tabView, setTabView] = React.useState(0);
   const [Chassis, setChassis] = React.useState("");
 
-  const [customFilteredData, setCustomFilteredData] = React.useState(AllCustomData);
-  console.log(customFilteredData);
+  // const [customFilteredData, setCustomFilteredData] = React.useState(AllCustomData);
+  // console.log(customFilteredData);
 
   const [mltFilteredData, setMltFilteredData] = React.useState(
     // filterAndSortData(AllData, CombinedData, CombinedSort)
@@ -200,7 +199,7 @@ export default function BuildLayout({ AllData, AllCustomData }) {
                   >
                     MLT Data Base
                   </button>
-                  <div id="MLTDataDrop" className="DataDrop overflow-scroll w-[40rem] h-[30rem] px-6 border-y-2 transition-all ease-in-out duration-300">
+                  <div id="MLTDataDrop" className="DataDrop overflow-scroll w-[40rem] h-[30rem] border-y-2 transition-all ease-in-out duration-300">
                     <InputFilters
                       AllData={AllData}
                       AvalableSlots={AvalableSlots}
@@ -236,7 +235,7 @@ export default function BuildLayout({ AllData, AllCustomData }) {
                   >
                     Common Used Data Base
                   </button>
-                  <div id="CommonDataDrop" className="DataDrop overflow-scroll w-[40rem] h-[0rem] px-6 border-y-2 transition-all ease-in-out duration-300">
+                  <div id="CommonDataDrop" className="DataDrop overflow-scroll w-[40rem] h-[0rem]  border-y-2 transition-all ease-in-out duration-300">
                     <InputFilters
                       AllData={AllData}
                       AvalableSlots={AvalableSlots}
@@ -275,13 +274,8 @@ export default function BuildLayout({ AllData, AllCustomData }) {
                     </button>{" "}
                     <NewModelLayout />
                   </div>
-                  <div id="CreatedDataDrop" className="DataDrop overflow-scroll w-[40rem] h-[0rem] px-6 border-y-2 transition-all ease-in-out duration-300">
-                    <InputFiltersNonMLT
-                      AllData={AllCustomData}
-                      visable={visable}
-                      setSelectedMLTItem={setSelectedMLTItem}
-                      setMltFilteredData={setCustomFilteredData}
-                    />
+                  <div id="CreatedDataDrop" className="DataDrop overflow-scroll w-[40rem] h-[0rem]  border-y-2 transition-all ease-in-out duration-300">
+                    <InputFiltersNonMLT visable={visable} setSelectedMLTItem={setSelectedMLTItem} />
                   </div>
                 </div>
               </div>

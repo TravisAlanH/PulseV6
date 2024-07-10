@@ -1,8 +1,31 @@
 import React from "react";
 import DataFiltered from "./DataFiltered";
+import { getMLTList } from "../../../FireActions";
+import * as FireActions from "../../../FireActions";
+import { useSelector } from "react-redux";
 
-export default function InputFiltersNonMLT({ AllData, AvalableSlots, visable, setSelectedMLTItem }) {
-  console.log(AvalableSlots);
+export default function InputFiltersNonMLT({ visable, setSelectedMLTItem }) {
+  const user = FireActions.auth.currentUser;
+  const MLTCount = useSelector((state) => state.data.Current.MLTCreatedCount);
+  const DataKeys = ["Make", "Model", "RUHeight", "Class", "SubClass", "Mounting", "DataPortsCount", "PowerPortsCount", "FrontSlotsCount", "BackSlotsCount"];
+  const [AllCustomData, setAllCustomData] = React.useState([]);
+
+  console.log("MLTCount", MLTCount);
+
+  React.useEffect(() => {
+    getMLTList(user).then((data) => {
+      console.log("data", data);
+      setAllCustomData(data);
+    });
+  }, [user, MLTCount]);
+
+  let AllDataFormatted = AllCustomData.map((item) => {
+    let newItem = {};
+    DataKeys.map((key) => {
+      return (newItem[key] = item[key]);
+    });
+    return newItem;
+  });
 
   const Headers = ["Make", "Model", "RUHeight", "Class", "Subclass", "Mounting", "DataPorts", "PowerPorts", "FrontSlots", "BackSlots"];
 
@@ -21,7 +44,7 @@ export default function InputFiltersNonMLT({ AllData, AvalableSlots, visable, se
         })}
       </div>
       <div>
-        <DataFiltered setSelectedMLTItem={setSelectedMLTItem} mltFilteredData={AllData} visable={visable} />
+        <DataFiltered setSelectedMLTItem={setSelectedMLTItem} mltFilteredData={AllDataFormatted} visable={visable} />
       </div>
     </div>
   );

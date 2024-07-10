@@ -14,6 +14,10 @@ const Slice = createSlice({
   name: "Template",
   initialState: initState,
   reducers: {
+    addToMLTCreatedCount: (state) => {
+      state.Current.MLTCreatedCount = state.Current.MLTCreatedCount + 1;
+      if (state.Settings.localStorage) localStorage.setItem("PulseStateData", JSON.stringify(state));
+    },
     setChassisSlot: (state, action) => {
       state.Current.Chassis = action.payload.Chassis;
       state.Current.Slot = action.payload.Slot;
@@ -361,6 +365,7 @@ const Slice = createSlice({
 });
 
 export const {
+  addToMLTCreatedCount,
   setChassisSlot,
   AdjustOpenRU,
   AddToStepFullData,

@@ -4,8 +4,11 @@ import NewModelInputs from "./NewModelInputs";
 import { addToMLTList } from "../../../../FireActions";
 import * as FireActions from "../../../../FireActions";
 import LoadingSpinner from "../../../Reuse/LoadingSpinner/Spinner";
+import { useDispatch } from "react-redux";
+import * as actions from "../../../../Store/Slices/Slice";
 
 export default function NewModelLayout() {
+  const dispatch = useDispatch();
   const user = FireActions.auth.currentUser;
 
   const [Template, setTemplate] = React.useState(ModelTempalates.Template);
@@ -16,6 +19,7 @@ export default function NewModelLayout() {
     setLoading(true);
     addToMLTList(Template, user).then((res) => {
       if (res === "success") {
+        dispatch(actions.addToMLTCreatedCount());
         setLoading(false);
       } else {
         setLoading(false);

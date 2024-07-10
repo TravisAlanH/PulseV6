@@ -2036,6 +2036,7 @@ const state = {
     Naming: [],
     DataBaseUUID: "",
     DataBaseTime: "",
+    MLTCreatedCount: 0,
     StructuredCablingSet: {
       rack: null,
       asset: null,
