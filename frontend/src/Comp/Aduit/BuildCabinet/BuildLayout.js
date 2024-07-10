@@ -12,8 +12,11 @@ import PDUViewVertical from "./PDUViewVertical";
 import { GrDatabase } from "react-icons/gr";
 import BladeView from "./BladeView";
 import EmptyInRack from "./EmptyInRack";
+import NewModelLayout from "./AddNewModel/NewModelLayout";
+import InputFiltersNonMLT from "./InputFiltersNonMLT";
 
-export default function BuildLayout({ AllData }) {
+export default function BuildLayout({ AllData, AllCustomData }) {
+  console.log(AllCustomData);
   const dispatch = useDispatch();
   const CurrentRack = useSelector((state) => state.data.Current.Racks);
   const CurrentCabinet = useSelector((state) => state.data.Racks[CurrentRack]);
@@ -39,6 +42,9 @@ export default function BuildLayout({ AllData }) {
   const [showingFront, setShowingFront] = React.useState(true);
   const [tabView, setTabView] = React.useState(0);
   const [Chassis, setChassis] = React.useState("");
+
+  const [customFilteredData, setCustomFilteredData] = React.useState(AllCustomData);
+  console.log(customFilteredData);
 
   const [mltFilteredData, setMltFilteredData] = React.useState(
     // filterAndSortData(AllData, CombinedData, CombinedSort)
@@ -230,7 +236,7 @@ export default function BuildLayout({ AllData }) {
                   >
                     Common Used Data Base
                   </button>
-                  <div id="CommonDataDrop" className="DataDrop overflow-scroll w-[40rem] h-[30rem] px-6 border-y-2 transition-all ease-in-out duration-300">
+                  <div id="CommonDataDrop" className="DataDrop overflow-scroll w-[40rem] h-[0rem] px-6 border-y-2 transition-all ease-in-out duration-300">
                     <InputFilters
                       AllData={AllData}
                       AvalableSlots={AvalableSlots}
@@ -245,37 +251,36 @@ export default function BuildLayout({ AllData }) {
                 </div>
                 {/* //! Created Items Seach Box */}
                 <div id="CreatedSearchingData Box">
-                  <button
-                    id="MLTSearchingData Drop Button"
-                    className="orangeButton"
-                    onClick={() => {
-                      const DataDrop = document.getElementById("CreatedDataDrop");
-                      const allDataDrops = document.getElementsByClassName("DataDrop");
-                      if (DataDrop.classList.contains("h-[30rem]")) {
-                        DataDrop.classList.remove("h-[30rem]");
-                        DataDrop.classList.add("h-[0rem]");
-                      } else {
-                        for (let i = 0; i < allDataDrops.length; i++) {
-                          allDataDrops[i].classList.remove("h-[30rem]");
-                          allDataDrops[i].classList.add("h-[0rem]");
+                  <div className="flex flex-row justify-between">
+                    <button
+                      id="MLTSearchingData Drop Button"
+                      className="orangeButton"
+                      onClick={() => {
+                        const DataDrop = document.getElementById("CreatedDataDrop");
+                        const allDataDrops = document.getElementsByClassName("DataDrop");
+                        if (DataDrop.classList.contains("h-[30rem]")) {
+                          DataDrop.classList.remove("h-[30rem]");
+                          DataDrop.classList.add("h-[0rem]");
+                        } else {
+                          for (let i = 0; i < allDataDrops.length; i++) {
+                            allDataDrops[i].classList.remove("h-[30rem]");
+                            allDataDrops[i].classList.add("h-[0rem]");
+                          }
+                          DataDrop.classList.remove("h-[0rem]");
+                          DataDrop.classList.add("h-[30rem]");
                         }
-                        DataDrop.classList.remove("h-[0rem]");
-                        DataDrop.classList.add("h-[30rem]");
-                      }
-                    }}
-                  >
-                    Created Data Base
-                  </button>
-                  <div id="CreatedDataDrop" className="DataDrop overflow-scroll w-[40rem] h-[30rem] px-6 border-y-2 transition-all ease-in-out duration-300">
-                    <InputFilters
-                      AllData={AllData}
-                      AvalableSlots={AvalableSlots}
-                      setAvalableSlots={setAvalableSlots}
+                      }}
+                    >
+                      Created Data Base
+                    </button>{" "}
+                    <NewModelLayout />
+                  </div>
+                  <div id="CreatedDataDrop" className="DataDrop overflow-scroll w-[40rem] h-[0rem] px-6 border-y-2 transition-all ease-in-out duration-300">
+                    <InputFiltersNonMLT
+                      AllData={AllCustomData}
                       visable={visable}
-                      MLTClass={MLTClass}
                       setSelectedMLTItem={setSelectedMLTItem}
-                      mltFilteredData={mltFilteredData}
-                      setMltFilteredData={setMltFilteredData}
+                      setMltFilteredData={setCustomFilteredData}
                     />
                   </div>
                 </div>

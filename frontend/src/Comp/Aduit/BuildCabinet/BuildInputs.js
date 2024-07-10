@@ -16,7 +16,9 @@ export default function BuildInputs({ SelectedMLTItem, UPosition, setSavingData,
   const Class = SelectedMLTItem.Class;
   console.log("Class", Class);
   const subClass = SelectedMLTItem.SubClass;
+  console.log("subClass", subClass);
   const mounting = SelectedMLTItem.Mounting;
+  console.log("mounting", mounting);
   let Step = "";
   //   ! Add Additional Classes here
   if (Class === "Device" || Class === "Networks" || Class === "Data Panel" || (Class === "Passive" && mounting !== "Blade" && subClass !== "Blade")) {
@@ -35,6 +37,8 @@ export default function BuildInputs({ SelectedMLTItem, UPosition, setSavingData,
     Step = "UPS";
     setStep("UPS");
   }
+
+  console.log("Step", Step);
 
   //   ! Add Additional Classes here
 

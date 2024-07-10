@@ -75,7 +75,6 @@ export function filterAndSortData(allData, combinedData, combinedSort, CombinedF
 
   if (CombinedFilter[2][0].length !== 0) {
     const mountingFilters = CombinedFilter[2][0];
-    console.log(mountingFilters);
     allData = allData.filter((item) => mountingFilters.includes(item.Mounting));
   }
 

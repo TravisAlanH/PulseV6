@@ -11,15 +11,7 @@ import {
 } from "firebase/auth";
 import { getDatabase, onValue, ref } from "firebase/database";
 import app from "./firebase";
-import {
-  arrayRemove,
-  arrayUnion,
-  doc,
-  getDoc,
-  getFirestore,
-  setDoc,
-  updateDoc,
-} from "firebase/firestore";
+import { arrayRemove, arrayUnion, doc, getDoc, getFirestore, setDoc, updateDoc } from "firebase/firestore";
 
 const auth = getAuth(app);
 
@@ -71,12 +63,7 @@ function signup(user) {
   setPersistence(auth, browserSessionPersistence);
   const db = getFirestore(app);
 
-  createUserWithEmailAndPassword(
-    auth,
-    user.email,
-    user.password,
-    user.phoneNumber
-  )
+  createUserWithEmailAndPassword(auth, user.email, user.password, user.phoneNumber)
     .then((userCredential) => {
       // Set the display name for the user
       return updateProfile(userCredential.user, {
@@ -140,8 +127,7 @@ async function replaceLocationWithUpdate(newLocationData) {
     let LocationsList = docSnap.data().LocationsList;
     for (let i = 0; i < LocationsList.length; i++) {
       let LocationListIndexData = LocationsList[i];
-      if (typeof LocationListIndexData === "string")
-        LocationListIndexData = JSON.parse(LocationListIndexData);
+      if (typeof LocationListIndexData === "string") LocationListIndexData = JSON.parse(LocationListIndexData);
       if (LocationListIndexData.Current.DataBaseUUID === UUID) {
         removed = LocationsList[i];
         await updateDoc(docRef, {
@@ -202,6 +188,25 @@ export async function addToMLTList(ItemToAdd, user) {
   }
 }
 
+export async function getMLTList(user) {
+  const db = getFirestore(app);
+  const docRef = doc(db, "users", user.uid);
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    let incomingData = docSnap.data().MLTList;
+    let dataHold = [];
+    if (incomingData === undefined) {
+      return dataHold;
+    }
+    console.log(incomingData);
+    for (let i = 0; i < incomingData.length; i++) {
+      dataHold.push(incomingData[i]);
+    }
+    console.log(dataHold);
+    return dataHold;
+  }
+}
+
 function UserSignOut(auth) {
   if (!auth.currentUser) {
     console.log("no user");
@@ -232,15 +237,4 @@ function signIn(user) {
     });
 }
 
-export {
-  replaceLocationWithUpdate,
-  signup,
-  signIn,
-  UserSignOut,
-  addToLocations,
-  changeLocationAtIndex,
-  updateLocationsList,
-  getData,
-  auth,
-  VerificationEmail,
-};
+export { replaceLocationWithUpdate, signup, signIn, UserSignOut, addToLocations, changeLocationAtIndex, updateLocationsList, getData, auth, VerificationEmail };

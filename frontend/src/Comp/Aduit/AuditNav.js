@@ -8,10 +8,15 @@ import LocationLayout from "../Location/LocationLayout";
 import ExportPageAudit from "../Export/ExportPageAudit";
 import StructuredCablingLayout from "./StructuredCabling/StructuredCablingLayout";
 import BuildLayout from "./BuildCabinet/BuildLayout";
+
+import { getMLTList } from "../../FireActions";
+import * as FireActions from "../../FireActions";
 // import * as FireActions from "../../FireActions";
 
 export default function AuditNav({ setCurrentAudit, AllData }) {
+  const user = FireActions.auth.currentUser;
   const buttons = document.getElementsByClassName("AuditLinks");
+  const [AllCustomData, setAllCustomData] = React.useState([]);
 
   // const user = FireActions.auth.currentUser.displayName;
 
@@ -24,6 +29,13 @@ export default function AuditNav({ setCurrentAudit, AllData }) {
       });
     }
   }
+
+  React.useEffect(() => {
+    getMLTList(user).then((data) => {
+      console.log("data", data);
+      setAllCustomData(data);
+    });
+  }, [user]);
 
   const buttonStyle = "bg-[#F7F5F1] text-[black] font-bold py-2 px-6 AuditLinks flex-grow ";
 
@@ -57,7 +69,7 @@ export default function AuditNav({ setCurrentAudit, AllData }) {
         onClick={(e) => {
           removeSelected();
           e.target.classList.add("selected");
-          setCurrentAudit(<BuildLayout AllData={AllData} />);
+          setCurrentAudit(<BuildLayout AllData={AllData} AllCustomData={AllCustomData} />);
         }}
       >
         Build Cabinet

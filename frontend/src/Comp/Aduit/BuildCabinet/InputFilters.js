@@ -16,7 +16,7 @@ export default function InputFilters({
   mltFilteredData,
   setMltFilteredData,
 }) {
-  console.log(AvalableSlots);
+  console.log(AllData);
   // const [mltFilteredData, setMltFilteredData] = React.useState([...AllData]);
 
   const [make, setMake] = useState("");
