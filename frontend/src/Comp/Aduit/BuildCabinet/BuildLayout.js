@@ -78,16 +78,33 @@ export default function BuildLayout({ AllData }) {
   };
 
   const openAbover = (index, depth) => {
+    console.log(index);
+    console.log(CurrentFilledCabinet.value);
+
     if (depth === "") {
-      setAvalableSlots(100);
-      // Filter the MLTData based on the available slots
-      setMltFilteredData(
-        AllData.filter((obj) => {
-          return obj.RUHeight <= 100;
-        })
-      );
-      return 100;
+      let openHold = 1;
+      for (let i = index + 1; i < CurrentFilledCabinet.value.length; i++) {
+        if (CurrentFilledCabinet.value[i] === 0) {
+          openHold += 1;
+        } else {
+          break;
+        }
+      }
+      setMltFilteredData(AllData.filter((obj) => obj.RUHeight <= openHold));
+      setAvalableSlots(openHold);
+      return openHold;
     }
+
+    // if (depth === "") {
+    //   setAvalableSlots(100);
+    //   // Filter the MLTData based on the available slots
+    //   setMltFilteredData(
+    //     AllData.filter((obj) => {
+    //       return obj.RUHeight <= 100;
+    //     })
+    //   );
+    //   return 100;
+    // }
     let open = 0;
 
     // Ensure index is within bounds of the array

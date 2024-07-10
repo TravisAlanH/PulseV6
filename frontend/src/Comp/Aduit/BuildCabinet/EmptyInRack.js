@@ -26,6 +26,7 @@ export default function EmptyInRack({ index, depth, side, Type, Chassis, setMLTC
           setSideDepth({ Depth: depth, Side: side });
           setUPosition(index + 1);
           openAbover(index, depth);
+          console.log(openAbover(index, depth));
           // setUpdate(!update);
         }}
       >

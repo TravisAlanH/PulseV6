@@ -89,7 +89,9 @@ export default function BuildInputs({ SelectedMLTItem, UPosition, setSavingData,
   function HandleTemplateUpdate(item, value) {
     console.log(value);
     console.log(item);
-    let newTemplate = { ...SaveTemplate };
+    // let newTemplate = { ...SaveTemplate };
+    let newTemplate = JSON.parse(JSON.stringify(SaveTemplate));
+
     newTemplate[item]["value"] = value;
     console.log("newTemplate", newTemplate);
     setSaveTemplate(newTemplate);

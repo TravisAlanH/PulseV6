@@ -46,7 +46,7 @@ export const TemplateKeyRequired = {
   Units: false,
   Status: false,
   URL: false,
-  RUHeight: false,
+  RUHeight: true,
   DataPortsCount: true,
   PowerPortsCount: true,
   FrontSlotsCount: true,

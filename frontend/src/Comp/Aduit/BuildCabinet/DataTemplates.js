@@ -2,6 +2,11 @@ function Assets(Template, Step, UPosition, SelectedMLTItem, LocationName, Cabine
   console.log("SelectedMLTItem", SelectedMLTItem);
   const data = {
     ...Template[Step],
+    "Name *": {
+      ...Template[Step]["Name *"],
+      value: "",
+    },
+    ...Template[Step],
     "U Position *": {
       ...Template[Step]["U Position *"],
       value: UPosition,
@@ -59,6 +64,11 @@ function Blades(Template, Step, SelectedMLTItem, LocationName, CabinetName, Chas
   console.log(Chassis);
   const data = {
     ...Template[Step],
+    "Name *": {
+      ...Template[Step]["Name *"],
+      value: "",
+    },
+    ...Template[Step],
     "Chassis *": {
       ...Template[Step]["Chassis *"],
       value: Chassis,
@@ -104,6 +114,11 @@ function PDUs(Template, Step, UPosition, SelectedMLTItem, LocationName, CabinetN
   console.log(SideDepth);
   console.log("SelectedMLTItem", SelectedMLTItem);
   const data = {
+    ...Template[Step],
+    "Name *": {
+      ...Template[Step]["Name *"],
+      value: "",
+    },
     ...Template[Step],
     "U Position *": {
       ...Template[Step]["U Position *"],

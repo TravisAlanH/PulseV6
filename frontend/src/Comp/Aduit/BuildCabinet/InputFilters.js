@@ -16,7 +16,6 @@ export default function InputFilters({
   mltFilteredData,
   setMltFilteredData,
 }) {
-  console.log(AllData);
   // const [mltFilteredData, setMltFilteredData] = React.useState([...AllData]);
 
   const [make, setMake] = useState("");
@@ -180,6 +179,7 @@ export default function InputFilters({
                 <input
                   id={"FilterInput" + index}
                   type="number"
+                  disabled={Headers[index] === "RUHeight" ? true : false}
                   className="border-2 border-gray-300 w-full"
                   value={item[0]}
                   onChange={(e) => {
@@ -199,16 +199,20 @@ export default function InputFilters({
                   }}
                 />
               )}
-              <button
-                className="w-[2rem] border-2 rounded-md"
-                onClick={() => {
-                  item[1]("");
-                  closeAllFilterBars();
-                  setMltFilteredData(filterAndSortData(AllData, CombinedData, CombinedSort, CombinedFilter));
-                }}
-              >
-                X
-              </button>
+              {Headers[index] !== "RUHeight" ? (
+                <button
+                  className="w-[2rem] border-2 rounded-md"
+                  onClick={() => {
+                    item[1]("");
+                    closeAllFilterBars();
+                    setMltFilteredData(filterAndSortData(AllData, CombinedData, CombinedSort, CombinedFilter));
+                  }}
+                >
+                  X
+                </button>
+              ) : (
+                <div className="w-[2rem]"></div>
+              )}
             </div>
           );
         })}
@@ -249,7 +253,7 @@ export default function InputFilters({
             </div>
             <div>
               <button
-                className="flex flex-row gap-3 items-center"
+                className="flex flex-row gap-3 items-center w-[11rem]"
                 onClick={() => {
                   if (CombinedSort[index][0] !== 1) CombinedSort[index][1](1);
                   if (CombinedSort[index][0] === 1) CombinedSort[index][1](0);
@@ -271,41 +275,45 @@ export default function InputFilters({
                 <IoClose /> <label className="cursor-pointer">Clear Sort</label>
               </button>
             </div>
-            <div className="flex flex-row">
-              <input
-                type="text"
-                className="border-2 w-[9rem]"
-                defaultValue={CombinedData[index][0]}
-                onFocus={() => {
-                  document.getElementById("FilterInput" + index).focus();
-                  closeAllFilterBars();
-                }}
-              />
-              <button
-                className="w-[2rem] border-2 rounded-md"
-                onClick={() => {
-                  CombinedData[index][1]("");
-                  closeAllFilterBars();
-                }}
-              >
-                X
-              </button>
-            </div>
+            {Headers[index] !== "RUHeight" ? (
+              <div className="flex flex-row">
+                <input
+                  type="text"
+                  className="border-2 w-[9rem]"
+                  defaultValue={CombinedData[index][0]}
+                  onFocus={() => {
+                    document.getElementById("FilterInput" + index).focus();
+                    closeAllFilterBars();
+                  }}
+                />
+                <button
+                  className="w-[2rem] border-2 rounded-md"
+                  onClick={() => {
+                    CombinedData[index][1]("");
+                    closeAllFilterBars();
+                  }}
+                >
+                  X
+                </button>
+              </div>
+            ) : null}
           </div>
           {FilterScrollBoxes(index)}
-          <div>
-            <button
-              className="flex flex-row gap-3 items-center"
-              onClick={() => {
-                CombinedData[index][1]("");
-                CombinedSort[index][1](0);
-                setMltFilteredData(filterAndSortData(AllData, CombinedData, CombinedSort, CombinedFilter));
-              }}
-            >
-              <TbClearAll />
-              <label className="cursor-pointer">Clear All</label>
-            </button>
-          </div>
+          {Headers[index] !== "RUHeight" ? (
+            <div>
+              <button
+                className="flex flex-row gap-3 items-center"
+                onClick={() => {
+                  CombinedData[index][1]("");
+                  CombinedSort[index][1](0);
+                  setMltFilteredData(filterAndSortData(AllData, CombinedData, CombinedSort, CombinedFilter));
+                }}
+              >
+                <TbClearAll />
+                <label className="cursor-pointer">Clear All</label>
+              </button>
+            </div>
+          ) : null}
         </div>
       </div>
     );
