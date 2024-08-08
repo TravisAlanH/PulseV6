@@ -17,6 +17,9 @@ export function LARGEtoSMALL(obj) {
           newEntry[baseKey] = {
             value: itemLevel2[baseKey]?.value !== undefined ? itemLevel2[baseKey].value : "",
           };
+          if (itemLevel2[baseKey]?.notes !== undefined) {
+            newEntry[baseKey].notes = itemLevel2[baseKey].notes;
+          }
         });
         baseHoldArray.push(newEntry);
       });
@@ -42,9 +45,21 @@ export function SMALLtoLARGE(simplifiedObj) {
       for (let i = 0; i < simplifiedObj[key].length; i++) {
         let useTemplate = structuredClone(templates[key]);
 
+        // for (const keyName in useTemplate) {
+        //   if (simplifiedObj[key][i][keyName] !== undefined) {
+        //     useTemplate[keyName].value = simplifiedObj[key][i][keyName].value;
+        //   }
+        // }
         for (const keyName in useTemplate) {
+          // Check if the current key exists in simplifiedObj[key][i]
           if (simplifiedObj[key][i][keyName] !== undefined) {
+            // Update the value in useTemplate from simplifiedObj
             useTemplate[keyName].value = simplifiedObj[key][i][keyName].value;
+
+            // Check if notes exist for the current key in simplifiedObj and update in useTemplate
+            if (simplifiedObj[key][i][keyName].notes !== undefined) {
+              useTemplate[keyName].notes = simplifiedObj[key][i][keyName].notes;
+            }
           }
         }
 

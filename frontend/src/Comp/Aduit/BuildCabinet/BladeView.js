@@ -3,7 +3,7 @@ import EmptyInRack from "./EmptyInRack";
 import { useSelector, useDispatch } from "react-redux";
 import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-icons/md";
 import ScrollableText from "./ScrollableText";
-import EditButton from "./EditButton";
+import EditButton from "./DeleteButton";
 import * as Actions from "../../../Store/Slices/Slice";
 
 export default function BladeView({ SlottedItem, showingFront, Step, setShowingFront, setMLTClass, setChassis, setSideDepth, setUPosition, openAbover }) {

@@ -15,6 +15,8 @@ import EmptyInRack from "./EmptyInRack";
 import NewModelLayout from "./AddNewModel/NewModelLayout";
 import InputFiltersNonMLT from "./InputFiltersNonMLT";
 
+import DeleteButtonAtIndex from "./DeleteButtonAtIndex";
+
 export default function BuildLayout({ AllData }) {
   const dispatch = useDispatch();
   const CurrentRack = useSelector((state) => state.data.Current.Racks);
@@ -492,7 +494,7 @@ export default function BuildLayout({ AllData }) {
                   </div>
                 </div>
                 {TabsPerFilledUP()}
-                <div>{tabView === 0 ? InfoTab() : tabView === 1 ? BladeViewTab(hasSlots, item) : InfoTab()}</div>
+                <div>{tabView === 0 ? InfoTab(item, index) : tabView === 1 ? BladeViewTab(hasSlots, item) : InfoTab()}</div>
               </div>
             );
           })}
@@ -538,8 +540,13 @@ export default function BuildLayout({ AllData }) {
       );
     }
 
-    function InfoTab() {
-      return <div>INFORMATIONs</div>;
+    function InfoTab(item, index) {
+      index = Assets.indexOf(item);
+      return (
+        <div>
+          <DeleteButtonAtIndex item={item} Step={"Assets"} Current={Assets.indexOf(item)} />
+        </div>
+      );
     }
 
     function BladeViewTab(hasSlots, item) {

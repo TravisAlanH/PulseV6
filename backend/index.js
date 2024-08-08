@@ -3,16 +3,18 @@ const fs = require("fs");
 // const clipboard = require("clipboard");
 
 const config = {
-  user: "admin",
-  password: "WAT499er!",
+  user: "odbcuser_x",
+  password: "sunbird",
   // host: "10.34.3.86",
-  host: "10.34.3.93",
+  host: "10.34.6.71",
   database: "raritan",
   port: 5432,
 };
 
 let newQ =
   'SELECT a."Make", a."ModelName" AS "Model", a."RUHeight" ,a."Height", a."Width",a."Depth",a."Class",a."Subclass", a."Mounting", a."DataPortsCount", a."PowerPortsCount", a."FrontSlotsCount", a."BackSlotsCount" FROM odbc."dcModels" a join "dcModelObjectTypes" b on b."ModelName" = a."ModelName"';
+
+// MLT.csv
 
 let query = newQ;
 const client = new Client(config);

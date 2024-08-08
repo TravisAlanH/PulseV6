@@ -318,6 +318,19 @@ const Slice = createSlice({
       state[action.payload.Step].splice(action.payload.Current, 1);
       if (state.Settings.localStorage) localStorage.setItem("PulseStateData", JSON.stringify(state));
     },
+    deleteAtIndexUpdateOpenRu: (state, action) => {
+      let StepArray = state[action.payload.Step];
+      StepArray.splice(action.payload.Current, 1);
+      state[action.payload.Step] = StepArray;
+      let openRU = JSON.parse(JSON.stringify(state.OpenRU[state.Current.Racks].value));
+      console.log("before", openRU);
+      for (let i = 0; i < action.payload.item["RU Height"].value; i++) {
+        openRU[action.payload.item["U Position *"].value + i] = 0;
+      }
+      state.OpenRU[state.Current.Racks].value = openRU;
+      console.log("After", openRU);
+    },
+
     setLocalStorage: (state, action) => {
       console.log("called");
       state.Settings.localStorage = action.payload.value;
@@ -365,6 +378,7 @@ const Slice = createSlice({
 });
 
 export const {
+  deleteAtIndexUpdateOpenRu,
   addToMLTCreatedCount,
   setChassisSlot,
   AdjustOpenRU,
