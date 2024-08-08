@@ -4,7 +4,6 @@ import * as actions from "../../../Store/Slices/Slice";
 
 export default function DeleteButton({ Step, EditIndex }) {
   const dispatch = useDispatch();
-  const EditItem = useSelector((state) => state.data[Step][EditIndex]);
   const Current = useSelector((state) => state.data.Current[Step]);
   const CurrentName = useSelector((state) => state.data[Step][Current]["Name *"].value);
 

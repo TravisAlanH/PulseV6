@@ -14,7 +14,8 @@ export default function DeleteButton({ Step }) {
       className="redButton"
       onClick={() => {
         dispatch(DeleteAction({ Step: Step, Current: current }));
-      }}>
+      }}
+    >
       Delete at {state["U Position *"].value}
     </button>
   );
