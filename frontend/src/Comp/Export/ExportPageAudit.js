@@ -56,7 +56,7 @@ export default function ExportPageAudit() {
     <div className="w-screen h-screen p-3">
       <div className="w-full text-white mb-3 flex flex-col border-[#F3EEE7] border-2">
         <div className="w-full h-[2.5rem] bg-[#F3EEE7] flex flex-row items-center justify-start pl-3">
-          <h1 className="font-bold text-black">Export </h1>
+          <h1 className="font-bold text-black">Export</h1>
           <h1 className="font-black"> {""}</h1>
         </div>
         <div className="p-2">

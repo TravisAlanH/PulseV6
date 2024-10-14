@@ -128,7 +128,7 @@ function CheckCustomHeaders(Key, Step) {
   if (NormalHeaders.includes(Key)) {
     return Key;
   } else {
-    return `Custom Field ${Key}`;
+    return `Custom Field ${Key}`.replace("*", "");
   }
 }
 
@@ -138,6 +138,9 @@ function createTable(data, tableId) {
 
   var headerRow = document.createElement("tr");
   for (var key in data[0]) {
+    if (key.includes("Test")) {
+      continue;
+    }
     var headerCell = document.createElement("th");
     headerCell.textContent = CheckCustomHeaders(key, data[0]["Object *"]);
     headerRow.appendChild(headerCell);
