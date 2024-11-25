@@ -21,16 +21,7 @@ export default function ExportPageAudit() {
     Object.keys(adjustedData).forEach((key) => {
       OutputAll = [];
       if (adjustedData[key].length === 0) return;
-      if (
-        key === "Current" ||
-        key === "LoggedIn" ||
-        key.includes("Survey") ||
-        key === "Settings" ||
-        key.includes("New") ||
-        key === "OpenRU" ||
-        key.includes("Cabling")
-      )
-        return;
+      if (key === "Current" || key === "LoggedIn" || key.includes("Survey") || key === "Settings" || key.includes("New") || key === "OpenRU" || key.includes("Cabling")) return;
       let Input = adjustedData[key];
 
       for (let i = 0; i < Input.length; i++) {
@@ -48,9 +39,22 @@ export default function ExportPageAudit() {
         else temp = sortObjectByTemplate(temp, key);
         OutputAll.push(temp);
       }
+      console.log(removeStatus(OutputAll));
       createTable(OutputAll, "ExportTable");
     });
   }, [adjustedData, Data]);
+
+  function removeStatus(array) {
+    return array.map((item) => {
+      // Loop through object keys and delete ones ending with "status *"
+      Object.keys(item).forEach((key) => {
+        if (key.toLowerCase().includes("status *")) {
+          delete item[key];
+        }
+      });
+      return item;
+    });
+  }
 
   return (
     <div className="w-screen h-screen p-3">
