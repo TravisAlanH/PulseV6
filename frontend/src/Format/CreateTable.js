@@ -34,6 +34,15 @@ function createTable(data, tableId) {
     if (key.includes("Test")) {
       continue;
     }
+    if (key === "Custom Field Testing 1 *") {
+      continue;
+    }
+    if (key === `36" Clearance Fire / Power Panels`) {
+      continue;
+    }
+    if (key === "Survey Date") {
+      continue;
+    }
     var headerCell = document.createElement("th");
     headerCell.textContent = CheckCustomHeaders(key, data[0]["Object *"]);
     headerRow.appendChild(headerCell);
@@ -46,6 +55,12 @@ function createTable(data, tableId) {
 
     for (var key in rowObj) {
       if (key === "Custom Field Testing 1 *") {
+        continue;
+      }
+      if (key === `36" Clearance Fire / Power Panels`) {
+        continue;
+      }
+      if (key === "Survey Date") {
         continue;
       }
       var cell = document.createElement("td");
