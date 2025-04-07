@@ -33,7 +33,9 @@ export default function HomeLayout() {
 
   const user = FireActions.auth.currentUser;
 
+  console.log("test");
   React.useEffect(() => {
+    console.log("useEffect");
     setLoading(true);
     const data = async () => {
       const db = getFirestore(app);
@@ -52,7 +54,7 @@ export default function HomeLayout() {
         // if (user.displayName === "Travis Heidelberger") {
         let dataHold2 = [];
         let settingsPush = [];
-        console.log("Data Hold", dataHold);
+        // console.log("Data Hold", dataHold);
         dataHold.forEach((element) => {
           settingsPush.push({
             DataBaseUUID: element.Current.DataBaseUUID,
@@ -62,11 +64,11 @@ export default function HomeLayout() {
         });
         localStorage.setItem("NamingList", JSON.stringify(settingsPush));
         for (let i = 0; i < dataHold.length; i++) {
-          console.log("Data Hold i", dataHold[i]);
+          // console.log("Data Hold i", dataHold[i]);
           dataHold2.push(SMALLtoLARGE(dataHold[i]));
-          console.log(dataHold2[i]);
+          // console.log(dataHold2[i]);
         }
-        console.log("Data Hold 2", dataHold2);
+        // console.log("Data Hold 2", dataHold2);
         setLocationData(dataHold2);
         // } else {
         //   setLocationData(dataHold);
@@ -86,16 +88,18 @@ export default function HomeLayout() {
   let Duplicate = null;
 
   if (locationData === undefined || locationData.length !== 0) {
+    console.log("locationData === undefined : 91");
     Duplicate = Functions.findOldestNonUniqueEntries(locationData);
     if (Duplicate) {
       Duplicate.forEach((item) => {
         FireActions.removeFromLocationList(item, user).then(() => {});
       });
-      setReload(!reload);
+      // setReload(!reload);
     }
   }
 
   function createLocation(e) {
+    console.log("Create Location : 102");
     let codeExists = false;
     e.preventDefault();
     setLoading(true);
@@ -121,6 +125,7 @@ export default function HomeLayout() {
   }
 
   function newSaveData(item) {
+    console.log("New Save Data : 126");
     let holdItem = structuredClone(item);
     console.log("Old Save Data", holdItem);
     // if (user.displayName === "Travis Heidelberger") {
@@ -139,6 +144,7 @@ export default function HomeLayout() {
   }
 
   function downloadData(item) {
+    console.log("Download Data : 147");
     setLoading(true);
     if (saveConfirm) {
       const payload = { value: item };
@@ -158,7 +164,9 @@ export default function HomeLayout() {
 
   return (
     <div className="flex flex-col border-2 m-2">
-      <div className="bg-[#F7F5F1] flex flex-row justify-start h-[3rem] items-center pl-6 text-lg font-bold">Created Locations</div>
+      <div className="bg-[#F7F5F1] flex flex-row justify-start h-[3rem] items-center pl-6 text-lg font-bold">
+        Created Locations
+      </div>
       <div className="flex flex-col gap-3 w-full items-center justify-center p-2 border-b-2 mb-2">
         <div className="flex flex-row">
           {CreateLocationForm()}
@@ -240,7 +248,9 @@ export default function HomeLayout() {
               onClick={() => {
                 let locationDataCopy = structuredClone(locationData);
                 locationDataCopy = locationDataCopy.sort((a, b) => {
-                  return a.Location[0]["dcTrack Location Code *"].value.localeCompare(b.Location[0]["dcTrack Location Code *"].value);
+                  return a.Location[0]["dcTrack Location Code *"].value.localeCompare(
+                    b.Location[0]["dcTrack Location Code *"].value
+                  );
                 });
                 setLocationData(locationDataCopy);
               }}
@@ -252,7 +262,9 @@ export default function HomeLayout() {
               onClick={() => {
                 let locationDataCopy = structuredClone(locationData);
                 locationDataCopy = locationDataCopy.sort((a, b) => {
-                  return b.Location[0]["dcTrack Location Code *"].value.localeCompare(a.Location[0]["dcTrack Location Code *"].value);
+                  return b.Location[0]["dcTrack Location Code *"].value.localeCompare(
+                    a.Location[0]["dcTrack Location Code *"].value
+                  );
                 });
                 setLocationData(locationDataCopy);
               }}
@@ -269,7 +281,9 @@ export default function HomeLayout() {
               onClick={() => {
                 let locationDataCopy = structuredClone(locationData);
                 locationDataCopy = locationDataCopy.sort((a, b) => {
-                  return a.Location[0]["dcTrack Location Name *"].value.localeCompare(b.Location[0]["dcTrack Location Name *"].value);
+                  return a.Location[0]["dcTrack Location Name *"].value.localeCompare(
+                    b.Location[0]["dcTrack Location Name *"].value
+                  );
                 });
                 setLocationData(locationDataCopy);
               }}
@@ -281,7 +295,9 @@ export default function HomeLayout() {
               onClick={() => {
                 let locationDataCopy = structuredClone(locationData);
                 locationDataCopy = locationDataCopy.sort((a, b) => {
-                  return b.Location[0]["dcTrack Location Name *"].value.localeCompare(a.Location[0]["dcTrack Location Name *"].value);
+                  return b.Location[0]["dcTrack Location Name *"].value.localeCompare(
+                    a.Location[0]["dcTrack Location Name *"].value
+                  );
                 });
                 setLocationData(locationDataCopy);
               }}
@@ -326,11 +342,15 @@ export default function HomeLayout() {
   function LocationBaseDataCard(index, showButton, Code, Name, Hierarchy, item) {
     return (
       <div key={fullState + index} className={"flex flex-row  w-full px-2 h-full"}>
-        <div className="w-[2rem] flex flex-row justify-center items-center">{!showButton ? <RiCheckboxFill className="text-[#f59439] text-2xl" /> : null}</div>
+        <div className="w-[2rem] flex flex-row justify-center items-center">
+          {!showButton ? <RiCheckboxFill className="text-[#f59439] text-2xl" /> : null}
+        </div>
         <div className="lg:flex lg:flex-row justify-between md:grid md:grid-cols-2 w-full">
           <div className="flex flex-row">
             <div>
-              <label className="text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center w-[7rem] h-[2rem] pl-2">Location Code</label>
+              <label className="text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center w-[7rem] h-[2rem] pl-2">
+                Location Code
+              </label>
             </div>
             <div>
               <p className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-[10rem]"}>
@@ -340,7 +360,9 @@ export default function HomeLayout() {
           </div>
           <div className="flex flex-row">
             <div>
-              <label className="text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center w-[7rem] h-[2rem] pl-2">Location Name</label>
+              <label className="text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center w-[7rem] h-[2rem] pl-2">
+                Location Name
+              </label>
             </div>
             <div>
               <p className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-[10rem]"}>
@@ -350,7 +372,9 @@ export default function HomeLayout() {
           </div>
           <div className="flex flex-row">
             <div>
-              <label className="text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center w-[7rem] h-[2rem] pl-2">Hierarchy</label>
+              <label className="text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center w-[7rem] h-[2rem] pl-2">
+                Hierarchy
+              </label>
             </div>
             <div>
               <p className={"h-[2rem] px-2 text-black border-b-2 border-[#F7F5F1] bg-inherit w-[10rem]"}>
@@ -395,7 +419,9 @@ export default function HomeLayout() {
   function LocationAdditionalDataCard(showButton, item) {
     return (
       <div id="LocationCard" className="h-[0rem] overflow-clip transition-all flex flex-col justify-center">
-        <div className="flex flex-row justify-end w-full">{showButton ? null : <p className="text-[red] text-sm">Save data to see most recent changes</p>}</div>
+        <div className="flex flex-row justify-end w-full">
+          {showButton ? null : <p className="text-[red] text-sm">Save data to see most recent changes</p>}
+        </div>
         <div className="flex flex-col gap-2">
           <div className="border-2 rounded-md p-2 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 ">
             <div>Building: {item.SurveySite[0]["Building"].value}</div>
@@ -438,8 +464,8 @@ export default function HomeLayout() {
           </div>
           <p>Replace Current Data without Saving?</p>
           <p className="text-xs">
-            The current data that is saved locally is not synced with the database, continuing will remove your local data and replace it with the location data
-            you selected
+            The current data that is saved locally is not synced with the database, continuing will remove your local data and
+            replace it with the location data you selected
           </p>
           <div className="flex flex-row items-center justify-center gap-2" id="confirmBox">
             <label>{"Replace: "}</label>
@@ -500,7 +526,9 @@ export default function HomeLayout() {
     return (
       <form className="flex flex-row" onSubmit={createLocation}>
         <div className="w-[1rem] flex flex-row justify-center items-center text-red-500">*</div>
-        <label className={"text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center w-[11rem] pl-2"}>dcTrack Location Code</label>
+        <label className={"text-xs font-bold  p-1 bg-[#F7F5F1] flex flex-col justify-center w-[11rem] pl-2"}>
+          dcTrack Location Code
+        </label>
         <input
           type="text"
           required={true}
