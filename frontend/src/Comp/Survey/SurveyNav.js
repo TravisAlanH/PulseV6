@@ -30,7 +30,8 @@ export default function SurveyNav({ setCurrentSurvey }) {
           removeSelected();
           e.target.classList.add("selected");
           setCurrentSurvey(<LocationLayout />);
-        }}>
+        }}
+      >
         Location
       </button>{" "}
       <button
@@ -40,7 +41,8 @@ export default function SurveyNav({ setCurrentSurvey }) {
           removeSelected();
           e.target.classList.add("selected");
           setCurrentSurvey(<SurveyRoomLayout Step={"SurveyRoom"} />);
-        }}>
+        }}
+      >
         Room
       </button>
       <button
@@ -50,7 +52,8 @@ export default function SurveyNav({ setCurrentSurvey }) {
           removeSelected();
           e.target.classList.add("selected");
           setCurrentSurvey(<SurveyDetailsLayout Step={"SurveySite"} />);
-        }}>
+        }}
+      >
         Site
       </button>
       <button
@@ -60,7 +63,8 @@ export default function SurveyNav({ setCurrentSurvey }) {
           removeSelected();
           e.target.classList.add("selected");
           setCurrentSurvey(<SurveySpreadLayout Step={"SurveyGlobal"} />);
-        }}>
+        }}
+      >
         Global
       </button>
       <button
@@ -70,8 +74,9 @@ export default function SurveyNav({ setCurrentSurvey }) {
           removeSelected();
           e.target.classList.add("selected");
           setCurrentSurvey(<SurveySpreadLayout Step={"SurveySecurity"} />);
-        }}>
-        Security
+        }}
+      >
+        Security / Cable / Equipment
       </button>
       <button
         id="SurveyLinks"
@@ -80,7 +85,8 @@ export default function SurveyNav({ setCurrentSurvey }) {
           removeSelected();
           e.target.classList.add("selected");
           setCurrentSurvey(<SurveySpreadLayout Step={"SurveySafety"} />);
-        }}>
+        }}
+      >
         Safety
       </button>
       <button
@@ -90,7 +96,8 @@ export default function SurveyNav({ setCurrentSurvey }) {
           removeSelected();
           e.target.classList.add("selected");
           setCurrentSurvey(<ExportPageSurvey />);
-        }}>
+        }}
+      >
         Export
       </button>
     </div>
